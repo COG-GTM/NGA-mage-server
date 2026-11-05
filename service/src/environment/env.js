@@ -75,6 +75,13 @@ const environment = {
   securityDirectory: path.resolve(process.env.MAGE_SECURITY_DIR || '/var/lib/mage/security'),
   exportSweepInterval: parseInt(process.env.MAGE_EXPORT_SWEEP_INTERVAL) || 28800,
   exportTtl: parseInt(process.env.MAGE_EXPORT_TTL) || 259200,
+  /**
+   * Feature flag for the standalone export service.  Unset (default): exports
+   * run in-process.  Set to the internal base URL of the export service
+   * (e.g. http://mage-export:4243) to delegate export generation to it.
+   */
+  exportServiceUrl: process.env.MAGE_EXPORT_SERVICE_URL || undefined,
+  exportServiceToken: process.env.MAGE_EXPORT_SERVICE_TOKEN || undefined,
   tokenExpiration: parseInt(process.env.MAGE_TOKEN_EXPIRATION) || 28800,
   httpRequestLogMethods: (process.env.MAGE_HTTP_REQUEST_LOG_METHODS || 'GET,POST,PUT,PATCH,DELETE')
     .split(',').map(x => x.trim().toUpperCase()).filter(x => x.length > 0),

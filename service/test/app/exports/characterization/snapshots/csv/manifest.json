@@ -1,0 +1,20 @@
+{
+  "format": "csv",
+  "entries": {
+    "locations.csv": {
+      "sha256": "7e33b2c480f104a51343d29ac61c87e6312d609f7cb86ad0cf04b0ee77857fb9",
+      "snapshot": "locations.csv",
+      "canonicalized": false
+    },
+    "observations.csv": {
+      "sha256": "b204076352a3d34a690366eabd1149729d6def21c8e46788c2c9a3ddb11bf7eb",
+      "snapshot": "observations.csv",
+      "canonicalized": false
+    },
+    "photo.jpg": {
+      "sha256": "6439d650bc55ca9f18c8eba2b64fd83a490a5f0e45b2946570383b94cfe18c9b",
+      "snapshot": "photo.jpg",
+      "canonicalized": false
+    }
+  }
+}

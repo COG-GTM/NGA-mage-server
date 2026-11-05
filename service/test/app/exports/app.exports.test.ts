@@ -281,7 +281,7 @@ describe('export use case interactions', function() {
       exportFactory = sinon.stub()
       exportFactory.withArgs('csv').returns(csvExport)
 
-      createExport = impl.CreateExport(exportFactory, repository, store, permissions, teamRepository)
+      createExport = impl.CreateExport(impl.InProcessExportEngine(exportFactory), repository, store, permissions, teamRepository)
     })
 
     it('creates export', async function() {

@@ -45,6 +45,57 @@ export interface ExportTransform {
   export(event: MageEvent, archive: Archiver, params: ExportParams): Promise<ExportSummary>
 }
 
+/**
+ * An export engine produces the complete export ZIP archive for a format into
+ * the export store's content stream.  `CreateExport` is agnostic of whether
+ * the archive is produced in-process ({@link InProcessExportEngine}, the
+ * default) or by the standalone export service
+ * (`RemoteExportEngine` in `app.impl.exports.remote.ts`, selected when
+ * `MAGE_EXPORT_SERVICE_URL` is set).
+ */
+export interface ExportEngine {
+  canExport(format: ExportFormat): boolean
+  /**
+   * Resolve to the export summary after the archive bytes have been fully
+   * written and `content` has closed.
+   */
+  export(format: ExportFormat, event: MageEvent, params: ExportParams, content: ExportContentStream): Promise<ExportSummary>
+}
+
+export type ExportContentStream = NodeJS.WritableStream & NodeJS.EventEmitter & { destroy?: (error?: Error) => void }
+
+/**
+ * The in-process engine runs the export transforms in the service process
+ * exactly as before the export service extraction: zip archive piped to the
+ * content stream, finalize, wait for close.
+ */
+export function InProcessExportEngine(exportFactory: ExportFactory): ExportEngine {
+  return {
+    canExport(format: ExportFormat): boolean {
+      return !!exportFactory(format)
+    },
+    async export(format: ExportFormat, event: MageEvent, params: ExportParams, content: ExportContentStream): Promise<ExportSummary> {
+      const exporter = exportFactory(format)
+      if (!exporter) {
+        throw new Error(`invalid export type: ${format}`)
+      }
+      const archive = archiver('zip')
+      archive.pipe(content)
+      try {
+        const result = await exporter.export(event, archive, params)
+        const streamClosed = once(content, 'close')
+        await archive.finalize()
+        await streamClosed
+        return result
+      }
+      catch (err) {
+        archive.abort()
+        throw err
+      }
+    }
+  }
+}
+
 export function FetchExports(repository: ExportsRepository, permissionService: api.ExportAppLayerPermissionService): api.GetExports {
   return async function getExports(req: api.GetExportsRequest): ReturnType<api.GetExports> {
     return await withPermission<ExportExpanded[], KnownErrorsOf<api.GetExports>>(
@@ -91,7 +142,7 @@ export function GetExportContent(
 }
 
 export function CreateExport(
-  exportFactory: ExportFactory,
+  exportEngine: ExportEngine,
   exportsRepository: ExportsRepository,
   contentStore: ExportStore,
   permissionService: api.ExportAppLayerPermissionService,
@@ -110,9 +161,7 @@ export function CreateExport(
           ...req
         })
 
-        const exporter = exportFactory(format)
-
-        if (!exporter) {
+        if (!exportEngine.canExport(format)) {
           return invalidInput('invalid export type', [ `invalid export type: ${format}`, 'type' ])
         }
 
@@ -161,12 +210,7 @@ export function CreateExport(
           }
         }
 
-        const archive = archiver('zip')
-        archive.pipe(content)
-        exporter.export(context.mageEvent, archive, exportParams).then(async result => {
-          const streamClosed = once(content, 'close')
-          await archive.finalize()
-          await streamClosed
+        exportEngine.export(format, context.mageEvent, exportParams, content).then(async result => {
           const stats = await contentStore.contentStats(newExport)
           const update = {
             status: ExportStatus.Completed,
@@ -187,7 +231,6 @@ export function CreateExport(
           log.error('Export error', err)
           await contentStore.deleteContent(newExport)
           await exportsRepository.updateExportForUser(newExport.id, user.id, { status: ExportStatus.Failed })
-          archive.abort()
         })
 
         return { ...newExport, ...patch }

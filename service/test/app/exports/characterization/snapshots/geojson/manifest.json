@@ -1,0 +1,20 @@
+{
+  "format": "geojson",
+  "entries": {
+    "locations.geojson": {
+      "sha256": "97106d0dd528b5b74e18877204194251f07032be22fd4067dfca13b5ce6fb5fa",
+      "snapshot": "locations.geojson",
+      "canonicalized": false
+    },
+    "observations.geojson": {
+      "sha256": "734df6ce015857df75ac63ec19529ca233d61c4f89f073c7577e615b0c3ad0fe",
+      "snapshot": "observations.geojson",
+      "canonicalized": false
+    },
+    "photo.jpg": {
+      "sha256": "6439d650bc55ca9f18c8eba2b64fd83a490a5f0e45b2946570383b94cfe18c9b",
+      "snapshot": "photo.jpg",
+      "canonicalized": false
+    }
+  }
+}

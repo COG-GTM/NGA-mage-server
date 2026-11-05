@@ -1,0 +1,1142 @@
+{
+  "table:Attachments": {
+    "sql": "CREATE TABLE \"Attachments\" (\n  \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n  \"data\" BLOB NOT NULL,\n  \"content_type\" TEXT NOT NULL,\n  \"name\" TEXT,\n  \"size\" REAL\n)",
+    "columns": [
+      "id INTEGER",
+      "data BLOB",
+      "content_type TEXT",
+      "name TEXT",
+      "size REAL"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "data": {
+          "blobSha256": "6439d650bc55ca9f18c8eba2b64fd83a490a5f0e45b2946570383b94cfe18c9b",
+          "length": 46
+        },
+        "content_type": "image/jpeg",
+        "name": "photo.jpg",
+        "size": 46
+      }
+    ]
+  },
+  "table:Form_10": {
+    "sql": "CREATE TABLE \"Form_10\" (\n  \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n  \"textField\" TEXT,\n  \"textareaField\" TEXT,\n  \"numberField\" INTEGER,\n  \"dateField\" TEXT,\n  \"dropdownField\" TEXT,\n  \"multiselectField\" TEXT,\n  \"checkboxField\" TEXT,\n  \"radioField\" TEXT,\n  \"emailField\" TEXT,\n  \"geometryField\" TEXT,\n  \"attachmentField\" TEXT,\n  \"hiddenField\" TEXT,\n  \"passwordField\" TEXT,\n  \"formId\" INTEGER,\n  \"primaryField\" TEXT,\n  \"variantField\" TEXT\n)",
+    "columns": [
+      "id INTEGER",
+      "textField TEXT",
+      "textareaField TEXT",
+      "numberField INTEGER",
+      "dateField TEXT",
+      "dropdownField TEXT",
+      "multiselectField TEXT",
+      "checkboxField TEXT",
+      "radioField TEXT",
+      "emailField TEXT",
+      "geometryField TEXT",
+      "attachmentField TEXT",
+      "hiddenField TEXT",
+      "passwordField TEXT",
+      "formId INTEGER",
+      "primaryField TEXT",
+      "variantField TEXT"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "textField": "hello text",
+        "textareaField": "line one\nline two",
+        "numberField": 42.5,
+        "dateField": "2024-01-15T12:34:56.000Z",
+        "dropdownField": "Alpha",
+        "multiselectField": "Red, Blue",
+        "checkboxField": "true",
+        "radioField": "Two",
+        "emailField": "alice@example.test",
+        "geometryField": "POINT(-105 39.75)",
+        "attachmentField": "att1",
+        "hiddenField": "hidden value",
+        "passwordField": "secret",
+        "formId": 10,
+        "primaryField": "Alpha",
+        "variantField": "Two"
+      },
+      {
+        "id": 2,
+        "textField": "polygon obs",
+        "textareaField": null,
+        "numberField": 7,
+        "dateField": null,
+        "dropdownField": "Bravo",
+        "multiselectField": "Green",
+        "checkboxField": "false",
+        "radioField": null,
+        "emailField": null,
+        "geometryField": null,
+        "attachmentField": null,
+        "hiddenField": null,
+        "passwordField": null,
+        "formId": 10,
+        "primaryField": "Bravo",
+        "variantField": "undefined"
+      }
+    ]
+  },
+  "table:Form_10_Attachments": {
+    "sql": "CREATE TABLE \"Form_10_Attachments\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER"
+    ],
+    "rows": [
+      {
+        "base_id": 1,
+        "related_id": 1
+      }
+    ]
+  },
+  "table:Forms": {
+    "sql": "CREATE TABLE \"Forms\" (\n  \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n  \"formName\" TEXT,\n  \"primaryField\" TEXT,\n  \"variantField\" TEXT,\n  \"color\" TEXT,\n  \"formId\" TEXT\n)",
+    "columns": [
+      "id INTEGER",
+      "formName TEXT",
+      "primaryField TEXT",
+      "variantField TEXT",
+      "color TEXT",
+      "formId TEXT"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "formName": "Characterization Form",
+        "primaryField": "dropdownField",
+        "variantField": "radioField",
+        "color": "#AA00FF",
+        "formId": "10.0"
+      }
+    ]
+  },
+  "table:Locations": {
+    "sql": "CREATE TABLE \"Locations\" (\n  \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n  \"geometry\" GEOMETRY,\n  \"Location Id\" TEXT,\n  \"User Id\" TEXT,\n  \"Username\" TEXT,\n  \"Display Name\" TEXT,\n  \"Date/Time\" DATETIME,\n  \"Device Id\" TEXT,\n  \"Accuracy\" REAL,\n  \"Altitude\" REAL,\n  \"Bearing\" REAL,\n  \"Speed\" REAL\n)",
+    "columns": [
+      "id INTEGER",
+      "geometry GEOMETRY",
+      "Location Id TEXT",
+      "User Id TEXT",
+      "Username TEXT",
+      "Display Name TEXT",
+      "Date/Time DATETIME",
+      "Device Id TEXT",
+      "Accuracy REAL",
+      "Altitude REAL",
+      "Bearing REAL",
+      "Speed REAL"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "geometry": {
+          "blobSha256": "282061f25c674b6b49d438f2885eb8762f9003ab1f03db9693a62c45cdee877e",
+          "length": 29
+        },
+        "Location Id": null,
+        "User Id": "user1",
+        "Username": "alice",
+        "Display Name": "Alice Anders",
+        "Date/Time": "2024-02-01T09:50:00.000Z",
+        "Device Id": "device1",
+        "Accuracy": 12.5,
+        "Altitude": 1609.3,
+        "Bearing": 90,
+        "Speed": 1.25
+      }
+    ]
+  },
+  "table:Observations": {
+    "sql": "CREATE TABLE \"Observations\" (\n  \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n  \"geometry\" GEOMETRY,\n  \"lastModified\" DATETIME,\n  \"timestamp\" DATETIME,\n  \"mageId\" TEXT,\n  \"userId\" TEXT,\n  \"deviceId\" TEXT,\n  \"createdAt\" DATETIME,\n  \"primaryField\" TEXT,\n  \"variantField\" TEXT\n)",
+    "columns": [
+      "id INTEGER",
+      "geometry GEOMETRY",
+      "lastModified DATETIME",
+      "timestamp DATETIME",
+      "mageId TEXT",
+      "userId TEXT",
+      "deviceId TEXT",
+      "createdAt DATETIME",
+      "primaryField TEXT",
+      "variantField TEXT"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "geometry": {
+          "blobSha256": "ed067b6a89998fd3a00fe991bb1671b1726362b8c85aeb2eacc0e6b5901f0513",
+          "length": 29
+        },
+        "lastModified": "2024-02-01T10:05:00.000Z",
+        "timestamp": "2024-02-01T09:58:30.000Z",
+        "mageId": "obs1",
+        "userId": "user1",
+        "deviceId": "device1",
+        "createdAt": "2024-02-01T10:00:00.000Z",
+        "primaryField": "Alpha",
+        "variantField": "Two"
+      },
+      {
+        "id": 2,
+        "geometry": {
+          "blobSha256": "b74f05f7a8ed16ae5c7cc64d5b1cf44cbbb304fef553e0b07ab677bbed579a46",
+          "length": 101
+        },
+        "lastModified": "2024-02-02T11:00:00.000Z",
+        "timestamp": "2024-02-02T10:59:00.000Z",
+        "mageId": "obs2",
+        "userId": "user2",
+        "deviceId": null,
+        "createdAt": "2024-02-02T11:00:00.000Z",
+        "primaryField": "Bravo",
+        "variantField": "undefined"
+      }
+    ]
+  },
+  "table:Observations_Attachments": {
+    "sql": "CREATE TABLE \"Observations_Attachments\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER"
+    ],
+    "rows": [
+      {
+        "base_id": 1,
+        "related_id": 1
+      }
+    ]
+  },
+  "table:Observations_Form_10": {
+    "sql": "CREATE TABLE \"Observations_Form_10\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER"
+    ],
+    "rows": [
+      {
+        "base_id": 1,
+        "related_id": 1
+      },
+      {
+        "base_id": 2,
+        "related_id": 2
+      }
+    ]
+  },
+  "table:gpkg_contents": {
+    "sql": "CREATE TABLE gpkg_contents ( table_name TEXT NOT NULL PRIMARY KEY, data_type TEXT NOT NULL, identifier TEXT UNIQUE, description TEXT DEFAULT '', last_change DATETIME NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')), min_x DOUBLE, min_y DOUBLE, max_x DOUBLE, max_y DOUBLE, srs_id INTEGER, CONSTRAINT fk_gc_r_srs_id FOREIGN KEY (srs_id) REFERENCES gpkg_spatial_ref_sys(srs_id))",
+    "columns": [
+      "table_name TEXT",
+      "data_type TEXT",
+      "identifier TEXT",
+      "description TEXT",
+      "last_change DATETIME",
+      "min_x DOUBLE",
+      "min_y DOUBLE",
+      "max_x DOUBLE",
+      "max_y DOUBLE",
+      "srs_id INTEGER"
+    ],
+    "rows": [
+      {
+        "table_name": "Attachments",
+        "data_type": "attributes",
+        "identifier": "Attachments",
+        "description": "",
+        "last_change": "<volatile>",
+        "min_x": null,
+        "min_y": null,
+        "max_x": null,
+        "max_y": null,
+        "srs_id": null
+      },
+      {
+        "table_name": "Form_10",
+        "data_type": "attributes",
+        "identifier": "Form_10",
+        "description": "",
+        "last_change": "<volatile>",
+        "min_x": null,
+        "min_y": null,
+        "max_x": null,
+        "max_y": null,
+        "srs_id": null
+      },
+      {
+        "table_name": "Forms",
+        "data_type": "attributes",
+        "identifier": "Forms",
+        "description": "",
+        "last_change": "<volatile>",
+        "min_x": null,
+        "min_y": null,
+        "max_x": null,
+        "max_y": null,
+        "srs_id": null
+      },
+      {
+        "table_name": "Locations",
+        "data_type": "features",
+        "identifier": "Locations",
+        "description": "",
+        "last_change": "<volatile>",
+        "min_x": -104.95,
+        "min_y": 39.74,
+        "max_x": -104.95,
+        "max_y": 39.74,
+        "srs_id": 4326
+      },
+      {
+        "table_name": "Observations",
+        "data_type": "features",
+        "identifier": "Observations",
+        "description": "",
+        "last_change": "<volatile>",
+        "min_x": -105,
+        "min_y": 39.7,
+        "max_x": -104.9,
+        "max_y": 39.8,
+        "srs_id": 4326
+      },
+      {
+        "table_name": "nga_icon",
+        "data_type": "attributes",
+        "identifier": "nga_icon",
+        "description": "",
+        "last_change": "<volatile>",
+        "min_x": null,
+        "min_y": null,
+        "max_x": null,
+        "max_y": null,
+        "srs_id": null
+      },
+      {
+        "table_name": "nga_style",
+        "data_type": "attributes",
+        "identifier": "nga_style",
+        "description": "",
+        "last_change": "<volatile>",
+        "min_x": null,
+        "min_y": null,
+        "max_x": null,
+        "max_y": null,
+        "srs_id": null
+      }
+    ]
+  },
+  "table:gpkg_data_columns": {
+    "sql": "CREATE TABLE gpkg_data_columns (  table_name TEXT NOT NULL,  column_name TEXT NOT NULL,  name TEXT,  title TEXT,  description TEXT,  mime_type TEXT,  constraint_name TEXT,  CONSTRAINT pk_gdc PRIMARY KEY (table_name, column_name),  CONSTRAINT gdc_tn UNIQUE (table_name, name))",
+    "columns": [
+      "table_name TEXT",
+      "column_name TEXT",
+      "name TEXT",
+      "title TEXT",
+      "description TEXT",
+      "mime_type TEXT",
+      "constraint_name TEXT"
+    ],
+    "rows": [
+      {
+        "table_name": "Form_10",
+        "column_name": "attachmentField",
+        "name": "attachmentField",
+        "title": "Attachment Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "checkboxField",
+        "name": "checkboxField",
+        "title": "Checkbox Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "dateField",
+        "name": "dateField",
+        "title": "Date Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "dropdownField",
+        "name": "dropdownField",
+        "title": "Dropdown Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "emailField",
+        "name": "emailField",
+        "title": "Email Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "geometryField",
+        "name": "geometryField",
+        "title": "Geometry Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "hiddenField",
+        "name": "hiddenField",
+        "title": "Hidden Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "multiselectField",
+        "name": "multiselectField",
+        "title": "Multi Select Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "numberField",
+        "name": "numberField",
+        "title": "Number Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "passwordField",
+        "name": "passwordField",
+        "title": "Password Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "radioField",
+        "name": "radioField",
+        "title": "Radio Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "textField",
+        "name": "textField",
+        "title": "Text Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      },
+      {
+        "table_name": "Form_10",
+        "column_name": "textareaField",
+        "name": "textareaField",
+        "title": "Text Area Field",
+        "description": null,
+        "mime_type": null,
+        "constraint_name": null
+      }
+    ]
+  },
+  "table:gpkg_extensions": {
+    "sql": "CREATE TABLE gpkg_extensions (  table_name TEXT,  column_name TEXT,  extension_name TEXT NOT NULL,  definition TEXT NOT NULL,  scope TEXT NOT NULL,  CONSTRAINT ge_tce UNIQUE (table_name, column_name, extension_name))",
+    "columns": [
+      "table_name TEXT",
+      "column_name TEXT",
+      "extension_name TEXT",
+      "definition TEXT",
+      "scope TEXT"
+    ],
+    "rows": [
+      {
+        "table_name": "Form_10_Attachments",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "Locations",
+        "column_name": "geometry",
+        "extension_name": "gpkg_rtree_index",
+        "definition": "http://www.geopackage.org/spec/#extension_rtree",
+        "scope": "write-only"
+      },
+      {
+        "table_name": "Locations",
+        "column_name": null,
+        "extension_name": "nga_feature_style",
+        "definition": "http://ngageoint.github.io/GeoPackage/docs/extensions/feature-style.html",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "Observations",
+        "column_name": "geometry",
+        "extension_name": "gpkg_rtree_index",
+        "definition": "http://www.geopackage.org/spec/#extension_rtree",
+        "scope": "write-only"
+      },
+      {
+        "table_name": "Observations",
+        "column_name": null,
+        "extension_name": "nga_feature_style",
+        "definition": "http://ngageoint.github.io/GeoPackage/docs/extensions/feature-style.html",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "Observations_Attachments",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "Observations_Form_10",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "gpkg_data_column_constraints",
+        "column_name": null,
+        "extension_name": "gpkg_schema",
+        "definition": "http://www.geopackage.org/spec/#extension_schema",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "gpkg_data_columns",
+        "column_name": null,
+        "extension_name": "gpkg_schema",
+        "definition": "http://www.geopackage.org/spec/#extension_schema",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "gpkgext_relations",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "nga_icon_Locations",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "nga_icon_Observations",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "nga_icon_default_Locations",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "nga_icon_default_Observations",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "nga_style_Locations",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "nga_style_Observations",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "nga_style_default_Locations",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": "nga_style_default_Observations",
+        "column_name": null,
+        "extension_name": "gpkg_related_tables",
+        "definition": "TBD",
+        "scope": "read-write"
+      },
+      {
+        "table_name": null,
+        "column_name": null,
+        "extension_name": "gpkg_crs_wkt",
+        "definition": "http://www.geopackage.org/spec/#extension_crs_wkt",
+        "scope": "read-write"
+      },
+      {
+        "table_name": null,
+        "column_name": null,
+        "extension_name": "nga_contents_id",
+        "definition": "http://ngageoint.github.io/GeoPackage/docs/extensions/contents-id.html",
+        "scope": "read-write"
+      }
+    ]
+  },
+  "table:gpkg_geometry_columns": {
+    "sql": "CREATE TABLE gpkg_geometry_columns (  table_name TEXT NOT NULL,  column_name TEXT NOT NULL,  geometry_type_name TEXT NOT NULL,  srs_id INTEGER NOT NULL,  z TINYINT NOT NULL,  m TINYINT NOT NULL,  CONSTRAINT pk_geom_cols PRIMARY KEY (table_name, column_name),  CONSTRAINT uk_gc_table_name UNIQUE (table_name),  CONSTRAINT fk_gc_tn FOREIGN KEY (table_name) REFERENCES gpkg_contents(table_name),  CONSTRAINT fk_gc_srs FOREIGN KEY (srs_id) REFERENCES gpkg_spatial_ref_sys (srs_id))",
+    "columns": [
+      "table_name TEXT",
+      "column_name TEXT",
+      "geometry_type_name TEXT",
+      "srs_id INTEGER",
+      "z TINYINT",
+      "m TINYINT"
+    ],
+    "rows": [
+      {
+        "table_name": "Locations",
+        "column_name": "geometry",
+        "geometry_type_name": "GEOMETRY",
+        "srs_id": 4326,
+        "z": 0,
+        "m": 0
+      },
+      {
+        "table_name": "Observations",
+        "column_name": "geometry",
+        "geometry_type_name": "GEOMETRY",
+        "srs_id": 4326,
+        "z": 0,
+        "m": 0
+      }
+    ]
+  },
+  "table:gpkg_spatial_ref_sys": {
+    "sql": "CREATE TABLE gpkg_spatial_ref_sys (  srs_name TEXT NOT NULL,  srs_id INTEGER NOT NULL PRIMARY KEY,  organization TEXT NOT NULL,  organization_coordsys_id INTEGER NOT NULL,  definition  TEXT NOT NULL,  description TEXT,  definition_12_063 TEXT NOT NULL DEFAULT \"undefined\")",
+    "columns": [
+      "srs_name TEXT",
+      "srs_id INTEGER",
+      "organization TEXT",
+      "organization_coordsys_id INTEGER",
+      "definition TEXT",
+      "description TEXT",
+      "definition_12_063 TEXT"
+    ],
+    "rows": [
+      {
+        "srs_name": "Undefined cartesian SRS",
+        "srs_id": -1,
+        "organization": "NONE",
+        "organization_coordsys_id": -1,
+        "definition": "undefined",
+        "description": "undefined cartesian coordinate reference system",
+        "definition_12_063": "undefined"
+      },
+      {
+        "srs_name": "Undefined geographic SRS",
+        "srs_id": 0,
+        "organization": "NONE",
+        "organization_coordsys_id": 0,
+        "definition": "undefined",
+        "description": "undefined geographic coordinate reference system",
+        "definition_12_063": "undefined"
+      },
+      {
+        "srs_name": "WGS 84 / Pseudo-Mercator",
+        "srs_id": 3857,
+        "organization": "EPSG",
+        "organization_coordsys_id": 3857,
+        "definition": "PROJCS[\"WGS 84 / Pseudo-Mercator\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Mercator_1SP\"],PARAMETER[\"central_meridian\",0],PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"X\",EAST],AXIS[\"Y\",NORTH],EXTENSION[\"PROJ4\",\"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs\"],AUTHORITY[\"EPSG\",\"3857\"]]",
+        "description": "Spherical Mercator projection coordinate system",
+        "definition_12_063": "PROJCS[\"WGS 84 / Pseudo-Mercator\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]],PROJECTION[\"Mercator_1SP\"],PARAMETER[\"central_meridian\",0],PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"X\",EAST],AXIS[\"Y\",NORTH],EXTENSION[\"PROJ4\",\"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs\"],AUTHORITY[\"EPSG\",\"3857\"]]"
+      },
+      {
+        "srs_name": "WGS 84 geodetic",
+        "srs_id": 4326,
+        "organization": "EPSG",
+        "organization_coordsys_id": 4326,
+        "definition": "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]]",
+        "description": "longitude/latitude coordinates in decimal degrees on the WGS 84 spheroid",
+        "definition_12_063": "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]]"
+      }
+    ]
+  },
+  "table:gpkgext_relations": {
+    "sql": "CREATE TABLE gpkgext_relations (  id INTEGER PRIMARY KEY AUTOINCREMENT,  base_table_name TEXT NOT NULL,  base_primary_column TEXT NOT NULL DEFAULT 'id',  related_table_name TEXT NOT NULL,  related_primary_column TEXT NOT NULL DEFAULT 'id',  relation_name TEXT NOT NULL,  mapping_table_name TEXT NOT NULL UNIQUE)",
+    "columns": [
+      "id INTEGER",
+      "base_table_name TEXT",
+      "base_primary_column TEXT",
+      "related_table_name TEXT",
+      "related_primary_column TEXT",
+      "relation_name TEXT",
+      "mapping_table_name TEXT"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "base_table_name": "Observations",
+        "base_primary_column": "id",
+        "related_table_name": "nga_style",
+        "related_primary_column": "id",
+        "relation_name": "attributes",
+        "mapping_table_name": "nga_style_Observations"
+      },
+      {
+        "id": 10,
+        "base_table_name": "Locations",
+        "base_primary_column": "id",
+        "related_table_name": "nga_icon",
+        "related_primary_column": "id",
+        "relation_name": "media",
+        "mapping_table_name": "nga_icon_Locations"
+      },
+      {
+        "id": 11,
+        "base_table_name": "nga_contents_id",
+        "base_primary_column": "id",
+        "related_table_name": "nga_icon",
+        "related_primary_column": "id",
+        "relation_name": "media",
+        "mapping_table_name": "nga_icon_default_Locations"
+      },
+      {
+        "id": 2,
+        "base_table_name": "nga_contents_id",
+        "base_primary_column": "id",
+        "related_table_name": "nga_style",
+        "related_primary_column": "id",
+        "relation_name": "attributes",
+        "mapping_table_name": "nga_style_default_Observations"
+      },
+      {
+        "id": 3,
+        "base_table_name": "Observations",
+        "base_primary_column": "id",
+        "related_table_name": "nga_icon",
+        "related_primary_column": "id",
+        "relation_name": "media",
+        "mapping_table_name": "nga_icon_Observations"
+      },
+      {
+        "id": 4,
+        "base_table_name": "nga_contents_id",
+        "base_primary_column": "id",
+        "related_table_name": "nga_icon",
+        "related_primary_column": "id",
+        "relation_name": "media",
+        "mapping_table_name": "nga_icon_default_Observations"
+      },
+      {
+        "id": 5,
+        "base_table_name": "Observations",
+        "base_primary_column": "id",
+        "related_table_name": "Attachments",
+        "related_primary_column": "id",
+        "relation_name": "media",
+        "mapping_table_name": "Observations_Attachments"
+      },
+      {
+        "id": 6,
+        "base_table_name": "Form_10",
+        "base_primary_column": "id",
+        "related_table_name": "Attachments",
+        "related_primary_column": "id",
+        "relation_name": "media",
+        "mapping_table_name": "Form_10_Attachments"
+      },
+      {
+        "id": 7,
+        "base_table_name": "Observations",
+        "base_primary_column": "id",
+        "related_table_name": "Form_10",
+        "related_primary_column": "id",
+        "relation_name": "attributes",
+        "mapping_table_name": "Observations_Form_10"
+      },
+      {
+        "id": 8,
+        "base_table_name": "Locations",
+        "base_primary_column": "id",
+        "related_table_name": "nga_style",
+        "related_primary_column": "id",
+        "relation_name": "attributes",
+        "mapping_table_name": "nga_style_Locations"
+      },
+      {
+        "id": 9,
+        "base_table_name": "nga_contents_id",
+        "base_primary_column": "id",
+        "related_table_name": "nga_style",
+        "related_primary_column": "id",
+        "relation_name": "attributes",
+        "mapping_table_name": "nga_style_default_Locations"
+      }
+    ]
+  },
+  "table:nga_contents_id": {
+    "sql": "CREATE TABLE nga_contents_id (  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,  table_name TEXT NOT NULL,  CONSTRAINT uk_nci_table_name UNIQUE (table_name),  CONSTRAINT fk_nci_gc_tn FOREIGN KEY (table_name) REFERENCES gpkg_contents(table_name))",
+    "columns": [
+      "id INTEGER",
+      "table_name TEXT"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "table_name": "Observations"
+      }
+    ]
+  },
+  "table:nga_icon": {
+    "sql": "CREATE TABLE \"nga_icon\" (\n  \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n  \"data\" BLOB NOT NULL,\n  \"content_type\" TEXT NOT NULL,\n  \"name\" TEXT,\n  \"description\" TEXT,\n  \"width\" REAL,\n  \"height\" REAL,\n  \"anchor_u\" REAL,\n  \"anchor_v\" REAL\n)",
+    "columns": [
+      "id INTEGER",
+      "data BLOB",
+      "content_type TEXT",
+      "name TEXT",
+      "description TEXT",
+      "width REAL",
+      "height REAL",
+      "anchor_u REAL",
+      "anchor_v REAL"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "data": {
+          "blobSha256": "497790947d4666760ce38f3c00e852c71fdb66cae849bae8e9ede352719e1581",
+          "length": 70
+        },
+        "content_type": "image/png",
+        "name": "Characterization Form icon",
+        "description": null,
+        "width": 36,
+        "height": null,
+        "anchor_u": 0.5,
+        "anchor_v": 1
+      },
+      {
+        "id": 2,
+        "data": {
+          "blobSha256": "497790947d4666760ce38f3c00e852c71fdb66cae849bae8e9ede352719e1581",
+          "length": 70
+        },
+        "content_type": "image/png",
+        "name": "Characterization Form icon",
+        "description": null,
+        "width": 36,
+        "height": null,
+        "anchor_u": 0.5,
+        "anchor_v": 1
+      },
+      {
+        "id": 3,
+        "data": {
+          "blobSha256": "497790947d4666760ce38f3c00e852c71fdb66cae849bae8e9ede352719e1581",
+          "length": 70
+        },
+        "content_type": "image/png",
+        "name": "Characterization Form icon",
+        "description": null,
+        "width": 36,
+        "height": null,
+        "anchor_u": 0.5,
+        "anchor_v": 1
+      },
+      {
+        "id": 4,
+        "data": {
+          "blobSha256": "497790947d4666760ce38f3c00e852c71fdb66cae849bae8e9ede352719e1581",
+          "length": 70
+        },
+        "content_type": "image/png",
+        "name": "alice",
+        "description": "Icon for user alice",
+        "width": 36,
+        "height": null,
+        "anchor_u": 0.5,
+        "anchor_v": 1
+      }
+    ]
+  },
+  "table:nga_icon_Locations": {
+    "sql": "CREATE TABLE \"nga_icon_Locations\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL,\n  \"geometry_type_name\" TEXT\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER",
+      "geometry_type_name TEXT"
+    ],
+    "rows": [
+      {
+        "base_id": 1,
+        "related_id": 4,
+        "geometry_type_name": null
+      }
+    ]
+  },
+  "table:nga_icon_Observations": {
+    "sql": "CREATE TABLE \"nga_icon_Observations\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL,\n  \"geometry_type_name\" TEXT\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER",
+      "geometry_type_name TEXT"
+    ],
+    "rows": [
+      {
+        "base_id": 1,
+        "related_id": 2,
+        "geometry_type_name": null
+      },
+      {
+        "base_id": 2,
+        "related_id": 3,
+        "geometry_type_name": null
+      }
+    ]
+  },
+  "table:nga_icon_default_Locations": {
+    "sql": "CREATE TABLE \"nga_icon_default_Locations\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL,\n  \"geometry_type_name\" TEXT\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER",
+      "geometry_type_name TEXT"
+    ],
+    "rows": []
+  },
+  "table:nga_icon_default_Observations": {
+    "sql": "CREATE TABLE \"nga_icon_default_Observations\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL,\n  \"geometry_type_name\" TEXT\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER",
+      "geometry_type_name TEXT"
+    ],
+    "rows": [
+      {
+        "base_id": 1,
+        "related_id": 1,
+        "geometry_type_name": null
+      }
+    ]
+  },
+  "table:nga_style": {
+    "sql": "CREATE TABLE \"nga_style\" (\n  \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n  \"name\" TEXT,\n  \"description\" TEXT,\n  \"color\" TEXT,\n  \"opacity\" REAL,\n  \"width\" REAL,\n  \"fill_color\" TEXT,\n  \"fill_opacity\" REAL\n)",
+    "columns": [
+      "id INTEGER",
+      "name TEXT",
+      "description TEXT",
+      "color TEXT",
+      "opacity REAL",
+      "width REAL",
+      "fill_color TEXT",
+      "fill_opacity REAL"
+    ],
+    "rows": []
+  },
+  "table:nga_style_Locations": {
+    "sql": "CREATE TABLE \"nga_style_Locations\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL,\n  \"geometry_type_name\" TEXT\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER",
+      "geometry_type_name TEXT"
+    ],
+    "rows": []
+  },
+  "table:nga_style_Observations": {
+    "sql": "CREATE TABLE \"nga_style_Observations\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL,\n  \"geometry_type_name\" TEXT\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER",
+      "geometry_type_name TEXT"
+    ],
+    "rows": []
+  },
+  "table:nga_style_default_Locations": {
+    "sql": "CREATE TABLE \"nga_style_default_Locations\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL,\n  \"geometry_type_name\" TEXT\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER",
+      "geometry_type_name TEXT"
+    ],
+    "rows": []
+  },
+  "table:nga_style_default_Observations": {
+    "sql": "CREATE TABLE \"nga_style_default_Observations\" (\n  \"base_id\" INTEGER NOT NULL,\n  \"related_id\" INTEGER NOT NULL,\n  \"geometry_type_name\" TEXT\n)",
+    "columns": [
+      "base_id INTEGER",
+      "related_id INTEGER",
+      "geometry_type_name TEXT"
+    ],
+    "rows": []
+  },
+  "table:rtree_Locations_geometry": {
+    "sql": "CREATE VIRTUAL TABLE \"rtree_Locations_geometry\" USING rtree(id, minx, maxx, miny, maxy)",
+    "columns": [
+      "id INT",
+      "minx REAL",
+      "maxx REAL",
+      "miny REAL",
+      "maxy REAL"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "minx": -104.95001220703125,
+        "maxx": -104.94999694824219,
+        "miny": 39.739994049072266,
+        "maxy": 39.7400016784668
+      }
+    ]
+  },
+  "table:rtree_Locations_geometry_node": {
+    "sql": "CREATE TABLE \"rtree_Locations_geometry_node\"(nodeno INTEGER PRIMARY KEY,data)",
+    "columns": [
+      "nodeno INTEGER",
+      "data "
+    ],
+    "rows": [
+      {
+        "nodeno": 1,
+        "data": {
+          "blobSha256": "18a8da8464b5871eebbb5c1764a15eb985a2c18aaa1b24e65faa9d503d6b1fcb",
+          "length": 1228
+        }
+      }
+    ]
+  },
+  "table:rtree_Locations_geometry_parent": {
+    "sql": "CREATE TABLE \"rtree_Locations_geometry_parent\"(nodeno INTEGER PRIMARY KEY,parentnode)",
+    "columns": [
+      "nodeno INTEGER",
+      "parentnode "
+    ],
+    "rows": []
+  },
+  "table:rtree_Locations_geometry_rowid": {
+    "sql": "CREATE TABLE \"rtree_Locations_geometry_rowid\"(rowid INTEGER PRIMARY KEY,nodeno)",
+    "columns": [
+      "rowid INTEGER",
+      "nodeno "
+    ],
+    "rows": [
+      {
+        "rowid": 1,
+        "nodeno": 1
+      }
+    ]
+  },
+  "table:rtree_Observations_geometry": {
+    "sql": "CREATE VIRTUAL TABLE \"rtree_Observations_geometry\" USING rtree(id, minx, maxx, miny, maxy)",
+    "columns": [
+      "id INT",
+      "minx REAL",
+      "maxx REAL",
+      "miny REAL",
+      "maxy REAL"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "minx": -104.99030303955078,
+        "maxx": -104.99028778076172,
+        "miny": 39.73919677734375,
+        "maxy": 39.739200592041016
+      },
+      {
+        "id": 2,
+        "minx": -105,
+        "maxx": -104.89998626708984,
+        "miny": 39.69999694824219,
+        "maxy": 39.80000305175781
+      }
+    ]
+  },
+  "table:rtree_Observations_geometry_node": {
+    "sql": "CREATE TABLE \"rtree_Observations_geometry_node\"(nodeno INTEGER PRIMARY KEY,data)",
+    "columns": [
+      "nodeno INTEGER",
+      "data "
+    ],
+    "rows": [
+      {
+        "nodeno": 1,
+        "data": {
+          "blobSha256": "e0e2dfc9cacb759eaa7770bcd617d12f4329198c5b9aba168af6457c52ec4cc6",
+          "length": 1228
+        }
+      }
+    ]
+  },
+  "table:rtree_Observations_geometry_parent": {
+    "sql": "CREATE TABLE \"rtree_Observations_geometry_parent\"(nodeno INTEGER PRIMARY KEY,parentnode)",
+    "columns": [
+      "nodeno INTEGER",
+      "parentnode "
+    ],
+    "rows": []
+  },
+  "table:rtree_Observations_geometry_rowid": {
+    "sql": "CREATE TABLE \"rtree_Observations_geometry_rowid\"(rowid INTEGER PRIMARY KEY,nodeno)",
+    "columns": [
+      "rowid INTEGER",
+      "nodeno "
+    ],
+    "rows": [
+      {
+        "rowid": 1,
+        "nodeno": 1
+      },
+      {
+        "rowid": 2,
+        "nodeno": 1
+      }
+    ]
+  },
+  "trigger:rtree_Locations_geometry_delete": "CREATE TRIGGER \"rtree_Locations_geometry_delete\" AFTER DELETE ON \"Locations\" WHEN old.geometry NOT NULL BEGIN  DELETE FROM \"rtree_Locations_geometry\" WHERE id = OLD.id; END",
+  "trigger:rtree_Locations_geometry_insert": "CREATE TRIGGER \"rtree_Locations_geometry_insert\" AFTER INSERT ON \"Locations\" WHEN (new.geometry NOT NULL AND NOT ST_IsEmpty(NEW.geometry)) BEGIN   INSERT OR REPLACE INTO \"rtree_Locations_geometry\" VALUES (    NEW.id,    ST_MinX(NEW.geometry), ST_MaxX(NEW.geometry),     ST_MinY(NEW.geometry), ST_MaxY(NEW.geometry)   ); END",
+  "trigger:rtree_Locations_geometry_update1": "CREATE TRIGGER \"rtree_Locations_geometry_update1\" AFTER UPDATE OF geometry ON \"Locations\" WHEN OLD.id = NEW.id AND      (NEW.geometry NOTNULL AND NOT ST_IsEmpty(NEW.geometry)) BEGIN   INSERT OR REPLACE INTO \"rtree_Locations_geometry\" VALUES (    NEW.id,    ST_MinX(NEW.geometry), ST_MaxX(NEW.geometry),     ST_MinY(NEW.geometry), ST_MaxY(NEW.geometry)   ); END",
+  "trigger:rtree_Locations_geometry_update2": "CREATE TRIGGER \"rtree_Locations_geometry_update2\" AFTER UPDATE OF geometry ON \"Locations\" WHEN OLD.id = NEW.id AND        (NEW.geometry ISNULL OR ST_IsEmpty(NEW.geometry)) BEGIN   DELETE FROM \"rtree_Locations_geometry\" WHERE id = OLD.id; END",
+  "trigger:rtree_Locations_geometry_update3": "CREATE TRIGGER \"rtree_Locations_geometry_update3\" AFTER UPDATE OF geometry ON \"Locations\" WHEN OLD.id != NEW.id AND        (NEW.geometry NOTNULL AND NOT ST_IsEmpty(NEW.geometry)) BEGIN   DELETE FROM \"rtree_Locations_geometry\" WHERE id = OLD.id;   INSERT OR REPLACE INTO \"rtree_Locations_geometry\" VALUES (    NEW.id,     ST_MinX(NEW.geometry), ST_MaxX(NEW.geometry),     ST_MinY(NEW.geometry), ST_MaxY(NEW.geometry)  ); END",
+  "trigger:rtree_Locations_geometry_update4": "CREATE TRIGGER \"rtree_Locations_geometry_update4\" AFTER UPDATE ON \"Locations\"  WHEN OLD.id != NEW.id AND        (NEW.geometry ISNULL OR ST_IsEmpty(NEW.geometry)) BEGIN   DELETE FROM \"rtree_Locations_geometry\" WHERE id IN (OLD.id, NEW.id); END",
+  "trigger:rtree_Observations_geometry_delete": "CREATE TRIGGER \"rtree_Observations_geometry_delete\" AFTER DELETE ON \"Observations\" WHEN old.geometry NOT NULL BEGIN  DELETE FROM \"rtree_Observations_geometry\" WHERE id = OLD.id; END",
+  "trigger:rtree_Observations_geometry_insert": "CREATE TRIGGER \"rtree_Observations_geometry_insert\" AFTER INSERT ON \"Observations\" WHEN (new.geometry NOT NULL AND NOT ST_IsEmpty(NEW.geometry)) BEGIN   INSERT OR REPLACE INTO \"rtree_Observations_geometry\" VALUES (    NEW.id,    ST_MinX(NEW.geometry), ST_MaxX(NEW.geometry),     ST_MinY(NEW.geometry), ST_MaxY(NEW.geometry)   ); END",
+  "trigger:rtree_Observations_geometry_update1": "CREATE TRIGGER \"rtree_Observations_geometry_update1\" AFTER UPDATE OF geometry ON \"Observations\" WHEN OLD.id = NEW.id AND      (NEW.geometry NOTNULL AND NOT ST_IsEmpty(NEW.geometry)) BEGIN   INSERT OR REPLACE INTO \"rtree_Observations_geometry\" VALUES (    NEW.id,    ST_MinX(NEW.geometry), ST_MaxX(NEW.geometry),     ST_MinY(NEW.geometry), ST_MaxY(NEW.geometry)   ); END",
+  "trigger:rtree_Observations_geometry_update2": "CREATE TRIGGER \"rtree_Observations_geometry_update2\" AFTER UPDATE OF geometry ON \"Observations\" WHEN OLD.id = NEW.id AND        (NEW.geometry ISNULL OR ST_IsEmpty(NEW.geometry)) BEGIN   DELETE FROM \"rtree_Observations_geometry\" WHERE id = OLD.id; END",
+  "trigger:rtree_Observations_geometry_update3": "CREATE TRIGGER \"rtree_Observations_geometry_update3\" AFTER UPDATE OF geometry ON \"Observations\" WHEN OLD.id != NEW.id AND        (NEW.geometry NOTNULL AND NOT ST_IsEmpty(NEW.geometry)) BEGIN   DELETE FROM \"rtree_Observations_geometry\" WHERE id = OLD.id;   INSERT OR REPLACE INTO \"rtree_Observations_geometry\" VALUES (    NEW.id,     ST_MinX(NEW.geometry), ST_MaxX(NEW.geometry),     ST_MinY(NEW.geometry), ST_MaxY(NEW.geometry)  ); END",
+  "trigger:rtree_Observations_geometry_update4": "CREATE TRIGGER \"rtree_Observations_geometry_update4\" AFTER UPDATE ON \"Observations\"  WHEN OLD.id != NEW.id AND        (NEW.geometry ISNULL OR ST_IsEmpty(NEW.geometry)) BEGIN   DELETE FROM \"rtree_Observations_geometry\" WHERE id IN (OLD.id, NEW.id); END",
+  "view:geometry_columns": "CREATE VIEW geometry_columns AS  SELECT    table_name AS f_table_name,    column_name AS f_geometry_column,    (CASE geometry_type_name       WHEN 'GEOMETRY' THEN 0       WHEN 'POINT' THEN 1       WHEN 'LINESTRING' THEN 2       WHEN 'POLYGON' THEN 3       WHEN 'MULTIPOINT' THEN 4       WHEN 'MULTILINESTRING' THEN 5       WHEN 'MULTIPOLYGON' THEN 6       WHEN 'GEOMETRYCOLLECTION' THEN 7       WHEN 'CIRCULARSTRING' THEN 8       WHEN 'COMPOUNDCURVE' THEN 9       WHEN 'CURVEPOLYGON' THEN 10       WHEN 'MULTICURVE' THEN 11       WHEN 'MULTISURFACE' THEN 12       WHEN 'CURVE' THEN 13       WHEN 'SURFACE' THEN 14       WHEN 'POLYHEDRALSURFACE' THEN 15       WHEN 'TIN' THEN 16       WHEN 'TRIANGLE' THEN 17       ELSE 0 END) AS geometry_type,    2 + (CASE z WHEN 1 THEN 1 WHEN 2 THEN 1 ELSE 0 END) + (CASE m WHEN 1 THEN 1 WHEN 2 THEN 1 ELSE 0 END) AS coord_dimension,    srs_id AS srid  FROM gpkg_geometry_columns",
+  "view:spatial_ref_sys": "CREATE VIEW spatial_ref_sys AS SELECT   srs_id AS srid,   organization AS auth_name,   organization_coordsys_id AS auth_srid,   definition AS srtext FROM gpkg_spatial_ref_sys",
+  "view:st_geometry_columns": "CREATE VIEW st_geometry_columns AS  SELECT    table_name,    column_name,    'ST_' || geometry_type_name AS geometry_type_name,    g.srs_id,    srs_name  FROM gpkg_geometry_columns as g JOIN gpkg_spatial_ref_sys AS s  WHERE g.srs_id = s.srs_id",
+  "view:st_spatial_ref_sys": "CREATE VIEW st_spatial_ref_sys AS SELECT   srs_name,   srs_id,   organization,   organization_coordsys_id,   definition,   description FROM gpkg_spatial_ref_sys"
+}

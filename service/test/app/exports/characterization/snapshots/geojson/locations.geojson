@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"id":"loc1","userId":"user1","eventId":7,"type":"Feature","geometry":{"type":"Point","coordinates":[-104.95,39.74]},"properties":{"timestamp":"2024-02-01T09:50:00.000Z","deviceId":"device1","provider":"gps","altitude":1609.3,"accuracy":12.5,"speed":1.25,"bearing":90,"battery_level":81,"mgrs":"13SED0428498902"}}]}
