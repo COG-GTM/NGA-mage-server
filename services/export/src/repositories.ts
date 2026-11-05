@@ -97,15 +97,24 @@ export async function connectRepositories(config: ExportServiceConfig): Promise<
 }
 
 /**
- * Same transform wiring as `initExportsAppLayer` in the MAGE service.
+ * Same transform wiring as `initExportsAppLayer` in the MAGE service.  A new
+ * transform instance is created for every export, as the service does; the
+ * GeoPackage transform in particular keeps per-export icon state, and reusing
+ * an instance changes the output of subsequent exports.
  */
 export function transformFactory(repos: ExportRepositories, log: Logger): (format: ExportFormat) => ExportTransform | null {
   const { locationRepo, iterateObservations, attachmentStore, deviceRepo, userRepo, iconRepo, iconStore, userIconStore } = repos
-  const transforms: { [format in ExportFormat]: ExportTransform } = {
-    csv: new CsvExportTransform(locationRepo, iterateObservations, attachmentStore, deviceRepo, userRepo),
-    kml: new KmlExportTransform(locationRepo, iterateObservations, iconRepo, iconStore, attachmentStore, userRepo, userIconStore),
-    geojson: new GeoJsonExportTransform(locationRepo, iterateObservations, attachmentStore, deviceRepo, userRepo),
-    geopackage: new GeoPackageExportTransform(locationRepo, iterateObservations, iconStore, attachmentStore, iconRepo, userRepo, userIconStore, log),
+  return (format: ExportFormat): ExportTransform | null => {
+    switch (format) {
+      case 'csv':
+        return new CsvExportTransform(locationRepo, iterateObservations, attachmentStore, deviceRepo, userRepo)
+      case 'kml':
+        return new KmlExportTransform(locationRepo, iterateObservations, iconRepo, iconStore, attachmentStore, userRepo, userIconStore)
+      case 'geojson':
+        return new GeoJsonExportTransform(locationRepo, iterateObservations, attachmentStore, deviceRepo, userRepo)
+      case 'geopackage':
+        return new GeoPackageExportTransform(locationRepo, iterateObservations, iconStore, attachmentStore, iconRepo, userRepo, userIconStore, log)
+    }
+    return null
   }
-  return (format: ExportFormat) => transforms[format] || null
 }
