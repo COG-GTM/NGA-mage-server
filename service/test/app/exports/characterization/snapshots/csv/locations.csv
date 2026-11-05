@@ -1,0 +1,2 @@
+"user","timestamp","latitude","longitude","altitude","provider","mgrs","accuracy","speed","bearing","battery_level","device"
+"alice","2024-02-01T09:50:00.000Z",39.74,-104.95,1609.3,"gps","13SED0428498902",12.5,1.25,90,81,"device-uid-0001"

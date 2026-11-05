@@ -1,0 +1,10 @@
+{
+  "format": "geopackage",
+  "entries": {
+    "CharacterizationEvent.gpkg": {
+      "sha256": "1cc922c506be2275fbdc2d61ee4816d541f1a5ab58719e2b5806b818ad504660",
+      "snapshot": "CharacterizationEvent.gpkg.canonical.json",
+      "canonicalized": true
+    }
+  }
+}
