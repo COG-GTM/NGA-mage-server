@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig",
+  "include": [ "./**/*" ],
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": ".",
+    "outDir": "../lib"
+  }
+}

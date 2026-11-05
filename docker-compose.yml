@@ -67,6 +67,38 @@ services:
       MAGE_CLAMAV_HOST: mage-clamav
       MAGE_CLAMAV_PORT: "3310"
       MAGE_SFTP_KEY_FILE: /run/secrets/mage/sftp_key
+      # Export feature flag. Unset (default): exports run in-process exactly as
+      # before. Set to the internal URL of the mage-export service below to
+      # delegate export generation to it. The token must match the export
+      # service's MAGE_EXPORT_SERVICE_TOKEN.
+      # MAGE_EXPORT_SERVICE_URL: http://mage-export:4243
+      # MAGE_EXPORT_SERVICE_TOKEN: change-me
+
+  # Separately deployable export service (services/export). Reads the same
+  # MongoDB and data directory as mage-server. It has NO published ports: it is
+  # reachable only on mage.net from mage-server, which enforces the export
+  # permission checks before delegating.
+  mage-export:
+    depends_on: [ mage-db ]
+    build:
+      context: ./
+      dockerfile: services/export/Dockerfile
+      tags:
+        - mage-export:local
+    image: mage-export:local
+    volumes:
+      - ./docker/mage/resources:/var/lib/mage
+    expose:
+      - "4243"
+    networks:
+      - mage.net
+    environment:
+      MAGE_MONGO_URL: mongodb://mage-db:27017/magedb
+      MAGE_ATTACHMENT_DIR: /var/lib/mage/attachments
+      MAGE_ICON_DIR: /var/lib/mage/icons
+      MAGE_USER_DIR: /var/lib/mage/users
+      MAGE_EXPORT_SERVICE_PORT: "4243"
+      # MAGE_EXPORT_SERVICE_TOKEN: change-me
 
   # Uncomment the following block to enable the TLS reverse proxy.  You will
   # also need to generate the key and certificate as the README describes.

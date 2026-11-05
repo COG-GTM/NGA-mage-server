@@ -1,0 +1,59 @@
+{
+  "name": "@ngageoint/mage.export.service",
+  "version": "6.7.1",
+  "description": "Separately deployable MAGE observation/location export service. Produces the same CSV, GeoJSON, KML and GeoPackage archives as the in-process export module of @ngageoint/mage.service over an internal HTTP interface.",
+  "main": "lib/index.js",
+  "bin": {
+    "mage.export.service": "lib/index.js"
+  },
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "build": "tsc -b src",
+    "clean": "rimraf ./lib",
+    "start": "node lib/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngageoint/mage-server.git"
+  },
+  "keywords": [
+    "mage",
+    "export",
+    "nga",
+    "geospatial"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@ngageoint/geopackage": "^4.2.10",
+    "@turf/centroid": "7.2.0",
+    "archiver": "^7.0.1",
+    "express": "4.22.3",
+    "geojson": "0.5.0",
+    "json2csv": "5.0.7",
+    "mgrs": "1.0.0",
+    "moment": "2.31.0",
+    "winston": "3.19.0",
+    "wkx": "0.5.0",
+    "xmlbuilder2": "4.0.3"
+  },
+  "peerDependencies": {
+    "@ngageoint/mage.service": "^6.7.0 || ^6.7.1-beta",
+    "mongoose": "^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@ngageoint/mage.service": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/archiver": "^7.0.0",
+    "@types/express": "4.17.21",
+    "@types/geojson": "7946.0.16",
+    "@types/json2csv": "5.0.7",
+    "@types/node": "^24.0.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.9.3"
+  }
+}
