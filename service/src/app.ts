@@ -161,6 +161,7 @@ import { RoleBasedTeamsPermissionService } from './permissions/permissions.teams
 import { SearchTeams } from './app.impl/teams/app.impl.teams'
 import * as exportsImpl from './app.impl/exports/app.impl.exports';
 import { ExportModel, MongooseExportsRepository } from './adapters/exports/adapters.exports.db.mongoose';
+import { RemoteExportEngine } from './app.impl/exports/app.impl.exports.remote';
 import { ExportFormat, ExportsRepository, ExportStore } from './entities/exports/entities.exports';
 import { RoleBasedExportsPermissionService } from './permissions/permissions.exports';
 import { ExportAppLayer, ExportRoutes, MyExportRoutes } from './adapters/exports/adapters.exports.controllers.web';
@@ -954,9 +955,21 @@ async function initExportsAppLayer(
     }
   };
 
+  /*
+  Feature flag: MAGE_EXPORT_SERVICE_URL unset (default) keeps export
+  generation in this process exactly as before; set, exports are delegated to
+  the standalone export service after the permission checks above pass.
+  */
+  const exportEngine: exportsImpl.ExportEngine = environment.exportServiceUrl ?
+    RemoteExportEngine({ url: environment.exportServiceUrl, token: environment.exportServiceToken, log: logger }) :
+    exportsImpl.InProcessExportEngine(exportFactory)
+  logger.info(environment.exportServiceUrl ?
+    `exports delegated to export service at ${environment.exportServiceUrl}` :
+    'exports run in-process (MAGE_EXPORT_SERVICE_URL not set)')
+
   return {
     createExport: exportsImpl.CreateExport(
-      exportFactory,
+      exportEngine,
       repos.exports.exportRepo,
       repos.exports.exportStore,
       exportPermissions,
