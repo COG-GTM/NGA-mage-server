@@ -87,9 +87,10 @@ canonical SQLite dump because `gpkg_contents.last_change` is set at export time.
 
 ```sh
 cd service
-npm run ci:test -- --grep "flag off"      # in-process engine (default path)
-npm run ci:test -- --grep "flag on"       # RemoteExportEngine -> locally started export service
-MAGE_EXPORT_SNAPSHOT_UPDATE=1 npm run ci:test -- --grep "flag off"   # regenerate after a reviewed output change
+npm run test:compile                                               # once, compiles test-lib
+npm run test:run -- --grep "characterization \(in-process"         # flag off: in-process engine (default path)
+npm run test:run -- --grep "characterization \(remote"             # flag on: RemoteExportEngine -> locally started export service
+MAGE_EXPORT_SNAPSHOT_UPDATE=1 npm run test:run -- --grep "characterization \(in-process"   # regenerate after a reviewed output change
 ```
 
 The flag-on suite starts the export service's HTTP server in the test process

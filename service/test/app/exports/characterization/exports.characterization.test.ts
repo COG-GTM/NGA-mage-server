@@ -4,7 +4,7 @@
  * standalone export service can be verified to preserve output.
  *
  * Regenerate snapshots (after a deliberate, reviewed output change) with
- *   MAGE_EXPORT_SNAPSHOT_UPDATE=1 npm run ci:test -- --grep characterization
+ *   MAGE_EXPORT_SNAPSHOT_UPDATE=1 npm run test:run -- --grep "characterization \(in-process"
  */
 import { expect } from 'chai'
 import { CHARACTERIZED_FORMATS, characterize, expectMatchesSnapshot, inProcessRunner, readManifest } from './characterize'
