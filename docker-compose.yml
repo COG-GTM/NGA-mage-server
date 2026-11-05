@@ -72,7 +72,7 @@ services:
       # delegate export generation to it. The token must match the export
       # service's MAGE_EXPORT_SERVICE_TOKEN.
       # MAGE_EXPORT_SERVICE_URL: http://mage-export:4243
-      # MAGE_EXPORT_SERVICE_TOKEN: change-me
+      MAGE_EXPORT_SERVICE_TOKEN: ${MAGE_EXPORT_SERVICE_TOKEN:-change-me-export-token}
 
   # Separately deployable export service (services/export). Reads the same
   # MongoDB and data directory as mage-server. It has NO published ports: it is
@@ -98,7 +98,8 @@ services:
       MAGE_ICON_DIR: /var/lib/mage/icons
       MAGE_USER_DIR: /var/lib/mage/users
       MAGE_EXPORT_SERVICE_PORT: "4243"
-      # MAGE_EXPORT_SERVICE_TOKEN: change-me
+      # Required: the service refuses to start without a shared token.
+      MAGE_EXPORT_SERVICE_TOKEN: ${MAGE_EXPORT_SERVICE_TOKEN:-change-me-export-token}
 
   # Uncomment the following block to enable the TLS reverse proxy.  You will
   # also need to generate the key and certificate as the README describes.

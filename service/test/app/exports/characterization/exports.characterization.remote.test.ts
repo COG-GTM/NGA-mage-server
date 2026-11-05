@@ -79,9 +79,11 @@ describe('export characterization (remote export service, flag on)', function() 
     const engine = RemoteExportEngine({ url, token: 'wrong' })
     const { BufferWriteable } = await import('../../../utils')
     const { fixtureEvent, fixtureExportParams } = await import('./fixture')
+    const content = new BufferWriteable()
     let err: any
-    await engine.export('csv', fixtureEvent(), fixtureExportParams(), new BufferWriteable()).catch(e => err = e)
+    await engine.export('csv', fixtureEvent(), fixtureExportParams(), content).catch(e => err = e)
     expect(err).to.be.instanceOf(Error)
     expect(err.statusCode).to.equal(401)
+    expect(content.destroyed, 'content stream released on failure').to.be.true
   })
 })

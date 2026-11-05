@@ -18,7 +18,7 @@ MAGE service. Only where the archive bytes are generated changes.
 | Variable | Set on | Default | Effect |
 | --- | --- | --- | --- |
 | `MAGE_EXPORT_SERVICE_URL` | mage-server | unset | **Unset: exports run in-process exactly as before (default).** Set to the export service base URL (e.g. `http://mage-export:4243`) to delegate archive generation. |
-| `MAGE_EXPORT_SERVICE_TOKEN` | mage-server and mage-export | unset | Shared secret; mage-server sends it as `x-mage-export-token`, mage-export rejects requests without it (401). |
+| `MAGE_EXPORT_SERVICE_TOKEN` | mage-server and mage-export | unset on mage-server; **required** on mage-export | Shared secret; mage-server sends it as `x-mage-export-token`, mage-export refuses to start without one and rejects requests that do not present it (401). |
 
 In both modes the MAGE service still creates the export record, enforces the
 export permission (`RoleBasedExportsPermissionService.ensureCreateExportPermission`,
@@ -26,7 +26,7 @@ event read access, before anything is delegated), stores the archive in
 `MAGE_EXPORT_DIR`, and serves it from `/api/exports/mine/:id`. The export
 service has no end-user authentication and must only be reachable from the MAGE
 service: the compose service publishes no ports (`expose` only, on `mage.net`),
-and the shared token guards against anything else on that network.
+and the mandatory shared token guards against anything else on that network.
 
 Selection happens once at startup in `initExportsAppLayer` (`service/src/app.ts`):
 `InProcessExportEngine` or `RemoteExportEngine`
@@ -38,12 +38,12 @@ Selection happens once at startup in `initExportsAppLayer` (`service/src/app.ts`
 
 | Variable | Default |
 | --- | --- |
-| `MAGE_MONGO_URL` | `mongodb://127.0.0.1:27017/magedb` |
+| `MAGE_MONGO_URL`, `MAGE_MONGO_USER`, `MAGE_MONGO_PASSWORD`, `MAGE_MONGO_SSL`, `MAGE_MONGO_X509_*`, `MAGE_MONGO_REPLICA_SET`, pool size | same meaning and defaults as mage-server (parsed by the MAGE service's own `environment/env` module) |
 | `MAGE_ATTACHMENT_DIR` | `/var/lib/mage/attachments` |
 | `MAGE_ICON_DIR` | `/var/lib/mage/icons` |
 | `MAGE_USER_DIR` | `/var/lib/mage/users` (user avatar icons for KML/GeoPackage) |
 | `MAGE_EXPORT_SERVICE_PORT` / `MAGE_EXPORT_SERVICE_HOST` | `4243` / `0.0.0.0` |
-| `MAGE_EXPORT_SERVICE_TOKEN` | unset |
+| `MAGE_EXPORT_SERVICE_TOKEN` | **required** |
 | `MAGE_MONGO_CONN_TIMEOUT` / `MAGE_MONGO_CONN_RETRY_DELAY` | `300` / `5` seconds |
 
 It reads observations, events/forms, users, devices, locations and icons through
@@ -68,7 +68,7 @@ GET  /health             -> 200 {"status":"ok"}
 cd service && npm ci && npm run build
 # export service
 cd ../services/export && npm install && npm link ../../service && npm run build
-MAGE_MONGO_URL=mongodb://127.0.0.1:27017/magedb MAGE_ATTACHMENT_DIR=... MAGE_ICON_DIR=... MAGE_USER_DIR=... npm start
+MAGE_EXPORT_SERVICE_TOKEN=<secret> MAGE_MONGO_URL=mongodb://127.0.0.1:27017/magedb MAGE_ATTACHMENT_DIR=... MAGE_ICON_DIR=... MAGE_USER_DIR=... npm start
 
 # containers (from the repository root)
 docker compose build mage-export

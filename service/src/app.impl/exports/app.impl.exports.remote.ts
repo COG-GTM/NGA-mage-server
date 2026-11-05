@@ -68,6 +68,19 @@ export function RemoteExportEngine(opts: RemoteExportEngineOptions): ExportEngin
       const target = new URL(EXPORTS_PATH.replace(/^\//, ''), base.href.endsWith('/') ? base.href : base.href + '/')
       const client = target.protocol === 'https:' ? https : http
       return new Promise<ExportSummary>((resolve, reject) => {
+        /*
+        The export store opened the content stream before this request; on any
+        failure destroy it so the descriptor is released and CreateExport can
+        delete the file.
+        */
+        let settled = false
+        const fail = (err: Error): void => {
+          if (settled) return
+          settled = true
+          content.on('error', () => { /* tearing down */ })
+          content.destroy?.(err)
+          reject(err)
+        }
         const headers: http.OutgoingHttpHeaders = {
           'content-type': 'application/json',
           'content-length': Buffer.byteLength(body)
@@ -80,7 +93,7 @@ export function RemoteExportEngine(opts: RemoteExportEngineOptions): ExportEngin
             let text = ''
             res.setEncoding('utf-8')
             res.on('data', chunk => text += chunk)
-            res.on('end', () => reject(new RemoteExportError(res.statusCode, `export service responded ${res.statusCode}: ${text}`)))
+            res.on('end', () => fail(new RemoteExportError(res.statusCode, `export service responded ${res.statusCode}: ${text}`)))
             return
           }
           const summaryHeader = res.headers[EXPORT_SUMMARY_HEADER]
@@ -90,19 +103,20 @@ export function RemoteExportEngine(opts: RemoteExportEngineOptions): ExportEngin
           }
           catch (err) {
             res.resume()
-            reject(new RemoteExportError(res.statusCode, `export service response missing ${EXPORT_SUMMARY_HEADER} header`))
+            fail(new RemoteExportError(res.statusCode, `export service response missing ${EXPORT_SUMMARY_HEADER} header`))
             return
           }
           const streamClosed = once(content, 'close')
-          res.on('error', reject)
-          res.on('aborted', () => reject(new RemoteExportError(res.statusCode, 'export service response aborted')))
+          res.on('error', fail)
+          res.on('aborted', () => fail(new RemoteExportError(res.statusCode, 'export service response aborted')))
+          content.on('error', fail)
           res.pipe(content)
-          streamClosed.then(() => resolve(summary), reject)
+          streamClosed.then(() => { settled = true; resolve(summary) }, fail)
         })
         req.on('timeout', () => req.destroy(new RemoteExportError(undefined, `export service did not respond within ${timeout}ms`)))
         req.on('error', err => {
           log.error('export service request failed', err)
-          reject(err)
+          fail(err)
         })
         req.end(body)
       })

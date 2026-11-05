@@ -62,7 +62,7 @@ export interface ExportEngine {
   export(format: ExportFormat, event: MageEvent, params: ExportParams, content: ExportContentStream): Promise<ExportSummary>
 }
 
-export type ExportContentStream = NodeJS.WritableStream & NodeJS.EventEmitter
+export type ExportContentStream = NodeJS.WritableStream & NodeJS.EventEmitter & { destroy?: (error?: Error) => void }
 
 /**
  * The in-process engine runs the export transforms in the service process

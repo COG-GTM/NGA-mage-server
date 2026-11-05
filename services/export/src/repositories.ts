@@ -6,6 +6,7 @@
  * in-process export path.
  */
 import path from 'path'
+import type { ConnectOptions } from 'mongoose'
 import { EventEmitter } from 'events'
 import { waitForDefaultMongooseConnection } from '@ngageoint/mage.service/lib/adapters/adapters.db.mongoose'
 import { MongooseMageEventRepository } from '@ngageoint/mage.service/lib/adapters/events/adapters.events.db.mongoose'
@@ -47,6 +48,8 @@ export interface ExportServiceConfig {
   mongoUrl: string
   mongoConnectTimeout: number
   mongoConnectRetryDelay: number
+  /** same connect options (auth, x509/TLS, pool, replica set) the MAGE service derives from its MAGE_MONGO_* environment */
+  mongoOptions: ConnectOptions
   attachmentBaseDirectory: string
   iconBaseDirectory: string
   userBaseDirectory: string
@@ -66,7 +69,7 @@ export interface ExportRepositories {
 
 export async function connectRepositories(config: ExportServiceConfig): Promise<ExportRepositories> {
   const mongoose = serviceMongoose()
-  await waitForDefaultMongooseConnection(mongoose, config.mongoUrl, config.mongoConnectTimeout, config.mongoConnectRetryDelay, {})
+  await waitForDefaultMongooseConnection(mongoose, config.mongoUrl, config.mongoConnectTimeout, config.mongoConnectRetryDelay, config.mongoOptions)
   const conn = mongoose.connection
   // the legacy models register on the default mongoose connection
   // eslint-disable-next-line @typescript-eslint/no-var-requires

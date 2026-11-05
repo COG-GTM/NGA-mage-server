@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 /**
- * MAGE export service entry point.  Configuration is environment only:
+ * MAGE export service entry point.  Configuration is environment only, and
+ * the MongoDB and data directory variables are parsed by the MAGE service's
+ * own environment module so authentication (MAGE_MONGO_USER/PASSWORD or
+ * X.509 via MAGE_MONGO_X509_*), TLS, pool and replica set settings behave
+ * exactly as they do for mage-server:
  *
- *   MAGE_MONGO_URL                MongoDB connection string (default mongodb://127.0.0.1:27017/magedb)
- *   MAGE_MONGO_CONN_TIMEOUT       seconds to keep retrying the initial connection (default 300)
- *   MAGE_MONGO_CONN_RETRY_DELAY   seconds between connection attempts (default 5)
+ *   MAGE_MONGO_URL (+ MAGE_MONGO_USER, MAGE_MONGO_PASSWORD, MAGE_MONGO_SSL, MAGE_MONGO_X509_*, MAGE_MONGO_REPLICA_SET, ...)
+ *   MAGE_MONGO_CONN_TIMEOUT / MAGE_MONGO_CONN_RETRY_DELAY   seconds (default 300 / 5)
  *   MAGE_ATTACHMENT_DIR           attachment store base directory (default /var/lib/mage/attachments)
  *   MAGE_ICON_DIR                 observation icon store base directory (default /var/lib/mage/icons)
  *   MAGE_USER_DIR                 user icon store base directory (default /var/lib/mage/users)
  *   MAGE_EXPORT_SERVICE_PORT      listen port (default 4243)
  *   MAGE_EXPORT_SERVICE_HOST      listen address (default 0.0.0.0)
- *   MAGE_EXPORT_SERVICE_TOKEN     shared secret the MAGE service sends in x-mage-export-token (optional)
+ *   MAGE_EXPORT_SERVICE_TOKEN     shared secret the MAGE service sends in x-mage-export-token (REQUIRED)
  */
 import { connectRepositories, transformFactory } from './repositories'
 import { createExportServer } from './server'
@@ -25,15 +28,22 @@ const log: Logger = {
 
 async function main(): Promise<void> {
   const env = process.env
+  const token = env.MAGE_EXPORT_SERVICE_TOKEN
+  if (!token) {
+    throw new Error('MAGE_EXPORT_SERVICE_TOKEN is required; the export service performs no end-user authorization and must only accept requests from mage-server')
+  }
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const environment = require('@ngageoint/mage.service/lib/environment/env')
   const repos = await connectRepositories({
-    mongoUrl: env.MAGE_MONGO_URL || 'mongodb://127.0.0.1:27017/magedb',
-    mongoConnectTimeout: parseInt(env.MAGE_MONGO_CONN_TIMEOUT || '300', 10) * 1000,
-    mongoConnectRetryDelay: parseInt(env.MAGE_MONGO_CONN_RETRY_DELAY || '5', 10) * 1000,
-    attachmentBaseDirectory: env.MAGE_ATTACHMENT_DIR || '/var/lib/mage/attachments',
-    iconBaseDirectory: env.MAGE_ICON_DIR || '/var/lib/mage/icons',
-    userBaseDirectory: env.MAGE_USER_DIR || '/var/lib/mage/users',
+    mongoUrl: environment.mongo.uri,
+    mongoConnectTimeout: environment.mongo.connectTimeout,
+    mongoConnectRetryDelay: environment.mongo.connectRetryDelay,
+    mongoOptions: environment.mongo.options,
+    attachmentBaseDirectory: environment.attachmentBaseDirectory,
+    iconBaseDirectory: environment.iconBaseDirectory,
+    userBaseDirectory: environment.userBaseDirectory,
   })
-  const app = createExportServer({ transformForFormat: transformFactory(repos, log), token: env.MAGE_EXPORT_SERVICE_TOKEN, log })
+  const app = createExportServer({ transformForFormat: transformFactory(repos, log), token, log })
   const port = parseInt(env.MAGE_EXPORT_SERVICE_PORT || '4243', 10)
   const host = env.MAGE_EXPORT_SERVICE_HOST || '0.0.0.0'
   app.listen(port, host, () => log.info(`listening on ${host}:${port}`))
