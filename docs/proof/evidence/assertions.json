@@ -1,0 +1,1974 @@
+[
+  {
+    "label": "Flag off startup selects in-process",
+    "result": "passed",
+    "actual": "expected log present"
+  },
+  {
+    "label": "off csv: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef9302451b7f0aacdfd654",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "off csv: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef9302451b7f0aacdfd654",
+      "exportType": "csv",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:14.103Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:14.105Z",
+      "lastUpdated": "2026-11-07T21:07:14.239Z",
+      "relativePath": "6aef9302451b7f0aacdfd654-csv.zip",
+      "size": 811,
+      "id": "6aef9302451b7f0aacdfd654",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef9302451b7f0aacdfd654"
+    }
+  },
+  {
+    "label": "off csv: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 811
+    }
+  },
+  {
+    "label": "off csv: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "observations.csv",
+      "locations.csv"
+    ]
+  },
+  {
+    "label": "off geojson: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef9302451b7f0aacdfd69a",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "off geojson: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef9302451b7f0aacdfd69a",
+      "exportType": "geojson",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:14.580Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:14.580Z",
+      "lastUpdated": "2026-11-07T21:07:14.613Z",
+      "relativePath": "6aef9302451b7f0aacdfd69a-geojson.zip",
+      "size": 748,
+      "id": "6aef9302451b7f0aacdfd69a",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef9302451b7f0aacdfd69a"
+    }
+  },
+  {
+    "label": "off geojson: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 748
+    }
+  },
+  {
+    "label": "off geojson: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "observations.geojson",
+      "locations.geojson"
+    ]
+  },
+  {
+    "label": "off kml: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef9302451b7f0aacdfd6de",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "off kml: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef9302451b7f0aacdfd6de",
+      "exportType": "kml",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:14.878Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:14.878Z",
+      "lastUpdated": "2026-11-07T21:07:14.942Z",
+      "relativePath": "6aef9302451b7f0aacdfd6de-kml.zip",
+      "size": 21901,
+      "id": "6aef9302451b7f0aacdfd6de",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef9302451b7f0aacdfd6de"
+    }
+  },
+  {
+    "label": "off kml: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 21901
+    }
+  },
+  {
+    "label": "off kml: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "mage-export.kml",
+      "icons/1/icon.png",
+      "icons/1/1/icon.png"
+    ]
+  },
+  {
+    "label": "off geopackage: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef9303451b7f0aacdfd722",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "off geopackage: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef9303451b7f0aacdfd722",
+      "exportType": "geopackage",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:15.210Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:15.210Z",
+      "lastUpdated": "2026-11-07T21:07:15.479Z",
+      "relativePath": "6aef9303451b7f0aacdfd722-geopackage.zip",
+      "size": 23366,
+      "id": "6aef9303451b7f0aacdfd722",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef9303451b7f0aacdfd722"
+    }
+  },
+  {
+    "label": "off geopackage: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 23366
+    }
+  },
+  {
+    "label": "off geopackage: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "ExportParityE2E.gpkg"
+    ]
+  },
+  {
+    "label": "Flag off denies authenticated nonparticipant",
+    "result": "passed",
+    "actual": {
+      "status": 403,
+      "data": "permission denied: CREATE EXPORT"
+    }
+  },
+  {
+    "label": "Export service refuses startup without token",
+    "result": "passed",
+    "actual": {
+      "exitCode": 1,
+      "signal": null,
+      "log": "(node:15365) [MONGOOSE] Warning: `errors` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:15365) [MONGOOSE] Warning: Duplicate schema index on {\"userId\":1} found. This is often due to declaring an index using both \"index: true\" and \"schema.index()\". Please remove the duplicate index definition.\n[export-service] failed to start Error: MAGE_EXPORT_SERVICE_TOKEN is required; the export service performs no end-user authorization and must only accept requests from mage-server\n    at /home/ubuntu/repos/NGA-mage-server/services/export/lib/index.js:42:19\n    at Generator.next (<anonymous>)\n    at /home/ubuntu/repos/NGA-mage-server/services/export/lib/index.js:9:71\n    at new Promise (<anonymous>)\n    at __awaiter (/home/ubuntu/repos/NGA-mage-server/services/export/lib/index.js:5:12)\n    at main (/home/ubuntu/repos/NGA-mage-server/services/export/lib/index.js:38:12)\n    at Object.<anonymous> (/home/ubuntu/repos/NGA-mage-server/services/export/lib/index.js:61:1)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n"
+    }
+  },
+  {
+    "label": "Standalone health endpoint",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    }
+  },
+  {
+    "label": "Flag on startup selects delegation",
+    "result": "passed",
+    "actual": "expected log present"
+  },
+  {
+    "label": "on csv: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef930659218e0be08b57aa",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "on csv: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef930659218e0be08b57aa",
+      "exportType": "csv",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:18.718Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:18.724Z",
+      "lastUpdated": "2026-11-07T21:07:18.839Z",
+      "relativePath": "6aef930659218e0be08b57aa-csv.zip",
+      "size": 811,
+      "id": "6aef930659218e0be08b57aa",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef930659218e0be08b57aa"
+    }
+  },
+  {
+    "label": "on csv: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 811
+    }
+  },
+  {
+    "label": "on csv: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "observations.csv",
+      "locations.csv"
+    ]
+  },
+  {
+    "label": "on geojson: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef930759218e0be08b57e8",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "on geojson: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef930759218e0be08b57e8",
+      "exportType": "geojson",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:19.101Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:19.102Z",
+      "lastUpdated": "2026-11-07T21:07:19.164Z",
+      "relativePath": "6aef930759218e0be08b57e8-geojson.zip",
+      "size": 748,
+      "id": "6aef930759218e0be08b57e8",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef930759218e0be08b57e8"
+    }
+  },
+  {
+    "label": "on geojson: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 748
+    }
+  },
+  {
+    "label": "on geojson: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "observations.geojson",
+      "locations.geojson"
+    ]
+  },
+  {
+    "label": "on kml: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef930759218e0be08b5826",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "on kml: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef930759218e0be08b5826",
+      "exportType": "kml",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:19.421Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:19.421Z",
+      "lastUpdated": "2026-11-07T21:07:19.489Z",
+      "relativePath": "6aef930759218e0be08b5826-kml.zip",
+      "size": 21901,
+      "id": "6aef930759218e0be08b5826",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef930759218e0be08b5826"
+    }
+  },
+  {
+    "label": "on kml: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 21901
+    }
+  },
+  {
+    "label": "on kml: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "mage-export.kml",
+      "icons/1/icon.png",
+      "icons/1/1/icon.png"
+    ]
+  },
+  {
+    "label": "on geopackage: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef930759218e0be08b5864",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "on geopackage: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef930759218e0be08b5864",
+      "exportType": "geopackage",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:19.703Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:19.703Z",
+      "lastUpdated": "2026-11-07T21:07:20.101Z",
+      "relativePath": "6aef930759218e0be08b5864-geopackage.zip",
+      "size": 23371,
+      "id": "6aef930759218e0be08b5864",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef930759218e0be08b5864"
+    }
+  },
+  {
+    "label": "on geopackage: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 23371
+    }
+  },
+  {
+    "label": "on geopackage: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "ExportParityE2E.gpkg"
+    ]
+  },
+  {
+    "label": "csv: identical archive entry names and bytes",
+    "result": "passed",
+    "actual": {
+      "off": [
+        {
+          "name": "locations.csv",
+          "comparisonSha256": "7421abbddef0a31da70082f0e41061510830624fe05b99f424cf52dd47549bb3"
+        },
+        {
+          "name": "observations.csv",
+          "comparisonSha256": "465dc980a5386967ff4860fe99ece5d1a8c650c7456e790f0bf8ee5a4cf94b69"
+        }
+      ],
+      "on": [
+        {
+          "name": "locations.csv",
+          "comparisonSha256": "7421abbddef0a31da70082f0e41061510830624fe05b99f424cf52dd47549bb3"
+        },
+        {
+          "name": "observations.csv",
+          "comparisonSha256": "465dc980a5386967ff4860fe99ece5d1a8c650c7456e790f0bf8ee5a4cf94b69"
+        }
+      ]
+    }
+  },
+  {
+    "label": "csv: identical export summaries",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "geojson: identical archive entry names and bytes",
+    "result": "passed",
+    "actual": {
+      "off": [
+        {
+          "name": "locations.geojson",
+          "comparisonSha256": "7c67d4bbef70004344463f01d19b9c2cb8363fc173197132d37dff4b6097021c"
+        },
+        {
+          "name": "observations.geojson",
+          "comparisonSha256": "8371427cadad5042a896b642684e7df5359bf604132757199ef12cdff75183ab"
+        }
+      ],
+      "on": [
+        {
+          "name": "locations.geojson",
+          "comparisonSha256": "7c67d4bbef70004344463f01d19b9c2cb8363fc173197132d37dff4b6097021c"
+        },
+        {
+          "name": "observations.geojson",
+          "comparisonSha256": "8371427cadad5042a896b642684e7df5359bf604132757199ef12cdff75183ab"
+        }
+      ]
+    }
+  },
+  {
+    "label": "geojson: identical export summaries",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "kml: identical archive entry names and bytes",
+    "result": "passed",
+    "actual": {
+      "off": [
+        {
+          "name": "icons/1/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "icons/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "mage-export.kml",
+          "comparisonSha256": "15d1502fad3c153526706b69bd66613b5c3b6f78df6840879f672ddc254aa82c"
+        }
+      ],
+      "on": [
+        {
+          "name": "icons/1/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "icons/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "mage-export.kml",
+          "comparisonSha256": "15d1502fad3c153526706b69bd66613b5c3b6f78df6840879f672ddc254aa82c"
+        }
+      ]
+    }
+  },
+  {
+    "label": "kml: identical export summaries",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "geopackage: identical archive entry names and canonical schema/rows",
+    "result": "passed",
+    "actual": {
+      "off": [
+        {
+          "name": "ExportParityE2E.gpkg",
+          "comparisonSha256": "d32ab2bb0074a1e498381874aeee7d791735f9f940f4e0d5d571ee211a99d301"
+        }
+      ],
+      "on": [
+        {
+          "name": "ExportParityE2E.gpkg",
+          "comparisonSha256": "d32ab2bb0074a1e498381874aeee7d791735f9f940f4e0d5d571ee211a99d301"
+        }
+      ]
+    }
+  },
+  {
+    "label": "geopackage: identical export summaries",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "Standalone service handled all four requests",
+    "result": "passed",
+    "actual": [
+      "[export-service] exported csv for event 1 { observations: 1, locations: 1 }",
+      "[export-service] exported geojson for event 1 { observations: 1, locations: 1 }",
+      "[export-service] exported kml for event 1 { observations: 1, locations: 1 }",
+      "[export-service] exported geopackage for event 1 { observations: 1, locations: 1 }"
+    ]
+  },
+  {
+    "label": "Flag on preserves nonparticipant denial",
+    "result": "passed",
+    "actual": {
+      "status": 403,
+      "data": "permission denied: CREATE EXPORT"
+    }
+  },
+  {
+    "label": "Denied request creates no export or delegation",
+    "result": "passed",
+    "actual": {
+      "exports": []
+    }
+  },
+  {
+    "label": "Direct service missing token rejected",
+    "result": "passed",
+    "actual": {
+      "status": 401,
+      "body": {
+        "error": "unauthorized"
+      }
+    }
+  },
+  {
+    "label": "Direct service wrong token rejected",
+    "result": "passed",
+    "actual": {
+      "status": 401,
+      "body": {
+        "error": "unauthorized"
+      }
+    }
+  },
+  {
+    "label": "Malformed event with valid token is HTTP 400",
+    "result": "passed",
+    "actual": {
+      "status": 400,
+      "body": {
+        "error": "invalid event: Cannot read properties of undefined (reading 'map')"
+      }
+    }
+  },
+  {
+    "label": "Malformed event does not crash export service",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "body": {
+        "status": "ok"
+      },
+      "pid": 15373
+    }
+  },
+  {
+    "label": "Outage creation still returns export record",
+    "result": "passed",
+    "actual": {
+      "exportType": "csv",
+      "status": "Running",
+      "expirationDate": "2026-11-10T21:07:25.544Z",
+      "_id": "6aef930d59218e0be08b58c7",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:25.544Z",
+      "lastUpdated": "2026-11-07T21:07:25.544Z",
+      "id": "6aef930d59218e0be08b58c7",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "relativePath": "6aef930d59218e0be08b58c7-csv.zip",
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef930d59218e0be08b58c7"
+    }
+  },
+  {
+    "label": "Outage export transitions to Failed without hanging",
+    "result": "passed",
+    "actual": {
+      "elapsedMs": 143,
+      "_id": "6aef930d59218e0be08b58c7",
+      "exportType": "csv",
+      "status": "Failed",
+      "expirationDate": "2026-11-10T21:07:25.544Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:25.544Z",
+      "lastUpdated": "2026-11-07T21:07:25.586Z",
+      "relativePath": "6aef930d59218e0be08b58c7-csv.zip",
+      "id": "6aef930d59218e0be08b58c7",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef930d59218e0be08b58c7"
+    }
+  },
+  {
+    "label": "Failed export leaves no orphan file or open descriptor",
+    "result": "passed",
+    "actual": {
+      "failedPath": "/home/ubuntu/.devin-files/mage-proof/run-01/data/export/6aef930d59218e0be08b58c7-csv.zip",
+      "exists": false,
+      "orphanFds": [],
+      "remainingExports": [
+        "6aef9302451b7f0aacdfd654-csv.zip",
+        "6aef9302451b7f0aacdfd69a-geojson.zip",
+        "6aef9302451b7f0aacdfd6de-kml.zip",
+        "6aef9303451b7f0aacdfd722-geopackage.zip",
+        "6aef930659218e0be08b57aa-csv.zip",
+        "6aef930759218e0be08b57e8-geojson.zip",
+        "6aef930759218e0be08b5826-kml.zip",
+        "6aef930759218e0be08b5864-geopackage.zip"
+      ]
+    }
+  },
+  {
+    "label": "API remains alive after exporter outage",
+    "result": "passed",
+    "actual": {
+      "eventId": 1,
+      "pid": 15445
+    }
+  },
+  {
+    "label": "API remains responsive two seconds after outage",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "failedExportStatus": "Failed"
+    }
+  },
+  {
+    "label": "recovery csv: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef931059218e0be08b5900",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "recovery csv: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef931059218e0be08b5900",
+      "exportType": "csv",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:28.998Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:28.999Z",
+      "lastUpdated": "2026-11-07T21:07:29.072Z",
+      "relativePath": "6aef931059218e0be08b5900-csv.zip",
+      "size": 811,
+      "id": "6aef931059218e0be08b5900",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef931059218e0be08b5900"
+    }
+  },
+  {
+    "label": "recovery csv: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 811
+    }
+  },
+  {
+    "label": "recovery csv: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "observations.csv",
+      "locations.csv"
+    ]
+  },
+  {
+    "label": "recovery geojson: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef931159218e0be08b593e",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "recovery geojson: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef931159218e0be08b593e",
+      "exportType": "geojson",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:29.415Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:29.415Z",
+      "lastUpdated": "2026-11-07T21:07:29.441Z",
+      "relativePath": "6aef931159218e0be08b593e-geojson.zip",
+      "size": 748,
+      "id": "6aef931159218e0be08b593e",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef931159218e0be08b593e"
+    }
+  },
+  {
+    "label": "recovery geojson: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 748
+    }
+  },
+  {
+    "label": "recovery geojson: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "observations.geojson",
+      "locations.geojson"
+    ]
+  },
+  {
+    "label": "recovery kml: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef931159218e0be08b597c",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "recovery kml: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef931159218e0be08b597c",
+      "exportType": "kml",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:29.702Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:29.703Z",
+      "lastUpdated": "2026-11-07T21:07:29.735Z",
+      "relativePath": "6aef931159218e0be08b597c-kml.zip",
+      "size": 21901,
+      "id": "6aef931159218e0be08b597c",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef931159218e0be08b597c"
+    }
+  },
+  {
+    "label": "recovery kml: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 21901
+    }
+  },
+  {
+    "label": "recovery kml: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "mage-export.kml",
+      "icons/1/icon.png",
+      "icons/1/1/icon.png"
+    ]
+  },
+  {
+    "label": "recovery geopackage: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef931259218e0be08b59ba",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "recovery geopackage: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef931259218e0be08b59ba",
+      "exportType": "geopackage",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:30.015Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:30.015Z",
+      "lastUpdated": "2026-11-07T21:07:30.449Z",
+      "relativePath": "6aef931259218e0be08b59ba-geopackage.zip",
+      "size": 23367,
+      "id": "6aef931259218e0be08b59ba",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef931259218e0be08b59ba"
+    }
+  },
+  {
+    "label": "recovery geopackage: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 23367
+    }
+  },
+  {
+    "label": "recovery geopackage: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "ExportParityE2E.gpkg"
+    ]
+  },
+  {
+    "label": "recovery csv: content parity",
+    "result": "passed",
+    "actual": {
+      "expected": [
+        {
+          "name": "locations.csv",
+          "comparisonSha256": "7421abbddef0a31da70082f0e41061510830624fe05b99f424cf52dd47549bb3"
+        },
+        {
+          "name": "observations.csv",
+          "comparisonSha256": "465dc980a5386967ff4860fe99ece5d1a8c650c7456e790f0bf8ee5a4cf94b69"
+        }
+      ],
+      "actual": [
+        {
+          "name": "locations.csv",
+          "comparisonSha256": "7421abbddef0a31da70082f0e41061510830624fe05b99f424cf52dd47549bb3"
+        },
+        {
+          "name": "observations.csv",
+          "comparisonSha256": "465dc980a5386967ff4860fe99ece5d1a8c650c7456e790f0bf8ee5a4cf94b69"
+        }
+      ]
+    }
+  },
+  {
+    "label": "recovery csv: summary parity",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "recovery geojson: content parity",
+    "result": "passed",
+    "actual": {
+      "expected": [
+        {
+          "name": "locations.geojson",
+          "comparisonSha256": "7c67d4bbef70004344463f01d19b9c2cb8363fc173197132d37dff4b6097021c"
+        },
+        {
+          "name": "observations.geojson",
+          "comparisonSha256": "8371427cadad5042a896b642684e7df5359bf604132757199ef12cdff75183ab"
+        }
+      ],
+      "actual": [
+        {
+          "name": "locations.geojson",
+          "comparisonSha256": "7c67d4bbef70004344463f01d19b9c2cb8363fc173197132d37dff4b6097021c"
+        },
+        {
+          "name": "observations.geojson",
+          "comparisonSha256": "8371427cadad5042a896b642684e7df5359bf604132757199ef12cdff75183ab"
+        }
+      ]
+    }
+  },
+  {
+    "label": "recovery geojson: summary parity",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "recovery kml: content parity",
+    "result": "passed",
+    "actual": {
+      "expected": [
+        {
+          "name": "icons/1/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "icons/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "mage-export.kml",
+          "comparisonSha256": "15d1502fad3c153526706b69bd66613b5c3b6f78df6840879f672ddc254aa82c"
+        }
+      ],
+      "actual": [
+        {
+          "name": "icons/1/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "icons/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "mage-export.kml",
+          "comparisonSha256": "15d1502fad3c153526706b69bd66613b5c3b6f78df6840879f672ddc254aa82c"
+        }
+      ]
+    }
+  },
+  {
+    "label": "recovery kml: summary parity",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "recovery geopackage: content parity",
+    "result": "passed",
+    "actual": {
+      "expected": [
+        {
+          "name": "ExportParityE2E.gpkg",
+          "comparisonSha256": "d32ab2bb0074a1e498381874aeee7d791735f9f940f4e0d5d571ee211a99d301"
+        }
+      ],
+      "actual": [
+        {
+          "name": "ExportParityE2E.gpkg",
+          "comparisonSha256": "d32ab2bb0074a1e498381874aeee7d791735f9f940f4e0d5d571ee211a99d301"
+        }
+      ]
+    }
+  },
+  {
+    "label": "recovery geopackage: summary parity",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "Recovery does not silently replay the failed job",
+    "result": "passed",
+    "actual": "failed record retained; new jobs used for recovery"
+  },
+  {
+    "label": "Rollback selects legacy engine",
+    "result": "passed",
+    "actual": "exporter stopped, feature flag unset"
+  },
+  {
+    "label": "rollback csv: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef93185c970028bf3714b3",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "rollback csv: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef93185c970028bf3714b3",
+      "exportType": "csv",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:36.758Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:36.760Z",
+      "lastUpdated": "2026-11-07T21:07:36.844Z",
+      "relativePath": "6aef93185c970028bf3714b3-csv.zip",
+      "size": 811,
+      "id": "6aef93185c970028bf3714b3",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef93185c970028bf3714b3"
+    }
+  },
+  {
+    "label": "rollback csv: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 811
+    }
+  },
+  {
+    "label": "rollback csv: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "observations.csv",
+      "locations.csv"
+    ]
+  },
+  {
+    "label": "rollback geojson: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef93195c970028bf3714f9",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "rollback geojson: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef93195c970028bf3714f9",
+      "exportType": "geojson",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:37.108Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:37.108Z",
+      "lastUpdated": "2026-11-07T21:07:37.151Z",
+      "relativePath": "6aef93195c970028bf3714f9-geojson.zip",
+      "size": 748,
+      "id": "6aef93195c970028bf3714f9",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef93195c970028bf3714f9"
+    }
+  },
+  {
+    "label": "rollback geojson: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 748
+    }
+  },
+  {
+    "label": "rollback geojson: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "observations.geojson",
+      "locations.geojson"
+    ]
+  },
+  {
+    "label": "rollback kml: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef93195c970028bf37153d",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "rollback kml: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef93195c970028bf37153d",
+      "exportType": "kml",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:37.412Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:37.412Z",
+      "lastUpdated": "2026-11-07T21:07:37.480Z",
+      "relativePath": "6aef93195c970028bf37153d-kml.zip",
+      "size": 21901,
+      "id": "6aef93195c970028bf37153d",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef93195c970028bf37153d"
+    }
+  },
+  {
+    "label": "rollback kml: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 21901
+    }
+  },
+  {
+    "label": "rollback kml: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "mage-export.kml",
+      "icons/1/icon.png",
+      "icons/1/1/icon.png"
+    ]
+  },
+  {
+    "label": "rollback geopackage: creation returns record",
+    "result": "passed",
+    "actual": {
+      "id": "6aef93195c970028bf371581",
+      "status": "Running"
+    }
+  },
+  {
+    "label": "rollback geopackage: Completed, one observation and one location",
+    "result": "passed",
+    "actual": {
+      "summary": {
+        "observations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:00:00.000Z",
+          "endTimestamp": "2026-01-15T12:00:00.000Z"
+        },
+        "locations": {
+          "count": 1,
+          "startTimestamp": "2026-01-15T12:01:00.000Z",
+          "endTimestamp": "2026-01-15T12:01:00.000Z"
+        }
+      },
+      "_id": "6aef93195c970028bf371581",
+      "exportType": "geopackage",
+      "status": "Completed",
+      "expirationDate": "2026-11-10T21:07:37.735Z",
+      "processingErrors": [],
+      "createdAt": "2026-11-07T21:07:37.735Z",
+      "lastUpdated": "2026-11-07T21:07:37.968Z",
+      "relativePath": "6aef93195c970028bf371581-geopackage.zip",
+      "size": 23365,
+      "id": "6aef93195c970028bf371581",
+      "userId": "6aef9300f709cbfb0ff78945",
+      "user": {
+        "id": "6aef9300f709cbfb0ff78945",
+        "username": "export-admin",
+        "displayName": "export-admin"
+      },
+      "options": {
+        "filter": {
+          "observations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z",
+            "includeAttachments": true
+          },
+          "locations": {
+            "startDate": "2026-01-15T00:00:00.000Z",
+            "endDate": "2026-01-16T00:00:00.000Z"
+          }
+        },
+        "eventId": 1,
+        "event": {
+          "id": 1,
+          "name": "Export Parity E2E"
+        }
+      },
+      "url": "http://127.0.0.1:4242/api/exports/mine/6aef93195c970028bf371581"
+    }
+  },
+  {
+    "label": "rollback geopackage: ZIP download",
+    "result": "passed",
+    "actual": {
+      "status": 200,
+      "bytes": 23365
+    }
+  },
+  {
+    "label": "rollback geopackage: ZIP has readable entries",
+    "result": "passed",
+    "actual": [
+      "ExportParityE2E.gpkg"
+    ]
+  },
+  {
+    "label": "rollback csv: content parity",
+    "result": "passed",
+    "actual": {
+      "expected": [
+        {
+          "name": "locations.csv",
+          "comparisonSha256": "7421abbddef0a31da70082f0e41061510830624fe05b99f424cf52dd47549bb3"
+        },
+        {
+          "name": "observations.csv",
+          "comparisonSha256": "465dc980a5386967ff4860fe99ece5d1a8c650c7456e790f0bf8ee5a4cf94b69"
+        }
+      ],
+      "actual": [
+        {
+          "name": "locations.csv",
+          "comparisonSha256": "7421abbddef0a31da70082f0e41061510830624fe05b99f424cf52dd47549bb3"
+        },
+        {
+          "name": "observations.csv",
+          "comparisonSha256": "465dc980a5386967ff4860fe99ece5d1a8c650c7456e790f0bf8ee5a4cf94b69"
+        }
+      ]
+    }
+  },
+  {
+    "label": "rollback csv: summary parity",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "rollback geojson: content parity",
+    "result": "passed",
+    "actual": {
+      "expected": [
+        {
+          "name": "locations.geojson",
+          "comparisonSha256": "7c67d4bbef70004344463f01d19b9c2cb8363fc173197132d37dff4b6097021c"
+        },
+        {
+          "name": "observations.geojson",
+          "comparisonSha256": "8371427cadad5042a896b642684e7df5359bf604132757199ef12cdff75183ab"
+        }
+      ],
+      "actual": [
+        {
+          "name": "locations.geojson",
+          "comparisonSha256": "7c67d4bbef70004344463f01d19b9c2cb8363fc173197132d37dff4b6097021c"
+        },
+        {
+          "name": "observations.geojson",
+          "comparisonSha256": "8371427cadad5042a896b642684e7df5359bf604132757199ef12cdff75183ab"
+        }
+      ]
+    }
+  },
+  {
+    "label": "rollback geojson: summary parity",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "rollback kml: content parity",
+    "result": "passed",
+    "actual": {
+      "expected": [
+        {
+          "name": "icons/1/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "icons/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "mage-export.kml",
+          "comparisonSha256": "15d1502fad3c153526706b69bd66613b5c3b6f78df6840879f672ddc254aa82c"
+        }
+      ],
+      "actual": [
+        {
+          "name": "icons/1/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "icons/1/icon.png",
+          "comparisonSha256": "e7ee0fee27aa6a9aabb9b72b7fd4d2577a908394dd5d1b067968d2932812cbb0"
+        },
+        {
+          "name": "mage-export.kml",
+          "comparisonSha256": "15d1502fad3c153526706b69bd66613b5c3b6f78df6840879f672ddc254aa82c"
+        }
+      ]
+    }
+  },
+  {
+    "label": "rollback kml: summary parity",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "rollback geopackage: content parity",
+    "result": "passed",
+    "actual": {
+      "expected": [
+        {
+          "name": "ExportParityE2E.gpkg",
+          "comparisonSha256": "d32ab2bb0074a1e498381874aeee7d791735f9f940f4e0d5d571ee211a99d301"
+        }
+      ],
+      "actual": [
+        {
+          "name": "ExportParityE2E.gpkg",
+          "comparisonSha256": "d32ab2bb0074a1e498381874aeee7d791735f9f940f4e0d5d571ee211a99d301"
+        }
+      ]
+    }
+  },
+  {
+    "label": "rollback geopackage: summary parity",
+    "result": "passed",
+    "actual": {
+      "observations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:00:00.000Z",
+        "endTimestamp": "2026-01-15T12:00:00.000Z"
+      },
+      "locations": {
+        "count": 1,
+        "startTimestamp": "2026-01-15T12:01:00.000Z",
+        "endTimestamp": "2026-01-15T12:01:00.000Z"
+      }
+    }
+  },
+  {
+    "label": "Static retirement importer gate",
+    "result": "passed",
+    "actual": {
+      "exitCode": 0
+    }
+  }
+]

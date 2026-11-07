@@ -1,0 +1,10 @@
+== importers of service/src/app.impl/exports (excluding the module itself)
+service/src/app.ts
+== importers outside the allow list (^service/src/app\.ts$|^service/src/app\.impl/exports/)
+<none>
+== tests exercising the module (informational)
+service/test/app/exports/app.exports.test.ts
+service/test/app/exports/characterization/characterize.ts
+service/test/app/exports/characterization/exports.characterization.remote.test.ts
+service/test/app/exports/characterization/fixture.ts
+OK: only the feature-flag wiring in service/src/app.ts imports the in-process export module

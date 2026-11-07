@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "scope": "isolated local public-code demonstration; NOT federal contract or production performance",
+  "window": {
+    "start_utc": "2026-11-07T21:07:06.873Z",
+    "end_utc": "2026-11-07T21:07:38.279Z",
+    "duration_seconds": 31.405955215,
+    "clock": "UTC timestamps; monotonic durations for window/recovery"
+  },
+  "provenance": {
+    "revision": "289b0aa6d947db4c4e4fc4c0c7b4b5aa11af169b",
+    "runtime_revision": "a17c6feaeb709df03e75d1847f44a618995dcfc3",
+    "worktree_dirty": false,
+    "image": "mage-export-proof:a17c6fe",
+    "image_id": "sha256:33695febd96e7d168c9158aefd21ce11998cdfaf8c7e9feac840d7017fb469b9",
+    "node": "v24.19.0"
+  },
+  "metrics": {
+    "deployment_frequency": {
+      "value": 3,
+      "unit": "verified local release transitions per observation window",
+      "denominator_seconds": 31.405955215,
+      "samples": [
+        {
+          "type": "deployment_verified",
+          "timestamp": "2026-11-07T21:07:15.729Z",
+          "elapsed_ms": 8958.816829,
+          "mode": "in-process",
+          "revision": "a17c6feaeb709df03e75d1847f44a618995dcfc3",
+          "change_committed_at": "2026-11-05T17:55:19+00:00",
+          "image_id": null,
+          "evidence": "off/",
+          "acceptance": "four completed, downloaded exports with expected fixture counts"
+        },
+        {
+          "type": "deployment_verified",
+          "timestamp": "2026-11-07T21:07:20.212Z",
+          "elapsed_ms": 13441.507002,
+          "mode": "delegated",
+          "revision": "a17c6feaeb709df03e75d1847f44a618995dcfc3",
+          "change_committed_at": "2026-11-05T17:55:19+00:00",
+          "image_id": "sha256:33695febd96e7d168c9158aefd21ce11998cdfaf8c7e9feac840d7017fb469b9",
+          "evidence": "on/",
+          "acceptance": "four completed, downloaded exports with expected fixture counts"
+        },
+        {
+          "type": "deployment_verified",
+          "timestamp": "2026-11-07T21:07:38.160Z",
+          "elapsed_ms": 31389.428869,
+          "mode": "rollback",
+          "revision": "a17c6feaeb709df03e75d1847f44a618995dcfc3",
+          "change_committed_at": "2026-11-05T17:55:19+00:00",
+          "image_id": null,
+          "evidence": "rollback/",
+          "acceptance": "four completed, downloaded exports with expected fixture counts"
+        }
+      ],
+      "definition": "A running release transition counts only after four authenticated exports complete and download. Baseline, cutover and rollback count; bootstrap/health-only starts, commits, PRs and same-revision incident restarts do not. No per-day extrapolation."
+    },
+    "lead_time_for_changes": {
+      "value": 184316.729,
+      "unit": "seconds",
+      "denominator_changes": 1,
+      "samples": [
+        {
+          "revision": "a17c6feaeb709df03e75d1847f44a618995dcfc3",
+          "committed_at": "2026-11-05T17:55:19+00:00",
+          "verified_at": "2026-11-07T21:07:15.729Z",
+          "seconds": 184316.729
+        }
+      ],
+      "definition": "Mean Git committer timestamp to first verified LOCAL deployment in this window, once per unique runtime source revision. Includes idle time; not coding time, merge-to-production time or labor saved."
+    },
+    "demo_mttr": {
+      "value": 4.8969046689999995,
+      "unit": "seconds",
+      "denominator_recovered_incidents": 1,
+      "unrecovered_incidents": 0,
+      "samples": [
+        {
+          "incident_id": "exporter-stop-1",
+          "detected_at": "2026-11-07T21:07:25.622Z",
+          "recovered_at": "2026-11-07T21:07:30.519Z",
+          "seconds": 4.8969046689999995,
+          "acceptance": "all four authenticated export formats downloaded and matched baseline"
+        }
+      ],
+      "definition": "Mean first observed Failed authenticated export to all four fresh authenticated exports downloaded and matched baseline after an intentional exporter stop/restart. Includes the scripted 2-second isolation check. Not production MTTR."
+    },
+    "labor_hours_saved": {
+      "value": null,
+      "status": "not observed/not measurable",
+      "reason": "No measured manual baseline, comparable task cohort, human touch-time or quality-adjusted rework data"
+    },
+    "mission_efficiency_change": {
+      "value": null,
+      "status": "not observed/not measurable",
+      "reason": "No operational users, mission outcome baseline or comparable mission workload"
+    },
+    "production_deployments": {
+      "value": null,
+      "status": "not observed/not measurable",
+      "reason": "No production telemetry or deployments performed"
+    },
+    "production_mttr": {
+      "value": null,
+      "status": "not observed/not measurable",
+      "reason": "No production incidents observed"
+    },
+    "velocity": {
+      "value": null,
+      "status": "not observed/not measurable",
+      "reason": "No sprint cadence, estimates or historical accepted story points; demonstration backlog is not velocity"
+    }
+  },
+  "validation": {
+    "passed_assertions": 108,
+    "exercise_completed": true,
+    "rollback_observed": true
+  },
+  "limitations": [
+    "One host, one seeded observation and one seeded location; not load, scalability, resilience or HA evidence.",
+    "Exporter shares MongoDB, file stores and core MAGE adapters. Not independently owned data or a fully decoupled estate.",
+    "Failed jobs remain Failed; recovery verifies newly submitted jobs, not automatic replay.",
+    "No continuous government tool access, deployment history or production observability is established by a saved demo report.",
+    "Short-window deployment counts and one intentional fault do not predict steady-state DORA performance."
+  ],
+  "raw_event_sha256": "f03deea34d521039861617ea13171bc17ca50999e27268ff54cd114d3bd8b93a"
+}
