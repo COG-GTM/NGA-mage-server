@@ -1,0 +1,60 @@
+# Captured command output excerpts — 2026-11-07 UTC
+Full command definitions: services/export/proof/README.md.
+Run 01 is the primary KPI observation; run 02 separately verifies the output-directory provenance fix. Metrics are not pooled.
+
+
+## service-tests.log
+
+
+  1351 passing (24s)
+  55 pending
+
+
+## generator-tests.log
+test_arithmetic (test_report.ReportTests.test_arithmetic) ... ok
+test_backwards_time_rejected (test_report.ReportTests.test_backwards_time_rejected) ... ok
+test_commit_after_deployment_rejected (test_report.ReportTests.test_commit_after_deployment_rejected) ... ok
+test_failed_assertion_rejected (test_report.ReportTests.test_failed_assertion_rejected) ... ok
+test_failed_exercise_rejected (test_report.ReportTests.test_failed_exercise_rejected) ... ok
+test_missing_end_rejected (test_report.ReportTests.test_missing_end_rejected) ... ok
+test_recovery_without_detection_rejected (test_report.ReportTests.test_recovery_without_detection_rejected) ... ok
+test_repeated_revision_not_double_counted_as_change (test_report.ReportTests.test_repeated_revision_not_double_counted_as_change) ... ok
+test_unknown_is_null_not_zero (test_report.ReportTests.test_unknown_is_null_not_zero) ... ok
+test_unrecovered_is_not_zero_recovery (test_report.ReportTests.test_unrecovered_is_not_zero_recovery) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.001s
+
+OK
+
+## transform-parity.log
+parity OK: app.impl.exports.csv.ts == services/export/src/transforms/csv.ts
+parity OK: app.impl.exports.geojson.ts == services/export/src/transforms/geojson.ts
+parity OK: app.impl.exports.kml.ts == services/export/src/transforms/kml.ts
+parity OK: app.impl.exports.geopackage.ts == services/export/src/transforms/geopackage.ts
+
+## runtime.log
+FINISHED 108 assertions
+
+## provenance-regression.log
+FINISHED 108 assertions
+
+## container-build.log
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 9.0s done
+#18 exporting manifest sha256:07e830bf104e99e43ce970fbc1c40053bcf82ef9896b5d11591fe32529525251 done
+#18 exporting config sha256:840a864aecf96b471f99935f6ee04e633e418626d770ca2ff7ed26da4ebc684f done
+#18 exporting attestation manifest sha256:8d8b015cea51970aa5bd272ac4b0942f628d96095e844e242754e70abb36c405 0.0s done
+#18 exporting manifest list sha256:33695febd96e7d168c9158aefd21ce11998cdfaf8c7e9feac840d7017fb469b9 done
+#18 naming to docker.io/library/mage-export-proof:a17c6fe done
+#18 unpacking to docker.io/library/mage-export-proof:a17c6fe
+#18 unpacking to docker.io/library/mage-export-proof:a17c6fe 2.7s done
+#18 DONE 11.8s
+
+## Provenance regression
+Clean checkout HEAD: 21d58c495e731e6740ca9bc06030b184cf01c881
+MAGE_E2E_OUT=$PWD/proof-output-regression MAGE_PROOF_IMAGE=mage-export-proof:a17c6fe node services/export/proof/harness.cjs
+Expected/observed: window_started.worktree_dirty=false; git status after run lists ?? proof-output-regression/.
+All 108 assertions passed. Output moved outside checkout afterward; git status clean.
