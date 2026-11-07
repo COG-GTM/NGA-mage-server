@@ -6,20 +6,21 @@ const { spawn, execFileSync } = require('child_process');
 const { once } = require('events');
 const root = path.resolve(__dirname, '../../..');
 const out = path.resolve(process.env.MAGE_E2E_OUT || path.join(root, 'services/export/proof/runs', new Date().toISOString().replace(/[:.]/g, '-')));
-fs.mkdirSync(out, { recursive: true });
-const eventsPath = path.join(out, 'events.ndjson');
-const eventFd = fs.openSync(eventsPath, 'wx');
 const started = process.hrtime.bigint();
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 const revision = git('rev-parse', 'HEAD');
 const runtimeRevision = git('log', '-1', '--format=%H', '--', 'service/src', 'services/export/src');
 const changeCommittedAt = git('show', '-s', '--format=%cI', runtimeRevision);
+const worktreeDirty = !!git('status', '--porcelain');
 const image = process.env.MAGE_PROOF_IMAGE;
 const imageId = image ? execFileSync('docker', ['image', 'inspect', '--format', '{{.Id}}', image], { encoding: 'utf8' }).trim() : null;
+fs.mkdirSync(out, { recursive: true });
+const eventsPath = path.join(out, 'events.ndjson');
+const eventFd = fs.openSync(eventsPath, 'wx');
 function emit(type, detail = {}) {
   fs.writeSync(eventFd, JSON.stringify({ type, timestamp: new Date().toISOString(), elapsed_ms: Number(process.hrtime.bigint() - started) / 1e6, ...detail }) + '\n');
 }
-emit('window_started', { environment: 'isolated-local-demo', revision, runtime_revision: runtimeRevision, change_committed_at: changeCommittedAt, worktree_dirty: !!git('status', '--porcelain'), image, image_id: imageId, node: process.version });
+emit('window_started', { environment: 'isolated-local-demo', revision, runtime_revision: runtimeRevision, change_committed_at: changeCommittedAt, worktree_dirty: worktreeDirty, image, image_id: imageId, node: process.version });
 const { MongoMemoryServer } = require(root + '/service/node_modules/mongodb-memory-server');
 const delay = ms => new Promise(r => setTimeout(r, ms));
 const transcript = fs.createWriteStream(out + '/transcript.txt');
