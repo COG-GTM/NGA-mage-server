@@ -1,0 +1,12 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Wiki generation for COG-GTM/NGA-mage-server finished after 196s. View it at https://devin-gtm.devinenterprise.com/wiki/COG-GTM/NGA-mage-server"
+    }
+  ],
+  "structuredContent": {
+    "result": "Wiki generation for COG-GTM/NGA-mage-server finished after 196s. View it at https://devin-gtm.devinenterprise.com/wiki/COG-GTM/NGA-mage-server"
+  },
+  "isError": false
+}

@@ -1,0 +1,128 @@
+{"type":"window_started","timestamp":"2026-11-07T21:07:06.873Z","elapsed_ms":102.930086,"environment":"isolated-local-demo","revision":"289b0aa6d947db4c4e4fc4c0c7b4b5aa11af169b","runtime_revision":"a17c6feaeb709df03e75d1847f44a618995dcfc3","change_committed_at":"2026-11-05T17:55:19+00:00","worktree_dirty":false,"image":"mage-export-proof:a17c6fe","image_id":"sha256:33695febd96e7d168c9158aefd21ce11998cdfaf8c7e9feac840d7017fb469b9","node":"v24.19.0"}
+{"type":"process_started","timestamp":"2026-11-07T21:07:11.398Z","elapsed_ms":4627.433764,"name":"mage-off","pid":15269,"container":false}
+{"type":"fixture_ready","timestamp":"2026-11-07T21:07:13.231Z","elapsed_ms":6460.684466,"observations":1,"locations":1,"authenticated_users":2}
+{"type":"process_started","timestamp":"2026-11-07T21:07:13.268Z","elapsed_ms":6497.028649,"name":"mage-off","pid":15332,"container":false}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.038Z","elapsed_ms":7267.402885,"label":"Flag off startup selects in-process","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.136Z","elapsed_ms":7365.206841,"label":"off csv: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.470Z","elapsed_ms":7699.753363,"label":"off csv: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.508Z","elapsed_ms":7737.073651,"label":"off csv: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.511Z","elapsed_ms":7740.453027,"label":"off csv: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.595Z","elapsed_ms":7824.337469,"label":"off geojson: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.836Z","elapsed_ms":8065.532372,"label":"off geojson: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.861Z","elapsed_ms":8090.887265,"label":"off geojson: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.862Z","elapsed_ms":8091.340475,"label":"off geojson: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:14.887Z","elapsed_ms":8116.492543,"label":"off kml: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:15.177Z","elapsed_ms":8406.322115,"label":"off kml: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:15.192Z","elapsed_ms":8421.31346,"label":"off kml: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:15.193Z","elapsed_ms":8422.05134,"label":"off kml: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:15.222Z","elapsed_ms":8451.713086,"label":"off geopackage: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:15.707Z","elapsed_ms":8936.219804,"label":"off geopackage: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:15.720Z","elapsed_ms":8949.453707,"label":"off geopackage: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:15.721Z","elapsed_ms":8950.335293,"label":"off geopackage: ZIP has readable entries","result":"passed"}
+{"type":"deployment_verified","timestamp":"2026-11-07T21:07:15.729Z","elapsed_ms":8958.816829,"mode":"in-process","revision":"a17c6feaeb709df03e75d1847f44a618995dcfc3","change_committed_at":"2026-11-05T17:55:19+00:00","image_id":null,"evidence":"off/","acceptance":"four completed, downloaded exports with expected fixture counts"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:15.748Z","elapsed_ms":8977.036353,"label":"Flag off denies authenticated nonparticipant","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:16.525Z","elapsed_ms":9754.961037,"label":"Export service refuses startup without token","result":"passed"}
+{"type":"process_started","timestamp":"2026-11-07T21:07:16.529Z","elapsed_ms":9758.197307,"name":"export-service","pid":15373,"container":true}
+{"type":"assertion","timestamp":"2026-11-07T21:07:17.551Z","elapsed_ms":10780.292528,"label":"Standalone health endpoint","result":"passed"}
+{"type":"process_started","timestamp":"2026-11-07T21:07:17.563Z","elapsed_ms":10792.047913,"name":"mage-on","pid":15445,"container":false}
+{"type":"assertion","timestamp":"2026-11-07T21:07:18.596Z","elapsed_ms":11825.401535,"label":"Flag on startup selects delegation","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:18.768Z","elapsed_ms":11997.994244,"label":"on csv: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.034Z","elapsed_ms":12263.19503,"label":"on csv: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.057Z","elapsed_ms":12286.524868,"label":"on csv: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.058Z","elapsed_ms":12287.013368,"label":"on csv: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.138Z","elapsed_ms":12367.700608,"label":"on geojson: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.374Z","elapsed_ms":12603.43803,"label":"on geojson: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.402Z","elapsed_ms":12631.029016,"label":"on geojson: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.402Z","elapsed_ms":12631.765188,"label":"on geojson: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.434Z","elapsed_ms":12663.0191,"label":"on kml: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.674Z","elapsed_ms":12903.359894,"label":"on kml: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.687Z","elapsed_ms":12916.391729,"label":"on kml: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.687Z","elapsed_ms":12916.942588,"label":"on kml: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:19.714Z","elapsed_ms":12943.641881,"label":"on geopackage: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.184Z","elapsed_ms":13413.691771,"label":"on geopackage: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.204Z","elapsed_ms":13433.013483,"label":"on geopackage: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.204Z","elapsed_ms":13433.437153,"label":"on geopackage: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.210Z","elapsed_ms":13439.809754,"label":"csv: identical archive entry names and bytes","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.210Z","elapsed_ms":13439.958209,"label":"csv: identical export summaries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.211Z","elapsed_ms":13440.1248,"label":"geojson: identical archive entry names and bytes","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.211Z","elapsed_ms":13440.212296,"label":"geojson: identical export summaries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.211Z","elapsed_ms":13440.696561,"label":"kml: identical archive entry names and bytes","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.211Z","elapsed_ms":13440.788538,"label":"kml: identical export summaries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.211Z","elapsed_ms":13440.884621,"label":"geopackage: identical archive entry names and canonical schema/rows","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.212Z","elapsed_ms":13441.071507,"label":"geopackage: identical export summaries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.212Z","elapsed_ms":13441.397616,"label":"Standalone service handled all four requests","result":"passed"}
+{"type":"deployment_verified","timestamp":"2026-11-07T21:07:20.212Z","elapsed_ms":13441.507002,"mode":"delegated","revision":"a17c6feaeb709df03e75d1847f44a618995dcfc3","change_committed_at":"2026-11-05T17:55:19+00:00","image_id":"sha256:33695febd96e7d168c9158aefd21ce11998cdfaf8c7e9feac840d7017fb469b9","evidence":"on/","acceptance":"four completed, downloaded exports with expected fixture counts"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.245Z","elapsed_ms":13474.938077,"label":"Flag on preserves nonparticipant denial","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.255Z","elapsed_ms":13484.509624,"label":"Denied request creates no export or delegation","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.258Z","elapsed_ms":13487.430699,"label":"Direct service missing token rejected","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.260Z","elapsed_ms":13489.83297,"label":"Direct service wrong token rejected","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.279Z","elapsed_ms":13508.031434,"label":"Malformed event with valid token is HTTP 400","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:20.281Z","elapsed_ms":13510.383047,"label":"Malformed event does not crash export service","result":"passed"}
+{"type":"fault_injected","timestamp":"2026-11-07T21:07:20.281Z","elapsed_ms":13510.557807,"incident_id":"exporter-stop-1","fault":"intentional exporter process/container stop"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:25.587Z","elapsed_ms":18816.563538,"label":"Outage creation still returns export record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:25.622Z","elapsed_ms":18851.157267,"label":"Outage export transitions to Failed without hanging","result":"passed"}
+{"type":"incident_detected","timestamp":"2026-11-07T21:07:25.622Z","elapsed_ms":18851.334228,"incident_id":"exporter-stop-1","evidence":"outage.json","criterion":"authenticated export observed Failed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:25.622Z","elapsed_ms":18851.768959,"label":"Failed export leaves no orphan file or open descriptor","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:25.633Z","elapsed_ms":18862.014119,"label":"API remains alive after exporter outage","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:27.690Z","elapsed_ms":20919.915629,"label":"API remains responsive two seconds after outage","result":"passed"}
+{"type":"recovery_started","timestamp":"2026-11-07T21:07:27.691Z","elapsed_ms":20920.169842,"incident_id":"exporter-stop-1","action":"restart same exporter revision; no new release"}
+{"type":"process_started","timestamp":"2026-11-07T21:07:27.696Z","elapsed_ms":20925.893662,"name":"export-recovered","pid":15545,"container":true}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.008Z","elapsed_ms":22237.201401,"label":"recovery csv: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.336Z","elapsed_ms":22565.962645,"label":"recovery csv: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.394Z","elapsed_ms":22623.66193,"label":"recovery csv: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.395Z","elapsed_ms":22624.214186,"label":"recovery csv: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.422Z","elapsed_ms":22651.379209,"label":"recovery geojson: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.666Z","elapsed_ms":22895.769759,"label":"recovery geojson: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.684Z","elapsed_ms":22913.462365,"label":"recovery geojson: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.684Z","elapsed_ms":22913.869491,"label":"recovery geojson: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.709Z","elapsed_ms":22938.4242,"label":"recovery kml: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.947Z","elapsed_ms":23176.00946,"label":"recovery kml: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.963Z","elapsed_ms":23192.243735,"label":"recovery kml: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:29.963Z","elapsed_ms":23192.757127,"label":"recovery kml: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.021Z","elapsed_ms":23250.855947,"label":"recovery geopackage: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.493Z","elapsed_ms":23722.962949,"label":"recovery geopackage: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.505Z","elapsed_ms":23734.577082,"label":"recovery geopackage: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.506Z","elapsed_ms":23735.262542,"label":"recovery geopackage: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.513Z","elapsed_ms":23742.746156,"label":"recovery csv: content parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.513Z","elapsed_ms":23742.954255,"label":"recovery csv: summary parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.514Z","elapsed_ms":23743.34188,"label":"recovery geojson: content parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.514Z","elapsed_ms":23743.713137,"label":"recovery geojson: summary parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.514Z","elapsed_ms":23743.89159,"label":"recovery kml: content parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.515Z","elapsed_ms":23744.149754,"label":"recovery kml: summary parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.518Z","elapsed_ms":23747.786201,"label":"recovery geopackage: content parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.518Z","elapsed_ms":23747.962716,"label":"recovery geopackage: summary parity","result":"passed"}
+{"type":"incident_recovered","timestamp":"2026-11-07T21:07:30.519Z","elapsed_ms":23748.238897,"incident_id":"exporter-stop-1","evidence":"recovery/","criterion":"all four authenticated export formats downloaded and matched baseline"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:30.535Z","elapsed_ms":23764.116312,"label":"Recovery does not silently replay the failed job","result":"passed"}
+{"type":"rollback_started","timestamp":"2026-11-07T21:07:30.535Z","elapsed_ms":23764.314501,"action":"stop exporter, unset URL and token, restart API"}
+{"type":"process_started","timestamp":"2026-11-07T21:07:35.695Z","elapsed_ms":28924.603041,"name":"mage-rollback","pid":15699,"container":false}
+{"type":"assertion","timestamp":"2026-11-07T21:07:36.712Z","elapsed_ms":29941.627617,"label":"Rollback selects legacy engine","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:36.776Z","elapsed_ms":30005.495189,"label":"rollback csv: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.065Z","elapsed_ms":30294.3964,"label":"rollback csv: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.091Z","elapsed_ms":30320.099636,"label":"rollback csv: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.091Z","elapsed_ms":30320.501796,"label":"rollback csv: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.120Z","elapsed_ms":30349.826895,"label":"rollback geojson: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.368Z","elapsed_ms":30597.274659,"label":"rollback geojson: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.391Z","elapsed_ms":30620.741789,"label":"rollback geojson: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.392Z","elapsed_ms":30621.127254,"label":"rollback geojson: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.431Z","elapsed_ms":30660.440979,"label":"rollback kml: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.695Z","elapsed_ms":30924.11544,"label":"rollback kml: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.710Z","elapsed_ms":30939.534291,"label":"rollback kml: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.711Z","elapsed_ms":30940.015066,"label":"rollback kml: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:37.754Z","elapsed_ms":30983.188812,"label":"rollback geopackage: creation returns record","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.137Z","elapsed_ms":31366.407881,"label":"rollback geopackage: Completed, one observation and one location","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.149Z","elapsed_ms":31378.970222,"label":"rollback geopackage: ZIP download","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.150Z","elapsed_ms":31379.331756,"label":"rollback geopackage: ZIP has readable entries","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.155Z","elapsed_ms":31384.955288,"label":"rollback csv: content parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.156Z","elapsed_ms":31385.170357,"label":"rollback csv: summary parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.156Z","elapsed_ms":31385.60249,"label":"rollback geojson: content parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.158Z","elapsed_ms":31387.74802,"label":"rollback geojson: summary parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.159Z","elapsed_ms":31388.002867,"label":"rollback kml: content parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.159Z","elapsed_ms":31388.43186,"label":"rollback kml: summary parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.159Z","elapsed_ms":31388.774138,"label":"rollback geopackage: content parity","result":"passed"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.160Z","elapsed_ms":31389.078904,"label":"rollback geopackage: summary parity","result":"passed"}
+{"type":"deployment_verified","timestamp":"2026-11-07T21:07:38.160Z","elapsed_ms":31389.428869,"mode":"rollback","revision":"a17c6feaeb709df03e75d1847f44a618995dcfc3","change_committed_at":"2026-11-05T17:55:19+00:00","image_id":null,"evidence":"rollback/","acceptance":"four completed, downloaded exports with expected fixture counts"}
+{"type":"rollback_verified","timestamp":"2026-11-07T21:07:38.160Z","elapsed_ms":31389.451519,"evidence":"rollback/","criterion":"all four formats match with exporter stopped; persisted fixture reused"}
+{"type":"assertion","timestamp":"2026-11-07T21:07:38.185Z","elapsed_ms":31414.979674,"label":"Static retirement importer gate","result":"passed"}
+{"type":"retirement_decision","timestamp":"2026-11-07T21:07:38.186Z","elapsed_ms":31415.33962,"decision":"retain legacy path","reason":"no production observation window or operator approval; static gate alone does not authorize deletion"}
+{"type":"exercise_passed","timestamp":"2026-11-07T21:07:38.186Z","elapsed_ms":31415.382712}
+{"type":"window_ended","timestamp":"2026-11-07T21:07:38.279Z","elapsed_ms":31508.885301}
