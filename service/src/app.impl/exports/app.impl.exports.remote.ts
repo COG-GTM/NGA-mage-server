@@ -89,6 +89,8 @@ export function RemoteExportEngine(opts: RemoteExportEngineOptions): ExportEngin
           headers[EXPORT_TOKEN_HEADER] = opts.token
         }
         const req = client.request(target, { method: 'POST', headers, timeout }, res => {
+          res.on('error', fail)
+          res.on('aborted', () => fail(new RemoteExportError(res.statusCode, 'export service response aborted')))
           if (res.statusCode !== 200) {
             let text = ''
             res.setEncoding('utf-8')
@@ -107,8 +109,6 @@ export function RemoteExportEngine(opts: RemoteExportEngineOptions): ExportEngin
             return
           }
           const streamClosed = once(content, 'close')
-          res.on('error', fail)
-          res.on('aborted', () => fail(new RemoteExportError(res.statusCode, 'export service response aborted')))
           content.on('error', fail)
           res.pipe(content)
           streamClosed.then(() => { settled = true; resolve(summary) }, fail)
