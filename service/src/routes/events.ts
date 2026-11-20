@@ -225,16 +225,12 @@ function EventRoutes(app: express.Application, security: { authentication: authe
           return next(err);
         }
 
-        const populateTasks = events!.map((event) => {
-          return new Promise<void>((resolve, reject) => {
-            new api.Form(event).populateUserFields((err: any) => {
-              if (err) return reject(err);
-              resolve();
-            });
+        new Promise<void>((resolve, reject) => {
+          api.Form.populateUserFieldsForEvents(events, (err: any) => {
+            if (err) return reject(err);
+            resolve();
           });
-        });
-
-        Promise.all(populateTasks).then(() => {
+        }).then(() => {
           if (req.query.includePagination) {
             res.json({
               pageSize: pageSize,

@@ -67,9 +67,7 @@ Event.prototype.getEvents = function(options, callback) {
   EventModel.getEvents(options, function(err, events) {
     if (err) return callback(err);
 
-    async.each(events, function(event, done) {
-      new api.Form(event).populateUserFields(done);
-    }, function(err) {
+    api.Form.populateUserFieldsForEvents(events, function(err) {
       callback(err, events);
     });
   });
