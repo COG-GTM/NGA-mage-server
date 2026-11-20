@@ -41,64 +41,96 @@ function getUserFields(form) {
   });
 }
 
-Form.prototype.populateUserFields = function (callback) {
-  var event = this._event;
-  var form = this._form;
-
-  var forms = form ? [form] : (event.forms || []);
-  var formsUserFields = [];
+function getFormsUserFields(event, form) {
+  const forms = form ? [form] : (event.forms || []);
+  const formsUserFields = [];
   forms.forEach(function (form) {
-    var userFields = getUserFields(form);
+    const userFields = getUserFields(form);
     if (userFields.length) {
       formsUserFields.push(userFields);
     }
   });
+  return formsUserFields;
+}
+
+function getEventTeamIds(event) {
+  return (event.teamIds || []).map(x => x._id ? x._id : x);
+}
+
+function setUserFieldChoices(formsUserFields, teams) {
+  var choices = [];
+  var users = {};
+
+  teams.forEach(function (team) {
+    team.userIds.forEach(function (user) {
+      users[user.displayName] = user.displayName;
+    });
+  });
+
+  users = Object.keys(users);
+  users.sort(compareDisplayName);
+  for (var i = 0; i < users.length; i++) {
+    choices.push({
+      id: i + 1,
+      value: i + 1,
+      title: users[i]
+    });
+  }
+
+  // Update the choices for user field
+  formsUserFields.forEach(function (userFields) {
+    userFields.forEach(function (userField) {
+      userField.choices = choices.slice();
+    });
+  });
+}
+
+Form.prototype.populateUserFields = function (callback) {
+  const formsUserFields = getFormsUserFields(this._event, this._form);
 
   // None of the forms in this event contain user fields
   if (!formsUserFields.length) return callback();
 
-  /*
-  TODO: This used to use event.populated('teamIds'), after a check that the
-  populated() function exists on the event document instance, which was
-  confusing.  Apparently that check was there because the pre-init hook on the
-  event schema calls populateUserFields() for every document Mongoose fetches
-  from the database.  However, apparently Mongoose does not add the populated()
-  method until the pre-init hooks finish.  So, this whole situation needs some
-  clean-up.
-  */
-  const teamIds = (event.teamIds || []).map(x => x._id ? x._id : x)
-  Team.getTeams({ teamIds }, function (err, teams) {
+  Team.getTeams({ teamIds: getEventTeamIds(this._event) }, function (err, teams) {
     if (err) {
       console.error(err);
       return callback(err);
     }
 
-    var choices = [];
-    var users = {};
+    setUserFieldChoices(formsUserFields, teams);
+    callback();
+  });
+};
 
-    teams.forEach(function (team) {
-      team.userIds.forEach(function (user) {
-        users[user.displayName] = user.displayName;
-      });
-    });
+/**
+ * Same as populateUserFields() for each event, but loads the teams of all the
+ * events with one query instead of one query per event.
+ */
+Form.populateUserFieldsForEvents = function (events, callback) {
+  const pending = [];
+  const teamIds = new Map();
+  (events || []).forEach(function (event) {
+    const formsUserFields = getFormsUserFields(event);
+    if (!formsUserFields.length) return;
 
-    users = Object.keys(users);
-    users.sort(compareDisplayName);
-    for (var i = 0; i < users.length; i++) {
-      choices.push({
-        id: i + 1,
-        value: i + 1,
-        title: users[i]
-      });
+    const eventTeamIds = getEventTeamIds(event);
+    eventTeamIds.forEach(id => teamIds.set(id.toString(), id));
+    pending.push({ formsUserFields, eventTeamIds });
+  });
+
+  if (!pending.length) return callback();
+
+  Team.getTeams({ teamIds: Array.from(teamIds.values()) }, function (err, teams) {
+    if (err) {
+      console.error(err);
+      return callback(err);
     }
 
-    // Update the choices for user field
-    formsUserFields.forEach(function (userFields) {
-      userFields.forEach(function (userField) {
-        userField.choices = choices.slice();
-      });
+    pending.forEach(function ({ formsUserFields, eventTeamIds }) {
+      // Keep the query's team order so ties in compareDisplayName resolve as in populateUserFields()
+      const ids = new Set(eventTeamIds.map(id => id.toString()));
+      setUserFieldChoices(formsUserFields, teams.filter(team => ids.has(team._id.toString())));
     });
-
     callback();
   });
 };
