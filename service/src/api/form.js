@@ -126,13 +126,10 @@ Form.populateUserFieldsForEvents = function (events, callback) {
       return callback(err);
     }
 
-    const teamsById = new Map(teams.map(team => [team._id.toString(), team]));
     pending.forEach(function ({ formsUserFields, eventTeamIds }) {
-      const eventTeams = [];
-      new Set(eventTeamIds.map(id => id.toString())).forEach(function (id) {
-        if (teamsById.has(id)) eventTeams.push(teamsById.get(id));
-      });
-      setUserFieldChoices(formsUserFields, eventTeams);
+      // Keep the query's team order so ties in compareDisplayName resolve as in populateUserFields()
+      const ids = new Set(eventTeamIds.map(id => id.toString()));
+      setUserFieldChoices(formsUserFields, teams.filter(team => ids.has(team._id.toString())));
     });
     callback();
   });

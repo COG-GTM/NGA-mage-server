@@ -56,7 +56,7 @@ describe("form user fields tests", function() {
   it("should match populateUserFields for each event", function(done) {
     const teamA = new mongoose.Types.ObjectId();
     const teamB = new mongoose.Types.ObjectId();
-    const teams = [team(teamA, ['Carl Jones', 'Ann Smith']), team(teamB, ['Ann Smith', 'Bob Brown'])];
+    const teams = [team(teamA, ['Carl Jones', 'Ann Smith', 'Dee Q Lee']), team(teamB, ['Ann Smith', 'Bob Brown', 'Dee R Lee'])];
     const getTeams = sinon.stub().callsFake(function(options, callback) {
       const ids = options.teamIds.map(String);
       callback(null, teams.filter(t => ids.includes(String(t._id))));
@@ -65,7 +65,7 @@ describe("form user fields tests", function() {
       '../models/team': { getTeams }
     });
 
-    const batched = [{ teamIds: [teamA], forms: [userForm(1)] }, { teamIds: [teamA, teamB], forms: [userForm(2)] }];
+    const batched = [{ teamIds: [teamA], forms: [userForm(1)] }, { teamIds: [teamB, teamA], forms: [userForm(2)] }];
     const single = JSON.parse(JSON.stringify(batched)).map(e => ({ ...e, teamIds: e.teamIds.map(id => new mongoose.Types.ObjectId(id)) }));
 
     Form.populateUserFieldsForEvents(batched, function(err) {
