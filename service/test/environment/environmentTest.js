@@ -17,6 +17,13 @@ describe("environment", function() {
       'MAGE_MONGO_SSL',
       'MAGE_MONGO_USER',
       'MAGE_MONGO_PASSWORD',
+      'MAGE_MONGO_AUTH_MECHANISM',
+      'MAGE_MONGO_X509_KEY',
+      'MAGE_MONGO_X509_CERT',
+      'MAGE_MONGO_X509_CA_CERT',
+      'MAGE_MONGO_X509_KEY_FILE',
+      'MAGE_MONGO_X509_CERT_FILE',
+      'MAGE_MONGO_X509_CA_CERT_FILE',
       'MAGE_MONGO_X509_PEM',
       'MAGE_MONGO_X509_PASSWORD',
       'MAGE_MONGO_X509_CA_PEM',
@@ -84,6 +91,72 @@ describe("environment", function() {
       expect(options).to.have.property('minPoolSize', 87);
       expect(options).to.have.property('maxPoolSize', 87);
       expect(options).to.have.deep.property('auth', { "username": "mage_test", "password": "test_mage" });
+      expect(options).to.have.property('authSource', 'admin');
+      expect(options).to.have.property('authMechanism', 'SCRAM-SHA-256');
+    });
+
+    describe("user/password auth mechanism", function() {
+
+      beforeEach(function() {
+        Object.assign(process.env, {
+          MAGE_MONGO_USER: 'mage_test',
+          MAGE_MONGO_PASSWORD: 'test_mage'
+        });
+      });
+
+      it("defaults to SCRAM-SHA-256", function() {
+
+        const environment = proxyquire('../../lib/environment/env', {});
+
+        expect(environment.mongo.options).to.have.property('authMechanism', 'SCRAM-SHA-256');
+      });
+
+      it("defaults to SCRAM-SHA-256 when the override is blank", function() {
+
+        process.env.MAGE_MONGO_AUTH_MECHANISM = '  ';
+        const environment = proxyquire('../../lib/environment/env', {});
+
+        expect(environment.mongo.options).to.have.property('authMechanism', 'SCRAM-SHA-256');
+      });
+
+      it("uses SCRAM-SHA-1 when MAGE_MONGO_AUTH_MECHANISM overrides the default", function() {
+
+        process.env.MAGE_MONGO_AUTH_MECHANISM = 'SCRAM-SHA-1';
+        const environment = proxyquire('../../lib/environment/env', {});
+
+        expect(environment.mongo.options).to.have.property('authMechanism', 'SCRAM-SHA-1');
+        expect(environment.mongo.options).to.have.deep.property('auth', { "username": "mage_test", "password": "test_mage" });
+      });
+
+      it("accepts the override regardless of case and surrounding whitespace", function() {
+
+        process.env.MAGE_MONGO_AUTH_MECHANISM = ' scram-sha-1 ';
+        const environment = proxyquire('../../lib/environment/env', {});
+
+        expect(environment.mongo.options).to.have.property('authMechanism', 'SCRAM-SHA-1');
+      });
+
+      it("rejects an unsupported MAGE_MONGO_AUTH_MECHANISM value", function() {
+
+        for (const invalid of [ 'SCRAM-SHA-512', 'MONGODB-X509', 'PLAIN', 'sha256' ]) {
+          process.env.MAGE_MONGO_AUTH_MECHANISM = invalid;
+          expect(() => proxyquire('../../lib/environment/env', {}), invalid)
+            .to.throw(Error, `Unsupported MAGE_MONGO_AUTH_MECHANISM value '${invalid}'; supported values are SCRAM-SHA-256, SCRAM-SHA-1`);
+        }
+      });
+
+      it("does not apply to x509 authentication", function() {
+
+        Object.assign(process.env, {
+          MAGE_MONGO_AUTH_MECHANISM: 'SCRAM-SHA-1',
+          MAGE_MONGO_X509_KEY: 'ENV KEY',
+          MAGE_MONGO_X509_CERT: 'ENV CERT',
+          MAGE_MONGO_X509_CA_CERT: 'ENV CA CERT'
+        });
+        const environment = proxyquire('../../lib/environment/env', {});
+
+        expect(environment.mongo.options).to.have.property('authMechanism', 'MONGODB-X509');
+      });
     });
 
     it("prefers x509 authentication when present", function() {

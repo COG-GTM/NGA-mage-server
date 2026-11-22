@@ -61,6 +61,7 @@ const options = [
   new Option('--mongo.pool-size <string>').env('MAGE_MONGO_POOL_SIZE').default(5).argParser(x => parseInt(x)),
   new Option('--mongo.user <string>').env('MAGE_MONGO_USER'),
   new Option('--mongo.password <string>').env('MAGE_MONGO_PASSWORD'),
+  new Option('--mongo.auth-mechanism <string>', 'SCRAM mechanism for user/password authentication to MongoDB: SCRAM-SHA-256 (default) or SCRAM-SHA-1').env('MAGE_MONGO_AUTH_MECHANISM'),
   new Option('--mongo.ssl [string]').env('MAGE_MONGO_SSL').default(false),
   new Option('--mongo.replica-set <string>').env('MAGE_MONGO_REPLICA_SET'),
   new Option('--mongo.x509-key <string>').env('MAGE_MONGO_X509_KEY'),

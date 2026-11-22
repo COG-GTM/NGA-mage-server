@@ -44,6 +44,10 @@ export MAGE_MONGO_MAX_POOL_SIZE=5
 export MAGE_MONGO_USER=
 # the password MAGE uses to authenticate to mongodb
 export MAGE_MONGO_PASSWORD=
+# the SCRAM mechanism MAGE uses for user name/password authentication to mongodb; SCRAM-SHA-256 (default) or
+# SCRAM-SHA-1 for older mongodb deployments whose users only have SCRAM-SHA-1 credentials.  any other value
+# stops the server at startup.  x509 authentication (below) ignores this value.
+export MAGE_MONGO_AUTH_MECHANISM=SCRAM-SHA-256
 # (optional) the mongodb replica set name
 export MAGE_MONGO_REPLICA_SET=
 # the PEM text or path to the file containing the private key for 2-way SSL/x509 certificate authentication from the server to mongodb

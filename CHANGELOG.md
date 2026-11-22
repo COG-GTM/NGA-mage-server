@@ -12,6 +12,7 @@ Mage adheres to [Semantic Versioning](http://semver.org/).
 #### Bug Fixes
 * Re-indexing a single event's observation search (`POST /api/search-index/events/:eventId`) no longer always fails with 403, even for admins; an unknown event now returns 404
 #### Security
+* User name/password connections to MongoDB now authenticate with `SCRAM-SHA-256` instead of `SCRAM-SHA-1`. Set the new `MAGE_MONGO_AUTH_MECHANISM` env var to `SCRAM-SHA-1` for older MongoDB deployments whose users only have SCRAM-SHA-1 credentials; any other value stops the server at startup. x509 authentication is unchanged.
 
 ### Web App
 #### Features
