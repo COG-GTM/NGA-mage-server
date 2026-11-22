@@ -46,6 +46,22 @@ if (process.env.MAGE_MONGO_MAX_POOL_SIZE) {
   maxMongoPoolSize = parseInt(process.env.MAGE_MONGO_POOL_SIZE);
 }
 
+const mongoScramAuthMechanisms = [
+  mongodb.AuthMechanism.MONGODB_SCRAM_SHA256,
+  mongodb.AuthMechanism.MONGODB_SCRAM_SHA1
+];
+
+function resolveMongoScramAuthMechanism(value) {
+  if (value === undefined || value.trim() === '') {
+    return mongodb.AuthMechanism.MONGODB_SCRAM_SHA256;
+  }
+  const mechanism = value.trim().toUpperCase();
+  if (!mongoScramAuthMechanisms.includes(mechanism)) {
+    throw new Error(`Unsupported MAGE_MONGO_AUTH_MECHANISM value '${value}'; supported values are ${mongoScramAuthMechanisms.join(', ')}`);
+  }
+  return mechanism;
+}
+
 const mongoConfig = {
   url: process.env.MAGE_MONGO_URL || 'mongodb://127.0.0.1:27017/magedb',
   minPoolSize: minMongoPoolSize,
@@ -118,8 +134,7 @@ else if (user && password) {
       password: password
     },
     authSource: process.env.MAGE_MONGO_CRED_DB_NAME || 'admin',
-    //TODO we need to move to at least SHA256
-    authMechanism: mongodb.AuthMechanism.MONGODB_SCRAM_SHA1,
+    authMechanism: resolveMongoScramAuthMechanism(process.env.MAGE_MONGO_AUTH_MECHANISM),
   });
 }
 
