@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, inject } from '@angular/core'
+import { Component, Input, OnChanges, inject, output } from '@angular/core'
 import { ArcGISPluginConfig, defaultArcGISPluginConfig } from '../ArcGISPluginConfig'
 import { ArcService } from '../arc.service'
 import { FeatureLayerConfig, FeatureServiceConfig } from '../ArcGISConfig'
@@ -25,7 +25,7 @@ export class ArcLayerComponent implements OnChanges {
 
 
   @Input('config') config: ArcGISPluginConfig
-  @Output() configChanged = new EventEmitter<ArcGISPluginConfig>()
+  readonly configChanged = output<ArcGISPluginConfig>();
 
   layers: ArcLayerSelectable[]
 

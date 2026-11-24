@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject, input, output } from '@angular/core';
 import { ArcGISPluginConfig, defaultArcGISPluginConfig } from '../ArcGISPluginConfig'
 import { FeatureLayerConfig, FeatureServiceConfig } from "../ArcGISConfig"
 import { ArcService, MageEvent } from '../arc.service'
@@ -41,9 +41,9 @@ export class ArcEventComponent implements OnInit, OnChanges, OnDestroy {
     return this._eventSet;
   }
 
-  @Input() configChangedNotifier: Observable<void>;
+  readonly configChangedNotifier = input<Observable<void>>(undefined!);
 
-  @Output() configChanged = new EventEmitter<ArcGISPluginConfig>();
+  readonly configChanged = output<ArcGISPluginConfig>();
 
   private _model: ArcEventsModel = new ArcEventsModel()
 
@@ -71,7 +71,7 @@ export class ArcEventComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     // detect changes in other tabs
-    this.configChangedSubscription = this.configChangedNotifier?.subscribe(() => this.refreshEventLayers());
+    this.configChangedSubscription = this.configChangedNotifier()?.subscribe(() => this.refreshEventLayers());
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, inject, viewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { MatSelectionList, MatListOption, MatListItemTitle, MatListItemLine } from '@angular/material/list';
@@ -94,7 +94,9 @@ export class ArcLayerDialogComponent implements OnDestroy {
 	private readonly isNewService: boolean
 	private layersSaved = false
 
-	@ViewChild('layerList') layerList: MatSelectionList
+	readonly layerList = viewChild.required<MatSelectionList
+/** Inserted by Angular inject() migration for backwards compatibility */
+>('layerList');
 
 	/** Inserted by Angular inject() migration for backwards compatibility */
 	constructor(...args: unknown[]);
@@ -208,7 +210,7 @@ export class ArcLayerDialogComponent implements OnDestroy {
 
 	hasSelectedLayers = false
 	onLayerSelectionChange(): void {
-		this.hasSelectedLayers = this.layerList.selectedOptions.selected.length > 0
+		this.hasSelectedLayers = this.layerList().selectedOptions.selected.length > 0
 	}
 
 	fetchLayers(url: string): void {
@@ -437,7 +439,7 @@ export class ArcLayerDialogComponent implements OnDestroy {
 	}
 
 	onSave(): void {
-		this.featureService.layers = this.layerList.selectedOptions.selected.map(option => {
+		this.featureService.layers = this.layerList().selectedOptions.selected.map(option => {
 			return { layer: `${option.value}` }
 		})
 		this.layersSaved = true

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, inject, viewChild } from '@angular/core';
 import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
 import { AttributeConfig, AttributeConcatenationConfig, AttributeDefaultConfig, AttributeValueConfig, FeatureServiceConfig } from '../ArcGISConfig';
 import { ArcGISPluginConfig, defaultArcGISPluginConfig } from '../ArcGISPluginConfig'
@@ -64,32 +64,19 @@ export class ArcAdminComponent implements OnInit {
     )
   }
 
-  @ViewChild('infoDialog', { static: true })
-  private infoTemplate: TemplateRef<unknown>
-  @ViewChild('editProcessingDialog', { static: true })
-  private editProcessingTemplate: TemplateRef<unknown>
-  @ViewChild('editAttributesDialog', { static: true })
-  private editAttributesTemplate: TemplateRef<unknown>
-  @ViewChild('resetConfigDialog', { static: true })
-  private resetConfigTemplate: TemplateRef<unknown>
-  @ViewChild('deleteFieldDialog', { static: true })
-  private deleteFieldTemplate: TemplateRef<unknown>
-  @ViewChild('addFieldDialog', { static: true })
-  private addFieldTemplate: TemplateRef<unknown>
-  @ViewChild('addFieldValueDialog', { static: true })
-  private addFieldValueTemplate: TemplateRef<unknown>
-  @ViewChild('addFieldAutoDialog', { static: true })
-  private addFieldAutoTemplate: TemplateRef<unknown>
-  @ViewChild('addFieldAutoValueDialog', { static: true })
-  private addFieldAutoValueTemplate: TemplateRef<unknown>
-  @ViewChild('editFieldDialog', { static: true })
-  private editFieldTemplate: TemplateRef<unknown>
-  @ViewChild('editFieldAutoDialog', { static: true })
-  private editFieldAutoTemplate: TemplateRef<unknown>
-  @ViewChild('editBooleanFieldDialog', { static: true })
-  private editBooleanFieldTemplate: TemplateRef<unknown>
-  @ViewChild('editAttributeConfigDialog', { static: true })
-  private editAttributeConfigTemplate: TemplateRef<unknown>
+  private readonly infoTemplate = viewChild.required<TemplateRef<unknown>>('infoDialog');
+  private readonly editProcessingTemplate = viewChild.required<TemplateRef<unknown>>('editProcessingDialog');
+  private readonly editAttributesTemplate = viewChild.required<TemplateRef<unknown>>('editAttributesDialog');
+  private readonly resetConfigTemplate = viewChild.required<TemplateRef<unknown>>('resetConfigDialog');
+  private readonly deleteFieldTemplate = viewChild.required<TemplateRef<unknown>>('deleteFieldDialog');
+  private readonly addFieldTemplate = viewChild.required<TemplateRef<unknown>>('addFieldDialog');
+  private readonly addFieldValueTemplate = viewChild.required<TemplateRef<unknown>>('addFieldValueDialog');
+  private readonly addFieldAutoTemplate = viewChild.required<TemplateRef<unknown>>('addFieldAutoDialog');
+  private readonly addFieldAutoValueTemplate = viewChild.required<TemplateRef<unknown>>('addFieldAutoValueDialog');
+  private readonly editFieldTemplate = viewChild.required<TemplateRef<unknown>>('editFieldDialog');
+  private readonly editFieldAutoTemplate = viewChild.required<TemplateRef<unknown>>('editFieldAutoDialog');
+  private readonly editBooleanFieldTemplate = viewChild.required<TemplateRef<unknown>>('editBooleanFieldDialog');
+  private readonly editAttributeConfigTemplate = viewChild.required<TemplateRef<unknown>>('editAttributeConfigDialog');
 
   attributesForm: FormGroup;
 
@@ -312,7 +299,7 @@ export class ArcAdminComponent implements OnInit {
   }
 
   showResetConfig() {
-    this.dialog.open<unknown, unknown, string>(this.resetConfigTemplate)
+    this.dialog.open<unknown, unknown, string>(this.resetConfigTemplate())
   }
 
   // Reset the entire ArcGIS configuration to the default values and reload the page
@@ -675,7 +662,7 @@ export class ArcAdminComponent implements OnInit {
   showInfo(title: string, message: string) {
     this.infoTitle = title
     this.infoMessage = message
-    this.dialog.open<unknown, unknown, string>(this.infoTemplate)
+    this.dialog.open<unknown, unknown, string>(this.infoTemplate())
   }
 
   showDeleteField(type: string, object: any, name: string, value: string) {
@@ -683,7 +670,7 @@ export class ArcAdminComponent implements OnInit {
     this.editObject = object;
     this.editName = name;
     this.editValue = value;
-    this.dialog.open<unknown, unknown, string>(this.deleteFieldTemplate)
+    this.dialog.open<unknown, unknown, string>(this.deleteFieldTemplate())
   }
 
   deleteField() {
@@ -702,7 +689,7 @@ export class ArcAdminComponent implements OnInit {
     this.editObject = object;
     this.editIsAttributeName = false;
     this.editIsFieldMappingAttribute = false;
-    this.dialog.open<unknown, unknown, string>(this.addFieldTemplate)
+    this.dialog.open<unknown, unknown, string>(this.addFieldTemplate())
   }
 
   addField(name: string) {
@@ -740,7 +727,7 @@ export class ArcAdminComponent implements OnInit {
     this.editObject = object;
     this.editIsAttributeName = false;
     this.editIsFieldMappingAttribute = false;
-    this.dialog.open<unknown, unknown, string>(this.addFieldValueTemplate)
+    this.dialog.open<unknown, unknown, string>(this.addFieldValueTemplate())
   }
 
   addFieldValue(name: string, value: any) {
@@ -771,7 +758,7 @@ export class ArcAdminComponent implements OnInit {
     this.editSelectValue = undefined;
     this.editIsAttributeName = type === 'Attribute';
     this.editIsFieldMappingAttribute = false;
-    this.dialog.open<unknown, unknown, string>(this.addFieldAutoTemplate)
+    this.dialog.open<unknown, unknown, string>(this.addFieldAutoTemplate())
   }
 
   showAddFieldAutoValue(type: string, object: any, options: any[]) {
@@ -782,7 +769,7 @@ export class ArcAdminComponent implements OnInit {
     this.editIsAttributeName = type === 'Field';
     this.editIsFieldMappingAttribute = type === 'Field';
     this.editValueInput = '';
-    this.dialog.open<unknown, unknown, string>(this.addFieldAutoValueTemplate)
+    this.dialog.open<unknown, unknown, string>(this.addFieldAutoValueTemplate())
   }
 
   showEditField(name: string, field: string, object: any, value: any, isAttributeName = false, isFieldMappingAttribute = false) {
@@ -793,7 +780,7 @@ export class ArcAdminComponent implements OnInit {
     this.editIsAttributeName = isAttributeName;
     this.editIsFieldMappingAttribute = isFieldMappingAttribute;
     this.editValueInput = value;
-    this.dialog.open<unknown, unknown, string>(this.editFieldTemplate)
+    this.dialog.open<unknown, unknown, string>(this.editFieldTemplate())
   }
 
   editField(value: any) {
@@ -840,7 +827,7 @@ export class ArcAdminComponent implements OnInit {
     this.editSelectValue = value;
     this.editIsAttributeName = name === 'Attribute';
     this.editIsFieldMappingAttribute = false;
-    this.dialog.open<unknown, unknown, string>(this.editFieldAutoTemplate)
+    this.dialog.open<unknown, unknown, string>(this.editFieldAutoTemplate())
   }
 
   showEditBooleanField(name: string, field: string, object: any, value: any) {
@@ -850,7 +837,7 @@ export class ArcAdminComponent implements OnInit {
     this.editValue = value;
     this.editIsFieldMappingAttribute = false;
     this.editIsAttributeName = false;
-    this.dialog.open<unknown, unknown, string>(this.editBooleanFieldTemplate)
+    this.dialog.open<unknown, unknown, string>(this.editBooleanFieldTemplate())
   }
 
   editBooleanField(value: any) {
@@ -860,7 +847,7 @@ export class ArcAdminComponent implements OnInit {
 
   showEditAttributeConfig(attribute: string) {
     this.editName = attribute
-    this.dialog.open<unknown, unknown, string>(this.editAttributeConfigTemplate)
+    this.dialog.open<unknown, unknown, string>(this.editAttributeConfigTemplate())
   }
 
   editAttributeConfig(concatenation: boolean, mappings: boolean, defaults: boolean, omit: boolean) {
