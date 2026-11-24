@@ -126,7 +126,7 @@ import { CoordinateSystemComponent } from '../preferences/coordinate-system/coor
 import { PasswordResetSuccessDialog } from '../user/password/password-reset-success-dialog';
 import { HomeComponent } from '..//home/home.component';
 import { RouterModule, Routes } from '@angular/router';
-import { UserResolver } from '../ingress/user.resolver';
+import { userResolver } from '../ingress/user.resolver';
 import { HomeGuard } from '../ingress/home-guard.service';
 
 
@@ -138,7 +138,7 @@ const routes: Routes = [{
   component: HomeComponent,
   canActivate: [HomeGuard],
   resolve: {
-    user: UserResolver
+    user: userResolver
   }
 }];
 
