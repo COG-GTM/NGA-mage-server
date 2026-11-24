@@ -7,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
       image works!
     </p>
   `,
-    styles: [],
-    standalone: false
+    styles: []
 })
 export class ImageComponent implements OnInit {
 
