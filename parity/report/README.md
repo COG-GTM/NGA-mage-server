@@ -35,9 +35,9 @@ Baseline (`develop`, :4000) vs upgraded (this branch, :4200). Same specs, both p
 
 | Page | Pixel diff | Size (baseline / upgraded) |
 |---|---|---|
-| [01-sign-in.png](side-by-side/01-sign-in.png) | 1.94% | 1440x900 / 1440x900 |
-| [02-sign-up.png](side-by-side/02-sign-up.png) | 0.00% | 1440x900 / 1440x900 |
-| [03-access-code.png](side-by-side/03-access-code.png) | 1.94% | 1440x900 / 1440x900 |
+| [01-sign-in.png](side-by-side/01-sign-in.png) | 0.00% | 1440x900 / 1440x900 |
+| [02-sign-up.png](side-by-side/02-sign-up.png) | 1.02% | 1440x900 / 1440x900 |
+| [03-access-code.png](side-by-side/03-access-code.png) | 1.27% | 1440x900 / 1440x900 |
 | [10-home.png](side-by-side/10-home.png) | 0.00% | 1440x900 / 1440x900 |
 | [11-profile.png](side-by-side/11-profile.png) | 0.00% | 1440x900 / 1440x900 |
 | [12-about.png](side-by-side/12-about.png) | 0.00% | 1440x900 / 1440x900 |

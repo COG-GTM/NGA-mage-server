@@ -34,10 +34,12 @@ test.describe('admin', () => {
 
   test('plugin pages (SFTP, ArcGIS) load from the plugin bundles', async ({ page }, info) => {
     await page.goto('/#/admin/dashboard');
+    const marker: Record<string, string> = { SFTP: 'SFTP Plugin Configuration', ArcGIS: 'Push observations from Mage' };
     for (const plugin of ['SFTP', 'ArcGIS']) {
       await page.getByText(plugin, { exact: true }).first().click();
       await expect(page).toHaveURL(/#\/admin\/plugins/);
       await page.waitForLoadState('networkidle');
+      await expect(page.getByText(marker[plugin]).first()).toBeVisible();
       const text = await page.locator('body').innerText();
       expect(text.length).toBeGreaterThan(200);
       await shot(page, info, `22-plugin-${plugin.toLowerCase()}`);
