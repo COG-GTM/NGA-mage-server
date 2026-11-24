@@ -5,11 +5,7 @@
     "target": "ES2022",
     "declaration": true,
     "inlineSources": true,
-    "types": [],
-    "lib": [
-      "dom",
-      "ES2022"
-    ]
+    "types": []
   },
   "angularCompilerOptions": {
     "enableResourceInlining": true
