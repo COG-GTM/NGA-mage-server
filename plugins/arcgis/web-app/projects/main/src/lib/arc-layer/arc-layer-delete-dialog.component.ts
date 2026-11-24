@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatButton } from '@angular/material/button';
@@ -11,13 +11,18 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, MatDialogClose, MatIcon]
 })
 export class ArcLayerDeleteDialogComponent {
+	dialogRef = inject<MatDialogRef<ArcLayerDeleteDialogComponent>>(MatDialogRef);
+	data = inject(MAT_DIALOG_DATA);
+
 
 	url: string
 
-	constructor(
-		public dialogRef: MatDialogRef<ArcLayerDeleteDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: string
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const data = this.data;
+
 		this.url = data
 	}
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { MatSelectionList, MatListOption, MatListItemTitle, MatListItemLine } from '@angular/material/list';
@@ -45,6 +45,11 @@ export interface DialogData {
     imports: [MatIconButton, MatIcon, MatDialogTitle, CdkScrollable, MatDialogContent, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatButtonToggleGroup, FormsModule, MatButtonToggle, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatAutocompleteTrigger, MatAutocomplete, MatOption, MatError, MatHint, MatSelect, MatProgressSpinner, MatSelectionList, MatListOption, MatTooltip, MatListItemTitle, MatListItemLine, MatButton]
 })
 export class ArcLayerDialogComponent implements OnDestroy {
+	dialogRef = inject<MatDialogRef<ArcLayerDialogComponent>>(MatDialogRef);
+	data = inject<DialogData>(MAT_DIALOG_DATA);
+	private arcService = inject(ArcService);
+	private recentUrlsService = inject(RecentFeatureServiceUrlsService);
+
 	State = State
 	state: State = State.Validate
 
@@ -91,12 +96,12 @@ export class ArcLayerDialogComponent implements OnDestroy {
 
 	@ViewChild('layerList') layerList: MatSelectionList
 
-	constructor(
-		public dialogRef: MatDialogRef<ArcLayerDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DialogData,
-		private arcService: ArcService,
-		private recentUrlsService: RecentFeatureServiceUrlsService
-	) {
+	/** Inserted by Angular inject() migration for backwards compatibility */
+	constructor(...args: unknown[]);
+
+	constructor() {
+		const data = this.data;
+
 		this.isNewService = data.featureService === undefined
 		if (data.featureService) {
 			this.featureService = data.featureService

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, Output, inject } from '@angular/core'
 import { ArcGISPluginConfig, defaultArcGISPluginConfig } from '../ArcGISPluginConfig'
 import { ArcService } from '../arc.service'
 import { FeatureLayerConfig, FeatureServiceConfig } from '../ArcGISConfig'
@@ -20,6 +20,9 @@ import { MatIconButton, MatButton } from '@angular/material/button';
     imports: [MatCard, MatCardHeader, MatCardTitle, MatHint, MatCardContent, MatIcon, MatList, MatListItem, MatTooltip, MatListItemIcon, MatListItemTitle, MatListItemLine, MatListItemMeta, MatIconButton, MatDivider, MatCardActions, MatButton]
 })
 export class ArcLayerComponent implements OnChanges {
+  private arcService = inject(ArcService);
+  private dialog = inject(MatDialog);
+
 
   @Input('config') config: ArcGISPluginConfig
   @Output() configChanged = new EventEmitter<ArcGISPluginConfig>()
@@ -29,7 +32,10 @@ export class ArcLayerComponent implements OnChanges {
   // service capabilities are fetched lazily and cached by url, since they aren't part of the saved config
   private serviceCapabilities = new Map<string, string | undefined>()
 
-  constructor(private arcService: ArcService, private dialog: MatDialog) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.config = defaultArcGISPluginConfig
     this.layers = new Array<ArcLayerSelectable>()
   }

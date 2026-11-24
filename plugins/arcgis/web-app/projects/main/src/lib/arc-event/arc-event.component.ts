@@ -1,13 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 import { ArcGISPluginConfig, defaultArcGISPluginConfig } from '../ArcGISPluginConfig'
 import { FeatureLayerConfig, FeatureServiceConfig } from "../ArcGISConfig"
 import { ArcService, MageEvent } from '../arc.service'
@@ -34,6 +25,8 @@ import { ArcPushStatusComponent } from '../arc-push-status/arc-push-status.compo
     imports: [MatCard, MatCardHeader, MatCardTitle, MatHint, MatCardContent, MatFormField, MatLabel, MatInput, FormsModule, MatDivider, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatSlideToggle, MatIconButton, MatIcon, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, MatButton, ArcPushStatusComponent]
 })
 export class ArcEventComponent implements OnInit, OnChanges, OnDestroy {
+  private arcService = inject(ArcService);
+
 
   @Input('config') config: ArcGISPluginConfig = defaultArcGISPluginConfig;
   private configSet = false;
@@ -68,7 +61,10 @@ export class ArcEventComponent implements OnInit, OnChanges, OnDestroy {
   isSaving: boolean;
   private savedSnapshot: string = '[]';
 
-  constructor(private arcService: ArcService) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.config = defaultArcGISPluginConfig;
     this._model = new ArcEventsModel();
   }

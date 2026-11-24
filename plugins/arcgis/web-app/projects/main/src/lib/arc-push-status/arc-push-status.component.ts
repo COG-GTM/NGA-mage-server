@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { ArcService, MageEvent, PushedLayerCount, PushedObservation } from '../arc.service';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -19,6 +19,8 @@ import { DatePipe } from '@angular/common';
     imports: [MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatIconButton, MatTooltip, MatIcon, MatProgressSpinner, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DatePipe]
 })
 export class ArcPushStatusComponent implements OnInit {
+  private arcService = inject(ArcService);
+
 
   events: MageEvent[] = [];
   selectedEventId: number | undefined;
@@ -39,7 +41,10 @@ export class ArcPushStatusComponent implements OnInit {
   tooltipX = 0;
   tooltipY = 0;
 
-  constructor(private arcService: ArcService) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   ngOnInit(): void {
     this.arcService.fetchEvents().subscribe(events => {

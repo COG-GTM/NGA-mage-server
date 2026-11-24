@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
 import { AttributeConfig, AttributeConcatenationConfig, AttributeDefaultConfig, AttributeValueConfig, FeatureServiceConfig } from '../ArcGISConfig';
 import { ArcGISPluginConfig, defaultArcGISPluginConfig } from '../ArcGISPluginConfig'
@@ -26,6 +26,10 @@ import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/mat
     imports: [MatIcon, MatButton, MatTabGroup, MatTab, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatHint, MatSlideToggle, FormsModule, MatFormField, MatLabel, MatInput, MatCardActions, ArcLayerComponent, ArcEventComponent, ReactiveFormsModule, MatIconButton, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatDialogClose, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete]
 })
 export class ArcAdminComponent implements OnInit {
+  private arcService = inject(ArcService);
+  private dialog = inject(MatDialog);
+  private fb = inject(FormBuilder);
+
 
   config: ArcGISPluginConfig;
   configChangedNotifier: Subject<void> = new Subject<void>();
@@ -89,7 +93,12 @@ export class ArcAdminComponent implements OnInit {
 
   attributesForm: FormGroup;
 
-  constructor(private arcService: ArcService, private dialog: MatDialog, private fb: FormBuilder) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
+    const arcService = this.arcService;
+
     this.config = defaultArcGISPluginConfig;
     this.editConfig = this.copyConfig();
     this.editFieldMappings = false;
