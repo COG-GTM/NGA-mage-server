@@ -1,14 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { Component, OnInit, inject } from '@angular/core';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { ArcService, MageEvent, PushedLayerCount, PushedObservation } from '../arc.service';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  standalone: false,
-  selector: 'arc-push-status',
-  templateUrl: './arc-push-status.component.html',
-  styleUrls: ['./arc-push-status.component.scss']
+    selector: 'arc-push-status',
+    templateUrl: './arc-push-status.component.html',
+    styleUrls: ['./arc-push-status.component.scss'],
+    imports: [MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatIconButton, MatTooltip, MatIcon, MatProgressSpinner, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DatePipe]
 })
 export class ArcPushStatusComponent implements OnInit {
+  private arcService = inject(ArcService);
+
 
   events: MageEvent[] = [];
   selectedEventId: number | undefined;
@@ -29,7 +41,10 @@ export class ArcPushStatusComponent implements OnInit {
   tooltipX = 0;
   tooltipY = 0;
 
-  constructor(private arcService: ArcService) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   ngOnInit(): void {
     this.arcService.fetchEvents().subscribe(events => {

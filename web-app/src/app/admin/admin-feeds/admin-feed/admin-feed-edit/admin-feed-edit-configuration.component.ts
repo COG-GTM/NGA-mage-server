@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnChanges, OnInit, SimpleChanges, inject, input, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup } from '@angular/forms'
 import { MatExpansionModule } from '@angular/material/expansion'
@@ -36,15 +36,15 @@ export class AdminFeedEditConfigurationComponent implements OnInit, OnChanges {
   private readonly sessionService: SessionService = inject(SessionService);
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  @Input() topic: FeedTopic | null;
-  @Input() itemPropertiesSchema: any;
+  readonly topic = input<FeedTopic | null>(undefined);
+  readonly itemPropertiesSchema = input<any>(undefined);
   @Input() feedMetaData: FeedMetaData | null;
-  @Input() expanded: boolean;
-  @Input() buttonText: string;
-  @Output() feedMetaDataAccepted = new EventEmitter<any>();
-  @Output() feedMetaDataChanged = new EventEmitter<FeedMetaData>();
-  @Output() cancelled = new EventEmitter();
-  @Output() opened = new EventEmitter();
+  readonly expanded = input<boolean>(undefined);
+  readonly buttonText = input<string>(undefined);
+  readonly feedMetaDataAccepted = output<any>();
+  readonly feedMetaDataChanged = output<FeedMetaData>();
+  readonly cancelled = output();
+  readonly opened = output();
 
   feedIconContent: IconReference
 
@@ -82,7 +82,7 @@ export class AdminFeedEditConfigurationComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.itemPropertiesSchema) {
-      const schema = this.itemPropertiesSchema || {}
+      const schema = this.itemPropertiesSchema() || {}
       const schemaProperties = schema.properties || {}
       this.itemSchemaPropertyTitles = Object.getOwnPropertyNames(schemaProperties).map(key => {
         const schemaProperty = schemaProperties[key] || {}
@@ -129,14 +129,14 @@ export class AdminFeedEditConfigurationComponent implements OnInit, OnChanges {
   }
 
   private resetFormWithMergedMetaData(): void {
-    const merged = mergedMetaData(this.feedMetaData, this.topic || {})
+    const merged = mergedMetaData(this.feedMetaData, this.topic() || {})
     this.feedMetaDataForm.reset(merged, { emitEvent: false })
     this.feedIconContent = merged.icon
   }
 
   private updateFormFromMetaDataRespectingUserChanges(): void {
     const metaData = {
-      ...feedMetaDataLean(this.topic || {}),
+      ...feedMetaDataLean(this.topic() || {}),
       ...feedMetaDataLean(this.feedMetaData || {})
     } as FeedMetaData
     const form = this.feedMetaDataForm

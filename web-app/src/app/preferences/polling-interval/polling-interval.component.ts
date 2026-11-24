@@ -1,8 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatSelectChange as MatSelectChange } from '@angular/material/select';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { MatSelectChange as MatSelectChange, MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PollingService } from '../../event/polling.service';
+import { MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatOption } from '@angular/material/autocomplete';
 
 interface PollingOption {
   title: string
@@ -13,9 +16,11 @@ interface PollingOption {
     selector: 'polling-interval',
     templateUrl: './polling-interval.component.html',
     styleUrls: ['./polling-interval.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatIcon, MatPrefix, MatSelect, MatOption]
 })
 export class PollingIntervalComponent implements OnInit, OnDestroy {
+  private pollingService = inject(PollingService);
+
   pollingOptions: PollingOption[] = [{
     title: '5 Seconds',
     interval: 5000
@@ -32,10 +37,6 @@ export class PollingIntervalComponent implements OnInit, OnDestroy {
   pollingOption: PollingOption
 
   private destroy$ = new Subject<void>();
-
-  constructor(
-    private pollingService: PollingService
-  ) { }
 
   ngOnInit(): void {
     this.pollingService.pollingInterval$.pipe(

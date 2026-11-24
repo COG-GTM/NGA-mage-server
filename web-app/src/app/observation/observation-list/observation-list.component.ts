@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nPluralPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -57,7 +57,7 @@ export class ObservationListComponent implements OnInit, OnDestroy {
   pageSize = 50
   readonly totalObservations = signal(0)
 
-  @ViewChild(SearchBarComponent) private searchBar: SearchBarComponent
+  private readonly searchBar = viewChild(SearchBarComponent);
 
   readonly event = signal<any>(undefined)
 
@@ -132,7 +132,7 @@ export class ObservationListComponent implements OnInit, OnDestroy {
     this.observations.set([])
     this.currentPageIndex.set(0)
     this.observationService.setPagingOptions({ page: 0, page_size: this.pageSize })
-    this.searchBar?.setValue(filter?.fieldFilter?.keyword ?? '')
+    this.searchBar()?.setValue(filter?.fieldFilter?.keyword ?? '')
 
     const activeFilters = filter ? this.buildActiveFilters(filter) : []
     this.filterTimerange.set(filter ? this.formatTimeInterval(filter.timeInterval) : '')

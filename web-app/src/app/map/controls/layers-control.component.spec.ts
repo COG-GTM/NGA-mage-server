@@ -10,9 +10,8 @@ describe('LayersControlComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ NoopAnimationsModule, MatIconModule ],
-      declarations: [ LayersControlComponent ]
-    })
+    imports: [NoopAnimationsModule, MatIconModule, LayersControlComponent]
+})
     .compileComponents();
   }));
 

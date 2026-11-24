@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { take, lastValueFrom } from 'rxjs';
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog as MatDialog } from '@angular/material/dialog';
@@ -33,19 +33,17 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   ]
 })
 export class SecurityDisclaimerComponent implements OnInit {
+  private settingsService = inject(SettingsService);
+  private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   readonly breadcrumbs: AdminBreadcrumb[] = [{ title: 'Disclaimer', icon: 'verified' }];
 
   readonly show = signal(false);
   readonly title = signal('');
   readonly text = signal('');
   readonly isDirty = signal(false);
-
-  constructor(
-    private settingsService: SettingsService,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {}
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);

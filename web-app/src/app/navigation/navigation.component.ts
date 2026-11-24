@@ -1,35 +1,43 @@
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
+import { Component, DestroyRef, ElementRef, OnDestroy, OnInit, inject, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ConnectedPosition } from '@angular/cdk/overlay';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { FilterService } from '../filter/filter.service';
 import { MapService } from '../map/map.service';
 import { UserService } from '../user/user.service';
 import { EventService } from '../event/event.service';
 import { MageEvent } from '../entities/event/entities.event';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SessionService } from 'mage-web-app/http/session.service';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { CdkMenuTrigger, CdkMenu, CdkMenuItem } from '@angular/cdk/menu';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatFormField, MatPrefix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
-    standalone: false
+    imports: [MatToolbar, MatIconButton, MatIcon, CdkMenuTrigger, MatMenuTrigger, MatMenu, MatMenuItem, RouterLink, MatTooltip, CdkMenu, MatFormField, MatPrefix, MatInput, FormsModule, ReactiveFormsModule, CdkMenuItem, AsyncPipe]
 })
 export class NavigationComponent implements OnInit, OnDestroy {
-  @Output() onFeedToggle = new EventEmitter<void>();
-  @Output() onPreferencesToggle = new EventEmitter<void>();
-  @ViewChild('eventSearchInput') eventSearchInput: ElementRef<HTMLInputElement>;
+  private router = inject(Router);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private userService = inject(UserService);
+  private eventService = inject(EventService);
+  private filterService = inject(FilterService);
+  private destroyRef = inject(DestroyRef);
+
+  readonly onFeedToggle = output<void>();
+  readonly onPreferencesToggle = output<void>();
+  readonly eventSearchInput = viewChild<ElementRef<HTMLInputElement>>('eventSearchInput');
 
   events: any[] = [];
   eventSearchControl = new FormControl('');
@@ -43,16 +51,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
   filteredEvent: any = {};
   eventsLoaded = false;
   isAdmin: boolean = false;
-
-  constructor(
-    private router: Router,
-    private mapService: MapService,
-    private sessionService: SessionService,
-    private userService: UserService,
-    private eventService: EventService,
-    private filterService: FilterService,
-    private destroyRef: DestroyRef
-  ) {}
 
   ngOnInit(): void {
     this.filterService.event$
@@ -105,7 +103,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   onEventMenuOpened(): void {
     this.eventSearchControl.setValue('');
-    setTimeout(() => this.eventSearchInput?.nativeElement.focus(), 0);
+    setTimeout(() => this.eventSearchInput()?.nativeElement.focus(), 0);
   }
 
   onSelectEvent(event: any): void {

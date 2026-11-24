@@ -1,9 +1,11 @@
 <mat-toolbar>
   <div class="container">
     <div class="menu">
-      <button matIconButton *ngIf="state === 'map'" (click)="toggleFeed()">
-        <mat-icon>menu</mat-icon>
-      </button>
+      @if (state === 'map') {
+        <button matIconButton (click)="toggleFeed()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
     </div>
 
     <button class="event-title" [cdkMenuTriggerFor]="eventPanel" [cdkMenuPosition]="eventMenuPosition" (cdkMenuOpened)="onEventMenuOpened()">
@@ -24,10 +26,12 @@
           <mat-icon>info</mat-icon>
           <span>About</span>
         </a>
-        <a mat-menu-item *ngIf="isAdmin" [routerLink]="['/admin']">
-          <mat-icon>admin_panel_settings</mat-icon>
-          <span>Admin</span>
-        </a>
+        @if (isAdmin) {
+          <a mat-menu-item [routerLink]="['/admin']">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Admin</span>
+          </a>
+        }
         <a mat-menu-item (click)="onLogout()">
           <mat-icon>logout</mat-icon>
           <span>Logout</span>
@@ -44,9 +48,11 @@
         <a matTooltip="Info" [routerLink]="['/about']" matIconButton>
           <mat-icon>info</mat-icon>
         </a>
-        <a matTooltip="Admin Page" *ngIf="isAdmin" matIconButton [routerLink]="['/admin']">
-          <mat-icon>admin_panel_settings</mat-icon>
-        </a>
+        @if (isAdmin) {
+          <a matTooltip="Admin Page" matIconButton [routerLink]="['/admin']">
+            <mat-icon>admin_panel_settings</mat-icon>
+          </a>
+        }
         <a matTooltip="Logout" matIconButton (click)="onLogout()">
           <mat-icon>logout</mat-icon>
         </a>
@@ -66,14 +72,17 @@
         (keydown)="$event.stopPropagation()">
     </mat-form-field>
     <div class="event-panel__list">
-      <button cdkMenuItem
-        *ngFor="let event of filteredEvents | async"
-        class="event-panel__item"
-        [class.event-panel__item--active]="event.id === filteredEvent?.id"
-        (click)="onSelectEvent(event)">
-        <div class="event-panel__item-name">{{ event.name }}</div>
-        <div class="event-panel__item-description" *ngIf="event.description">{{ event.description }}</div>
-      </button>
+      @for (event of filteredEvents | async; track event) {
+        <button cdkMenuItem
+          class="event-panel__item"
+          [class.event-panel__item--active]="event.id === filteredEvent?.id"
+          (click)="onSelectEvent(event)">
+          <div class="event-panel__item-name">{{ event.name }}</div>
+          @if (event.description) {
+            <div class="event-panel__item-description">{{ event.description }}</div>
+          }
+        </button>
+      }
     </div>
   </div>
 </ng-template>

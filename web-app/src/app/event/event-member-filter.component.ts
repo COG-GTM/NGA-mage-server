@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, ViewChild, computed, effect, inject, input, output, signal, untracked } from '@angular/core'
+import { Component, DestroyRef, ElementRef, computed, effect, inject, input, output, signal, untracked, viewChild } from '@angular/core'
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
@@ -48,13 +48,15 @@ interface MemberOptionGroup {
   ]
 })
 export class EventMemberFilterComponent {
+  private eventService = inject(EventService);
+
   eventId = input<EventId | null | undefined>()
   teams = input<Team[]>([])
   initialFilter = input<MemberFilterSelection | null>(null)
 
   memberFilterChanged = output<MemberFilterSelection>()
 
-  @ViewChild('memberInput') memberInput: ElementRef<HTMLInputElement>
+  readonly memberInput = viewChild<ElementRef<HTMLInputElement>>('memberInput');
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
 
@@ -93,7 +95,7 @@ export class EventMemberFilterComponent {
 
   filteredGroups = computed<MemberOptionGroup[]>(() => this.buildGroups())
 
-  constructor(private eventService: EventService) {
+  constructor() {
     effect(() => {
       const eventId = this.eventId()
       const teams = this.teams()
@@ -135,8 +137,9 @@ export class EventMemberFilterComponent {
       this.emit()
     }
     this.inputControl.setValue('')
-    this.memberInput.nativeElement.value = ''
-    this.memberInput.nativeElement.focus()
+    const memberInput = this.memberInput()!
+    memberInput.nativeElement.value = ''
+    memberInput.nativeElement.focus()
   }
 
   remove(option: MemberOption): void {

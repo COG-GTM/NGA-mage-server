@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
@@ -16,8 +16,8 @@ import { ObservationEditModule } from 'mage-web-app/observation/observation-edit
     ]
 })
 export class AdminEventFormPreviewDialogComponent implements OnInit {
+  formDefinition = inject(MAT_DIALOG_DATA);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public formDefinition: any) { }
 
   formGroup: UntypedFormGroup
 

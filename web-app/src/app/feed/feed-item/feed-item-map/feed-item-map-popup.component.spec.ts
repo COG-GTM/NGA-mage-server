@@ -12,16 +12,16 @@ describe('FeedItemMapPopupComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         MatIconModule,
         MomentModule,
-        MatListModule
-      ],
-      declarations: [FeedItemMapPopupComponent],
-      providers: [
-        { provide: SidebarService, useValue: { selectFeedItem: () => {} } }
-      ]
-    })
+        MatListModule,
+        FeedItemMapPopupComponent
+    ],
+    providers: [
+        { provide: SidebarService, useValue: { selectFeedItem: () => { } } }
+    ]
+})
     .compileComponents();
   }));
 

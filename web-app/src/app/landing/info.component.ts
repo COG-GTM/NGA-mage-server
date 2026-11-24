@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'info',
     templateUrl: './info.component.html',
     styleUrls: ['./info.component.scss'],
-    standalone: false
+    imports: [NgClass]
 })
 export class InfoComponent {
   backgrounds = [

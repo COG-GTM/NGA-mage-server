@@ -1,11 +1,10 @@
 import {
   Component,
   DestroyRef,
-  EventEmitter,
-  Output,
   OnInit,
   inject,
-  signal
+  signal,
+  output
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -62,8 +61,8 @@ export class AdminDashboardComponent implements OnInit {
   private breadcrumbService = inject(AdminBreadcrumbService);
   private destroyRef = inject(DestroyRef);
 
-  @Output() onUserActivated = new EventEmitter<any>();
-  @Output() onDeviceEnabled = new EventEmitter<any>();
+  readonly onUserActivated = output<any>();
+  readonly onDeviceEnabled = output<any>();
 
   userSearch = '';
   userState = 'inactive';

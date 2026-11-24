@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, Input, Output, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal, input, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { User } from '../user';
 import { UserPagingService } from '../../services/user-paging.service';
@@ -28,8 +28,8 @@ export class UserSearchBoxComponent {
   private readonly userPagingService = inject(UserPagingService);
   private readonly destroyRef = inject(DestroyRef);
 
-  @Input() placeholder: string = 'Search users...';
-  @Output() userSelected = new EventEmitter<User | null>();
+  readonly placeholder = input<string>('Search users...');
+  readonly userSelected = output<User | null>();
 
   inputValue: User | string = '';
   readonly searchResults = signal<User[]>([]);

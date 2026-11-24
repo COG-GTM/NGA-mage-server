@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit, inject, output } from '@angular/core';
 import { PasswordStrength, passwordStrengthScores } from '../../entities/password/password';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core'
 import { InitializeService } from './initialize.service';
 import { UserService } from '../../user/user.service';
@@ -8,6 +8,10 @@ import { User } from 'core-lib-src/user';
 import * as zxcvbnCommonPackage from '@zxcvbn-ts/language-common'
 import * as zxcvbnEnPackage from '@zxcvbn-ts/language-en'
 import { animate, style, transition, trigger } from '@angular/animations';
+import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatButton } from '@angular/material/button';
 
 export interface InitializedEvent {
   token: string
@@ -28,10 +32,13 @@ export interface InitializedEvent {
             ])
         ]),
     ],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatProgressBar, MatHint, MatButton]
 })
 export class InitializeComponent implements OnInit {
-  @Output() initialized = new EventEmitter<InitializedEvent>()
+  private userService = inject(UserService);
+  private initializeService = inject(InitializeService);
+
+  readonly initialized = output<InitializedEvent>();
 
   passwordStrength?: PasswordStrength
 
@@ -47,10 +54,7 @@ export class InitializeComponent implements OnInit {
     message: string
   }
 
-  constructor(
-    private userService: UserService,
-    private initializeService: InitializeService
-  ) {
+  constructor() {
     this.accountForm.controls.password.valueChanges.subscribe((password: string) => {
       this.onPasswordChanged(password)
     })

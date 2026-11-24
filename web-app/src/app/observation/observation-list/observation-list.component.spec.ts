@@ -90,7 +90,7 @@ describe('ObservationListComponent', () => {
 
     it('syncs the search bar to the filter keyword', () => {
       const searchBar = jasmine.createSpyObj('SearchBarComponent', ['setValue']);
-      (component as any).searchBar = searchBar;
+      (component as any).searchBar = () => searchBar;
 
       observationFilterSubject.next({ ...DEFAULT_OBSERVATION_FILTER, fieldFilter: { keyword: 'flood' } });
 

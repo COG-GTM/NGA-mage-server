@@ -1,16 +1,16 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ObservationViewAttachmentComponent } from './observation-view-attachment.component';
 
 @Component({
+    imports: [ObservationViewAttachmentComponent],
     selector: `host-component`,
-    template: `<observation-view-attachment [attachments]="attachments"></observation-view-attachment>`,
-    standalone: false
+    template: `<observation-view-attachment [attachments]="attachments"></observation-view-attachment>`
 })
 class TestHostComponent {
   attachments = []
-  @ViewChild(ObservationViewAttachmentComponent) component: ObservationViewAttachmentComponent
+  readonly component = viewChild(ObservationViewAttachmentComponent);
 }
 
 describe('ObservationViewAttachmentComponent', () => {
@@ -20,8 +20,8 @@ describe('ObservationViewAttachmentComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ObservationViewAttachmentComponent, TestHostComponent]
-    })
+    imports: [ObservationViewAttachmentComponent, TestHostComponent]
+})
       .compileComponents()
   }))
 
@@ -29,7 +29,7 @@ describe('ObservationViewAttachmentComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
     fixture.detectChanges();
-    component = hostComponent.component
+    component = hostComponent.component()
   })
 
 

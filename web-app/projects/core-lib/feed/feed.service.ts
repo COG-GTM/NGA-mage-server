@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Feature } from 'geojson'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -14,8 +14,13 @@ export interface FeedPreviewOptions {
   providedIn: 'root'
 })
 export class FeedService {
+  private webClient = inject(HttpClient);
 
-  constructor(private webClient: HttpClient) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
 
   // TODO: there is probably a better solution than maintaining this map here
   private _feeds = new BehaviorSubject<Array<Feed>>([]);

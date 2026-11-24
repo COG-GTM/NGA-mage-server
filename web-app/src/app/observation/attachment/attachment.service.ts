@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { FileUpload } from './attachment-upload/attachment-upload.component';
@@ -20,11 +20,11 @@ export interface AttachmentUploadEvent {
   providedIn: 'root'
 })
 export class AttachmentService {
+  private httpClient = inject(HttpClient);
+
   private uploadSource = new Subject<AttachmentUploadEvent>()
 
   upload$ = this.uploadSource.asObservable()
-
-  constructor(private httpClient: HttpClient) { }
 
   upload(upload: FileUpload, observationUrl: string): Observable<HttpEvent<Object>> {
     const formData = new FormData();

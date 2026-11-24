@@ -1,18 +1,12 @@
-import {
-  Component,
-  Output,
-  EventEmitter,
-  OnInit,
-  Input,
-  ViewChild,
-  ElementRef,
-  TemplateRef,
-  ViewContainerRef
-} from '@angular/core';
+import { Component, OnInit, ElementRef, TemplateRef, ViewContainerRef, inject, input, output, viewChild } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { ColorWrap, RGBA, toState } from 'ngx-color';
+import { ColorWrap, RGBA, toState, CheckboardModule, SaturationModule, HueModule, AlphaModule } from 'ngx-color';
 import { TinyColor } from '@ctrl/tinycolor';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatCard } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
 
 export interface ColorEvent {
   color: string;
@@ -22,27 +16,26 @@ export interface ColorEvent {
     selector: 'color-picker',
     templateUrl: './color-picker.component.html',
     styleUrls: ['./color-picker.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatInput, CheckboardModule, MatCard, SaturationModule, HueModule, AlphaModule, MatButton]
 })
 export class ColorPickerComponent extends ColorWrap implements OnInit {
+  private overlay = inject(Overlay);
+  private viewContainerRef = inject(ViewContainerRef);
+
   private static openInstance: ColorPickerComponent | null = null;
 
-  @Input() label: string;
-  @Input() hexColor: string;
-  @Output() onColorChanged = new EventEmitter<ColorEvent>();
+  readonly label = input<string>(undefined);
+  readonly hexColor = input<string>(undefined);
+  readonly onColorChanged = output<ColorEvent>();
 
-  @ViewChild('swatchEl') swatchEl: ElementRef;
-  @ViewChild('pickerTemplate') pickerTemplate: TemplateRef<any>;
+  readonly swatchEl = viewChild<ElementRef>('swatchEl');
+  readonly pickerTemplate = viewChild<TemplateRef<any>>('pickerTemplate');
 
   background: string;
   activeBackground: string;
 
   private originalHexColor: string;
   private overlayRef: OverlayRef | null = null;
-
-  constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef) {
-    super();
-  }
 
   ngOnInit(): void {
     this.updateColor();
@@ -53,7 +46,7 @@ export class ColorPickerComponent extends ColorWrap implements OnInit {
   }
 
   updateColor(): void {
-    const color = this.hexColor || '#000000ff';
+    const color = this.hexColor() || '#000000ff';
     this.setState(toState(color, 0));
     this.background = this.getRGBAStyle(this.rgb);
     this.activeBackground = this.getRGBAStyle(this.rgb);
@@ -75,11 +68,11 @@ export class ColorPickerComponent extends ColorWrap implements OnInit {
 
     if (this.overlayRef) return;
 
-    this.originalHexColor = this.hexColor || '#000000ff';
+    this.originalHexColor = this.hexColor() || '#000000ff';
 
     const positionStrategy = this.overlay
       .position()
-      .flexibleConnectedTo(this.swatchEl)
+      .flexibleConnectedTo(this.swatchEl())
       .withPositions([
         { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 },
         { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
@@ -93,7 +86,7 @@ export class ColorPickerComponent extends ColorWrap implements OnInit {
     });
 
     this.overlayRef.backdropClick().subscribe(() => this.cancel());
-    this.overlayRef.attach(new TemplatePortal(this.pickerTemplate, this.viewContainerRef));
+    this.overlayRef.attach(new TemplatePortal(this.pickerTemplate(), this.viewContainerRef));
     ColorPickerComponent.openInstance = this;
   }
 
@@ -105,14 +98,14 @@ export class ColorPickerComponent extends ColorWrap implements OnInit {
   }
 
   cancel(): void {
-    this.setState(toState(this.originalHexColor || this.hexColor || '#000000ff', 0));
+    this.setState(toState(this.originalHexColor || this.hexColor() || '#000000ff', 0));
     this.background = this.getRGBAStyle(this.rgb);
     this.activeBackground = this.background;
     this.closeOverlay();
   }
 
   forceClose(): void {
-    this.setState(toState(this.originalHexColor || this.hexColor || '#000000ff', 0));
+    this.setState(toState(this.originalHexColor || this.hexColor() || '#000000ff', 0));
     this.background = this.getRGBAStyle(this.rgb);
     this.activeBackground = this.background;
     this.closeOverlay();

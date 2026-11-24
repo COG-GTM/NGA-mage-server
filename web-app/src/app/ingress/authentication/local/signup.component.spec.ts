@@ -61,7 +61,6 @@ describe('SignupComponent', () => {
     };
 
     TestBed.configureTestingModule({
-    declarations: [SignupComponent],
     imports: [ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -70,7 +69,7 @@ describe('SignupComponent', () => {
         MatProgressBarModule,
         CommonModule,
         BrowserModule,
-        NoopAnimationsModule],
+        NoopAnimationsModule, SignupComponent],
     providers: [
         { provide: ApiService, useValue: mockApiService },
         { provide: UserService, useValue: mockUserService },

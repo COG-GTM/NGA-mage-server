@@ -1,4 +1,4 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { MatDialogRef as MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { Team, TeamService } from '@ngageoint/mage.web-core-lib/team'
 import { Observable, forkJoin } from 'rxjs';
@@ -28,6 +28,13 @@ import { FormsModule } from '@angular/forms';
     ]
 })
 export class DeleteTeamComponent {
+  dialogRef = inject<MatDialogRef<DeleteTeamComponent>>(MatDialogRef);
+  data = inject<{
+    team: Team;
+}>(MAT_DIALOG_DATA);
+  private teamsService = inject(TeamService);
+  private adminUserService = inject(UserService);
+
   // set once - never being reassigned, no signal declaration necessary
   team: Team;
   
@@ -42,12 +49,9 @@ export class DeleteTeamComponent {
    * @param teamsService - Service for team operations
    * @param adminUserService - Service for user operations
    */
-  constructor(
-    public dialogRef: MatDialogRef<DeleteTeamComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { team: Team },
-    private teamsService: TeamService,
-    private adminUserService: UserService
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.team = data.team;
   }
 

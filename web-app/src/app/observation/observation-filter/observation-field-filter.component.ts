@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core'
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, input, output, viewChild } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { ErrorStateMatcher } from '@angular/material/core'
@@ -47,16 +47,16 @@ import {
 export class ObservationFieldFilterComponent implements OnChanges {
   @Input() forms: any[] = []
   @Input() condition: Condition | null | undefined = null
-  @Input() showIncompleteError = false
-  @Output() conditionChanged = new EventEmitter<Condition | undefined>()
+  readonly showIncompleteError = input(false);
+  readonly conditionChanged = output<Condition | undefined>();
 
-  @ViewChild('filterInput') filterInput: ElementRef<HTMLInputElement>
-  @ViewChild(MatAutocompleteTrigger) autoTrigger: MatAutocompleteTrigger
-  @ViewChild('filterDatePicker') datePicker: MatDatepicker<any>
-  @ViewChild('chipGridCondition') chipGridCondition?: MatChipGrid
+  readonly filterInput = viewChild<ElementRef<HTMLInputElement>>('filterInput');
+  readonly autoTrigger = viewChild(MatAutocompleteTrigger);
+  readonly datePicker = viewChild<MatDatepicker<any>>('filterDatePicker');
+  readonly chipGridCondition = viewChild<MatChipGrid>('chipGridCondition');
 
   incompleteErrorStateMatcher: ErrorStateMatcher = {
-    isErrorState: () => this.showInvalidNumberError || (this.showIncompleteError && this.hasIncompleteCondition)
+    isErrorState: () => this.showInvalidNumberError || (this.showIncompleteError() && this.hasIncompleteCondition)
   }
 
   showInvalidNumberError = false
@@ -159,7 +159,7 @@ export class ObservationFieldFilterComponent implements OnChanges {
         }
         if (this.selectedField?.type === 'date') {
           this.clearInput()
-          setTimeout(() => this.datePicker?.open())
+          setTimeout(() => this.datePicker()?.open())
           return
         }
         this.clearInput()
@@ -177,8 +177,8 @@ export class ObservationFieldFilterComponent implements OnChanges {
     this.updateChipGridErrorState()
 
     setTimeout(() => {
-      this.filterInput?.nativeElement?.focus()
-      this.autoTrigger?.openPanel()
+      this.filterInput()?.nativeElement?.focus()
+      this.autoTrigger()?.openPanel()
     })
   }
 
@@ -195,9 +195,10 @@ export class ObservationFieldFilterComponent implements OnChanges {
       }
       return
     }
-    if (event.key === 'Escape' && this.autoTrigger?.panelOpen) {
+    const autoTrigger = this.autoTrigger();
+    if (event.key === 'Escape' && autoTrigger?.panelOpen) {
       event.stopPropagation()
-      this.autoTrigger.closePanel()
+      autoTrigger.closePanel()
     }
   }
 
@@ -214,7 +215,7 @@ export class ObservationFieldFilterComponent implements OnChanges {
     this.clearInput()
     this.setupFilteredOptions()
     this.updateChipGridErrorState()
-    setTimeout(() => this.autoTrigger?.openPanel())
+    setTimeout(() => this.autoTrigger()?.openPanel())
   }
 
   removeOperatorChip(): void {
@@ -226,7 +227,7 @@ export class ObservationFieldFilterComponent implements OnChanges {
     this.clearInput()
     this.setupFilteredOptions()
     this.updateChipGridErrorState()
-    setTimeout(() => this.autoTrigger?.openPanel())
+    setTimeout(() => this.autoTrigger()?.openPanel())
   }
 
   removeValueChip(): void {
@@ -234,7 +235,7 @@ export class ObservationFieldFilterComponent implements OnChanges {
     this.pendingValueDisplay = null
     this.clearInput()
     this.setupFilteredOptions()
-    setTimeout(() => this.autoTrigger?.openPanel())
+    setTimeout(() => this.autoTrigger()?.openPanel())
   }
 
   onDateSelected(event: MatDatepickerInputEvent<any>): void {
@@ -297,8 +298,9 @@ export class ObservationFieldFilterComponent implements OnChanges {
 
   private clearInput(): void {
     this.inputControl.setValue('', { emitEvent: false })
-    if (this.filterInput) {
-      this.filterInput.nativeElement.value = ''
+    const filterInput = this.filterInput();
+    if (filterInput) {
+      filterInput.nativeElement.value = ''
     }
     if (this.showInvalidNumberError) {
       this.showInvalidNumberError = false
@@ -333,7 +335,7 @@ export class ObservationFieldFilterComponent implements OnChanges {
   }
 
   private updateChipGridErrorState(): void {
-    this.chipGridCondition?.updateErrorState()
+    this.chipGridCondition()?.updateErrorState()
   }
 
   private setupFilteredOptions(): void {

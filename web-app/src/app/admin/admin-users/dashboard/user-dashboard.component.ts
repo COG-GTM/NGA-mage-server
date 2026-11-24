@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, signal, inject, viewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { Team, TeamService } from '@ngageoint/mage.web-core-lib/team'
@@ -24,7 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { UserAvatarModule } from 'src/app/user/user-avatar/user-avatar.module';
+
+import { UserAvatarComponent } from '../../../user/user-avatar/user-avatar.component';
 
 type UserFilter = {
   limit?: number;
@@ -38,20 +39,28 @@ type UserFilter = {
     templateUrl: './user-dashboard.component.html',
     styleUrls: ['./user-dashboard.component.scss'],
     imports: [
-      MatCardModule,
-      MatChipsModule,
-      MatFormFieldModule,
-      MatIconModule,
-      MatInputModule,
-      MatButtonModule,
-      MatListModule,
-      MatPaginatorModule,
-      FormsModule,
-      RouterLink,
-      UserAvatarModule
-    ]
+    MatCardModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatListModule,
+    MatPaginatorModule,
+    FormsModule,
+    RouterLink,
+    UserAvatarComponent
+]
 })
 export class UserDashboardComponent implements OnInit, OnDestroy {
+  private dialog = inject(MatDialog);
+  private userService = inject(UserService);
+  private teamService = inject(TeamService);
+  private sessionService = inject(SessionService);
+  private userPagingService = inject(UserPagingService);
+  private toastService = inject(AdminToastService);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   readonly dataSource = signal<User[]>([]);
 
   userSearch = '';
@@ -72,8 +81,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
   breadcrumbs: AdminBreadcrumb[] = [{ title: 'Users', icon: 'person' }];
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>;
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   userStatusFilter: 'all' | 'active' | 'inactive' | 'disabled' = 'all';
 
@@ -81,15 +89,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
   private readonly load$ = new Subject<Observable<{ users: User[]; total: number }>>();
   private readonly searchTerm$ = new Subject<string>();
 
-  constructor(
-    private dialog: MatDialog,
-    private userService: UserService,
-    private teamService: TeamService,
-    private sessionService: SessionService,
-    private userPagingService: UserPagingService,
-    private toastService: AdminToastService,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {
+  constructor() {
     this.stateAndData = this.userPagingService.constructDefault();
 
     this.load$
@@ -109,7 +109,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
-    this.breadcrumbService.setActions(this.breadcrumbActions);
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     this.refreshUsers();
     this.loadRoles();

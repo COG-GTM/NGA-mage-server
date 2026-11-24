@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, forkJoin, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { UserService } from '../../user/user.service';
@@ -24,7 +24,8 @@ export type UsersStateAndData = Record<StateKey, UserPagingState>;
 
 @Injectable({ providedIn: 'root' })
 export class UserPagingService {
-  constructor(private userService: UserService) {}
+  private userService = inject(UserService);
+
 
   constructDefault(): UsersStateAndData {
     return {

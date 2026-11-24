@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, signal, inject, viewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { LayersService, Layer } from '../layers.service';
@@ -36,6 +36,12 @@ import { RouterLink } from '@angular/router';
     ]
 })
 export class LayerDashboardComponent implements OnInit, OnDestroy {
+  private modal = inject(MatDialog);
+  private layersService = inject(LayersService);
+  private sessionService = inject(SessionService);
+  private toastService = inject(AdminToastService);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   layers: Layer[] = [];
   readonly filteredLayers = signal<Layer[]>([]);
 
@@ -53,20 +59,11 @@ export class LayerDashboardComponent implements OnInit, OnDestroy {
 
   breadcrumbs: AdminBreadcrumb[] = [{ title: 'Layers', icon: 'map' }];
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>;
-
-  constructor(
-    private modal: MatDialog,
-    private layersService: LayersService,
-    private sessionService: SessionService,
-    private toastService: AdminToastService,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {}
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
-    this.breadcrumbService.setActions(this.breadcrumbActions);
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     this.refreshLayers();
   }

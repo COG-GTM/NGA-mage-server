@@ -1,3 +1,4 @@
+import { MapClipComponent } from '../../../map/clip/clip.component';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ObservationEditGeometryMapComponent } from './observation-edit-geometry-map.component';
@@ -10,10 +11,11 @@ describe('ObservationEditGeometryMapComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ObservationEditGeometryMapComponent],
-      imports: [MatIconModule], 
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
+    imports: [MatIconModule, ObservationEditGeometryMapComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+    // Map clip has its own spec; keep it out of this shallow render.
+    .overrideComponent(ObservationEditGeometryMapComponent, { remove: { imports: [MapClipComponent] }, add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] } })
     .compileComponents();
   }));
 

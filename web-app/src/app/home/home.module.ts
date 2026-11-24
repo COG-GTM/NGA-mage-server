@@ -54,7 +54,7 @@ import { SearchComponent } from '../map/controls/search.component';
 import { LayersComponent } from '../map/layers/layers.component'
 import { LayersControlComponent } from '../map/controls/layers-control.component';
 import { MapComponent } from '../map/map.component';
-import { ColorPickerModule } from '../color-picker/color-picker.module';
+
 import { ExportComponent } from '../export/export.component';
 import { ExportCreateComponent } from '../export/export-create/export-create.component';
 import { ObservationPreviewItemComponent } from '../export/export-create/observation-preview-item.component';
@@ -68,12 +68,12 @@ import { EventMemberFilterComponent } from '../event/event-member-filter.compone
 import { LocationFilterDialogComponent } from '../user/location/location-filter.component';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 
-import { MapClipModule } from '../map/clip/map-clip.module';
-import { GeometryModule } from '../geometry/geometry.module';
+
+
 import { ObservationDeleteComponent } from '../observation/observation-delete/observation-delete.component';
 import { ObservationListItemComponent } from '../observation/observation-list/observation-list-item.component';
 import { MomentModule } from '../moment/moment.module';
-import { ObservationAttachmentModule } from '../observation/attachment/observation-attachment.module';
+
 
 import { ObservationViewFormComponent } from '../observation/observation-view/observation-view-form.component';
 import { ObservationViewComponent } from '../observation/observation-view/observation-view.component';
@@ -126,10 +126,10 @@ import { CoordinateSystemComponent } from '../preferences/coordinate-system/coor
 import { PasswordResetSuccessDialog } from '../user/password/password-reset-success-dialog';
 import { HomeComponent } from '..//home/home.component';
 import { RouterModule, Routes } from '@angular/router';
-import { UserResolver } from '../ingress/user.resolver';
+import { userResolver } from '../ingress/user.resolver';
 import { HomeGuard } from '../ingress/home-guard.service';
-import { UserAvatarModule } from '../user/user-avatar/user-avatar.module';
-import { IngressModule } from '../ingress/ingress.module';
+
+
 import { MatMenuModule as MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 
@@ -138,67 +138,32 @@ const routes: Routes = [{
   component: HomeComponent,
   canActivate: [HomeGuard],
   resolve: {
-    user: UserResolver
+    user: userResolver
   }
 }];
 
-@NgModule({
-  declarations: [],
-  imports: [MatTimepickerModule],
-  exports: [
-    AlphaModule,
-    CdkMenuModule,
-    CheckboardModule,
-    CommonModule,
-    FormsModule,
-    HueModule,
-    ReactiveFormsModule,
-    DragDropModule,
-    MatAutocompleteModule,
-    MatBadgeModule,
-    MatBottomSheetModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatTimepickerModule,
-    MatMomentDateModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatListModule,
-    NgxMatSelectSearchModule,
-    ScrollingModule,
-    SaturationModule
-  ]
-})
-class AngularModule { }
+
 
 @NgModule({
-  declarations: [
+    imports: [
+    DatetimePickerComponent,
+    EventMemberFilterComponent,
+    LayersComponent,
+    LocationFilterDialogComponent,
+    ObservationDeleteComponent,
+    ObservationListComponent,
+    ObservationListItemComponent,
+    ObservationFieldFilterComponent,
+    ObservationFilterDialogComponent,
+    SearchBarComponent,
+    FeedIconModule,
+    FeedItemSummaryModule,
+    MomentModule,
+    ObservationPreviewItemComponent,
+    ObservationEditModule,
+    StaticIconModule,
+    InputMaskModule.forRoot(),
+    RouterModule.forChild(routes),
     AddObservationComponent,
     ContactDialogComponent,
     CoordinateSystemComponent,
@@ -217,7 +182,6 @@ class AngularModule { }
     LocationComponent,
     MapComponent,
     MGRSValidatorDirective,
-
     NavigationComponent,
     ObservationEditComponent,
     ObservationEditDiscardComponent,
@@ -247,36 +211,9 @@ class AngularModule { }
     UserListItemComponent,
     UserPopupComponent,
     UserViewComponent,
-    ZoomComponent,
-  ],
-  imports: [
-    AngularModule,
-    ColorPickerModule,
-    DatetimePickerComponent,
-    EventMemberFilterComponent,
-    LayersComponent,
-    LocationFilterDialogComponent,
-    ObservationDeleteComponent,
-    ObservationListComponent,
-    ObservationListItemComponent,
-    ObservationFieldFilterComponent,
-    ObservationFilterDialogComponent,
-    SearchBarComponent,
-    FeedIconModule,
-    FeedItemSummaryModule,
-    GeometryModule,
-    MapClipModule,
-    IngressModule,
-    MomentModule,
-    ObservationAttachmentModule,
-    ObservationPreviewItemComponent,
-    ObservationEditModule,
-    StaticIconModule,
-    UserAvatarModule,
-    InputMaskModule.forRoot(),
-    RouterModule.forChild(routes)
-  ],
-  exports: [RouterModule]
+    ZoomComponent
+],
+    exports: [RouterModule]
 })
 export class HomeModule {
 }

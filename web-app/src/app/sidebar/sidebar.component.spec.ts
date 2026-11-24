@@ -42,8 +42,8 @@ describe('SidebarComponent', () => {
     exportService.fetchExports.and.returnValue(of([]));
 
     TestBed.configureTestingModule({
-      declarations: [SidebarComponent],
-      providers: [
+    imports: [SidebarComponent],
+    providers: [
         { provide: MatDialog, useValue: dialog },
         { provide: FeedService, useValue: feedService },
         { provide: SidebarService, useValue: sidebarService },
@@ -52,9 +52,12 @@ describe('SidebarComponent', () => {
         { provide: FilterService, useValue: filterService },
         { provide: EventService, useValue: eventService },
         { provide: ExportService, useValue: exportService }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
+    // Shallow render as before standalone: child panels have their own specs.
+    .overrideComponent(SidebarComponent, { set: { imports: [], schemas: [NO_ERRORS_SCHEMA] } })
+    .compileComponents();
   }));
 
   beforeEach(() => {

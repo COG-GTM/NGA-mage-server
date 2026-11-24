@@ -9,14 +9,13 @@ describe('ObservationEditDiscardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [MatDialogModule],
-      declarations: [ObservationEditDiscardComponent],
-      providers: [{
-        provide: MatDialogRef, useValue: {}
-      }, {
-        provide: MAT_DIALOG_DATA, useValue: {}
-      }]
-    })
+    imports: [MatDialogModule, ObservationEditDiscardComponent],
+    providers: [{
+            provide: MatDialogRef, useValue: {}
+        }, {
+            provide: MAT_DIALOG_DATA, useValue: {}
+        }]
+})
     .compileComponents();
   }));
 

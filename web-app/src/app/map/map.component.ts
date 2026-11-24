@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, OnDestroy, inject, output, viewChild } from '@angular/core'
 import { LocationEvent, LocationState } from '../../app/map/controls/location.component'
 import { SearchEvent } from '../../app/map/controls/search.component'
 import { ZoomDirection, ZoomEvent as ZoomControlEvent } from '../../app/map/controls/zoom.component'
@@ -9,7 +9,7 @@ import { LocalStorageService } from '../http/local-storage.service'
 import { EventService } from '../event/event.service'
 import { latLng, popup, tileLayer, Icon, Util, marker, TileLayer, geoJSON, GeoJSON as GeoJSONLayer, latLngBounds, LatLng, markerClusterGroup, MarkerClusterGroup, Map, Polyline, DomEvent, LocationEvent as LeafletLocationEvent } from "leaflet"
 import { OpacityEvent, ZoomEvent as LayerZoomEvent } from './layers/layer.service'
-import { ReorderEvent } from './layers/layers.component'
+import { ReorderEvent, LayersComponent } from './layers/layers.component'
 import { moveItemInArray } from '@angular/cdk/drag-drop'
 import { locationMarker, LocationMarker } from './marker/LocationMarker'
 import { observationMarker, ObservationMarker } from './marker/ObservationMarker'
@@ -29,6 +29,12 @@ import moment from 'moment';
 import { Subscription, interval } from 'rxjs'
 import { ContactDialogComponent } from '../contact/contact-dialog.component'
 import { SessionService } from 'mage-web-app/http/session.service'
+import { SearchComponent } from './controls/search.component';
+import { LayersControlComponent } from './controls/layers-control.component';
+import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
+import { AddObservationComponent } from './controls/add-observation.component';
+import { LocationComponent } from './controls/location.component';
+import { ZoomComponent } from './controls/zoom.component';
 
 Icon.Default.imagePath = '/'
 
@@ -37,9 +43,17 @@ Icon.Default.imagePath = '/'
     templateUrl: './map.component.html',
     styleUrls: ['./map.component.scss'],
     providers: [LayerService],
-    standalone: false
+    imports: [SearchComponent, LayersControlComponent, MatSidenavContainer, MatSidenav, LayersComponent, MatSidenavContent, AddObservationComponent, LocationComponent, ZoomComponent]
 })
 export class MapComponent implements OnDestroy, AfterViewInit {
+  dialog = inject(MatDialog);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private layerService = inject(LayerService);
+  private eventService = inject(EventService);
+  private filterService = inject(FilterService);
+  private localStorageService = inject(LocalStorageService);
+
 
   public static readonly PANE_Z_INDEX_BUCKET_SIZE = 10000
   public static readonly BASE_PANE_Z_INDEX_OFFSET = 1 * MapComponent.PANE_Z_INDEX_BUCKET_SIZE
@@ -48,11 +62,11 @@ export class MapComponent implements OnDestroy, AfterViewInit {
   public static readonly FEATURE_PANE_Z_INDEX_OFFSET = 6 * MapComponent.PANE_Z_INDEX_BUCKET_SIZE
   public static readonly MAGE_PANE_Z_INDEX_OFFSET = 7 * MapComponent.PANE_Z_INDEX_BUCKET_SIZE
 
-  @Output() addObservation = new EventEmitter<any>()
+  readonly addObservation = output<any>();
 
-  @ViewChild('map') mapElement!: ElementRef<any>
-  @ViewChild('mapControlsLeft') mapControlsLeft!: ElementRef<HTMLElement>
-  @ViewChild('mapControlsRight') mapControlsRight!: ElementRef<HTMLElement>
+  readonly mapElement = viewChild.required<ElementRef<any>>('map');
+  readonly mapControlsLeft = viewChild.required<ElementRef<HTMLElement>>('mapControlsLeft');
+  readonly mapControlsRight = viewChild.required<ElementRef<HTMLElement>>('mapControlsRight');
   mapReizeObserver?: ResizeObserver
   private listenerTimeout?: ReturnType<typeof setTimeout>
 
@@ -101,16 +115,9 @@ export class MapComponent implements OnDestroy, AfterViewInit {
 
   private static readonly TEMPORAL_LAYER_REFRESH_INTERVAL_MS = 60000
 
-  constructor(
-    public dialog: MatDialog,
-    private mapService: MapService,
-    private sessionService: SessionService,
-    mapLayerService: MapLayerService,
-    private layerService: LayerService,
-    private eventService: EventService,
-    private filterService: FilterService,
-    private localStorageService: LocalStorageService
-  ) {
+  constructor() {
+    const mapLayerService = inject(MapLayerService);
+
     this.toggleSubscription = mapLayerService.toggle$.subscribe(event => this.layerTogged(event));
     this.zoomSubscription = mapLayerService.zoom$.subscribe(event => this.zoom(event));
     this.opacitySubscription = mapLayerService.opacity$.subscribe(event => this.opacityChanged(event));
@@ -124,10 +131,10 @@ export class MapComponent implements OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.mapReizeObserver?.observe(this.mapElement.nativeElement)
+    this.mapReizeObserver?.observe(this.mapElement().nativeElement)
 
-    DomEvent.disableClickPropagation(this.mapControlsLeft.nativeElement)
-    DomEvent.disableClickPropagation(this.mapControlsRight.nativeElement)
+    DomEvent.disableClickPropagation(this.mapControlsLeft().nativeElement)
+    DomEvent.disableClickPropagation(this.mapControlsRight().nativeElement)
 
     let mapPosition = this.localStorageService.getMapPosition()
     if (!mapPosition) {
@@ -216,7 +223,7 @@ export class MapComponent implements OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     clearTimeout(this.listenerTimeout)
     this.mapService.removeListener(this)
-    this.mapReizeObserver?.unobserve(this.mapElement.nativeElement)
+    this.mapReizeObserver?.unobserve(this.mapElement().nativeElement)
 
     this.toggleSubscription.unsubscribe()
     this.zoomSubscription.unsubscribe()

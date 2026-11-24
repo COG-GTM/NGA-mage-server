@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef as MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { User } from '../user';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,10 +18,11 @@ import { A11yModule } from '@angular/cdk/a11y';
     ]
 })
 export class DeleteUserComponent {
-    constructor(
-        public dialogRef: MatDialogRef<DeleteUserComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { user: User }
-    ) { }
+    dialogRef = inject<MatDialogRef<DeleteUserComponent>>(MatDialogRef);
+    data = inject<{
+    user: User;
+}>(MAT_DIALOG_DATA);
+
 
     cancel(): void {
         this.dialogRef.close();

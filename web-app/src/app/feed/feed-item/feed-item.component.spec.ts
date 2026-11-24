@@ -1,3 +1,4 @@
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
@@ -6,10 +7,9 @@ import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { FeedIconModule } from '@ngageoint/mage.web-core-lib/feed/feed-icon'
-import { GeometryModule } from 'src/app/geometry/geometry.module';
 import { MapClipComponent } from 'src/app/map/clip/clip.component';
 import { FeedItemComponent } from './feed-item.component';
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { MomentPipe } from 'src/app/moment/moment.pipe';
 import { Feed } from 'core-lib-src/feed';
 import { MapService } from 'src/app/map/map.service';
@@ -49,7 +49,7 @@ class MockMapService {
 
 @Component({
     template: '<feed-item [feed]="feed" [item]="item"></feed-item>',
-    standalone: false
+    imports: [MatIconModule, MatToolbarModule, MatDividerModule, MatCardModule, GeometryPipe, FeedIconModule, FeedItemComponent]
 })
 class TestHostComponent {
   feed: Feed = {
@@ -82,8 +82,7 @@ class TestHostComponent {
     style: {}
   }
 
-  @ViewChild(FeedItemComponent, { static: true })
-  public feedItemComponent: FeedItemComponent
+  public readonly feedItemComponent = viewChild(FeedItemComponent);
 }
 
 describe('FeedItemComponent', () => {
@@ -93,44 +92,31 @@ describe('FeedItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [{
-        provide: MapService,
-        useClass: MockMapService
-      }, {
-        provide: LocalStorageService,
-        useClass: MockLocalStorageService
-      }, {
-        provide: SessionService,
-        useClass: MockSessionService
-      },{
-        provide: MomentPipe,
-        useClass: MomentPipe
-      },
+    providers: [{
+            provide: MapService,
+            useClass: MockMapService
+        }, {
+            provide: LocalStorageService,
+            useClass: MockLocalStorageService
+        }, {
+            provide: SessionService,
+            useClass: MockSessionService
+        }, {
+            provide: MomentPipe,
+            useClass: MomentPipe
+        },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-      ],
-      imports: [
-        MatIconModule,
-        MatToolbarModule,
-        MatDividerModule,
-        MatCardModule,
-        GeometryModule,
-        FeedIconModule
-      ],
-      declarations: [
-        FeedItemComponent,
-        MapClipComponent,
-        TestHostComponent,
-        MomentPipe
-      ]
-    })
+    ],
+    imports: [MatIconModule, MatToolbarModule, MatDividerModule, MatCardModule, GeometryPipe, FeedIconModule, FeedItemComponent, MapClipComponent, TestHostComponent, MomentPipe]
+})
     .compileComponents()
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
-    component = hostComponent.feedItemComponent
+    component = hostComponent.feedItemComponent()
     fixture.detectChanges()
   });
 

@@ -1,38 +1,38 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
-import { UntypedFormGroup, NgModel } from '@angular/forms';
+import { Component, OnChanges, SimpleChanges, inject, input, viewChild } from '@angular/core';
+import { UntypedFormGroup, NgModel, FormsModule } from '@angular/forms';
 import moment from 'moment';
 import { LocalStorageService } from '../../../http/local-storage.service';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatTimepickerInput, MatTimepickerToggle, MatTimepicker } from '@angular/material/timepicker';
 
 @Component({
     selector: 'observation-edit-date',
     templateUrl: './observation-edit-date.component.html',
     styleUrls: ['./observation-edit-date.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatInput, MatDatepickerInput, FormsModule, MatDatepickerToggle, MatSuffix, MatDatepicker, MatError, MatTimepickerInput, MatTimepickerToggle, MatTimepicker]
 })
 export class ObservationEditDateComponent implements OnChanges {
-  @Input() formGroup: UntypedFormGroup;
-  @Input() definition: any;
+  readonly formGroup = input<UntypedFormGroup>(undefined);
+  readonly definition = input<any>(undefined);
 
-  @ViewChild('dateModel') dateModel: NgModel;
+  readonly dateModel = viewChild<NgModel>('dateModel');
 
   date: moment.Moment | null = null;
   timeValue: moment.Moment | null = null;
   timeZone: string;
   second = 0;
 
-  constructor(localStorageService: LocalStorageService) {
+  constructor() {
+    const localStorageService = inject(LocalStorageService);
+
     this.timeZone = localStorageService.getTimeZoneEdit();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.formGroup && changes.formGroup.currentValue) {
-      const timestamp = this.formGroup.get(this.definition.name)?.value;
+      const timestamp = this.formGroup().get(this.definition().name)?.value;
 
       if (timestamp) {
         const m =
@@ -56,13 +56,13 @@ export class ObservationEditDateComponent implements OnChanges {
       return;
     }
 
-    if (!this.dateModel?.invalid) {
+    if (!this.dateModel()?.invalid) {
       this.setValue(true);
     }
   }
 
   onTime(): void {
-    if (this.timeValue && this.date && !this.dateModel?.invalid) {
+    if (this.timeValue && this.date && !this.dateModel()?.invalid) {
       this.setValue(false);
     }
   }
@@ -86,7 +86,7 @@ export class ObservationEditDateComponent implements OnChanges {
       date.add(date.utcOffset(), 'minutes');
     }
 
-    const control = this.formGroup?.get(this.definition.name);
+    const control = this.formGroup()?.get(this.definition().name);
     if (!control) {
       return;
     }

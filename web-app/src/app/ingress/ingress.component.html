@@ -1,33 +1,49 @@
-<div class="container" [class.compact]="!landing" @disableOnEnter>
-  <div class="state" *ngIf="ingress.state === IngressState.Signin" @slide>
-    <authentication [landing]="landing" [api]="api" (authenticated)="onAuthenticated($event)" (signup)="onSignup()" (created)="onCreated($event)"></authentication>
-  </div>
+<div class="container" [class.compact]="!landing()" @disableOnEnter>
+  @if (ingress.state === IngressState.Signin) {
+    <div class="state" @slide>
+      <authentication [landing]="landing()" [api]="api()" (authenticated)="onAuthenticated($event)" (signup)="onSignup()" (created)="onCreated($event)"></authentication>
+    </div>
+  }
 
-  <div class="state" *ngIf="ingress.state === IngressState.Authorization" @slide>
-    <authorization [token]="getAuthenticationToken()" [compact]="!landing" (authorized)="onAuthorized($event)"></authorization>
-  </div>
+  @if (ingress.state === IngressState.Authorization) {
+    <div class="state" @slide>
+      <authorization [token]="getAuthenticationToken()" [compact]="!landing()" (authorized)="onAuthorized($event)"></authorization>
+    </div>
+  }
 
-  <div *ngIf="ingress.state === IngressState.Disclaimer" @slide class="state">
-    <disclaimer [title]="api?.disclaimer?.title" [text]="api?.disclaimer?.text" [compact]="!landing" (close)="onDisclaimer($event)"></disclaimer>
-  </div>
+  @if (ingress.state === IngressState.Disclaimer) {
+    <div @slide class="state">
+      <disclaimer [title]="api()?.disclaimer?.title" [text]="api()?.disclaimer?.text" [compact]="!landing()" (close)="onDisclaimer($event)"></disclaimer>
+    </div>
+  }
 
-  <div *ngIf="ingress.state === IngressState.Signup" @slide class="state">
-    <signup (complete)="onCreated($event)"></signup>
-  </div>
+  @if (ingress.state === IngressState.Signup) {
+    <div @slide class="state">
+      <signup (complete)="onCreated($event)"></signup>
+    </div>
+  }
 
-  <div *ngIf="ingress.state === IngressState.ActiveAccount" @slide class="state">
-    <account-status [status]="'active'" (complete)="onAccountStatus()"></account-status>
-  </div>
+  @if (ingress.state === IngressState.ActiveAccount) {
+    <div @slide class="state">
+      <account-status [status]="'active'" (complete)="onAccountStatus()"></account-status>
+    </div>
+  }
 
-  <div *ngIf="ingress.state === IngressState.InactiveAccount" @slide class="state">
-    <account-status [status]="'inactive'" (complete)="onAccountStatus()"></account-status>
-  </div>
+  @if (ingress.state === IngressState.InactiveAccount) {
+    <div @slide class="state">
+      <account-status [status]="'inactive'" (complete)="onAccountStatus()"></account-status>
+    </div>
+  }
 
-  <div *ngIf="ingress.state === IngressState.DisabledAccount" @slide class="state">
-    <account-status [status]="'disabled'" (complete)="onAccountStatus()"></account-status>
-  </div>
+  @if (ingress.state === IngressState.DisabledAccount) {
+    <div @slide class="state">
+      <account-status [status]="'disabled'" (complete)="onAccountStatus()"></account-status>
+    </div>
+  }
 
-  <div *ngIf="ingress.state === IngressState.Initialize" @slide class="state">
-    <initialize (initialized)="onInitialized($event)"></initialize>
-  </div>
+  @if (ingress.state === IngressState.Initialize) {
+    <div @slide class="state">
+      <initialize (initialized)="onInitialized($event)"></initialize>
+    </div>
+  }
 </div>

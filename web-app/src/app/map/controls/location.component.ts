@@ -1,13 +1,16 @@
 import {
   Component,
-  Output,
-  EventEmitter,
   AfterViewInit,
   ElementRef,
-  ViewChild,
-  Input
+  Input,
+  output,
+  viewChild
 } from '@angular/core';
 import { DomEvent } from 'leaflet';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 export enum LocationState {
   Off,
@@ -23,24 +26,26 @@ export interface LocationEvent {
     selector: 'map-control-location',
     templateUrl: './location.component.html',
     styleUrls: ['./location.component.scss'],
-    standalone: false
+    imports: [MatMiniFabButton, MatTooltip, NgClass, MatIcon]
 })
 export class LocationComponent implements AfterViewInit {
-  @ViewChild('locateButton') locateButton!: ElementRef<HTMLElement>;
-  @ViewChild('broadcastButton') broadcastButton!: ElementRef<HTMLElement>;
+  readonly locateButton = viewChild.required<ElementRef<HTMLElement>>('locateButton');
+  readonly broadcastButton = viewChild.required<ElementRef<HTMLElement>>('broadcastButton');
 
   @Input() state: LocationState;
-  @Output() stageChange = new EventEmitter<LocationEvent>();
+  readonly stageChange = output<LocationEvent>();
 
   LocationState = LocationState;
 
   ngAfterViewInit(): void {
-    if (this.locateButton?.nativeElement) {
-      DomEvent.disableClickPropagation(this.locateButton.nativeElement);
+    const locateButton = this.locateButton();
+    if (locateButton?.nativeElement) {
+      DomEvent.disableClickPropagation(locateButton.nativeElement);
     }
 
-    if (this.broadcastButton?.nativeElement) {
-      DomEvent.disableClickPropagation(this.broadcastButton.nativeElement);
+    const broadcastButton = this.broadcastButton();
+    if (broadcastButton?.nativeElement) {
+      DomEvent.disableClickPropagation(broadcastButton.nativeElement);
     }
   }
 

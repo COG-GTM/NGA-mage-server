@@ -11,14 +11,14 @@ describe('CoordinateSystemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CoordinateSystemComponent],
-      imports: [
+    imports: [
         MatSelectModule,
         MatIconModule,
         MatFormFieldModule,
-        BrowserAnimationsModule
-      ]
-    }).compileComponents();
+        BrowserAnimationsModule,
+        CoordinateSystemComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

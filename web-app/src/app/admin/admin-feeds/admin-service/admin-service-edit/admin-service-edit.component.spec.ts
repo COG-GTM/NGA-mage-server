@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
@@ -14,13 +14,12 @@ describe('AdminServiceEditComponent', () => {
   @Component({
     selector: 'app-host-component',
     template: `<app-create-service [expanded]="expanded"></app-create-service>`,
-    standalone: false
+    imports: [AdminServiceEditComponent]
 })
   class TestHostComponent {
     expanded = false;
 
-    @ViewChild(AdminServiceEditComponent, { static: true })
-    createServiceComponent!: AdminServiceEditComponent;
+    readonly createServiceComponent = viewChild.required(AdminServiceEditComponent);
   }
 
   let fixture: ComponentFixture<TestHostComponent>;
@@ -58,15 +57,14 @@ describe('AdminServiceEditComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      declarations: [TestHostComponent],
-      imports: [AdminServiceEditComponent],
-      providers: [{ provide: FeedService, useValue: feedService }],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    imports: [AdminServiceEditComponent, TestHostComponent],
+    providers: [{ provide: FeedService, useValue: feedService }],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
     host = fixture.componentInstance;
-    component = host.createServiceComponent;
+    component = host.createServiceComponent();
   });
 
   it('should create', () => {

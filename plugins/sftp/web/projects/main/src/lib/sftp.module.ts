@@ -27,41 +27,39 @@ import { ObservationStatusComponent } from './observation-status/observation-sta
 import { SftpAdminComponent } from './sftp-admin/sftp-admin.component';
 
 @NgModule({
-  declarations: [
-    ConfigurationComponent,
-    ResetConfirmDialogComponent,
-    ObservationStatusComponent,
-    SftpAdminComponent,
-  ],
-  providers: [
-    provideHttpClient(withInterceptorsFromDi()),
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatRadioModule,
-    MatSlideToggleModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatTooltipModule,
-  ],
-  exports: [
-    ConfigurationComponent,
-    SftpAdminComponent,
-  ]
+    providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatSelectModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatRadioModule,
+        MatSlideToggleModule,
+        MatProgressSpinnerModule,
+        MatTabsModule,
+        MatTooltipModule,
+        ConfigurationComponent,
+        ResetConfirmDialogComponent,
+        ObservationStatusComponent,
+        SftpAdminComponent,
+    ],
+    exports: [
+        ConfigurationComponent,
+        SftpAdminComponent,
+    ]
 })
 export class SFTPModule { }

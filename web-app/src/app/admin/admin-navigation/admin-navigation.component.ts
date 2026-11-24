@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, input, output } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -16,11 +16,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   ]
 })
 export class AdminNavigationComponent {
-  @Input() stateName = '';
-  @Input() inactiveUsers: any[] = [];
-  @Input() unregisteredDevices: any[] = [];
+  readonly stateName = input('');
+  readonly inactiveUsers = input<any[]>([]);
+  readonly unregisteredDevices = input<any[]>([]);
   @Input() pluginTabs: any[] = [];
-  @Output() pluginActiveChange = new EventEmitter<any>();
+  readonly pluginActiveChange = output<any>();
 
   identitiesExpanded = true;
   environmentExpanded = true;

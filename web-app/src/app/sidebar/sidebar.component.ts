@@ -1,12 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, DestroyRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DestroyRef, OnChanges, OnInit, SimpleChanges, TemplateRef, inject, input, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog as MatDialog } from '@angular/material/dialog';
 import { MatTabGroup as MatTabGroup } from '@angular/material/tabs';
 import { filter, pairwise } from 'rxjs/operators';
 import moment from 'moment';
 import { FeedAction, FeedItemEvent, SidebarService } from './sidebar.service';
-import { FeedTab } from './sidebar-tab.component';
+import { FeedTab, SidebarTabComponent } from './sidebar-tab.component';
 import { MapService } from '../map/map.service';
 import { FilterService } from '../filter/filter.service';
 import { EventService } from '../event/event.service';
@@ -18,6 +18,16 @@ import { Export } from '../export/entities.export';
 import { Form } from '../entities/event/entities.event';
 import { FormProperties, Observation } from '../entities/observation/entities.observation';
 import { UserWithLocation } from '../entities/user/entities.user-location';
+import { MatDivider } from '@angular/material/list';
+import { UserViewComponent } from '../user/user-view/user-view.component';
+import { ObservationViewComponent } from '../observation/observation-view/observation-view.component';
+import { ObservationEditComponent } from '../observation/observation-edit/observation-edit.component';
+import { FeedItemComponent } from '../feed/feed-item/feed-item.component';
+import { ExportViewComponent } from '../export/export-view/export-view.component';
+import { ObservationListComponent } from '../observation/observation-list/observation-list.component';
+import { UserListComponent } from '../user/user-list/user-list.component';
+import { FeedListComponent } from '../feed/feed-list/feed-list.component';
+import { ExportComponent } from '../export/export.component';
 
 @Component({
     selector: 'sidebar',
@@ -34,17 +44,27 @@ import { UserWithLocation } from '../entities/user/entities.user-location';
             ])
         ])
     ],
-    standalone: false
+    imports: [SidebarTabComponent, MatDivider, UserViewComponent, ObservationViewComponent, ObservationEditComponent, FeedItemComponent, ExportViewComponent, ObservationListComponent, UserListComponent, FeedListComponent, ExportComponent]
 })
 export class SidebarComponent implements OnInit, OnChanges {
-  @Input() event: any
-  @Input() observationLocation: any
-  @Input() observationsChanged: any
+  dialog = inject(MatDialog);
+  private feedService = inject(FeedService);
+  private sidebarService = inject(SidebarService);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private filterService = inject(FilterService);
+  private eventService = inject(EventService);
+  private exportService = inject(ExportService);
+  private destroyRef = inject(DestroyRef);
 
-  @Output() toggle = new EventEmitter<any>()
+  readonly event = input<any>(undefined);
+  readonly observationLocation = input<any>(undefined);
+  readonly observationsChanged = input<any>(undefined);
 
-  @ViewChild('tabGroup') tabGroup: MatTabGroup
-  @ViewChild('permissionDialog') permissionDialog: TemplateRef<any>
+  readonly toggle = output<any>();
+
+  readonly tabGroup = viewChild<MatTabGroup>('tabGroup');
+  readonly permissionDialog = viewChild<TemplateRef<any>>('permissionDialog');
 
   defaultTabs: FeedTab[] = [{
     id: 'observations',
@@ -86,17 +106,6 @@ export class SidebarComponent implements OnInit, OnChanges {
   info = {};
   statusTitle = 'Cannot Create Observation';
   statusMessage = 'You are not part of this event.';
-
-  constructor(
-    public dialog: MatDialog,
-    private feedService: FeedService,
-    private sidebarService: SidebarService,
-    private mapService: MapService,
-    private sessionService: SessionService,
-    private filterService: FilterService,
-    private eventService: EventService,
-    private exportService: ExportService,
-    private destroyRef: DestroyRef) { }
 
   ngOnInit(): void {
     this.currentTab = this.tabs[0]

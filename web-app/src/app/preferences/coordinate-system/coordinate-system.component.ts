@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSelectChange as MatSelectChange } from '@angular/material/select';
+import { Component, OnInit, inject } from '@angular/core';
+import { MatSelectChange as MatSelectChange, MatSelect } from '@angular/material/select';
 import { LocalStorageService } from 'src/app/http/local-storage.service';
+import { MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatOption } from '@angular/material/autocomplete';
 
 interface CoordinateSystemOption {
   title: string
@@ -11,9 +14,11 @@ interface CoordinateSystemOption {
     selector: 'coordinate-system',
     templateUrl: './coordinate-system.component.html',
     styleUrls: ['./coordinate-system.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatIcon, MatPrefix, MatSelect, MatOption]
 })
 export class CoordinateSystemComponent implements OnInit {
+  private localStorageService = inject(LocalStorageService);
+
 
   coordinateSystemOptions: CoordinateSystemOption[] = [{
     title: 'Lat/Lng',
@@ -26,10 +31,6 @@ export class CoordinateSystemComponent implements OnInit {
     coordinateSystem: 'dms'
   }]
   coordinateSystemOption: CoordinateSystemOption
-
-  constructor(
-    private localStorageService: LocalStorageService
-  ) {}
 
   ngOnInit(): void {
     const coordinateSystem = this.localStorageService.getCoordinateSystemView()

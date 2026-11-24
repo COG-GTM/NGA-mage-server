@@ -10,15 +10,15 @@ describe('Feed Icon Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [
+    providers: [
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-      ],
-      imports: [
-        MatIconModule
-      ],
-      declarations: [ FeedIconComponent ]
-    })
+    ],
+    imports: [
+        MatIconModule,
+        FeedIconComponent
+    ]
+})
     .compileComponents();
   }));
 

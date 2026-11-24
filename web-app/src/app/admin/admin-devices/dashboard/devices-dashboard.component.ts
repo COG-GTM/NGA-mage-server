@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, signal, inject, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, Subject, catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,6 +43,12 @@ import { RouterLink } from '@angular/router';
     ]
 })
 export class DeviceDashboardComponent implements OnInit, OnDestroy {
+  private modal = inject(MatDialog);
+  private deviceService = inject(AdminDeviceService);
+  private sessionService = inject(SessionService);
+  private toastService = inject(AdminToastService);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   devices!: DevicesResponse;
   readonly filteredDevices = signal<Device[]>([]);
 
@@ -64,19 +70,12 @@ export class DeviceDashboardComponent implements OnInit, OnDestroy {
 
   breadcrumbs: AdminBreadcrumb[] = [{ title: 'Devices', icon: 'devices' }];
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>;
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   private readonly refresh$ = new Subject<void>();
   private readonly searchTerm$ = new Subject<string>();
 
-  constructor(
-    private modal: MatDialog,
-    private deviceService: AdminDeviceService,
-    private sessionService: SessionService,
-    private toastService: AdminToastService,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {
+  constructor() {
     this.refresh$
       .pipe(
         switchMap(() => this.deviceService.getDevices(this.searchOptions).pipe(
@@ -102,7 +101,7 @@ export class DeviceDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
-    this.breadcrumbService.setActions(this.breadcrumbActions);
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     this.refreshDevices();
   }

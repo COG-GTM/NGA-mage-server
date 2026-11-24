@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ObservationFavoritesComponent } from '../observation-favorites/observation-favorites.component';
 import { SidebarService } from '../../sidebar/sidebar.service';
@@ -12,6 +12,20 @@ import { EventService } from '../../event/event.service';
 import { Form } from '../../entities/event/entities.event';
 import { FormProperties, Observation } from '../../entities/observation/entities.observation';
 import { SessionService } from 'mage-web-app/http/session.service';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MapClipComponent } from '../../map/clip/clip.component';
+import { MatDivider } from '@angular/material/list';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, DecimalPipe } from '@angular/common';
+import { ObservationViewFormComponent } from './observation-view-form.component';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
+import { MomentPipe } from '../../moment/moment.pipe';
 
 @Component({
     selector: 'observation-view',
@@ -28,14 +42,21 @@ import { SessionService } from 'mage-web-app/http/session.service';
             ])
         ])
     ],
-    standalone: false
+    imports: [MatToolbar, MatToolbarRow, MatIconButton, MatIcon, MatButton, MatCard, MatCardContent, MapClipComponent, MatDivider, MatFormField, MatLabel, MatInput, FormsModule, MatCardActions, MatTooltip, NgClass, ObservationViewFormComponent, DecimalPipe, GeometryPipe, MomentPipe]
 })
 export class ObservationViewComponent implements OnChanges {
-  @Input() event: any
+  private dialog = inject(MatDialog);
+  private bottomSheet = inject(MatBottomSheet);
+  private mapService = inject(MapService);
+  private eventService = inject(EventService);
+  private sessionService = inject(SessionService);
+  private sidebarService = inject(SidebarService);
+
+  readonly event = input<any>(undefined);
   @Input() observation: any
 
-  @Output() close = new EventEmitter<void>()
-  @Output() delete = new EventEmitter<any>()
+  readonly close = output<void>();
+  readonly delete = output<any>();
 
   edit = false
   canEdit = false
@@ -56,15 +77,6 @@ export class ObservationViewComponent implements OnChanges {
   }
   primaryFeedField: any = {}
   secondaryFeedField: any = {}
-
-  constructor(
-    private dialog: MatDialog,
-    private bottomSheet: MatBottomSheet,
-    private mapService: MapService,
-    private eventService: EventService,
-    private sessionService: SessionService,
-    private sidebarService: SidebarService
-  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     // TODO why did this not change after edit?
@@ -100,7 +112,7 @@ export class ObservationViewComponent implements OnChanges {
     this.dialog.open(ObservationFavoritesComponent, {
       width: '500px',
       data: {
-        event: this.event,
+        event: this.event(),
         form: this.observationForm,
         userIds: this.observation.favoriteUserIds || []
       },
@@ -171,16 +183,17 @@ export class ObservationViewComponent implements OnChanges {
   }
 
   updateObservation(): void {
-    if (!this.observation || !this.event) return;
+    const event = this.event();
+    if (!this.observation || !event) return;
 
     this.isUserFavorite = this.observation.favoriteUserIds.includes(this.sessionService.user.id)
     this.canEdit = this.sessionService.hasPermission('UPDATE_OBSERVATION_EVENT') || this.sessionService.hasPermission('UPDATE_OBSERVATION_ALL')
 
-    const myAccess = this.event.acl[this.sessionService.user.id] || {}
+    const myAccess = event.acl[this.sessionService.user.id] || {}
     const aclPermissions = myAccess.permissions || []
     this.canEditImportant = this.sessionService.user.role.permissions.includes('UPDATE_EVENT') || aclPermissions.includes('update')
 
-    const formMap = this.eventService.getFormsForEvent(this.event, {}).reduce<Record<number, Form>>((map, form) => {
+    const formMap = this.eventService.getFormsForEvent(event, {}).reduce<Record<number, Form>>((map, form) => {
       map[form.id] = form
       return map
     }, {})

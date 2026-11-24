@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  signal
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, inject } from '@angular/core';
 import { Subject, lastValueFrom } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar';
@@ -21,7 +16,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ColorPickerModule } from '../../../color-picker/color-picker.module';
+
+import { ColorPickerComponent } from '../../../color-picker/color-picker.component';
 
 @Component({
   selector: 'security-banner',
@@ -37,10 +33,15 @@ import { ColorPickerModule } from '../../../color-picker/color-picker.module';
     MatInputModule,
     MatIconModule,
     MatSlideToggleModule,
-    ColorPickerModule
-  ]
+    ColorPickerComponent
+]
 })
 export class SecurityBannerComponent implements OnInit, OnDestroy {
+  private settingsService = inject(SettingsService);
+  private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   readonly breadcrumbs: AdminBreadcrumb[] = [{ title: 'Banner', icon: 'page_header' }];
 
   readonly showHeader = signal(false);
@@ -54,13 +55,6 @@ export class SecurityBannerComponent implements OnInit, OnDestroy {
   readonly isDirty = signal(false);
 
   private destroy$ = new Subject<void>();
-
-  constructor(
-    private settingsService: SettingsService,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {}
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);

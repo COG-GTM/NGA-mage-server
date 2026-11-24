@@ -34,7 +34,7 @@ import { AdminFeedEditItemPropertiesComponent } from './admin-feed/admin-feed-ed
 import { AdminFeedEditTopicComponent } from './admin-feed/admin-feed-edit/admin-feed-edit-topic/admin-feed-edit-topic.component';
 import { AdminFeedEditConfigurationComponent } from './admin-feed/admin-feed-edit/admin-feed-edit-configuration.component';
 import { AdminFeedEditTopicConfigurationComponent } from './admin-feed/admin-feed-edit/admin-feed-edit-topic/admin-feed-edit-topic-configuration.component';
-import { JsonSchemaModule } from '../json-schema/json-schema.module';
+
 import { FeedItemSummaryModule } from '../../feed/feed-item/feed-item-summary/feed-item-summary.module';
 import { StaticIconModule } from '@ngageoint/mage.web-core-lib/static-icon'
 import { FeedIconModule } from '@ngageoint/mage.web-core-lib/feed/feed-icon';
@@ -79,11 +79,10 @@ import { RouterModule } from '@angular/router';
     MomentModule,
     FeedIconModule,
     FeedItemSummaryModule,
-    JsonSchemaModule,
     StaticIconModule,
     RouterModule,
     MatSnackBarModule
-  ],
+],
   exports: [
     AdminFeedsComponent,
     AdminFeedEditComponent,

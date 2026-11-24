@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core'
+import { Component, Input, OnChanges, inject, output } from '@angular/core'
 import { ArcGISPluginConfig, defaultArcGISPluginConfig } from '../ArcGISPluginConfig'
 import { ArcService } from '../arc.service'
 import { FeatureLayerConfig, FeatureServiceConfig } from '../ArcGISConfig'
@@ -6,24 +6,36 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArcLayerSelectable } from './ArcLayerSelectable'
 import { ArcLayerDialogComponent, DialogData } from './arc-layer-dialog.component'
 import { ArcLayerDeleteDialogComponent } from './arc-layer-delete-dialog.component'
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatHint } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatList, MatListItem, MatListItemIcon, MatListItemTitle, MatListItemLine, MatListItemMeta, MatDivider } from '@angular/material/list';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton, MatButton } from '@angular/material/button';
 
 @Component({
-  standalone: false,
-  selector: 'arc-layer',
-  templateUrl: './arc-layer.component.html',
-  styleUrls: ['./arc-layer.component.scss']
+    selector: 'arc-layer',
+    templateUrl: './arc-layer.component.html',
+    styleUrls: ['./arc-layer.component.scss'],
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatHint, MatCardContent, MatIcon, MatList, MatListItem, MatTooltip, MatListItemIcon, MatListItemTitle, MatListItemLine, MatListItemMeta, MatIconButton, MatDivider, MatCardActions, MatButton]
 })
 export class ArcLayerComponent implements OnChanges {
+  private arcService = inject(ArcService);
+  private dialog = inject(MatDialog);
+
 
   @Input('config') config: ArcGISPluginConfig
-  @Output() configChanged = new EventEmitter<ArcGISPluginConfig>()
+  readonly configChanged = output<ArcGISPluginConfig>();
 
   layers: ArcLayerSelectable[]
 
   // service capabilities are fetched lazily and cached by url, since they aren't part of the saved config
   private serviceCapabilities = new Map<string, string | undefined>()
 
-  constructor(private arcService: ArcService, private dialog: MatDialog) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.config = defaultArcGISPluginConfig
     this.layers = new Array<ArcLayerSelectable>()
   }

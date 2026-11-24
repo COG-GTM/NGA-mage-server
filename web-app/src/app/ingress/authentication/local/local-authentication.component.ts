@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SecurityContext, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, Input, OnInit, SecurityContext, inject, input, output, viewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../api/api.service';
 import { LinkGenerator } from '../../../contact/utilities/link-generator'
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -7,6 +7,10 @@ import { Api, AuthenticationStrategy } from '../../../../app/api/api.entity';
 import { UserService } from '../../../user/user.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'local-authentication',
@@ -23,17 +27,22 @@ import { Router } from '@angular/router';
             ])
         ]),
     ],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatIconButton, MatSuffix, MatIcon, MatButton]
 })
 export class LocalAuthenticationComponent implements OnInit {
+  private router = inject(Router);
+  private apiService = inject(ApiService);
+  private userService = inject(UserService);
+  private sanitizer = inject(DomSanitizer);
+
   @Input() api: Api
-  @Input() strategy: AuthenticationStrategy
-  @Input() landing: boolean
+  readonly strategy = input<AuthenticationStrategy>(undefined);
+  readonly landing = input<boolean>(undefined);
 
-  @Output() signup = new EventEmitter<void>()
-  @Output() authenticated = new EventEmitter<any>()
+  readonly signup = output<void>();
+  readonly authenticated = output<any>();
 
-  @ViewChild('errorElement') private errorElement: ElementRef;
+  private readonly errorElement = viewChild<ElementRef>('errorElement');
 
   showPassword = false;
 
@@ -46,13 +55,6 @@ export class LocalAuthenticationComponent implements OnInit {
     title: string,
     message: SafeHtml
   }
-
-  constructor(
-    private router: Router,
-    private apiService: ApiService,
-    private userService: UserService,
-    private sanitizer: DomSanitizer
-  ) { }
 
   ngOnInit(): void {
     this.apiService.getApi().subscribe((api: any) => {
@@ -73,7 +75,7 @@ export class LocalAuthenticationComponent implements OnInit {
       error: (response: any) => {
         let message = response.error || 'Please check your username and password and try again.'
         if (this.api.contactInfo.email || this.api.contactInfo.phone) {
-          const email = LinkGenerator.emailLink(this.api.contactInfo, response.error, username, this.strategy)
+          const email = LinkGenerator.emailLink(this.api.contactInfo, response.error, username, this.strategy())
           const phone = LinkGenerator.phoneLink(this.api.contactInfo)
           message = `${message} Should you need futher assistance you may contact your Mage administrator via ${[`<a href=${email}>email</a>`, `<a href=${phone}>phone</a>`].join(' or ')}.`
         }
@@ -98,7 +100,7 @@ export class LocalAuthenticationComponent implements OnInit {
 
   scrollToError(): void {
     try {
-      this.errorElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.errorElement().nativeElement.scrollIntoView({ behavior: 'smooth' });
     } catch (err) { }     
   }
 }

@@ -1,4 +1,4 @@
-<mat-expansion-panel [expanded]="expanded" (opened)="this.opened.emit()" hideToggle>
+<mat-expansion-panel [expanded]="expanded()" (opened)="this.opened.emit()" hideToggle>
   <mat-expansion-panel-header>
     <mat-panel-title>
       Choose a Service and Topic
@@ -30,7 +30,7 @@
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Select A Topic</mat-label>
       <mat-select class="topic-select" [(ngModel)]="selectedTopic" (selectionChange)="onTopicSelected()" [required]>
-        @for (topic of topics; track topic.id) {
+        @for (topic of topics(); track topic.id) {
           <mat-option [value]="topic">
             {{topic.title}}
           </mat-option>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpContextToken, HttpStatusCode, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, ReplaySubject, switchMap, throwError, take } from 'rxjs';
 import { AuthenticationDialogComponent } from '../ingress/authentication/authentication-dialog.component';
@@ -12,13 +12,11 @@ export const SUPPRESS_AUTH_DIALOG = new HttpContextToken(() => false);
   providedIn: 'root'
 })
 export class TokenInterceptorService implements HttpInterceptor {
+  dialog = inject(MatDialog);
+  private sessionService = inject(SessionService);
+
   private isRefreshingToken = false;
   private tokenSubject = new ReplaySubject<void>(1);
-
-  constructor(
-    public dialog: MatDialog,
-    private sessionService: SessionService,
-  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.context.get(BYPASS_TOKEN) === true) {

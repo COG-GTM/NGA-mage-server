@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  standalone: false,
-  selector: 'sftp-reset-confirm-dialog',
-  template: `
+    selector: 'sftp-reset-confirm-dialog',
+    template: `
     <div class="dialog-modal">
       <div class="dialog-header">
         <div class="warning-icon">
@@ -34,5 +33,10 @@ import { MatDialogRef } from '@angular/material/dialog';
   `
 })
 export class ResetConfirmDialogComponent {
-  constructor(public dialogRef: MatDialogRef<ResetConfirmDialogComponent>) { }
+  dialogRef = inject<MatDialogRef<ResetConfirmDialogComponent>>(MatDialogRef);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 }

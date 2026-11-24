@@ -18,9 +18,9 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
 
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { InputMaskModule } from '@ngneat/input-mask';
-import { GeometryModule } from '../../geometry/geometry.module';
-import { MapClipModule } from '../../map/clip/map-clip.module';
-import { ObservationAttachmentModule } from '../attachment/observation-attachment.module';
+
+
+
 import {
   ObservationEditCheckboxComponent,
   ObservationEditDateComponent,
@@ -40,32 +40,12 @@ import { ObservationEditAttachmentComponent } from './observation-edit-attachmen
 import { ObservationEditPasswordComponent } from './observation-edit-password/observation-edit-password.component';
 
 @NgModule({
-  declarations: [
-    ObservationEditFormComponent,
-    ObservationEditAttachmentComponent,
-    ObservationEditCheckboxComponent,
-    ObservationEditDateComponent,
-    ObservationEditSelectComponent,
-    ObservationEditEmailComponent,
-    ObservationEditGeometryComponent,
-    ObservationEditGeometryFormComponent,
-    ObservationEditGeometryMapComponent,
-    ObservationEditMultiselectComponent,
-    ObservationEditNumberComponent,
-    ObservationEditPasswordComponent,
-    ObservationEditRadioComponent,
-    ObservationEditTextComponent,
-    ObservationEditTextareaComponent,
-  ],
-  imports: [
+    imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    GeometryModule,
     InputMaskModule.forRoot(),
-    MapClipModule,
     NgxMatSelectSearchModule,
-    ObservationAttachmentModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
@@ -80,8 +60,6 @@ import { ObservationEditPasswordComponent } from './observation-edit-password/ob
     MatRadioModule,
     MatSelectModule,
     MatTimepickerModule,
-  ],
-  exports: [
     ObservationEditFormComponent,
     ObservationEditAttachmentComponent,
     ObservationEditCheckboxComponent,
@@ -97,6 +75,23 @@ import { ObservationEditPasswordComponent } from './observation-edit-password/ob
     ObservationEditRadioComponent,
     ObservationEditTextComponent,
     ObservationEditTextareaComponent,
-  ]
+],
+    exports: [
+        ObservationEditFormComponent,
+        ObservationEditAttachmentComponent,
+        ObservationEditCheckboxComponent,
+        ObservationEditDateComponent,
+        ObservationEditSelectComponent,
+        ObservationEditEmailComponent,
+        ObservationEditGeometryComponent,
+        ObservationEditGeometryFormComponent,
+        ObservationEditGeometryMapComponent,
+        ObservationEditMultiselectComponent,
+        ObservationEditNumberComponent,
+        ObservationEditPasswordComponent,
+        ObservationEditRadioComponent,
+        ObservationEditTextComponent,
+        ObservationEditTextareaComponent,
+    ]
 })
 export class ObservationEditModule {}

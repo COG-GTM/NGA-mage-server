@@ -1,12 +1,4 @@
-import {
-  Component,
-  input,
-  OnChanges,
-  SimpleChanges,
-  AfterViewInit,
-  ElementRef,
-  viewChild
-} from '@angular/core';
+import { Component, input, OnChanges, SimpleChanges, AfterViewInit, ElementRef, viewChild, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import * as L from 'leaflet';
@@ -26,16 +18,14 @@ interface LayerBounds {
     imports: [MatIconModule]
 })
 export class LayerPreviewComponent implements AfterViewInit, OnChanges {
+  private http = inject(HttpClient);
+  private sessionService = inject(SessionService);
+
   layer = input.required<Layer & LayerBounds>();
   mapContainer = viewChild<ElementRef>('mapContainer');
 
   private map?: L.Map;
   private mapLayer?: L.Layer;
-
-  constructor(
-    private http: HttpClient,
-    private sessionService: SessionService
-  ) {}
 
   ngAfterViewInit(): void {
     this.initializeMap();

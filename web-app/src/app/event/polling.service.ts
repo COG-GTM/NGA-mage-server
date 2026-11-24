@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { LocalStorageService } from "../http/local-storage.service";
 
@@ -6,10 +6,14 @@ import { LocalStorageService } from "../http/local-storage.service";
   providedIn: 'root'
 })
 export class PollingService {
+  private localStorageService = inject(LocalStorageService);
+
   private pollingIntervalSubject: BehaviorSubject<number>;
   readonly pollingInterval$: Observable<number>;
 
-  constructor(private localStorageService: LocalStorageService) {
+  constructor() {
+    const localStorageService = this.localStorageService;
+
     let interval = localStorageService.getPollingInterval();
     if (!interval) {
       interval = 30000;

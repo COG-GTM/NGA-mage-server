@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PageOf } from '@ngageoint/mage.web-core-lib/paging'
 import { Team } from '@ngageoint/mage.web-core-lib/team'
@@ -42,7 +42,8 @@ const setParams = (options: any): HttpParams => {
     providedIn: 'root'
 })
 export class AdminEventsService {
-    constructor(private http: HttpClient) { }
+    private http = inject(HttpClient);
+
 
     getEvents(options: SearchOptions): Observable<PageOf<MageEvent>> {
         const page = options.page ?? 0;

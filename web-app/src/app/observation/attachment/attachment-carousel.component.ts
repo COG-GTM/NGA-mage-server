@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, input, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AttachmentComponent } from './attachment.component';
@@ -13,7 +13,7 @@ import { Attachment, AttachmentProcessingStatus } from '../../entities/observati
 export class AttachmentCarouselComponent {
   attachments = input<Attachment[]>([])
 
-  @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLDivElement>
+  readonly scrollContainer = viewChild<ElementRef<HTMLDivElement>>('scrollContainer');
 
   currentIndex = signal(0)
 
@@ -47,7 +47,7 @@ export class AttachmentCarouselComponent {
   }
 
   private goToSlide(index: number): void {
-    const el = this.scrollContainer?.nativeElement
+    const el = this.scrollContainer()?.nativeElement
     if (!el) return
     const clamped = Math.max(0, Math.min(index, this.attachments().length - 1))
     this.currentIndex.set(clamped)
@@ -55,7 +55,7 @@ export class AttachmentCarouselComponent {
   }
 
   private updateCurrentIndex(): void {
-    const el = this.scrollContainer?.nativeElement
+    const el = this.scrollContainer()?.nativeElement
     if (!el?.clientWidth) return
     this.currentIndex.set(Math.round(el.scrollLeft / el.clientWidth))
   }

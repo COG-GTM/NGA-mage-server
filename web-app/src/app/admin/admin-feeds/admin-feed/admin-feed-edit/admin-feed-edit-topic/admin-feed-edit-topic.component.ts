@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { MatExpansionModule } from '@angular/material/expansion'
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -14,13 +14,13 @@ import { FeedTopic, Service } from '@ngageoint/mage.web-core-lib/feed'
 export class AdminFeedEditTopicComponent implements OnChanges {
 
   @Input() services?: Service[] | null
-  @Input() topics?: FeedTopic[] | null
+  readonly topics = input<FeedTopic[] | null>(undefined);
   @Input() selectedService?: Service | null = null
   @Input() selectedTopic?: FeedTopic | null = null
-  @Input() expanded: boolean
-  @Output() serviceSelected = new EventEmitter<string>()
-  @Output() topicSelected = new EventEmitter<string>()
-  @Output() opened = new EventEmitter()
+  readonly expanded = input<boolean>(undefined);
+  readonly serviceSelected = output<string>();
+  readonly topicSelected = output<string>();
+  readonly opened = output();
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.services) {
@@ -40,15 +40,16 @@ export class AdminFeedEditTopicComponent implements OnChanges {
       }
     }
     if (changes.topics) {
-      if (this.topics) {
+      const topics = this.topics();
+      if (topics) {
         if (changes.selectedTopic) {
-          if (!this.selectedTopic && this.topics.length === 1) {
-            this.selectedTopic = this.topics[0]
+          if (!this.selectedTopic && topics.length === 1) {
+            this.selectedTopic = topics[0]
             this.onTopicSelected()
           }
         }
         else if (this.selectedTopic) {
-          const updatedTopic = this.topics.find(x => x.id === this.selectedTopic.id)
+          const updatedTopic = topics.find(x => x.id === this.selectedTopic.id)
           if (updatedTopic) {
             this.selectedTopic = updatedTopic
           }

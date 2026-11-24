@@ -13,17 +13,17 @@ describe('SidebarTabComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         MatIconModule,
         MatTooltipModule,
-        FeedIconModule
-      ],
-      declarations: [SidebarTabComponent],
-      providers: [
+        FeedIconModule,
+        SidebarTabComponent
+    ],
+    providers: [
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-      ]
-    })
+    ]
+})
     .compileComponents();
   }));
 

@@ -21,18 +21,18 @@ describe('PollingIntervalComponent', () => {
     });
 
     TestBed.configureTestingModule({
-      declarations: [PollingIntervalComponent],
-      imports: [
+    imports: [
         MatSelectModule,
         MatIconModule,
         MatFormFieldModule,
         BrowserAnimationsModule,
-        CommonModule
-      ],
-      providers: [
+        CommonModule,
+        PollingIntervalComponent
+    ],
+    providers: [
         { provide: PollingService, useValue: pollingService }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

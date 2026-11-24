@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core'
+import { Component, NgZone, inject } from '@angular/core'
 import { MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { A11yModule } from '@angular/cdk/a11y'
@@ -15,10 +15,9 @@ import { A11yModule } from '@angular/cdk/a11y'
     ]
 })
 export class AdminSettingsUnsavedComponent {
-    constructor(
-        private readonly dialogRef: MatDialogRef<AdminSettingsUnsavedComponent>,
-        private readonly ngZone: NgZone) {
-    }
+    private readonly dialogRef = inject<MatDialogRef<AdminSettingsUnsavedComponent>>(MatDialogRef);
+    private readonly ngZone = inject(NgZone);
+
 
     stay(): void {
         this.ngZone.run(() => {

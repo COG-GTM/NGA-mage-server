@@ -1,20 +1,25 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { Component, inject, input, output } from '@angular/core'
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { Api, AuthenticationStrategy } from '../../../api/api.entity'
 import { UserService } from '../../../user/user.service'
 import { LinkGenerator } from '../../../contact/utilities/link-generator'
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { AuthenticationButtonComponent } from '../button/authentication-button.component';
 
 @Component({
     selector: 'ldap-authentication',
     templateUrl: './ldap-authentication.component.html',
     styleUrls: ['./ldap-authentication.component.scss'],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, AuthenticationButtonComponent]
 })
 export class LdapAuthenticationComponent {
-  @Input() api: Api
-  @Input() strategy: AuthenticationStrategy
+  private userService = inject(UserService);
 
-  @Output() authenticated = new EventEmitter<any>();
+  readonly api = input<Api>(undefined);
+  readonly strategy = input<AuthenticationStrategy>(undefined);
+
+  readonly authenticated = output<any>();
   
   authenticationForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -27,10 +32,6 @@ export class LdapAuthenticationComponent {
     title: string,
     message: string
   }
-
-  constructor(
-    private userService: UserService
-  ) {}
 
   onSignin(): void {
     if (this.authenticationForm.invalid) {
@@ -48,8 +49,9 @@ export class LdapAuthenticationComponent {
           message: response.error || 'Please check your username and password and try again.'
         }
 
-        const email = LinkGenerator.emailLink(this.api?.contactInfo, response.error, username, this.strategy)
-        const phone = LinkGenerator.phoneLink(this.api?.contactInfo)
+        const api = this.api();
+        const email = LinkGenerator.emailLink(api?.contactInfo, response.error, username, this.strategy())
+        const phone = LinkGenerator.phoneLink(api?.contactInfo)
         this.contact = `Should you need futher assistance you may contact your Mage administrator via ${[`<a href=${email}>email</a>`, `<a href=${phone}>phone</a>`].join(' or ')}.`
       }
     }) 

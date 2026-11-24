@@ -1,9 +1,10 @@
-import { Component, computed, input } from '@angular/core'
+import { Component, computed, input, inject } from '@angular/core'
 import { EventService } from '../../event/event.service'
 import { Observation } from '../../entities/observation/entities.observation'
 import { MageEvent, Form, FormField } from '../../entities/event/entities.event'
-import { GeometryModule } from '../../geometry/geometry.module'
+
 import { MomentModule } from '../../moment/moment.module'
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 
 type ObservationForm = Form & { remoteId: string }
 
@@ -17,9 +18,11 @@ interface FeedField {
   templateUrl: './observation-preview-item.component.html',
   styleUrls: ['./observation-preview-item.component.scss'],
   standalone: true,
-  imports: [GeometryModule, MomentModule]
+  imports: [GeometryPipe, MomentModule]
 })
 export class ObservationPreviewItemComponent {
+  private eventService = inject(EventService);
+
   event = input<MageEvent>()
   observation = input<Observation>()
 
@@ -27,8 +30,6 @@ export class ObservationPreviewItemComponent {
 
   primaryFeedField = computed<FeedField>(() => this.computeFeedField('primaryFeedField'))
   secondaryFeedField = computed<FeedField>(() => this.computeFeedField('secondaryFeedField'))
-
-  constructor(private eventService: EventService) { }
 
   private buildObservationForms(): ObservationForm[] {
     const event = this.event()

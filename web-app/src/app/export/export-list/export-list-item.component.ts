@@ -1,13 +1,19 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import moment from 'moment';
 import { SessionService } from '../../http/session.service';
 import { Export, ExportStatus } from '../entities.export';
+import { MatRipple } from '@angular/material/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIcon } from '@angular/material/icon';
+import { NgPlural, NgPluralCase } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { MomentPipe } from '../../moment/moment.pipe';
 
 @Component({
-  selector: 'export-list-item',
-  templateUrl: 'export-list-item.component.html',
-  styleUrls: ['./export-list-item.component.scss'],
-  standalone: false
+    selector: 'export-list-item',
+    templateUrl: 'export-list-item.component.html',
+    styleUrls: ['./export-list-item.component.scss'],
+    imports: [MatRipple, MatProgressSpinner, MatIcon, NgPlural, NgPluralCase, MatIconButton, MomentPipe]
 })
 export class ExportListItemComponent implements OnChanges {
   @Input() item: Export
@@ -17,7 +23,9 @@ export class ExportListItemComponent implements OnChanges {
   summaryStart: number
   summaryEnd: number
 
-  constructor(sessionService: SessionService) {
+  constructor() {
+    const sessionService = inject(SessionService);
+
     this.token = sessionService.getToken()
   }
 

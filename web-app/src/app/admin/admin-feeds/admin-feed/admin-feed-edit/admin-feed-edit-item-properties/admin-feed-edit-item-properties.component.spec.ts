@@ -1,5 +1,6 @@
+import { JsonSchemaFormWithServiceComponent } from '../../../../json-schema/json-schema.component';
 import { JsonSchemaFormModule } from '@ngageoint/vendor-ajsf-core';
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatCardModule as MatCardModule } from '@angular/material/card'
@@ -11,7 +12,6 @@ import { MatIconModule } from '@angular/material/icon'
 import { By } from '@angular/platform-browser'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import * as _ from 'lodash'
-import { JsonSchemaModule } from '../../../../json-schema/json-schema.module';
 import { AdminFeedEditItemPropertiesComponent, SchemaFormValue, SimpleJsonSchema, SimplePropertyJsonSchema } from './admin-feed-edit-item-properties.component';
 
 
@@ -55,15 +55,14 @@ describe('AdminFeedEditItemPropertiesComponent', () => {
       >
       </app-feed-item-properties-configuration>
     `,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatCardModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatIconModule, JsonSchemaFormModule, JsonSchemaFormWithServiceComponent, AdminFeedEditItemPropertiesComponent]
 })
   class TestHostComponent {
     topicSchema: SimpleJsonSchema = null
     feedSchema: SimpleJsonSchema = null
     expanded: boolean
 
-    @ViewChild(AdminFeedEditItemPropertiesComponent, { static: true })
-    public target: AdminFeedEditItemPropertiesComponent
+    public readonly target = viewChild(AdminFeedEditItemPropertiesComponent);
   }
 
   let host: TestHostComponent
@@ -72,31 +71,15 @@ describe('AdminFeedEditItemPropertiesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatDividerModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        JsonSchemaFormModule,
-        JsonSchemaModule,
-        NoopAnimationsModule,
-        AdminFeedEditItemPropertiesComponent,
-      ],
-      declarations: [
-        TestHostComponent
-      ]
-    })
+    imports: [FormsModule, ReactiveFormsModule, MatCardModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatIconModule, JsonSchemaFormModule, JsonSchemaFormWithServiceComponent, NoopAnimationsModule, AdminFeedEditItemPropertiesComponent, TestHostComponent]
+})
     .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     host = fixture.componentInstance;
-    target = host.target;
+    target = host.target();
     fixture.detectChanges()
   });
 
@@ -256,7 +239,7 @@ describe('AdminFeedEditItemPropertiesComponent', () => {
         fixture.detectChanges()
 
         expect(target.feedSchema).toBeNull()
-        expect(target.topicSchema).toEqual(host.topicSchema)
+        expect(target.topicSchema()).toEqual(host.topicSchema)
         expect(target.schemaForm.value).toEqual(formValueForSchema(host.topicSchema))
 
         const formBefore = target.schemaForm

@@ -2,8 +2,10 @@
   <mat-label>Coordinate System</mat-label>
   <mat-icon matIconPrefix class="material-icons-outlined">map</mat-icon>
   <mat-select [(value)]="coordinateSystemOption" (selectionChange)="updateCoordinateSystem($event)" [compareWith]="compareOption">
-    <mat-option *ngFor="let option of coordinateSystemOptions" [value]="option">
-      {{option.title}}
-    </mat-option>
+    @for (option of coordinateSystemOptions; track option) {
+      <mat-option [value]="option">
+        {{option.title}}
+      </mat-option>
+    }
   </mat-select>
 </mat-form-field>

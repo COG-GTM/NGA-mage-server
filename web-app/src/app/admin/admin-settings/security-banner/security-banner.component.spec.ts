@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -16,13 +16,16 @@ import { SecurityBannerComponent } from './security-banner.component';
 import { SettingsService } from '../settings.service';
 
 @Component({
+    imports: [SecurityBannerComponent],
     selector: 'color-picker',
     template: '',
     standalone: true
 })
 class MockColorPickerComponent {
-  @Input() hexColor: string = '';
-  @Output() onColorChanged = new EventEmitter<{ color: string }>();
+  readonly hexColor = input<string>('');
+  readonly onColorChanged = output<{
+    color: string;
+}>();
 }
 
 class MockSettingsService {

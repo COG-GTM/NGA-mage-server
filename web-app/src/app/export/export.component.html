@@ -1,13 +1,19 @@
 <div class="export">
-  <div class="export-content" *ngIf="state.view === viewState.List && state.count > 0" [@fade]>
-    <export-list (create)="onCreate()"></export-list>
-  </div>
+  @if (state.view === viewState.List && state.count > 0) {
+    <div class="export-content" [@fade]>
+      <export-list (create)="onCreate()"></export-list>
+    </div>
+  }
 
-  <div class="export-content" *ngIf="state.view === viewState.List && state.count === 0" [@fade]>
-    <export-empty (open)="onCreate()"></export-empty>
-  </div>
+  @if (state.view === viewState.List && state.count === 0) {
+    <div class="export-content" [@fade]>
+      <export-empty (open)="onCreate()"></export-empty>
+    </div>
+  }
 
-  <div class="export-content" *ngIf="state.view === viewState.Create" [@fade]>
-    <export-create (close)="onCreateClose()"></export-create>
-  </div>
+  @if (state.view === viewState.Create) {
+    <div class="export-content" [@fade]>
+      <export-create (close)="onCreateClose()"></export-create>
+    </div>
+  }
 </div>

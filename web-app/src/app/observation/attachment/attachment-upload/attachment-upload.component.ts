@@ -1,8 +1,13 @@
 import { HttpEvent, HttpEventType, HttpResponse, HttpResponseBase } from '@angular/common/http';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { AttachmentAction } from '../../observation-edit/observation-edit-attachment/observation-edit-attachment-action';
 import { AttachmentService } from '../attachment.service';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIcon } from '@angular/material/icon';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { FilenamePipe } from '../../../filename/filename.pipe';
 
 export interface FileUpload {
   id: number | string,
@@ -24,22 +29,30 @@ enum PreviewType {
     selector: 'attachment-upload',
     templateUrl: './attachment-upload.component.html',
     styleUrls: ['./attachment-upload.component.scss'],
-    standalone: false
+    imports: [MatProgressSpinner, MatIcon, MatMiniFabButton, MatProgressBar, FilenamePipe]
 })
 export class AttachUploadComponent implements OnChanges {
-  @Input() attachment: FileUpload
-  @Input() url: string
+  private changeDetector = inject(ChangeDetectorRef);
+  private attachmentService = inject(AttachmentService);
 
-  @Output() remove = new EventEmitter<{ id: number | string }>()
-  @Output() upload = new EventEmitter<{ id: number | string, response: HttpResponseBase }>()
-  @Output() error = new EventEmitter<{ id: number | string }>()
+  @Input() attachment: FileUpload
+  readonly url = input<string>(undefined);
+
+  readonly remove = output<{
+    id: number | string;
+}>();
+  readonly upload = output<{
+    id: number | string;
+    response: HttpResponseBase;
+}>();
+  readonly error = output<{
+    id: number | string;
+}>();
 
   preview: PreviewType = PreviewType.LOADING
   previewType = PreviewType
   attachmentsToUpload = 0
   actions: typeof AttachmentAction = AttachmentAction
-
-  constructor(private changeDetector: ChangeDetectorRef, private attachmentService: AttachmentService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.attachment && this.attachment) {
@@ -121,9 +134,10 @@ export class AttachUploadComponent implements OnChanges {
   }
 
   startUpload(): void {
-    if (!this.attachment || !this.url) return
+    const url = this.url();
+    if (!this.attachment || !url) return
 
-    this.attachmentService.upload(this.attachment, this.url).subscribe((response: HttpEvent<HttpResponse<Object>>) => {
+    this.attachmentService.upload(this.attachment, url).subscribe((response: HttpEvent<HttpResponse<Object>>) => {
       if (response.type === HttpEventType.Response) {
         this.attachment.uploading = false
         if (response.status === 200) {

@@ -11,27 +11,14 @@ const routes: Routes = [{
   component: SwaggerComponent
 }];
 
-@NgModule({
-  declarations: [],
-  imports: [],
-  exports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule
-  ]
-})
-class AngularModule { }
+
 
 @NgModule({
-  declarations: [
+    imports: [
+    RouterModule.forChild(routes),
     SwaggerComponent
-  ],
-  imports: [
-    AngularModule,
-    RouterModule.forChild(routes)
-  ],
-  exports: [ RouterModule ]
+],
+    exports: [RouterModule]
 })
 export class SwaggerModule {
 }

@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationConfigurationService {
+  private http = inject(HttpClient);
+
   private readonly baseUrl = '/api/authentication/configuration';
   private readonly jsonHeaders = new HttpHeaders({
     'content-type': 'application/json'
   });
-
-  constructor(private http: HttpClient) {}
 
   getAllConfigurations(options?: Record<string, any>): Observable<any> {
     let params = new HttpParams();

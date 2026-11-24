@@ -12,13 +12,10 @@ describe('FeedComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [
-        FeedListComponent
-    ],
     imports: [MatToolbarModule,
         FeedItemSummaryModule,
         MatDividerModule,
-        MatListModule],
+        MatListModule, FeedListComponent],
     providers: [provideHttpClient(withInterceptorsFromDi())]
 })
     .compileComponents();

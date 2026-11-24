@@ -1,22 +1,28 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, output, viewChild } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import { MapService } from '../../map/map.service';
 import { SessionService } from '../../http/session.service';
 import { SidebarService } from '../../sidebar/sidebar.service';
 import { UserLocation, UserWithLocation } from '../../entities/user/entities.user-location';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { UserAvatarComponent } from '../user-avatar/user-avatar.component';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
+import { MomentPipe } from '../../moment/moment.pipe';
 
 @Component({
     selector: 'user-list-item',
     templateUrl: './user-list-item.component.html',
     styleUrls: ['./user-list-item.component.scss'],
-    standalone: false
+    imports: [MatCard, MatRipple, MatCardContent, UserAvatarComponent, MatCardActions, MatButton, MatIconButton, MatIcon, GeometryPipe, MomentPipe]
 })
 export class UserListItemComponent implements OnChanges {
   @Input() userWithLocation: UserWithLocation
 
-  @Output() click = new EventEmitter<any>()
+  readonly click = output<any>();
 
-  @ViewChild(MatRipple) ripple: MatRipple
+  readonly ripple = viewChild(MatRipple);
 
   token: string | null
   followingUser: any
@@ -53,7 +59,7 @@ export class UserListItemComponent implements OnChanges {
   }
 
   onRipple(): void {
-    this.ripple.launch({
+    this.ripple().launch({
       centered: true
     })
   }

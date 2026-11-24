@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -86,7 +86,7 @@ class MockLocalStorageService {
     [observation]="observation"
     [event]="event"
   ></observation-list-item>`,
-    standalone: false
+    imports: [ObservationListItemComponent, MatSnackBarModule]
 })
 class TestHostComponent {
   event: any = {
@@ -95,8 +95,7 @@ class TestHostComponent {
 
   observation: any;
 
-  @ViewChild(ObservationListItemComponent)
-  observationListItem: ObservationListItemComponent;
+  readonly observationListItem = viewChild(ObservationListItemComponent);
 }
 
 describe('ObservationListItemComponent', () => {
@@ -106,40 +105,38 @@ describe('ObservationListItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        TestHostComponent
-      ],
-      imports: [
+    imports: [
         ObservationListItemComponent,
         NoopAnimationsModule,
-        MatSnackBarModule
-      ],
-      providers: [
+        MatSnackBarModule,
+        TestHostComponent
+    ],
+    providers: [
         {
-          provide: MapService,
-          useClass: MockMapService
+            provide: MapService,
+            useClass: MockMapService
         },
         {
-          provide: SessionService,
-          useClass: MockSessionService
+            provide: SessionService,
+            useClass: MockSessionService
         },
         {
-          provide: EventService,
-          useClass: MockEventService
+            provide: EventService,
+            useClass: MockEventService
         },
         {
-          provide: LocalStorageService,
-          useClass: MockLocalStorageService
+            provide: LocalStorageService,
+            useClass: MockLocalStorageService
         }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.observationListItem;
+    component = hostComponent.observationListItem();
   });
 
   it('should create', () => {

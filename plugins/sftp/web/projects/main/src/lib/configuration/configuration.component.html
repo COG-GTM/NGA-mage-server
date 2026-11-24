@@ -1,16 +1,20 @@
 <div class="plugin">
-  <div *ngIf="loadError" class="error-banner">
-    <mat-icon>error</mat-icon>
-    <span>{{loadError}}</span>
-  </div>
-
-  <div *ngIf="lastTestResult" class="status-banner"
-    [class.connected]="lastTestResult.success" [class.disconnected]="!lastTestResult.success">
-    <mat-icon>{{lastTestResult.success ? 'check' : 'cloud_off'}}</mat-icon>
-    <div class="status-info">
-      <span class="status-text">{{lastTestResult.message}}</span>
+  @if (loadError) {
+    <div class="error-banner">
+      <mat-icon>error</mat-icon>
+      <span>{{loadError}}</span>
     </div>
-  </div>
+  }
+
+  @if (lastTestResult) {
+    <div class="status-banner"
+      [class.connected]="lastTestResult.success" [class.disconnected]="!lastTestResult.success">
+      <mat-icon>{{lastTestResult.success ? 'check' : 'cloud_off'}}</mat-icon>
+      <div class="status-info">
+        <span class="status-text">{{lastTestResult.message}}</span>
+      </div>
+    </div>
+  }
 
   <div class="configuration">
     <mat-card class="card">
@@ -27,9 +31,11 @@
           <mat-form-field appearance="fill">
             <mat-label>Observation SFTP Format</mat-label>
             <mat-select [(ngModel)]="configuration.archiveFormat" required>
-              <mat-option *ngFor="let format of formats" [value]="configuration.archiveFormat">
-                {{format}}
-              </mat-option>
+              @for (format of formats; track format) {
+                <mat-option [value]="configuration.archiveFormat">
+                  {{format}}
+                </mat-option>
+              }
             </mat-select>
             <mat-hint>Format for Observation metadata within SFTP archive.</mat-hint>
           </mat-form-field>
@@ -38,10 +44,12 @@
         <div class="radio-group-container">
           <span class="radio-label">Observation SFTP Rule</span>
           <mat-radio-group class="radio-group" [(ngModel)]="configuration.initiation.rule">
-            <mat-radio-button class="radio-button" color="primary" *ngFor="let rule of triggerRules"
-              [value]="rule.value">
-              <span class="radio-button-label">{{rule.title}}</span>
-            </mat-radio-button>
+            @for (rule of triggerRules; track rule) {
+              <mat-radio-button class="radio-button" color="primary"
+                [value]="rule.value">
+                <span class="radio-button-label">{{rule.title}}</span>
+              </mat-radio-button>
+            }
           </mat-radio-group>
           <mat-hint class="hint">Rule indicating when to SFTP observation</mat-hint>
         </div>
@@ -55,10 +63,12 @@
         <div class="radio-group-container">
           <span class="radio-label">Observation SFTP Success Action</span>
           <mat-radio-group class="radio-group" [(ngModel)]="configuration.completionAction">
-            <mat-radio-button class="radio-button" color="primary" *ngFor="let action of completionActions"
-              [value]="action">
-              <span class="radio-button-label">{{action}}</span>
-            </mat-radio-button>
+            @for (action of completionActions; track action) {
+              <mat-radio-button class="radio-button" color="primary"
+                [value]="action">
+                <span class="radio-button-label">{{action}}</span>
+              </mat-radio-button>
+            }
           </mat-radio-group>
           <mat-hint class="hint">Action to perform on observation after successful SFTP</mat-hint>
         </div>
@@ -82,42 +92,56 @@
         <div class="radio-group-container">
           <span class="radio-label">Event Filter Mode</span>
           <mat-radio-group class="radio-group" [(ngModel)]="configuration.eventFilterMode">
-            <mat-radio-button class="radio-button" color="primary" *ngFor="let mode of eventFilterModes"
-              [value]="mode.value">
-              <span class="radio-button-label">{{mode.title}}</span>
-              <span class="radio-button-description">{{mode.description}}</span>
-            </mat-radio-button>
+            @for (mode of eventFilterModes; track mode) {
+              <mat-radio-button class="radio-button" color="primary"
+                [value]="mode.value">
+                <span class="radio-button-label">{{mode.title}}</span>
+                <span class="radio-button-description">{{mode.description}}</span>
+              </mat-radio-button>
+            }
           </mat-radio-group>
           <mat-hint class="hint">Choose which events to sync observations from</mat-hint>
         </div>
 
-        <div *ngIf="configuration.eventFilterMode !== 'all'" class="event-selection-container">
-          <span class="radio-label">
-            {{configuration.eventFilterMode === 'include' ? 'Select events to sync' : 'Select events to exclude'}}
-          </span>
-          <div *ngIf="availableEvents.length === 0" class="no-events-message">
-            No active events available
-          </div>
-          <div *ngIf="availableEvents.length > 0" class="event-picker">
-            <mat-form-field appearance="fill" class="event-search">
-              <mat-label>Search events</mat-label>
-              <input matInput type="text" [(ngModel)]="eventSearchQuery" placeholder="Filter by name...">
-              <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
-            <div class="event-list">
-              <mat-checkbox *ngFor="let event of filteredEvents" [checked]="isEventSelected(event.id)"
-                (change)="toggleEvent(event.id)" color="primary" class="event-checkbox">
-                {{event.name}}
-              </mat-checkbox>
-              <div *ngIf="filteredEvents.length === 0" class="no-events-message">
-                No events match "{{eventSearchQuery}}"
+        @if (configuration.eventFilterMode !== 'all') {
+          <div class="event-selection-container">
+            <span class="radio-label">
+              {{configuration.eventFilterMode === 'include' ? 'Select events to sync' : 'Select events to exclude'}}
+            </span>
+            @if (availableEvents.length === 0) {
+              <div class="no-events-message">
+                No active events available
               </div>
-            </div>
+            }
+            @if (availableEvents.length > 0) {
+              <div class="event-picker">
+                <mat-form-field appearance="fill" class="event-search">
+                  <mat-label>Search events</mat-label>
+                  <input matInput type="text" [(ngModel)]="eventSearchQuery" placeholder="Filter by name...">
+                  <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                <div class="event-list">
+                  @for (event of filteredEvents; track event) {
+                    <mat-checkbox [checked]="isEventSelected(event.id)"
+                      (change)="toggleEvent(event.id)" color="primary" class="event-checkbox">
+                      {{event.name}}
+                    </mat-checkbox>
+                  }
+                  @if (filteredEvents.length === 0) {
+                    <div class="no-events-message">
+                      No events match "{{eventSearchQuery}}"
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+            @if (configuration.events.length > 0) {
+              <mat-hint class="hint">
+                {{configuration.events.length | i18nPlural: eventsSelectedPluralMap}}
+              </mat-hint>
+            }
           </div>
-          <mat-hint class="hint" *ngIf="configuration.events.length > 0">
-            {{configuration.events.length | i18nPlural: eventsSelectedPluralMap}}
-          </mat-hint>
-        </div>
+        }
       </div>
     </mat-card>
   </div>
@@ -164,38 +188,50 @@
             </span>
           </div>
 
-          <div *ngIf="!showKeyInput" class="key-actions">
-            <button mat-stroked-button color="primary" (click)="toggleKeyInput()">
-              <mat-icon>{{hasPrivateKey ? 'edit' : 'add'}}</mat-icon>
-              {{hasPrivateKey ? 'Replace Private Key' : 'Add Private Key'}}
-            </button>
-          </div>
-
-          <div *ngIf="showKeyInput" class="key-input-section">
-            <mat-form-field appearance="fill">
-              <mat-label>Paste OpenSSH Private Key</mat-label>
-              <textarea matInput [(ngModel)]="privateKeyText" rows="8"
-                placeholder="-----BEGIN OPENSSH PRIVATE KEY-----&#10;...&#10;-----END OPENSSH PRIVATE KEY-----"></textarea>
-              <mat-hint>Paste your OpenSSH private key (PEM format). The key is stored securely on the server and is
-                never displayed after saving.</mat-hint>
-            </mat-form-field>
-            <div class="key-input-actions">
-              <button mat-flat-button color="primary" (click)="savePrivateKey()"
-                [disabled]="isSavingKey || !privateKeyText.trim()">
-                <mat-spinner *ngIf="isSavingKey" diameter="20" class="button-spinner"></mat-spinner>
-                <mat-icon *ngIf="!isSavingKey">save</mat-icon>
-                {{isSavingKey ? 'Saving...' : 'Save Key'}}
+          @if (!showKeyInput) {
+            <div class="key-actions">
+              <button mat-stroked-button color="primary" (click)="toggleKeyInput()">
+                <mat-icon>{{hasPrivateKey ? 'edit' : 'add'}}</mat-icon>
+                {{hasPrivateKey ? 'Replace Private Key' : 'Add Private Key'}}
               </button>
-              <button mat-stroked-button (click)="toggleKeyInput()">Cancel</button>
             </div>
-          </div>
+          }
+
+          @if (showKeyInput) {
+            <div class="key-input-section">
+              <mat-form-field appearance="fill">
+                <mat-label>Paste OpenSSH Private Key</mat-label>
+                <textarea matInput [(ngModel)]="privateKeyText" rows="8"
+                placeholder="-----BEGIN OPENSSH PRIVATE KEY-----&#10;...&#10;-----END OPENSSH PRIVATE KEY-----"></textarea>
+                <mat-hint>Paste your OpenSSH private key (PEM format). The key is stored securely on the server and is
+                never displayed after saving.</mat-hint>
+              </mat-form-field>
+              <div class="key-input-actions">
+                <button mat-flat-button color="primary" (click)="savePrivateKey()"
+                  [disabled]="isSavingKey || !privateKeyText.trim()">
+                  @if (isSavingKey) {
+                    <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+                  }
+                  @if (!isSavingKey) {
+                    <mat-icon>save</mat-icon>
+                  }
+                  {{isSavingKey ? 'Saving...' : 'Save Key'}}
+                </button>
+                <button mat-stroked-button (click)="toggleKeyInput()">Cancel</button>
+              </div>
+            </div>
+          }
         </div>
 
         <div class="form-field-container">
           <button mat-stroked-button color="primary" (click)="testConnection()"
             [disabled]="isTesting || !configuration.sftpClient.host">
-            <mat-spinner *ngIf="isTesting" diameter="20" class="button-spinner"></mat-spinner>
-            <mat-icon *ngIf="!isTesting">wifi_tethering</mat-icon>
+            @if (isTesting) {
+              <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+            }
+            @if (!isTesting) {
+              <mat-icon>wifi_tethering</mat-icon>
+            }
             {{isTesting ? 'Testing...' : 'Test Connection'}}
           </button>
         </div>
@@ -205,12 +241,18 @@
 
   <div class="bottom-actions">
     <button mat-flat-button color="primary" (click)="save()" [disabled]="isSaving || !hasUnsavedChanges">
-      <mat-spinner *ngIf="isSaving" diameter="20" class="button-spinner"></mat-spinner>
-      <mat-icon *ngIf="!isSaving">save</mat-icon>
+      @if (isSaving) {
+        <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+      }
+      @if (!isSaving) {
+        <mat-icon>save</mat-icon>
+      }
       {{isSaving ? 'Saving...' : 'Save Configuration'}}
     </button>
     <button mat-stroked-button color="warn" (click)="resetToDefaults()" [disabled]="isResetting">
-      <mat-spinner *ngIf="isResetting" diameter="20" class="button-spinner"></mat-spinner>
+      @if (isResetting) {
+        <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+      }
       {{isResetting ? 'Resetting...' : 'Reset to Defaults'}}
     </button>
   </div>

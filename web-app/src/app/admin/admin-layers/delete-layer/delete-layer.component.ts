@@ -1,4 +1,4 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { MatDialogRef as MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { LayersService, Layer } from '../layers.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,17 +18,21 @@ import { A11yModule } from '@angular/cdk/a11y';
     ]
 })
 export class DeleteLayerComponent {
+    dialogRef = inject<MatDialogRef<DeleteLayerComponent>>(MatDialogRef);
+    data = inject<{
+    layer: Layer;
+}>(MAT_DIALOG_DATA);
+    private layersService = inject(LayersService);
+
     // set once - never being reassigned, no signal declaration necessary
     layer: Layer;
     
     readonly deleting = signal(false);
     readonly error = signal<string | null>(null);
 
-    constructor(
-        public dialogRef: MatDialogRef<DeleteLayerComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { layer: Layer },
-        private layersService: LayersService
-    ) {
+    constructor() {
+        const data = this.data;
+
         this.layer = data.layer;
     }
 

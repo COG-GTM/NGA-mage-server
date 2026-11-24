@@ -5,9 +5,11 @@
         <mat-icon>arrow_back</mat-icon>
       </button>
       <span class="toolbar__title">Export</span>
-      <a matIconButton *ngIf="item.status === exportStatus.Completed" href="{{item.url}}?access_token={{token}}" matTooltip="Download" aria-label="Download">
-        <mat-icon class="material-icons-outlined">download</mat-icon>
-      </a>
+      @if (item.status === exportStatus.Completed) {
+        <a matIconButton href="{{item.url}}?access_token={{token}}" matTooltip="Download" aria-label="Download">
+          <mat-icon class="material-icons-outlined">download</mat-icon>
+        </a>
+      }
       <button matIconButton (click)="deleteExport(item)" matTooltip="Delete" aria-label="Delete">
         <mat-icon class="material-icons-outlined">delete</mat-icon>
       </button>
@@ -17,119 +19,173 @@
     <mat-card-content>
       <mat-chip-set class="chips">
         <mat-chip>{{item.exportType}}</mat-chip>
-        <mat-chip *ngIf="item.status === exportStatus.Completed" class="chip__complete">
-          <mat-icon matChipAvatar>check</mat-icon>
-          Complete
-        </mat-chip>
-        <mat-chip *ngIf="item.status === exportStatus.Running" class="chip__running">
-          <span matChipAvatar><mat-spinner diameter="16"></mat-spinner></span>
-          <span>Running</span>
-        </mat-chip>
-        <mat-chip *ngIf="item.status === exportStatus.Failed" class="chip__failed">
-          <mat-icon matChipAvatar>error_outline</mat-icon>
-          Failed
-        </mat-chip>
+        @if (item.status === exportStatus.Completed) {
+          <mat-chip class="chip__complete">
+            <mat-icon matChipAvatar>check</mat-icon>
+            Complete
+          </mat-chip>
+        }
+        @if (item.status === exportStatus.Running) {
+          <mat-chip class="chip__running">
+            <span matChipAvatar><mat-spinner diameter="16"></mat-spinner></span>
+            <span>Running</span>
+          </mat-chip>
+        }
+        @if (item.status === exportStatus.Failed) {
+          <mat-chip class="chip__failed">
+            <mat-icon matChipAvatar>error_outline</mat-icon>
+            Failed
+          </mat-chip>
+        }
       </mat-chip-set>
       <mat-card-title-group>
         <mat-card-title>{{item.options?.event?.name}}</mat-card-title>
-        <mat-card-subtitle *ngIf="item.status === exportStatus.Completed">
-          <div *ngIf="summaryStart && summaryEnd">
-            <div class="text">{{formatSummaryDate(summaryStart)}} - {{formatSummaryDate(summaryEnd)}}</div>
-          </div>
-          <div class="text" *ngIf="item.options?.filter?.observations || item.options?.filter?.locations">
-            <span *ngIf="item.summary?.observations?.count !== undefined" [ngPlural]="item.summary?.observations?.count || 0">
-              <ng-template ngPluralCase="=1">
-                <span>{{item.summary?.observations?.count}} Observation</span>
-              </ng-template>
-              <ng-template ngPluralCase="other">
-                <span>{{item.summary?.observations?.count || 0}} Observations</span>
-              </ng-template>
-            </span>
-            <span *ngIf="item.summary?.observations?.count !== undefined || item.summary?.locations?.count !== undefined"> and </span>
-            <span *ngIf="item.summary?.locations?.count !== undefined" [ngPlural]="item.summary?.locations?.count || 0">
-              <ng-template ngPluralCase="=1">
-                <span>{{item.summary?.locations?.count}} Location</span>
-              </ng-template>
-              <ng-template ngPluralCase="other">
-                <span>{{item.summary?.locations?.count || 0}} Locations</span>
-              </ng-template>
-            </span>
-          </div>
-        </mat-card-subtitle>
-      </mat-card-title-group>
-      <div *ngIf="item.options?.filter?.observations" class="export-options">
-        <div *ngIf="item.options?.filter?.observations?.includeAttachments; else noAttachments" class="attachment-status">
-          <mat-icon class="attachment-status__icon attachment-status__icon--included">attach_file</mat-icon>
-          <span>Attachments included</span>
-        </div>
-        <ng-template #noAttachments>
-          <div class="attachment-status attachment-status--excluded">
-            <mat-icon class="attachment-status__icon">attach_file</mat-icon>
-            <span>No attachments</span>
-          </div>
-        </ng-template>
-      </div>
-
-      <div *ngIf="memberFilterLabels.length || hasObservationFilter" class="filter-section">
-        <div *ngIf="memberFilterLabels.length" class="filter-group">
-          <div class="filter-group__label">Members / Teams</div>
-          <mat-chip-set>
-            <mat-chip *ngFor="let label of memberFilterLabels">
-              <mat-icon matChipAvatar>{{label.type === 'team' ? 'group' : 'person'}}</mat-icon>
-              {{label.name}}
-            </mat-chip>
-          </mat-chip-set>
-        </div>
-        <div *ngIf="keywordFilter" class="filter-group">
-          <div class="filter-group__label">Keyword</div>
-          <span class="condition-field">{{keywordFilter}}</span>
-        </div>
-        <div *ngIf="conditionGroups.length" class="filter-group">
-          <div class="filter-group__label">Condition</div>
-          <div class="condition-groups">
-            <ng-container *ngFor="let group of conditionGroups; let lastGroup = last">
-              <div class="condition-group">
-                <ng-container *ngFor="let term of group; let lastTerm = last">
-                  <span class="condition-field">{{term.field}}</span>
-                  <span class="condition-operator">{{term.operator}}</span>
-                  <span *ngIf="term.value" class="condition-value">{{term.value}}</span>
-                  <span *ngIf="!lastTerm" class="condition-or">OR</span>
-                </ng-container>
+        @if (item.status === exportStatus.Completed) {
+          <mat-card-subtitle>
+            @if (summaryStart && summaryEnd) {
+              <div>
+                <div class="text">{{formatSummaryDate(summaryStart)}} - {{formatSummaryDate(summaryEnd)}}</div>
               </div>
-              <span *ngIf="!lastGroup" class="condition-and">and</span>
-            </ng-container>
-          </div>
+            }
+            @if (item.options?.filter?.observations || item.options?.filter?.locations) {
+              <div class="text">
+                @if (item.summary?.observations?.count !== undefined) {
+                  <span [ngPlural]="item.summary?.observations?.count || 0">
+                    <ng-template ngPluralCase="=1">
+                      <span>{{item.summary?.observations?.count}} Observation</span>
+                    </ng-template>
+                    <ng-template ngPluralCase="other">
+                      <span>{{item.summary?.observations?.count || 0}} Observations</span>
+                    </ng-template>
+                  </span>
+                }
+                @if (item.summary?.observations?.count !== undefined || item.summary?.locations?.count !== undefined) {
+                  <span> and </span>
+                }
+                @if (item.summary?.locations?.count !== undefined) {
+                  <span [ngPlural]="item.summary?.locations?.count || 0">
+                    <ng-template ngPluralCase="=1">
+                      <span>{{item.summary?.locations?.count}} Location</span>
+                    </ng-template>
+                    <ng-template ngPluralCase="other">
+                      <span>{{item.summary?.locations?.count || 0}} Locations</span>
+                    </ng-template>
+                  </span>
+                }
+              </div>
+            }
+          </mat-card-subtitle>
+        }
+      </mat-card-title-group>
+      @if (item.options?.filter?.observations) {
+        <div class="export-options">
+          @if (item.options?.filter?.observations?.includeAttachments) {
+            <div class="attachment-status">
+              <mat-icon class="attachment-status__icon attachment-status__icon--included">attach_file</mat-icon>
+              <span>Attachments included</span>
+            </div>
+          } @else {
+            <div class="attachment-status attachment-status--excluded">
+              <mat-icon class="attachment-status__icon">attach_file</mat-icon>
+              <span>No attachments</span>
+            </div>
+          }
+          <ng-template #noAttachments>
+            <div class="attachment-status attachment-status--excluded">
+              <mat-icon class="attachment-status__icon">attach_file</mat-icon>
+              <span>No attachments</span>
+            </div>
+          </ng-template>
         </div>
-      </div>
+      }
+
+      @if (memberFilterLabels.length || hasObservationFilter) {
+        <div class="filter-section">
+          @if (memberFilterLabels.length) {
+            <div class="filter-group">
+              <div class="filter-group__label">Members / Teams</div>
+              <mat-chip-set>
+                @for (label of memberFilterLabels; track label) {
+                  <mat-chip>
+                    <mat-icon matChipAvatar>{{label.type === 'team' ? 'group' : 'person'}}</mat-icon>
+                    {{label.name}}
+                  </mat-chip>
+                }
+              </mat-chip-set>
+            </div>
+          }
+          @if (keywordFilter) {
+            <div class="filter-group">
+              <div class="filter-group__label">Keyword</div>
+              <span class="condition-field">{{keywordFilter}}</span>
+            </div>
+          }
+          @if (conditionGroups.length) {
+            <div class="filter-group">
+              <div class="filter-group__label">Condition</div>
+              <div class="condition-groups">
+                @for (group of conditionGroups; track group; let lastGroup = $last) {
+                  <div class="condition-group">
+                    @for (term of group; track term; let lastTerm = $last) {
+                      <span class="condition-field">{{term.field}}</span>
+                      <span class="condition-operator">{{term.operator}}</span>
+                      @if (term.value) {
+                        <span class="condition-value">{{term.value}}</span>
+                      }
+                      @if (!lastTerm) {
+                        <span class="condition-or">OR</span>
+                      }
+                    }
+                  </div>
+                  @if (!lastGroup) {
+                    <span class="condition-and">and</span>
+                  }
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
 
       <div class="title mat-body-2">Form Fields</div>
       <div>
         <mat-accordion multi>
-          <mat-expansion-panel *ngFor="let formProjection of formProjections">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{formProjection.form.name}}
-              </mat-panel-title>
-              <mat-panel-description *ngIf="allFieldsSelected(formProjection)">
-                All Fields
-                <mat-icon class="material-symbols-outlined expansion-header-icon">check_box</mat-icon>
-              </mat-panel-description>
-              <mat-panel-description *ngIf="someFieldsSelected(formProjection)">
-                {{formProjection.selectedCount}}/{{formProjection.fieldProjections.length}} Fields
-                <mat-icon class="material-symbols-outlined expansion-header-icon">indeterminate_check_box</mat-icon>
-              </mat-panel-description>
-              <mat-panel-description *ngIf="noFieldsSelected(formProjection)">
-                No Fields
-                <mat-icon class="expansion-header-icon">check_box_outline_blank</mat-icon>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <div *ngFor="let fieldProjection of formProjection.fieldProjections" class="form__field">
-              <mat-checkbox *ngIf="!fieldProjection.field.archived" disabled [checked]="fieldProjection.selected">
-                {{fieldProjection.field.title}}
-              </mat-checkbox>
-            </div>
-          </mat-expansion-panel>
+          @for (formProjection of formProjections; track formProjection) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{formProjection.form.name}}
+                </mat-panel-title>
+                @if (allFieldsSelected(formProjection)) {
+                  <mat-panel-description>
+                    All Fields
+                    <mat-icon class="material-symbols-outlined expansion-header-icon">check_box</mat-icon>
+                  </mat-panel-description>
+                }
+                @if (someFieldsSelected(formProjection)) {
+                  <mat-panel-description>
+                    {{formProjection.selectedCount}}/{{formProjection.fieldProjections.length}} Fields
+                    <mat-icon class="material-symbols-outlined expansion-header-icon">indeterminate_check_box</mat-icon>
+                  </mat-panel-description>
+                }
+                @if (noFieldsSelected(formProjection)) {
+                  <mat-panel-description>
+                    No Fields
+                    <mat-icon class="expansion-header-icon">check_box_outline_blank</mat-icon>
+                  </mat-panel-description>
+                }
+              </mat-expansion-panel-header>
+              @for (fieldProjection of formProjection.fieldProjections; track fieldProjection) {
+                <div class="form__field">
+                  @if (!fieldProjection.field.archived) {
+                    <mat-checkbox disabled [checked]="fieldProjection.selected">
+                      {{fieldProjection.field.title}}
+                    </mat-checkbox>
+                  }
+                </div>
+              }
+            </mat-expansion-panel>
+          }
         </mat-accordion>
       </div>
 

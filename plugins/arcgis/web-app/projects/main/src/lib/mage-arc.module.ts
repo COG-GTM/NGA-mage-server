@@ -29,43 +29,41 @@ import { ArcLayerDeleteDialogComponent } from './arc-layer/arc-layer-delete-dial
 import { ArcPushStatusComponent } from './arc-push-status/arc-push-status.component';
 
 @NgModule({
-  declarations: [
-    ArcEventComponent,
-    ArcLayerComponent,
-    ArcLayerDialogComponent,
-    ArcLayerDeleteDialogComponent,
-    ArcPushStatusComponent,
-    ArcAdminComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatTableModule,
-    MatTabsModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    MatProgressSpinnerModule,
-  ],
-  providers: [provideHttpClient(withInterceptorsFromDi())],
-  exports: [
-    ArcAdminComponent,
-    ArcLayerComponent,
-    ArcEventComponent
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatCardModule,
+        MatDatepickerModule,
+        MatDialogModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatNativeDateModule,
+        MatPaginatorModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTableModule,
+        MatTabsModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MatProgressSpinnerModule,
+        ArcEventComponent,
+        ArcLayerComponent,
+        ArcLayerDialogComponent,
+        ArcLayerDeleteDialogComponent,
+        ArcPushStatusComponent,
+        ArcAdminComponent,
+    ],
+    providers: [provideHttpClient(withInterceptorsFromDi())],
+    exports: [
+        ArcAdminComponent,
+        ArcLayerComponent,
+        ArcEventComponent
+    ]
 })
 export class MageArcModule { }

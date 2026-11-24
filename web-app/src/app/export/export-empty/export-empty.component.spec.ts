@@ -9,9 +9,8 @@ describe('ExportEmptyComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [MatButtonModule, MatIconModule],
-      declarations: [ExportEmptyComponent]
-    }).compileComponents();
+    imports: [MatButtonModule, MatIconModule, ExportEmptyComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

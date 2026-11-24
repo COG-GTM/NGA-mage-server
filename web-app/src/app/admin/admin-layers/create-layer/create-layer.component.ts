@@ -43,6 +43,10 @@ import { ImageryLayerConfig, ImageryLayerSettingsComponent } from '../imagery-la
     ]
 })
 export class CreateLayerDialogComponent {
+  dialogRef = inject<MatDialogRef<CreateLayerDialogComponent>>(MatDialogRef);
+  private fb = inject(FormBuilder);
+  private layersService = inject(LayersService);
+
   layerForm: FormGroup;
   formStatus: Signal<FormControlStatus>;
   errorMessage = signal('');
@@ -65,11 +69,7 @@ export class CreateLayerDialogComponent {
 
   data = inject<{ layer: Partial<Layer> }>(MAT_DIALOG_DATA);
 
-  constructor(
-    public dialogRef: MatDialogRef<CreateLayerDialogComponent>,
-    private fb: FormBuilder,
-    private layersService: LayersService
-  ) {
+  constructor() {
     this.isEditMode = this.data.layer?.id != null;
 
     this.layerForm = this.fb.group({

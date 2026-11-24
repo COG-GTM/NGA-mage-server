@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -18,7 +18,7 @@ describe('ChooseServiceTopicComponent', () => {
       [selectedTopic]="selectedTopic"
     >
     </app-choose-service-topic>`,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatExpansionModule, MatSelectModule, NgxMatSelectSearchModule, AdminFeedEditTopicComponent]
 })
   class TestHostComponent {
     services: Service[];
@@ -26,8 +26,7 @@ describe('ChooseServiceTopicComponent', () => {
     selectedService: Service;
     selectedTopic: FeedTopic;
 
-    @ViewChild(AdminFeedEditTopicComponent, { static: true })
-    public chooseServiceTopicComponent: AdminFeedEditTopicComponent;
+    public readonly chooseServiceTopicComponent = viewChild(AdminFeedEditTopicComponent);
   }
 
   let fixture: ComponentFixture<TestHostComponent>;
@@ -39,23 +38,23 @@ describe('ChooseServiceTopicComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         FormsModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
         MatExpansionModule,
         MatSelectModule,
         NgxMatSelectSearchModule,
-        AdminFeedEditTopicComponent
-      ],
-      declarations: [TestHostComponent]
-    }).compileComponents();
+        AdminFeedEditTopicComponent,
+        TestHostComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     host = fixture.componentInstance;
-    target = host.chooseServiceTopicComponent;
+    target = host.chooseServiceTopicComponent();
     element = fixture.nativeElement;
     serviceSelected = jasmine.createSpy('serviceSelected');
     topicSelected = jasmine.createSpy('topicSelected');
@@ -449,7 +448,7 @@ describe('ChooseServiceTopicComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(target.topics).toBe(topics1);
+    expect(target.topics()).toBe(topics1);
     expect(target.selectedTopic).toBe(topics1[1]);
 
     const topics2: FeedTopic[] = [
@@ -461,7 +460,7 @@ describe('ChooseServiceTopicComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(target.topics).toBe(topics2);
+    expect(target.topics()).toBe(topics2);
     expect(target.selectedTopic).not.toBe(topics1[1]);
     expect(target.selectedTopic).toBe(topics2[1]);
     expect(topicSelected).not.toHaveBeenCalled();

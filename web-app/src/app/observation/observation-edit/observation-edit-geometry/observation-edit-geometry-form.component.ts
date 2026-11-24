@@ -1,18 +1,21 @@
-import { Component, Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core'
-import { AbstractControl, FormControl, FormGroup, NgModel, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms'
+import { Component, Directive, Input, OnChanges, OnInit, SimpleChanges, ViewContainerRef, inject, input, output, viewChild } from '@angular/core'
+import { AbstractControl, FormControl, FormGroup, NgModel, NG_VALIDATORS, ValidationErrors, Validator, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar'
 import mgrs from 'mgrs'
 import { Dimension, DimensionKey, DMSCoordinate, DMSParseError } from 'src/app/geometry/geometry-dms'
 import * as DMS from 'src/app/geometry/geometry-dms'
-import { createMask } from '@ngneat/input-mask'
+import { createMask, InputMaskModule } from '@ngneat/input-mask'
 import { LocalStorageService } from '../../../http/local-storage.service'
 import { MapService, FeatureEdit } from '../../../map/map.service'
 import { GeometryService } from '../../../geometry/geometry.service'
+import { MatChipListbox, MatChipOption } from '@angular/material/chips';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Directive({
     selector: '[mgrs][formControlName],[mgrs][formControl],[mgrs][ngModel]',
-    providers: [{ provide: NG_VALIDATORS, useExisting: MGRSValidatorDirective, multi: true }],
-    standalone: false
+    providers: [{ provide: NG_VALIDATORS, useExisting: MGRSValidatorDirective, multi: true }]
 })
 export class MGRSValidatorDirective implements Validator {
 
@@ -33,18 +36,17 @@ export class MGRSValidatorDirective implements Validator {
 
 @Directive({
     selector: '[dmsValidation][formControlName],[dmsValidation][formControl],[dmsValidation][ngModel]',
-    providers: [{ provide: NG_VALIDATORS, useExisting: DMSValidatorDirective, multi: true }],
-    standalone: false
+    providers: [{ provide: NG_VALIDATORS, useExisting: DMSValidatorDirective, multi: true }]
 })
 export class DMSValidatorDirective implements Validator {
 
-  @Input()
-  dmsValidation: 'latitude' | 'longitude'
+  readonly dmsValidation = input<'latitude' | 'longitude'>(undefined);
 
   validate(control: AbstractControl): ValidationErrors | null {
-    if (this.dmsValidation === 'latitude' && DMS.validateLatitude(control.value)) {
+    const dmsValidation = this.dmsValidation();
+    if (dmsValidation === 'latitude' && DMS.validateLatitude(control.value)) {
       return null
-    } else if (this.dmsValidation === 'longitude' && DMS.validateLongitude(control.value)) {
+    } else if (dmsValidation === 'longitude' && DMS.validateLongitude(control.value)) {
       return null
     }
     const error: ValidationErrors | null = {
@@ -67,16 +69,21 @@ type DMSFormValue = Partial<{ [DimensionKey.Latitude]: string, [DimensionKey.Lon
         { provide: NG_VALIDATORS, useExisting: MGRSValidatorDirective, multi: true },
         { provide: NG_VALIDATORS, useExisting: DMSValidatorDirective, multi: true }
     ],
-    standalone: false
+    imports: [MatChipListbox, MatChipOption, MatFormField, MatLabel, MatInput, FormsModule, MatError, ReactiveFormsModule, InputMaskModule, MatButton]
 })
 export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
+  private mapService = inject(MapService);
+  private geometryService = inject(GeometryService);
+  private localStorageService = inject(LocalStorageService);
+  private snackBar = inject(MatSnackBar);
+
 
   @Input() feature: any
-  @Output() save = new EventEmitter<any>()
-  @Output() cancel = new EventEmitter<any>()
+  readonly save = output<any>();
+  readonly cancel = output<any>();
 
-  @ViewChild('mgrsModel') mgrsModel: NgModel;
-  @ViewChild('snackbarContainer', { read: ViewContainerRef }) snackBarContainer: ViewContainerRef;
+  readonly mgrsModel = viewChild<NgModel>('mgrsModel');
+  readonly snackBarContainer = viewChild('snackbarContainer', { read: ViewContainerRef });
 
   selectedShapeType = 'Point'
   coordinateSystem = 'wgs84'
@@ -98,11 +105,7 @@ export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
     mask: `999° 99' 99" (E|W)`,
   })
 
-  constructor(
-    private mapService: MapService,
-    private geometryService: GeometryService,
-    private localStorageService: LocalStorageService,
-    private snackBar: MatSnackBar)
+  constructor()
   {
     this.coordinateSystem = this.localStorageService.getCoordinateSystemEdit()
   }
@@ -166,7 +169,8 @@ export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
 
   onCancel(): void {
     this.featureEdit?.cancel()
-    this.cancel.emit()
+    // TODO: The 'emit' function requires a mandatory any argument
+    this.cancel.emit(undefined)
   }
 
   coordinateSystemChange(coordinateSystem: CoordinateSystemKey): void {
@@ -251,7 +255,7 @@ export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
   }
 
   onMgrsChange(): void {
-    if (this.mgrsModel.control.invalid) {
+    if (this.mgrsModel().control.invalid) {
       return
     }
     const [ lon, lat ] = mgrs.toPoint(this.mgrs)
@@ -337,7 +341,7 @@ export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
     this.coordinateEditSource = null
     if (from !== 'mgrs') {
       this.mgrs = this.toMgrs(this.feature)
-      this.mgrsModel.control.setValue(this.mgrs, {emitEvent:false, emitViewToModelChange:false, emitModelToViewChange:true})
+      this.mgrsModel().control.setValue(this.mgrs, {emitEvent:false, emitViewToModelChange:false, emitModelToViewChange:true})
     }
     if (from !== 'dms') {
       this.dmsForm.setValue({

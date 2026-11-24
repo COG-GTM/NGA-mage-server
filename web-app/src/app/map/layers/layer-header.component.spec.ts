@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LayerHeaderComponent } from './layer-header.component';
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { MapLayerService } from './layer.service';
 import { By } from '@angular/platform-browser';
 import { RenderedMapLayer } from '../entities.map-layer';
@@ -20,7 +20,7 @@ class TestHostComponent {
 
   layer = gridLayer;
 
-  @ViewChild(LayerHeaderComponent) layerHeader!: LayerHeaderComponent;
+  readonly layerHeader = viewChild.required(LayerHeaderComponent);
 }
 
 describe('LayerHeaderComponent', () => {
@@ -40,7 +40,7 @@ describe('LayerHeaderComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.layerHeader
+    component = hostComponent.layerHeader()
   });
 
   it('should create', () => {

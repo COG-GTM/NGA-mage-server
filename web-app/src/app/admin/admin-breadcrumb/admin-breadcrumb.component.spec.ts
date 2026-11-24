@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AdminBreadcrumbComponent } from './admin-breadcrumb.component';
 import { AdminBreadcrumb } from './admin-breadcrumb.model';
@@ -13,13 +13,12 @@ describe('AdminBreadcrumbComponent', () => {
     template: `<admin-breadcrumb
       [breadcrumbs]="breadcrumbs"
     ></admin-breadcrumb>`,
-    standalone: false
+    imports: [MatIconTestingModule, MatIconModule, RouterTestingModule, AdminBreadcrumbComponent]
 })
   class TestHostComponent {
     breadcrumbs: AdminBreadcrumb[];
 
-    @ViewChild(AdminBreadcrumbComponent, { static: true })
-    adminBreadcrumbComponent: AdminBreadcrumbComponent;
+    readonly adminBreadcrumbComponent = viewChild(AdminBreadcrumbComponent);
   }
 
   let hostComponent: TestHostComponent;
@@ -29,16 +28,15 @@ describe('AdminBreadcrumbComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [MatIconTestingModule, MatIconModule, RouterTestingModule, AdminBreadcrumbComponent],
-      declarations: [TestHostComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+    imports: [MatIconTestingModule, MatIconModule, RouterTestingModule, AdminBreadcrumbComponent, TestHostComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
-    component = hostComponent.adminBreadcrumbComponent;
+    component = hostComponent.adminBreadcrumbComponent();
     element = fixture.nativeElement;
     fixture.detectChanges();
   });

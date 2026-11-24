@@ -17,7 +17,7 @@ import { UserDetailsEditComponent } from './user-details/user-details-edit/user-
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginsComponent } from '../admin-logins/admin-logins.component';
 import { UserDashboardComponent } from './dashboard/user-dashboard.component';
-import { UserAvatarModule } from 'src/app/user/user-avatar/user-avatar.module';
+
 import { CreateUserModalComponent } from './create-user/create-user.component';
 import { MatFormFieldModule as MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule as MatInputModule } from '@angular/material/input';
@@ -49,7 +49,6 @@ import { RouterModule } from '@angular/router';
     MatDividerModule,
     MatProgressSpinnerModule,
     LoginsComponent,
-    UserAvatarModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -69,7 +68,7 @@ import { RouterModule } from '@angular/router';
     ChangePasswordComponent,
     CreateUserModalComponent,
     UserSearchBoxComponent
-  ],
+],
   exports: [
     UserDetailsComponent,
     UserDashboardComponent,

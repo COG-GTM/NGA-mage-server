@@ -1,5 +1,5 @@
 import { HttpClient, HttpContext, HttpEvent, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { BYPASS_TOKEN, SUPPRESS_AUTH_DIALOG } from '../http/token.interceptor';
 import { EventPreference, User } from 'core-lib-src/user';
@@ -10,11 +10,9 @@ import { IdpSigninResult } from '../entities/authentication/authentication';
   providedIn: 'root'
 })
 export class UserService {
+  private httpClient = inject(HttpClient);
+  private sessionService = inject(SessionService);
 
-  constructor(
-    private httpClient: HttpClient,
-    private sessionService: SessionService
-  ) {}
 
   signup(username: string): Observable<any> {
     return this.httpClient.post<any>(

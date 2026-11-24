@@ -9,9 +9,8 @@ describe('ObservationViewCheckboxComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ObservationViewCheckboxComponent ],
-      imports: [MatCheckboxModule]
-    })
+    imports: [MatCheckboxModule, ObservationViewCheckboxComponent]
+})
     .compileComponents();
   }));
 

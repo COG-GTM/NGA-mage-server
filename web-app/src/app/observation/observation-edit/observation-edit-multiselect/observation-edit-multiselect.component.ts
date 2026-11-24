@@ -1,11 +1,15 @@
-import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { Component, ElementRef, Input, OnInit, input, viewChild } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete, MatOptgroup, MatOption } from '@angular/material/autocomplete';
+import { MatChipInputEvent, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { RecentChoice } from 'core-lib-src/user';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { NgClass, AsyncPipe } from '@angular/common';
 
 interface Choice {
   title: string;
@@ -23,11 +27,11 @@ interface MultiSelectField {
     selector: 'observation-edit-multiselect',
     templateUrl: './observation-edit-multiselect.component.html',
     styleUrls: ['./observation-edit-multiselect.component.scss'],
-    standalone: false
+    imports: [MatFormField, FormsModule, ReactiveFormsModule, MatLabel, MatChipGrid, MatChipRow, MatIcon, MatChipRemove, MatInput, MatAutocompleteTrigger, MatChipInput, MatAutocomplete, MatOptgroup, MatOption, NgClass, MatError, AsyncPipe]
 })
 export class ObservationEditMultiselectComponent implements OnInit {
-  @Input() formGroup!: UntypedFormGroup
-  @Input() definition!: MultiSelectField
+  readonly formGroup = input.required<UntypedFormGroup>();
+  readonly definition = input.required<MultiSelectField>();
 
   private _recentChoices: RecentChoice[] = []
   @Input()
@@ -38,8 +42,8 @@ export class ObservationEditMultiselectComponent implements OnInit {
     return this._recentChoices
   }
 
-  @ViewChild('choiceInput', { static: false }) choiceInput!: ElementRef<HTMLInputElement>
-  @ViewChild(MatAutocompleteTrigger, { static: false }) autocomplete!: MatAutocompleteTrigger
+  readonly choiceInput = viewChild.required<ElementRef<HTMLInputElement>>('choiceInput');
+  readonly autocomplete = viewChild.required(MatAutocompleteTrigger);
 
   separatorKeysCodes: number[] = [ENTER, COMMA]
   control!: UntypedFormControl
@@ -49,18 +53,18 @@ export class ObservationEditMultiselectComponent implements OnInit {
   recentChoices$: Observable<Choice[]>
 
   ngOnInit(): void {
-    this.control = this.formGroup.get(this.definition.name) as UntypedFormControl
+    this.control = this.formGroup().get(this.definition().name) as UntypedFormControl
 
-    this.recentChoicesFromDefinition = this.definition.maxRecent
+    this.recentChoicesFromDefinition = this.definition().maxRecent
       ? this.recentChoices
-        .map(recent => this.definition.choices.find(choice => choice.title === recent))
+        .map(recent => this.definition().choices.find(choice => choice.title === recent))
         .filter((choice): choice is Choice => choice !== undefined)
       : []
 
     this.filteredChoices$ = this.choiceControl.valueChanges.pipe(
       startWith(''),
       map(value => !value || typeof value === 'string' ? value : value.title),
-      map(title => title ? this.filter(title) : this.definition.choices.slice())
+      map(title => title ? this.filter(title) : this.definition().choices.slice())
     )
 
     this.recentChoices$ = this.choiceControl.valueChanges.pipe(
@@ -71,12 +75,12 @@ export class ObservationEditMultiselectComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    const choice = this.definition.choices.find((choice: Choice) => choice.title === event.value)
+    const choice = this.definition().choices.find((choice: Choice) => choice.title === event.value)
     if (!choice) return
 
     this.addChoice(choice.title)
-    this.choiceInput.nativeElement.value = ''
-    this.autocomplete.closePanel()
+    this.choiceInput().nativeElement.value = ''
+    this.autocomplete().closePanel()
   }
 
   remove(choice: string): void {
@@ -93,7 +97,7 @@ export class ObservationEditMultiselectComponent implements OnInit {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.addChoice(event.option.value)
-    this.choiceInput.nativeElement.value = ''
+    this.choiceInput().nativeElement.value = ''
   }
 
   private addChoice(choice: string): void {
@@ -111,6 +115,6 @@ export class ObservationEditMultiselectComponent implements OnInit {
 
   private filter(value: string): Choice[] {
     const filterValue = value.toLowerCase()
-    return this.definition.choices.filter(option => option.title.toLowerCase().indexOf(filterValue) === 0)
+    return this.definition().choices.filter(option => option.title.toLowerCase().indexOf(filterValue) === 0)
   }
 }

@@ -1,17 +1,4 @@
-import {
-  Component,
-  DestroyRef,
-  Injector,
-  afterNextRender,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  TemplateRef,
-  ViewChild,
-  signal
-} from '@angular/core';
+import { Component, DestroyRef, Injector, afterNextRender, OnInit, Input, ElementRef, TemplateRef, signal, inject, output, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -52,13 +39,18 @@ interface IconMetadata {
     ]
 })
 export class UserDetailsEditComponent implements OnInit {
+  private userService = inject(UserService);
+  private sessionService = inject(SessionService);
+  private destroyRef = inject(DestroyRef);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+  private injector = inject(Injector);
+
   @Input() user!: User;
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>;
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
-  @Output() saved = new EventEmitter<User>();
-  @Output() cancelled = new EventEmitter<void>();
+  readonly saved = output<User>();
+  readonly cancelled = output<void>();
 
   get canEditRole(): boolean {
     return this.sessionService.hasPermission('UPDATE_USER_ROLE');
@@ -76,18 +68,10 @@ export class UserDetailsEditComponent implements OnInit {
   removeIconSelected = false;
   iconMetadata: IconMetadata = { type: 'none' };
 
-  @ViewChild('mapIconCanvas') mapIconCanvasRef?: ElementRef<HTMLCanvasElement>;
-
-  constructor(
-    private userService: UserService,
-    private sessionService: SessionService,
-    private destroyRef: DestroyRef,
-    private breadcrumbService: AdminBreadcrumbService,
-    private injector: Injector
-  ) {}
+  readonly mapIconCanvasRef = viewChild<ElementRef<HTMLCanvasElement>>('mapIconCanvas');
 
   ngOnInit(): void {
-    this.breadcrumbService.setActions(this.breadcrumbActions);
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     this.editUser = { ...this.user } as EditableUser;
 
@@ -204,7 +188,7 @@ export class UserDetailsEditComponent implements OnInit {
   }
 
   private updateMapIconCanvas(): void {
-    const canvas = this.mapIconCanvasRef?.nativeElement;
+    const canvas = this.mapIconCanvasRef()?.nativeElement;
     if (!canvas || this.iconMetadata.type !== 'create') return;
     const color = this.iconMetadata.color || '#007bff';
     const text = (this.iconMetadata.text || '').toUpperCase().slice(0, 2);
@@ -364,7 +348,7 @@ export class UserDetailsEditComponent implements OnInit {
       userToSave['icon'] = null;
       userToSave['iconMetadata'] = JSON.stringify({ type: 'none' });
     } else if (this.iconMetadata.type === 'create') {
-      const canvas = this.mapIconCanvasRef?.nativeElement;
+      const canvas = this.mapIconCanvasRef()?.nativeElement;
       if (canvas) {
         const blob = this.canvasToPng(canvas);
         if (blob) userToSave['icon'] = blob as any;

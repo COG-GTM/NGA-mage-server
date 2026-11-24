@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError as MatError, MatFormFieldModule as MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +12,7 @@ import { ObservationEditNumberComponent } from './observation-edit-number.compon
     selector: `host-component`,
     template: `<observation-edit-number [definition]="definition" [formGroup]="formGroup"></observation-edit-number>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, ObservationEditNumberComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({
@@ -25,7 +25,7 @@ class TestHostComponent {
   }
 
 
-  @ViewChild(ObservationEditNumberComponent) component: ObservationEditNumberComponent
+  readonly component = viewChild(ObservationEditNumberComponent);
 }
 
 describe('ObservationEditNumberComponent', () => {
@@ -35,9 +35,8 @@ describe('ObservationEditNumberComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule],
-      declarations: [ObservationEditNumberComponent, TestHostComponent]
-    })
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule, ObservationEditNumberComponent, TestHostComponent]
+})
     .compileComponents()
   }))
 
@@ -45,7 +44,7 @@ describe('ObservationEditNumberComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
     fixture.detectChanges();
-    component = hostComponent.component
+    component = hostComponent.component()
   })
 
   it('should create', () => {
@@ -55,7 +54,7 @@ describe('ObservationEditNumberComponent', () => {
   it('should not indicate required', async () => {
     component.definition.required = false
 
-    const control = component.formGroup.get('number')
+    const control = component.formGroup().get('number')
     control.clearValidators()
     control.updateValueAndValidity()
 
@@ -70,7 +69,7 @@ describe('ObservationEditNumberComponent', () => {
   it('should indicate required', async () => {
     component.definition.required = true
 
-    const control = component.formGroup.get('number')
+    const control = component.formGroup().get('number')
     control.setValidators(Validators.required)
     control.updateValueAndValidity()
 
@@ -83,7 +82,7 @@ describe('ObservationEditNumberComponent', () => {
   it('should show error on invalid and touched', async () => {
     component.definition.required = true
 
-    const control = component.formGroup.get('number')
+    const control = component.formGroup().get('number')
     control.setValidators(Validators.required)
     control.updateValueAndValidity()
     control.markAsTouched()
@@ -99,7 +98,7 @@ describe('ObservationEditNumberComponent', () => {
   it('should not show error on invalid if not touched', async () => {
     component.definition.required = true
 
-    const control = component.formGroup.get('number')
+    const control = component.formGroup().get('number')
     control.setValidators(Validators.required)
     control.updateValueAndValidity()
 

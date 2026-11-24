@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialog as MatDialog, MatDialogModule as MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,13 +8,12 @@ import { AdminEventFormPreviewComponent } from './admin-event-form-preview.compo
 
 @Component({
     template: '<admin-event-form-preview [formDefinition]="formDefinition"></admin-event-form-preview>',
-    standalone: false
+    imports: [AdminEventFormPreviewComponent]
 })
 class TestHostComponent {
   formDefinition: any
 
-  @ViewChild(AdminEventFormPreviewComponent, { static: true })
-  public adminEventFormPreviewComponent: AdminEventFormPreviewComponent
+  public readonly adminEventFormPreviewComponent = viewChild(AdminEventFormPreviewComponent);
 }
 
 class MatDialogMock {
@@ -33,19 +32,18 @@ describe('AdminEventFormPreviewComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, MatDialogModule, AdminEventFormPreviewComponent],
-      declarations: [TestHostComponent],
-      providers: [{
-        provide: MatDialog, useClass: MatDialogMock
-      }]
-    })
+    imports: [BrowserAnimationsModule, MatDialogModule, AdminEventFormPreviewComponent, TestHostComponent],
+    providers: [{
+            provide: MatDialog, useClass: MatDialogMock
+        }]
+})
     .compileComponents()
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
-    component = hostComponent.adminEventFormPreviewComponent
+    component = hostComponent.adminEventFormPreviewComponent()
     dialog = TestBed.inject(MatDialog)
     fixture.detectChanges()
   });

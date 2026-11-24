@@ -12,12 +12,12 @@ const CHILD_STATES: [Ng2StateDeclaration] = [{
 }];
 
 @NgModule({
-  declarations: [ImageComponent],
-  imports: [
-    CommonModule,
-    UIRouterUpgradeModule.forChild({ states: CHILD_STATES })
-  ],
-  exports: [ImageComponent]
+    imports: [
+        CommonModule,
+        UIRouterUpgradeModule.forChild({ states: CHILD_STATES }),
+        ImageComponent
+    ],
+    exports: [ImageComponent]
 })
 export class PluginModule {
   static rootState() {

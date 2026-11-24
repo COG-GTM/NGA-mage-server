@@ -11,8 +11,7 @@ describe('Local Authentication Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [LocalAuthenticationComponent],
-    imports: [MatFormFieldModule, AuthenticationButtonComponent],
+    imports: [MatFormFieldModule, AuthenticationButtonComponent, LocalAuthenticationComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 }).compileComponents();
   }));

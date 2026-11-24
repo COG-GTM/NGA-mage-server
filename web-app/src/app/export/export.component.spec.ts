@@ -12,14 +12,14 @@ describe('ExportComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [ExportComponent],
-            providers: [
-                provideHttpClient(withInterceptorsFromDi()),
-                provideHttpClientTesting(),
-                provideNoopAnimations()
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
-        }).compileComponents();
+    imports: [ExportComponent],
+    providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        provideNoopAnimations()
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
     }));
 
     beforeEach(() => {

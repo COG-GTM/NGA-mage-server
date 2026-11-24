@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MapSettings } from 'src/app/entities/map/entities.map';
 
@@ -7,8 +7,8 @@ import { MapSettings } from 'src/app/entities/map/entities.map';
   providedIn: 'root'
 })
 export class MapSettingsService {
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
 
   getMapSettings(): Observable<MapSettings> {
     return this.http.get<any>('/api/settings/map');

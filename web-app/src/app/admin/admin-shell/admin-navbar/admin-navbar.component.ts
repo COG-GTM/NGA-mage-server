@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../../user/user.service';
 import { SidenavService } from '../sidenav.service';
@@ -21,11 +21,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ]
 })
 export class AdminNavbarComponent {
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private sidenavService: SidenavService
-  ) {}
+  private userService = inject(UserService);
+  private router = inject(Router);
+  private sidenavService = inject(SidenavService);
+
 
   toggleSidenav(): void {
     this.sidenavService.toggle();

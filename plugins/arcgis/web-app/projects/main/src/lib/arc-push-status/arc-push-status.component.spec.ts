@@ -34,7 +34,7 @@ describe('Arc Push Status - layer counts', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
+    imports: [
         FormsModule,
         MatSelectModule,
         MatFormFieldModule,
@@ -42,11 +42,11 @@ describe('Arc Push Status - layer counts', () => {
         MatTableModule,
         MatPaginatorModule,
         MatProgressSpinnerModule,
-        MatTooltipModule
-      ],
-      declarations: [ArcPushStatusComponent],
-      providers: [ArcService, provideHttpClient(), provideHttpClientTesting()]
-    }).compileComponents();
+        MatTooltipModule,
+        ArcPushStatusComponent
+    ],
+    providers: [ArcService, provideHttpClient(), provideHttpClientTesting()]
+}).compileComponents();
 
     httpMock = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(ArcPushStatusComponent);

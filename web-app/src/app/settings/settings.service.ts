@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { filter, map, Observable } from "rxjs";
 
 interface Setting {
@@ -22,7 +22,8 @@ export interface Banner {
   providedIn: 'root'
 })
 export class SettingsService {
-  constructor(private httpClient: HttpClient) { }
+  private httpClient = inject(HttpClient);
+
 
   getBanner(): Observable<Banners> {
     return this.httpClient.get<Setting>('/api/settings/banner')

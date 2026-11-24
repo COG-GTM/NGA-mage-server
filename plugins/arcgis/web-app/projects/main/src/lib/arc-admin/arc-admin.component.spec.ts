@@ -1,3 +1,6 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ArcLayerComponent } from '../arc-layer/arc-layer.component';
+import { ArcEventComponent } from '../arc-event/arc-event.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
@@ -14,10 +17,15 @@ describe('Arc Admin - Attributes tab', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule],
-      declarations: [ArcAdminComponent],
-      providers: [ArcService, provideHttpClient(), provideHttpClientTesting()]
-    }).compileComponents();
+    imports: [MatDialogModule, ArcAdminComponent],
+    providers: [ArcService, provideHttpClient(), provideHttpClientTesting()]
+})
+    // Keep the shallow render the NgModule-declared spec had: child tabs are not under test here.
+    .overrideComponent(ArcAdminComponent, {
+      remove: { imports: [ArcLayerComponent, ArcEventComponent] },
+      add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] }
+    })
+    .compileComponents();
 
     httpMock = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(ArcAdminComponent);

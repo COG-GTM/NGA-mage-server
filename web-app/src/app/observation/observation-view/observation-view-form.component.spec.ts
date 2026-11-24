@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatSelectModule as MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +13,7 @@ import { MatCheckboxModule as MatCheckboxModule } from '@angular/material/checkb
     [form]="form"
     [geometryStyle]="geometryStyle"
   ></observation-view-form>`,
-    standalone: false
+    imports: [MatSelectModule, MatIconModule, MatFormFieldModule, MatCardModule, MatCheckboxModule, ObservationViewFormComponent]
 })
 class TestHostComponent {
   form = {
@@ -22,8 +22,7 @@ class TestHostComponent {
   };
   geometryStyle = {};
 
-  @ViewChild(ObservationViewFormComponent)
-  component: ObservationViewFormComponent;
+  readonly component = viewChild(ObservationViewFormComponent);
 }
 
 describe('ObservationViewFormComponent', () => {
@@ -33,22 +32,22 @@ describe('ObservationViewFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         MatSelectModule,
         MatIconModule,
         MatFormFieldModule,
         MatCardModule,
-        MatCheckboxModule
-      ],
-      declarations: [ObservationViewFormComponent, TestHostComponent]
-    }).compileComponents();
+        MatCheckboxModule,
+        ObservationViewFormComponent, TestHostComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.component;
+    component = hostComponent.component();
   });
 
   it('should create', () => {

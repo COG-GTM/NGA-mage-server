@@ -8,15 +8,15 @@ import { MomentModule } from '../../../moment/moment.module'
 import { StaticIconModule } from '@ngageoint/mage.web-core-lib/static-icon'
 
 @NgModule({
-  declarations: [FeedItemSummaryComponent],
-  exports: [FeedItemSummaryComponent],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatCardModule,
-    MatRippleModule,
-    MomentModule,
-    StaticIconModule
-  ]
+    exports: [FeedItemSummaryComponent],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatCardModule,
+        MatRippleModule,
+        MomentModule,
+        StaticIconModule,
+        FeedItemSummaryComponent
+    ]
 })
 export class FeedItemSummaryModule { }

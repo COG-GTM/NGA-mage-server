@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core'
-import { AbstractControl, ControlValueAccessor, UntypedFormControl, UntypedFormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, Validators } from '@angular/forms'
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges, inject } from '@angular/core'
+import { AbstractControl, ControlValueAccessor, UntypedFormControl, UntypedFormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { StaticIconReference } from '../static-icon.model'
 import { StaticIconService } from '../static-icon.service'
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'mage-static-icon-form-field',
@@ -19,9 +20,12 @@ import { StaticIconService } from '../static-icon.service'
             useExisting: StaticIconFormFieldComponent
         },
     ],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatButton]
 })
 export class StaticIconFormFieldComponent implements OnChanges, OnDestroy, ControlValueAccessor, Validator {
+  private iconService = inject(StaticIconService);
+  private ref = inject(ChangeDetectorRef);
+
 
   iconRef: StaticIconReference = null
 
@@ -45,10 +49,10 @@ export class StaticIconFormFieldComponent implements OnChanges, OnDestroy, Contr
   private onValidatorChange: () => void = () => {}
   private onTouched: () => void = () => {}
 
-  constructor(
-    private iconService: StaticIconService,
-    private ref: ChangeDetectorRef
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.form.valueChanges.subscribe((x: IconRefFormValue) => {
       this.iconRef = iconRefForFormValue(x)
       this.onChange(this.iconRef)

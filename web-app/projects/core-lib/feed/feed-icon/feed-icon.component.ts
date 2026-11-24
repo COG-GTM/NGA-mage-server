@@ -1,7 +1,10 @@
-import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { contentPathOfIcon, StaticIconService } from '@ngageoint/mage.web-core-lib/static-icon';
+import { NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatBadge } from '@angular/material/badge';
 
 export interface MaterialIconReference {
   name: string
@@ -34,12 +37,16 @@ export interface FileIconReference {
 export type IconReference = MaterialIconReference | SourceUrlIconReference | RegisteredIconReference | FileIconReference
 
 @Component({
-  selector: 'feed-icon',
-  templateUrl: './feed-icon.component.html',
-  styleUrls: ['./feed-icon.component.scss'],
-  standalone: false
+    selector: 'feed-icon',
+    templateUrl: './feed-icon.component.html',
+    styleUrls: ['./feed-icon.component.scss'],
+    imports: [NgClass, MatIcon, MatBadge]
 })
 export class FeedIconComponent implements OnChanges, OnDestroy {
+  private iconService = inject(StaticIconService);
+  private httpClient = inject(HttpClient);
+  private sanitizer = inject(DomSanitizer);
+
   @Input() icon: IconReference
   @Input() active: Boolean = false
   @Input() size: number = 24
@@ -50,11 +57,10 @@ export class FeedIconComponent implements OnChanges, OnDestroy {
 
   private blobUrl: string | null = null
 
-  constructor(
-    private iconService: StaticIconService,
-    private httpClient: HttpClient,
-    private sanitizer: DomSanitizer
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.icon?.currentValue) {

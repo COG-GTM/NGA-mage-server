@@ -14,13 +14,13 @@ describe('ExportListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ExportListComponent],
-      providers: [
+    imports: [ExportListComponent],
+    providers: [
         { provide: ExportService, useValue: exportService },
         { provide: SidebarService, useValue: sidebarService }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

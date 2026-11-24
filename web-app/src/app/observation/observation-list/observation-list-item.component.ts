@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, input, OnChanges, signal, SimpleChanges, ViewChild } from '@angular/core'
+import { Component, DestroyRef, inject, input, OnChanges, signal, SimpleChanges, viewChild } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { NgClass } from '@angular/common'
 import { FormsModule } from '@angular/forms'
@@ -12,7 +12,7 @@ import { MatRipple, MatRippleModule } from '@angular/material/core';
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { animate, style, transition, trigger } from '@angular/animations'
-import { GeometryModule } from '../../geometry/geometry.module'
+
 import { MomentModule } from '../../moment/moment.module'
 import { AttachmentCarouselComponent } from '../attachment/attachment-carousel.component'
 import { SidebarService } from '../../sidebar/sidebar.service'
@@ -20,6 +20,7 @@ import { MapService } from '../../map/map.service';
 import { EventService } from '../../event/event.service';
 import { SessionService } from 'mage-web-app/http/session.service';
 import { AttachmentProcessingStatus } from '../../entities/observation/entities.observation';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 
 interface ImportantEditorState {
   open: boolean
@@ -42,19 +43,19 @@ interface ImportantEditorState {
         ])
     ],
     imports: [
-        NgClass,
-        FormsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatRippleModule,
-        MatTooltipModule,
-        GeometryModule,
-        MomentModule,
-        AttachmentCarouselComponent
-    ]
+    NgClass,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRippleModule,
+    MatTooltipModule,
+    GeometryPipe,
+    MomentModule,
+    AttachmentCarouselComponent
+]
 })
 export class ObservationListItemComponent implements OnChanges {
   private readonly mapService: MapService = inject(MapService)
@@ -68,7 +69,7 @@ export class ObservationListItemComponent implements OnChanges {
   form = input<any>()
   observation = input<any>()
 
-  @ViewChild(MatRipple) ripple: MatRipple
+  readonly ripple = viewChild(MatRipple);
 
   edit = false
   canEdit = false
@@ -144,7 +145,7 @@ export class ObservationListItemComponent implements OnChanges {
   }
 
   onRipple(): void {
-    this.ripple.launch({
+    this.ripple().launch({
       centered: true
     })
   }

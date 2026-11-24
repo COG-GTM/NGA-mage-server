@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Observable, Subject } from 'rxjs'
 import { ArcGISPluginConfig } from './ArcGISPluginConfig'
 import { FeatureServiceConfig } from './ArcGISConfig'
@@ -115,10 +115,13 @@ export interface DiscoveryResult {
   providedIn: 'root'
 })
 export class ArcService implements ArcServiceInterface {
+  private http = inject(HttpClient);
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
 
   fetchArcConfig(): Observable<ArcGISPluginConfig> {
     return this.http.get<ArcGISPluginConfig>(`${baseUrl}/config`)

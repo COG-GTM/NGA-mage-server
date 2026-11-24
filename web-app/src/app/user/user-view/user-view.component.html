@@ -36,15 +36,19 @@
           </span>
         </mat-list-item>
 
-        <a mat-list-item href="tel:{{user.user.phones[0].number}}" *ngIf="user.user?.phones?.length" class="row-phone">
-          <mat-icon matListItemIcon>phone</mat-icon>
-          <span matListItemTitle>{{user.user.phones[0].number}}</span>
-        </a>
+        @if (user.user?.phones?.length) {
+          <a mat-list-item href="tel:{{user.user.phones[0].number}}" class="row-phone">
+            <mat-icon matListItemIcon>phone</mat-icon>
+            <span matListItemTitle>{{user.user.phones[0].number}}</span>
+          </a>
+        }
 
-        <a mat-list-item href="mailto:{{user.user.email}}" *ngIf="user.user.email" class="row-email">
-          <mat-icon matListItemIcon>email</mat-icon>
-          <span matListItemTitle>{{user.user.email}}</span>
-        </a>
+        @if (user.user.email) {
+          <a mat-list-item href="mailto:{{user.user.email}}" class="row-email">
+            <mat-icon matListItemIcon>email</mat-icon>
+            <span matListItemTitle>{{user.user.email}}</span>
+          </a>
+        }
       </mat-action-list>
     </mat-card-content>
   </mat-card>

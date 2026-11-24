@@ -10,8 +10,7 @@ describe('StaticIconImgComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [StaticIconImgComponent],
-    imports: [MageCommonModule],
+    imports: [MageCommonModule, StaticIconImgComponent],
     providers: [provideHttpClient(withInterceptorsFromDi())]
 })
     .compileComponents();

@@ -3,20 +3,28 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 
-  <span *ngIf="primary" class="title">{{ primary }}</span>
+  @if (primary) {
+    <span class="title">{{ primary }}</span>
+  }
 </mat-toolbar>
 
 <div class="feed-item">
   <mat-card class="feed-item__card">
     <div class="card-header">
       <div class="card-header-text">
-        <div *ngIf="date" class="card-overline">{{ date }}</div>
-        <div *ngIf="primary" class="card-title">{{ primary }}</div>
-        <div *ngIf="secondary" class="card-subtitle">{{ secondary }}</div>
+        @if (date) {
+          <div class="card-overline">{{ date }}</div>
+        }
+        @if (primary) {
+          <div class="card-title">{{ primary }}</div>
+        }
+        @if (secondary) {
+          <div class="card-subtitle">{{ secondary }}</div>
+        }
       </div>
 
       <div class="card-avatar">
-        <feed-icon [icon]="feed.icon" [active]="true"></feed-icon>
+        <feed-icon [icon]="feed().icon" [active]="true"></feed-icon>
       </div>
     </div>
 
@@ -27,7 +35,7 @@
     <div class="card-actions">
       <button matButton (click)="onLocationClick()">
         <mat-icon>gps_fixed</mat-icon>
-        <span>{{ item?.geometry | geometry:5 }}</span>
+        <span>{{ item()?.geometry | geometry:5 }}</span>
       </button>
     </div>
   </mat-card>
@@ -38,10 +46,12 @@
     </mat-card-header>
 
     <mat-list>
-      <mat-list-item *ngFor="let property of properties">
-        <span matListItemTitle class="prop-key">{{ property.key }}</span>
-        <span matListItemLine class="prop-value">{{ property.value }}</span>
-      </mat-list-item>
+      @for (property of properties; track property) {
+        <mat-list-item>
+          <span matListItemTitle class="prop-key">{{ property.key }}</span>
+          <span matListItemLine class="prop-value">{{ property.value }}</span>
+        </mat-list-item>
+      }
     </mat-list>
   </mat-card>
 </div>

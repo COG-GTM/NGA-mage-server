@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Inject, Input, OnInit, AfterViewInit, Output, TemplateRef, ViewChild, DestroyRef, inject } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, TemplateRef, DestroyRef, inject, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExportService } from '../export.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import moment from 'moment';
 import { EventService } from 'src/app/event/event.service';
 import { SidebarService } from 'src/app/sidebar/sidebar.service';
@@ -11,20 +11,37 @@ import { Export, ExportStatus, FormProjection } from '../entities.export';
 import { Condition } from '../../entities/observation/filter/entities.observation.filter';
 import { Team } from '../../entities/team/entities.team';
 import { Form } from '../../entities/event/entities.event';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatCard, MatCardContent, MatCardTitleGroup, MatCardTitle, MatCardSubtitle } from '@angular/material/card';
+import { MatChipSet, MatChip, MatChipAvatar } from '@angular/material/chips';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { NgPlural, NgPluralCase } from '@angular/common';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 
 type ConditionTerm = { field: string, operator: string, value?: string }
 
 @Component({
-  selector: 'export-view',
-  templateUrl: 'export-view.component.html',
-  styleUrls: ['./export-view.component.scss'],
-  standalone: false
+    selector: 'export-view',
+    templateUrl: 'export-view.component.html',
+    styleUrls: ['./export-view.component.scss'],
+    imports: [MatToolbar, MatToolbarRow, MatIconButton, MatIcon, MatTooltip, MatCard, MatCardContent, MatChipSet, MatChip, MatChipAvatar, MatProgressSpinner, MatCardTitleGroup, MatCardTitle, MatCardSubtitle, NgPlural, NgPluralCase, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatCheckbox, MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, MatDialogClose]
 })
 export class ExportViewComponent implements OnInit, AfterViewInit {
-  @Input() item: Export
-  @Output() close = new EventEmitter<void>()
+  private dialog = inject(MatDialog);
+  exportService = inject<ExportService>(ExportService);
+  private eventService = inject(EventService);
+  private sidebarService = inject(SidebarService);
+  private localStorageService = inject(LocalStorageService);
 
-  @ViewChild('deleteDialog') deleteDialog: TemplateRef<void>
+  @Input() item: Export
+  readonly close = output<void>();
+
+  readonly deleteDialog = viewChild<TemplateRef<void>>('deleteDialog');
 
   private destroyRef = inject(DestroyRef)
 
@@ -40,14 +57,9 @@ export class ExportViewComponent implements OnInit, AfterViewInit {
 
   disableAnimation = true;
 
-  constructor(
-    private dialog: MatDialog,
-    @Inject(ExportService) public exportService: ExportService,
-    private eventService: EventService,
-    private sidebarService: SidebarService,
-    private localStorageService: LocalStorageService,
-    sessionService: SessionService
-  ) {
+  constructor() {
+    const sessionService = inject(SessionService);
+
     this.token = sessionService.getToken()
     this.formProjections = []
   }
@@ -144,7 +156,7 @@ export class ExportViewComponent implements OnInit, AfterViewInit {
   }
 
   deleteExport(e: Export): void {
-    this.dialog.open(this.deleteDialog).afterClosed().subscribe(result => {
+    this.dialog.open(this.deleteDialog()).afterClosed().subscribe(result => {
       if (result === 'delete') {
         this.exportService.deleteExport(e.id).subscribe(() => {
           this.sidebarService.viewExport(null)

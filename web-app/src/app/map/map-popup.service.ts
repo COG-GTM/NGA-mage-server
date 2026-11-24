@@ -1,4 +1,4 @@
-import { Injectable, ComponentFactoryResolver, Injector, ApplicationRef } from '@angular/core';
+import { Injectable, ComponentFactoryResolver, Injector, ApplicationRef, inject } from '@angular/core';
 import { LeafletMouseEvent, Layer } from 'leaflet';
 import { UserPopupComponent } from '../user/user-popup/user-popup.component';
 import { ObservationPopupComponent } from '../observation/observation-popup/observation-popup.component';
@@ -10,11 +10,10 @@ import { FeedItemMapPopupComponent } from '../feed/feed-item/feed-item-map/feed-
   providedIn: 'root'
 })
 export class MapPopupService {
+  private componentFactoryResolver = inject(ComponentFactoryResolver);
+  private injector = inject(Injector);
+  private applicationRef = inject(ApplicationRef);
 
-  constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private injector: Injector,
-    private applicationRef: ApplicationRef,) { }
 
   public registerObservation(layer: Layer, observation: any): void {
     layer.on('click', ($event: LeafletMouseEvent) => this.popupObservation($event.target, observation));

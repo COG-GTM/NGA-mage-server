@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, DestroyRef, inject, signal, computed, linkedSignal, effect } from '@angular/core'
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, DestroyRef, inject, signal, computed, linkedSignal, effect, viewChild } from '@angular/core'
 import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { KeyValuePipe } from '@angular/common'
 import { MatDialog } from '@angular/material/dialog'
@@ -81,8 +81,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
 
   @ViewChild('restrictions', { static: false }) restrictionsForm?: NgForm
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   private route = inject(ActivatedRoute)
   private router = inject(Router)
@@ -265,7 +264,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.breadcrumbService.setActions(this.breadcrumbActions)
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null)
   }
 
   ngOnDestroy(): void {

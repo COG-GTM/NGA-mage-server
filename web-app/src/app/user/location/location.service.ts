@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core"
+import { Injectable, inject } from "@angular/core"
 import { MageEvent } from "@ngageoint/mage.web-core-lib/event";
 import { Observable } from "rxjs";
 
@@ -16,6 +16,8 @@ export type LocationsRequestOptions = {
   providedIn: 'root'
 })
 export class LocationService {
+  private httpClient = inject(HttpClient);
+
 
   // Specify times in milliseconds
   colorBuckets = [{
@@ -31,10 +33,6 @@ export class LocationService {
     max: Number.MAX_VALUE,
     color: '#FF5721' // orange
   }];
-
-  constructor(
-    private httpClient: HttpClient
-  ) {}
 
   create(eventId: number, location: any): Observable<any> {
     return this.httpClient.post<any>(`/api/events/${eventId}/locations/`, location)

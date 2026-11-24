@@ -1,14 +1,17 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { Api, AuthenticationStrategy } from '../api/api.entity';
 import { UserService } from '../user/user.service';
-import { AuthorizationEvent } from './authorization/authorization.component';
-import { DiscalimeCloseEvent, DiscalimerCloseReason } from './disclaimer/disclaimer.component';
+import { AuthorizationEvent, AuthorizationComponent } from './authorization/authorization.component';
+import { DiscalimeCloseEvent, DiscalimerCloseReason, DisclaimerComponent } from './disclaimer/disclaimer.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { SignupEvent } from './authentication/@types/signup';
 import { User } from 'core-lib-src/user';
-import { InitializedEvent } from './intialize/initialize.component';
+import { InitializedEvent, InitializeComponent } from './intialize/initialize.component';
 import * as _ from 'underscore';
 import { SessionService } from 'mage-web-app/http/session.service';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { SignupComponent } from './authentication/local/signup.component';
+import { AccountStatusComponent } from './account-status/account-status.component';
 
 enum IngressState {
   Initialize,
@@ -87,14 +90,17 @@ class Initialize extends Ingress {
             ])
         ])
     ],
-    standalone: false
+    imports: [AuthenticationComponent, AuthorizationComponent, DisclaimerComponent, SignupComponent, AccountStatusComponent, InitializeComponent]
 })
 export class IngressComponent implements OnChanges {
-  @Input() api: Api;
-  @Input() landing: boolean;
-  @Output() complete = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
-  @Output() title = new EventEmitter<string>();
+  private userService = inject(UserService);
+  private sessionService = inject(SessionService);
+
+  readonly api = input<Api>(undefined);
+  readonly landing = input<boolean>(undefined);
+  readonly complete = output<void>();
+  readonly cancel = output<void>();
+  readonly title = output<string>();
 
   public readonly IngressState: typeof IngressState = IngressState;
 
@@ -102,11 +108,6 @@ export class IngressComponent implements OnChanges {
   strategy: any;
   thirdPartyStrategies: any;
   localAuthenticationStrategy: any;
-
-  constructor(
-    private userService: UserService,
-    private sessionService: SessionService
-  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.api?.currentValue?.initial === true) {
@@ -121,7 +122,7 @@ export class IngressComponent implements OnChanges {
       [IngressState.Signin]: 'Sign in to Mage',
       [IngressState.Signup]: 'Create Account',
       [IngressState.Authorization]: 'Access Code',
-      [IngressState.Disclaimer]: this.api?.disclaimer?.title || 'Terms & Conditions',
+      [IngressState.Disclaimer]: this.api()?.disclaimer?.title || 'Terms & Conditions',
       [IngressState.ActiveAccount]: 'Account Created',
       [IngressState.InactiveAccount]: 'Account Pending',
       [IngressState.DisabledAccount]: 'Account Disabled',
@@ -174,7 +175,7 @@ export class IngressComponent implements OnChanges {
   }
 
   private authorized(token: string) {
-    if (this.api.disclaimer?.show === true) {
+    if (this.api().disclaimer?.show === true) {
       this.ingress = new Authorized(token);
       this.emitTitle();
     } else {
@@ -190,7 +191,7 @@ export class IngressComponent implements OnChanges {
       this.complete.emit();
     } else {
       this.sessionService.clearSession();
-      if (this.landing) {
+      if (this.landing()) {
         this.ingress = new Signin();
         this.emitTitle();
       } else {

@@ -1,13 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject, input, output } from '@angular/core';
 import { ArcGISPluginConfig, defaultArcGISPluginConfig } from '../ArcGISPluginConfig'
 import { FeatureLayerConfig, FeatureServiceConfig } from "../ArcGISConfig"
 import { ArcService, MageEvent } from '../arc.service'
@@ -15,14 +6,27 @@ import { ArcEventsModel } from './ArcEventsModel';
 import { ArcEvent } from './ArcEvent';
 import { ArcEventLayer } from './ArcEventLayer';
 import { Observable, Subscription } from 'rxjs';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatHint, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatDivider } from '@angular/material/list';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader } from '@angular/material/expansion';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { ArcPushStatusComponent } from '../arc-push-status/arc-push-status.component';
 
 @Component({
-  standalone: false,
-  selector: 'arc-event',
-  templateUrl: './arc-event.component.html',
-  styleUrls: ['./arc-event.component.scss']
+    selector: 'arc-event',
+    templateUrl: './arc-event.component.html',
+    styleUrls: ['./arc-event.component.scss'],
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatHint, MatCardContent, MatFormField, MatLabel, MatInput, FormsModule, MatDivider, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatSlideToggle, MatIconButton, MatIcon, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, MatButton, ArcPushStatusComponent]
 })
 export class ArcEventComponent implements OnInit, OnChanges, OnDestroy {
+  private arcService = inject(ArcService);
+
 
   @Input('config') config: ArcGISPluginConfig = defaultArcGISPluginConfig;
   private configSet = false;
@@ -37,9 +41,9 @@ export class ArcEventComponent implements OnInit, OnChanges, OnDestroy {
     return this._eventSet;
   }
 
-  @Input() configChangedNotifier: Observable<void>;
+  readonly configChangedNotifier = input<Observable<void>>(undefined!);
 
-  @Output() configChanged = new EventEmitter<ArcGISPluginConfig>();
+  readonly configChanged = output<ArcGISPluginConfig>();
 
   private _model: ArcEventsModel = new ArcEventsModel()
 
@@ -57,14 +61,17 @@ export class ArcEventComponent implements OnInit, OnChanges, OnDestroy {
   isSaving: boolean;
   private savedSnapshot: string = '[]';
 
-  constructor(private arcService: ArcService) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.config = defaultArcGISPluginConfig;
     this._model = new ArcEventsModel();
   }
 
   ngOnInit(): void {
     // detect changes in other tabs
-    this.configChangedSubscription = this.configChangedNotifier?.subscribe(() => this.refreshEventLayers());
+    this.configChangedSubscription = this.configChangedNotifier()?.subscribe(() => this.refreshEventLayers());
   }
 
   ngOnDestroy(): void {

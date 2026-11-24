@@ -11,15 +11,15 @@ describe('TimeFormat Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TimeFormatComponent],
-      imports: [
+    imports: [
         MatSelectModule,
         MatIconModule,
         MatFormFieldModule,
         BrowserAnimationsModule,
-        MatSelectModule
-      ]
-    }).compileComponents();
+        MatSelectModule,
+        TimeFormatComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

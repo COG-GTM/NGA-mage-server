@@ -1,10 +1,12 @@
+import { GeometryPipe } from '../../geometry/geometry.pipe';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MapClipComponent } from '../../map/clip/clip.component';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserViewComponent } from './user-view.component';
 import { MapService } from '../../map/map.service';
 import { LocationService } from '../location/location.service';
-import { GeometryModule } from '../../geometry/geometry.module';
 import { UserLocation } from '../../entities/user/entities.user-location';
 
 describe('UserViewComponent', () => {
@@ -38,14 +40,16 @@ describe('UserViewComponent', () => {
     const locationService = { colorBuckets };
 
     TestBed.configureTestingModule({
-      declarations: [UserViewComponent],
-      imports: [CommonModule, GeometryModule],
-      providers: [
+    imports: [CommonModule, GeometryPipe, UserViewComponent],
+    providers: [
         { provide: MapService, useValue: mapService },
         { provide: LocationService, useValue: locationService }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
+    // Map clip has its own spec; keep it out of this shallow render.
+    .overrideComponent(UserViewComponent, { remove: { imports: [MapClipComponent] }, add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] } })
+    .compileComponents();
   }));
 
   beforeEach(() => {

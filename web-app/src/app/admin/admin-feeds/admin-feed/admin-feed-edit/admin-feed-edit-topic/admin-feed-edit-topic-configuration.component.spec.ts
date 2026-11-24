@@ -1,9 +1,8 @@
 import {
   Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild
+  input,
+  output,
+  viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync, fakeAsync, tick } from '@angular/core/testing';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -13,17 +12,18 @@ import { AdminFeedEditTopicConfigurationComponent } from './admin-feed-edit-topi
 import { JsonSchemaFormWithServiceComponent } from '../../../../json-schema/json-schema.component';
 
 @Component({
+    imports: [AdminFeedEditTopicConfigurationComponent],
     selector: 'mage-json-schema-form',
-    template: ` <input [value]="data?.derp ?? ''" (input)="onInput($event)" /> `
+    template: ` <input [value]="data()?.derp ?? ''" (input)="onInput($event)" /> `
 })
 class MockJsonSchemaFormWithServiceComponent {
-  @Input() framework: any;
-  @Input() data: any;
-  @Input() layout: any;
-  @Input() schema: any;
-  @Input() options: any;
+  readonly framework = input<any>(undefined);
+  readonly data = input<any>(undefined);
+  readonly layout = input<any>(undefined);
+  readonly schema = input<any>(undefined);
+  readonly options = input<any>(undefined);
 
-  @Output() onChanges = new EventEmitter<any>();
+  readonly onChanges = output<any>();
 
   onInput(event: Event) {
     const value = Number((event.target as HTMLInputElement).value);
@@ -41,7 +41,7 @@ describe('TopicConfigurationComponent', () => {
       [initialFetchParameters]="initialFetchParameters"
     >
     </app-topic-configuration>`,
-    standalone: false
+    imports: [MatExpansionModule, AdminFeedEditTopicConfigurationComponent]
 })
   class TestHostComponent {
     expanded: boolean;
@@ -49,8 +49,7 @@ describe('TopicConfigurationComponent', () => {
     fetchParametersSchema = { properties: { derp: { type: 'number' } } };
     initialFetchParameters = { derp: 100 };
 
-    @ViewChild(AdminFeedEditTopicConfigurationComponent, { static: true })
-    public target: AdminFeedEditTopicConfigurationComponent;
+    public readonly target = viewChild(AdminFeedEditTopicConfigurationComponent);
   }
 
   let host: TestHostComponent;
@@ -60,9 +59,8 @@ describe('TopicConfigurationComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [MatExpansionModule, NoopAnimationsModule, AdminFeedEditTopicConfigurationComponent],
-      declarations: [TestHostComponent]
-    }).compileComponents();
+    imports: [MatExpansionModule, NoopAnimationsModule, AdminFeedEditTopicConfigurationComponent, TestHostComponent]
+}).compileComponents();
 
     TestBed.overrideComponent(AdminFeedEditTopicConfigurationComponent, {
       remove: { imports: [JsonSchemaFormWithServiceComponent] },
@@ -73,7 +71,7 @@ describe('TopicConfigurationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     host = fixture.componentInstance;
-    target = host.target;
+    target = host.target();
     element = fixture.nativeElement;
   });
 

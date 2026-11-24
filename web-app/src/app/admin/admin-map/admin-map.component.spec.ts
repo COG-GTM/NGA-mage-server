@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { MatInputModule as MatInputModule } from '@angular/material/input';
 import { By } from '@angular/platform-browser';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
@@ -18,10 +18,10 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 @Component({
     selector: 'host-component',
     template: `<mage-admin-map></mage-admin-map>`,
-    standalone: false
+    imports: [AdminMapComponent, MatInputModule, MatSnackBarModule, MatRadioModule, MatFormFieldModule, FormsModule]
 })
 class TestHostComponent {
-  @ViewChild(AdminMapComponent) component!: AdminMapComponent;
+  readonly component = viewChild.required(AdminMapComponent);
 }
 
 describe('AdminMapComponent', () => {
@@ -48,7 +48,6 @@ describe('AdminMapComponent', () => {
     mockMapSettingsService.updateMapSettings.and.returnValue(of({} as any));
 
     await TestBed.configureTestingModule({
-    declarations: [TestHostComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [AdminMapComponent,
         MatInputModule,
@@ -56,7 +55,7 @@ describe('AdminMapComponent', () => {
         MatRadioModule,
         MatFormFieldModule,
         NoopAnimationsModule,
-        FormsModule],
+        FormsModule, TestHostComponent],
     providers: [
         { provide: MapSettingsService, useValue: mockMapSettingsService },
         provideHttpClient(withInterceptorsFromDi()),
@@ -69,7 +68,7 @@ describe('AdminMapComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.component;
+    component = hostComponent.component();
   });
 
   it('should create', () => {

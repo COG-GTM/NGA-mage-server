@@ -2,8 +2,10 @@
   <mat-label>Update Frequency</mat-label>
   <mat-icon matIconPrefix>refresh</mat-icon>
   <mat-select [(value)]="pollingOption" (selectionChange)="updatePollingInterval($event)" [compareWith]="compareOption">
-    <mat-option *ngFor="let option of pollingOptions" [value]="option">
-      {{option.title}}
-    </mat-option>
+    @for (option of pollingOptions; track option) {
+      <mat-option [value]="option">
+        {{option.title}}
+      </mat-option>
+    }
   </mat-select>
 </mat-form-field>

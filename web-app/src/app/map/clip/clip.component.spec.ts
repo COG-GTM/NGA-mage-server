@@ -31,12 +31,12 @@ describe('MapClipComponent', () => {
     mapService = jasmine.createSpyObj('MapService', ['addListener', 'removeListener']);
 
     TestBed.configureTestingModule({
-      declarations: [MapClipComponent],
-      providers: [
+    imports: [MapClipComponent],
+    providers: [
         { provide: MapService, useValue: mapService },
         { provide: LocalStorageService, useValue: jasmine.createSpyObj('LocalStorageService', { getMapPosition: { center: { lat: 0, lng: 0 } } }) }
-      ]
-    });
+    ]
+});
 
     fixture = TestBed.createComponent(MapClipComponent);
     component = fixture.componentInstance;

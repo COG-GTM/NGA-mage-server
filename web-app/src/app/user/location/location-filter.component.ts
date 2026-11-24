@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit, signal, inject } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -24,6 +24,9 @@ import moment from 'moment'
   ]
 })
 export class LocationFilterDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<LocationFilterDialogComponent>>(MatDialogRef);
+  private filterService = inject(FilterService);
+
   mageEvent: any
   teams: any[]
   localOffset = moment().format('Z')
@@ -38,11 +41,6 @@ export class LocationFilterDialogComponent implements OnInit {
   startDate: Date
   defaultEndDate: Date
   endDate: Date
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationFilterDialogComponent>,
-    private filterService: FilterService
-  ) { }
 
   ngOnInit() {
     this.mageEvent = this.filterService.getEvent()

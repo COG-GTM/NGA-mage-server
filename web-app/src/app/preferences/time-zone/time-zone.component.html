@@ -2,8 +2,10 @@
   <mat-label>Time Zone</mat-label>
   <mat-icon matIconPrefix>language</mat-icon>
   <mat-select [(value)]="timezoneOption" (selectionChange)="updateTimeZone($event)" [compareWith]="compareOption">
-    <mat-option *ngFor="let option of timezoneOptions" [value]="option">
-      {{option.title}}
-    </mat-option>
+    @for (option of timezoneOptions; track option) {
+      <mat-option [value]="option">
+        {{option.title}}
+      </mat-option>
+    }
   </mat-select>
 </mat-form-field>

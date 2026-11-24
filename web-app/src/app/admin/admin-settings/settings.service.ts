@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -10,9 +10,9 @@ export interface SettingsResponse {
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
-  private readonly baseUrl = '/api/settings';
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private readonly baseUrl = '/api/settings';
 
   get(type: SettingsType, params?: Record<string, any>): Observable<SettingsResponse> {
     const httpParams = this.toParams(params);

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { IconReference } from '@ngageoint/mage.web-core-lib/feed/feed-icon';
+import { Component, input } from '@angular/core';
+import { IconReference, FeedIconModule } from '@ngageoint/mage.web-core-lib/feed/feed-icon';
+import { MatTooltip } from '@angular/material/tooltip';
 
 export interface FeedTab {
   id: string,
@@ -13,9 +14,9 @@ export interface FeedTab {
     selector: 'sidebar-tab',
     templateUrl: './sidebar-tab.component.html',
     styleUrls: ['./sidebar-tab.component.scss'],
-    standalone: false
+    imports: [FeedIconModule, MatTooltip]
 })
 export class SidebarTabComponent {
-  @Input() tab: FeedTab;
-  @Input() active: boolean;
+  readonly tab = input<FeedTab>(undefined);
+  readonly active = input<boolean>(undefined);
 }

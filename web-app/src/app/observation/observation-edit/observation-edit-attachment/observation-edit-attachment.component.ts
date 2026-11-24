@@ -1,6 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, inject, input } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { AttachmentAction } from './observation-edit-attachment-action';
+import { AttachmentComponent } from '../../attachment/attachment.component';
+import { AttachUploadComponent } from '../../attachment/attachment-upload/attachment-upload.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
 
 interface AttachmentField {
   title: string,
@@ -14,22 +18,22 @@ interface AttachmentField {
     selector: 'observation-edit-attachment',
     templateUrl: './observation-edit-attachment.component.html',
     styleUrls: ['./observation-edit-attachment.component.scss'],
-    standalone: false
+    imports: [AttachmentComponent, AttachUploadComponent, MatIcon, MatButton]
 })
 export class ObservationEditAttachmentComponent implements OnInit {
-  @Input() formGroup: UntypedFormGroup
-  @Input() definition: AttachmentField
-  @Input() url: string
+  private changeDetector = inject(ChangeDetectorRef);
+
+  readonly formGroup = input<UntypedFormGroup>(undefined);
+  readonly definition = input<AttachmentField>(undefined);
+  readonly url = input<string>(undefined);
   @Input() attachments: any[]
 
   control: UntypedFormControl
   uploadId = 0
   uploadAttachments = false
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
-
   ngOnInit(): void {
-    this.control = this.formGroup.get(this.definition.name) as UntypedFormControl
+    this.control = this.formGroup().get(this.definition().name) as UntypedFormControl
   }
 
   trackByAttachment(index: number, attachment: any): any {
@@ -37,10 +41,10 @@ export class ObservationEditAttachmentComponent implements OnInit {
   }
 
   allAttachments(): any[] {
-    const observationFormId = this.formGroup.get('id')?.value
+    const observationFormId = this.formGroup().get('id')?.value
     const attachments = (this.attachments || []).filter(attachment => {
       return attachment.observationFormId === observationFormId &&
-        attachment.fieldName === this.definition.name
+        attachment.fieldName === this.definition().name
     });
 
     return this.control.value ? attachments.concat(this.control.value) : attachments
@@ -53,7 +57,7 @@ export class ObservationEditAttachmentComponent implements OnInit {
       const id = this.uploadId++;
       attachments.push({
         id: id,
-        formId: this.formGroup.get('formId').value,
+        formId: this.formGroup().get('formId').value,
         name: file.name,
         size: file.size,
         contentType: file.type,

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, OnDestroy, TemplateRef, ViewChild, inject, signal } from '@angular/core'
+import { Component, DestroyRef, OnInit, OnDestroy, TemplateRef, inject, signal, viewChild } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Feed, Service, FeedService } from '@ngageoint/mage.web-core-lib/feed'
 import { MatDialog } from '@angular/material/dialog'
@@ -52,8 +52,7 @@ export class AdminFeedsComponent implements OnInit, OnDestroy {
     icon: 'rss_feed',
   }]
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   readonly services = signal<Service[]>([])
   private _services: Service[] = []
@@ -82,7 +81,7 @@ export class AdminFeedsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs)
-    this.breadcrumbService.setActions(this.breadcrumbActions)
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null)
 
     forkJoin({
       services: this.feedService.fetchServices(),

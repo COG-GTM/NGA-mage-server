@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { UntypedFormGroup } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,7 +17,7 @@ import { MapClipComponent } from 'src/app/map/clip/clip.component';
     [geometryStyle]="geometryStyle"
     [options]="options"
   ></observation-edit-form>`,
-    standalone: false
+    imports: [MatIconModule, MatCardModule, MatListModule, ObservationEditFormComponent, MapClipComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({});
@@ -30,8 +30,7 @@ class TestHostComponent {
     expand: false
   };
 
-  @ViewChild(ObservationEditFormComponent)
-  component: ObservationEditFormComponent;
+  readonly component = viewChild(ObservationEditFormComponent);
 }
 
 describe('ObservationEditFormComponent', () => {
@@ -41,16 +40,15 @@ describe('ObservationEditFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MatIconModule, MatCardModule, MatListModule ],
-      declarations: [ObservationEditFormComponent, TestHostComponent, MapClipComponent]
-    }).compileComponents();
+    imports: [NoopAnimationsModule, MatIconModule, MatCardModule, MatListModule, ObservationEditFormComponent, TestHostComponent, MapClipComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.component;
+    component = hostComponent.component();
   });
 
   it('should create', () => {

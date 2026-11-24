@@ -15,19 +15,19 @@ describe('FeedItemSummaryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [
-        { provide: MapService, useValue: { zoomToFeatureInLayer: () => {} } },
-        { provide: SidebarService, useValue: { selectFeedItem: () => {} } }
-      ],
-      imports: [
+    providers: [
+        { provide: MapService, useValue: { zoomToFeatureInLayer: () => { } } },
+        { provide: SidebarService, useValue: { selectFeedItem: () => { } } }
+    ],
+    imports: [
         MatCardModule,
         MatRippleModule,
         MatIconModule,
-        MomentModule
-      ],
-      declarations: [ FeedItemSummaryComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
-    })
+        MomentModule,
+        FeedItemSummaryComponent
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   }));
 

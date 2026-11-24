@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, signal, inject, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, Subject, catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,6 +44,12 @@ import { RouterLink } from '@angular/router';
     ]
 })
 export class EventDashboardComponent implements OnInit, OnDestroy {
+  private modal = inject(MatDialog);
+  private eventService = inject(AdminEventsService);
+  private sessionService = inject(SessionService);
+  private toastService = inject(AdminToastService);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   events: PageOf<MageEvent> | null = null;
   readonly filteredEvents = signal<MageEvent[]>([]);
 
@@ -66,19 +72,12 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
 
   breadcrumbs: AdminBreadcrumb[] = [{ title: 'Events', icon: 'event' }];
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>;
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   private readonly refresh$ = new Subject<void>();
   private readonly searchTerm$ = new Subject<string>();
 
-  constructor(
-    private modal: MatDialog,
-    private eventService: AdminEventsService,
-    private sessionService: SessionService,
-    private toastService: AdminToastService,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {
+  constructor() {
     this.refresh$
       .pipe(
         switchMap(() => this.eventService.getEvents(this.searchOptions).pipe(
@@ -106,7 +105,7 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
-    this.breadcrumbService.setActions(this.breadcrumbActions);
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     this.refreshEvents();
   }

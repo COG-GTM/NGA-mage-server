@@ -51,18 +51,17 @@ describe('ExportViewComponent', () => {
     sessionService.getToken.and.returnValue('token');
 
     TestBed.configureTestingModule({
-      imports: [MomentModule],
-      declarations: [ExportViewComponent],
-      providers: [
+    imports: [MomentModule, ExportViewComponent],
+    providers: [
         { provide: ExportService, useValue: exportService },
         { provide: EventService, useValue: eventService },
         { provide: SidebarService, useValue: sidebarService },
         { provide: SessionService, useValue: sessionService },
         { provide: MatDialog, useValue: dialog },
         provideNoopAnimations()
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

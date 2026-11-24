@@ -11,23 +11,22 @@ describe('Arc Layer Delete Dialog', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule],
-      declarations: [ArcLayerDeleteDialogComponent],
-      providers: [
+    imports: [MatDialogModule, ArcLayerDeleteDialogComponent],
+    providers: [
         provideHttpClient(),
         {
-          provide: MatDialogRef,
-          useValue: {
-            close: jasmine.createSpy('close')
-          }
+            provide: MatDialogRef,
+            useValue: {
+                close: jasmine.createSpy('close')
+            }
         },
         {
-          provide: MAT_DIALOG_DATA,
-          useValue: {} 
+            provide: MAT_DIALOG_DATA,
+            useValue: {}
         },
-        ArcService 
-      ]
-    }).compileComponents();
+        ArcService
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

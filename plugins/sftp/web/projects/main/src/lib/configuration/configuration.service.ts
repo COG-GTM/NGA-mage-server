@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SFTPPluginConfig, ConnectionTestResult, MageEventSummary } from '../entities/entities.format';
 
@@ -22,7 +22,12 @@ export interface ConfigurationApi {
   providedIn: 'root'
 })
 export class ConfigurationService implements ConfigurationApi {
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   getConfiguration(): Observable<SFTPPluginConfig> {
     return this.http.get<SFTPPluginConfig>(`${baseUrl}/configuration`);

@@ -1,8 +1,8 @@
-import { Component, DestroyRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, inject, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MapService } from '../map/map.service';
 import { FilterService } from '../filter/filter.service';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavContainer } from '@angular/material/sidenav';
 import { LocationService } from '../user/location/location.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'core-lib-src/user';
@@ -10,14 +10,25 @@ import * as _ from 'underscore';
 import { UserService } from '../user/user.service';
 import { MageEvent } from '@ngageoint/mage.web-core-lib/event';
 import { SessionService } from 'mage-web-app/http/session.service';
+import { NavigationComponent } from '../navigation/navigation.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { PreferencesComponent } from '../preferences/preferences.component';
+import { MapComponent } from '../map/map.component';
 
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
-    standalone: false
+    imports: [NavigationComponent, MatSidenavContainer, MatSidenav, SidebarComponent, PreferencesComponent, MapComponent]
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private filterService = inject(FilterService);
+  private locationService = inject(LocationService);
+  private activatedRoute = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
+
 
   map: any
   myself: User
@@ -25,16 +36,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   hideFeed: boolean = false
   newObservation: any
 
-  @ViewChild('feed') feed: MatSidenav
+  readonly feed = viewChild<MatSidenav>('feed');
 
-  constructor(
-    private mapService: MapService,
-    private sessionService: SessionService,
-    private filterService: FilterService,
-    private locationService: LocationService,
-    private activatedRoute: ActivatedRoute,
-    private destroyRef: DestroyRef
-  ) {
+  constructor() {
     this.sessionService.user$.subscribe((myself: User) => {
       this.myself = myself
     })
@@ -63,8 +67,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onAddObservation($event) {
-    if (!this.feed.opened) {
-      this.feed.toggle()
+    const feed = this.feed();
+    if (!feed.opened) {
+      feed.toggle()
     }
 
     this.newObservation = $event

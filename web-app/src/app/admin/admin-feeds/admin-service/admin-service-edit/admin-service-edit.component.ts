@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, DestroyRef, EventEmitter, Input, NgZone, OnInit, Output, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, NgZone, OnInit, inject, signal, input, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { take } from 'rxjs/operators';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -32,10 +32,10 @@ export class AdminServiceEditComponent implements OnInit {
   private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly ngZone: NgZone = inject(NgZone);
 
-  @Input() expanded = false;
-  @Output() serviceCreated = new EventEmitter<Service>();
-  @Output() cancelled = new EventEmitter<void>();
-  @Output() opened = new EventEmitter<void>();
+  readonly expanded = input(false);
+  readonly serviceCreated = output<Service>();
+  readonly cancelled = output<void>();
+  readonly opened = output<void>();
 
   serviceTitleSummarySchema: any;
   serviceConfiguration: any;

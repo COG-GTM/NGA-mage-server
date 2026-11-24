@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core'
 import { Api, AuthenticationStrategy } from '../../api/api.entity'
 import { User } from 'core-lib-src/user'
 import * as _ from 'underscore'
 import { SignupEvent } from './@types/signup'
+import { IdpAuthenticationComponent } from './idp/idp-authentication.component';
+import { LdapAuthenticationComponent } from './ldap/ldap-authentication.component';
+import { LocalAuthenticationComponent } from './local/local-authentication.component';
 
 export interface AuthenticationEvent {
   user: User,
@@ -13,15 +16,18 @@ export interface AuthenticationEvent {
     selector: 'authentication',
     templateUrl: './authentication.component.html',
     styleUrls: ['./authentication.component.scss'],
-    standalone: false
+    imports: [IdpAuthenticationComponent, LdapAuthenticationComponent, LocalAuthenticationComponent]
 })
 export class AuthenticationComponent implements OnChanges {
   @Input() api: Api
-  @Input() landing: boolean = false
+  readonly landing = input<boolean>(false);
 
-  @Output() signup = new EventEmitter<void>()
-  @Output() created = new EventEmitter<SignupEvent>()
-  @Output() authenticated = new EventEmitter<{ user: User, token: string}>()
+  readonly signup = output<void>();
+  readonly created = output<SignupEvent>();
+  readonly authenticated = output<{
+    user: User;
+    token: string;
+}>();
 
   strategy: any
   thirdPartyStrategies: any

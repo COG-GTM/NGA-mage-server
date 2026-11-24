@@ -12,23 +12,22 @@ describe('Arc Layer Dialog', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule, MatAutocompleteModule],
-      declarations: [ArcLayerDialogComponent],
-      providers: [
+    imports: [MatDialogModule, MatAutocompleteModule, ArcLayerDialogComponent],
+    providers: [
         provideHttpClient(),
         {
-          provide: MatDialogRef,
-          useValue: {
-            close: jasmine.createSpy('close')
-          }
+            provide: MatDialogRef,
+            useValue: {
+                close: jasmine.createSpy('close')
+            }
         },
         {
-          provide: MAT_DIALOG_DATA,
-          useValue: {}
+            provide: MAT_DIALOG_DATA,
+            useValue: {}
         },
         ArcService
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   UntypedFormControl,
@@ -21,7 +21,7 @@ import { ObservationEditCheckboxComponent } from './observation-edit-checkbox.co
     [definition]="definition"
     [formGroup]="formGroup"
   ></observation-edit-checkbox>`,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatCheckboxModule, ObservationEditCheckboxComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({
@@ -35,8 +35,7 @@ class TestHostComponent {
     value: true
   };
 
-  @ViewChild(ObservationEditCheckboxComponent)
-  component: ObservationEditCheckboxComponent;
+  readonly component = viewChild(ObservationEditCheckboxComponent);
 }
 
 let loader: HarnessLoader;
@@ -48,14 +47,14 @@ describe('ObservationEditCheckboxComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
-        MatCheckboxModule
-      ],
-      declarations: [ObservationEditCheckboxComponent, TestHostComponent]
-    }).compileComponents();
+        MatCheckboxModule,
+        ObservationEditCheckboxComponent, TestHostComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
@@ -63,7 +62,7 @@ describe('ObservationEditCheckboxComponent', () => {
     loader = TestbedHarnessEnvironment.loader(fixture);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.component;
+    component = hostComponent.component();
   });
 
   it('should create', () => {

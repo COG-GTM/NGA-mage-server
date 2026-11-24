@@ -1,31 +1,9 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag, CdkDragHandle } from "@angular/cdk/drag-drop";
 
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  EventEmitter,
-  Inject,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  QueryList,
-  SimpleChanges,
-  ViewChild,
-  ViewChildren,
-  DOCUMENT,
-  inject
-} from "@angular/core";
+import { Component, DestroyRef, ElementRef, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren, DOCUMENT, inject, input, output, viewChild } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import {
-  UntypedFormArray,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-} from "@angular/forms";
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 import { catchError, distinctUntilChanged, first, switchMap } from "rxjs/operators";
 import { of, Subject } from "rxjs";
@@ -37,7 +15,7 @@ import {
   MatSnackBarRef as MatSnackBarRef,
   SimpleSnackBar as SimpleSnackBar,
 } from "@angular/material/snack-bar";
-import { MatIconRegistry } from "@angular/material/icon";
+import { MatIconRegistry, MatIcon } from "@angular/material/icon";
 import { MatDialog as MatDialog } from "@angular/material/dialog";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import {
@@ -54,6 +32,15 @@ import { FilterService } from "src/app/filter/filter.service";
 import { ObservationService } from "../observation.service";
 import { SessionService } from "mage-web-app/http/session.service";
 import { EventPreference } from "core-lib-src/user";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import { MatIconButton, MatButton, MatFabButton } from "@angular/material/button";
+import { MatProgressBar } from "@angular/material/progress-bar";
+import { CdkScrollable } from "@angular/cdk/scrolling";
+import { NgClass } from "@angular/common";
+import { MatCard, MatCardContent } from "@angular/material/card";
+import { ObservationEditDateComponent } from "./observation-edit-date/observation-edit-date.component";
+import { ObservationEditGeometryComponent } from "./observation-edit-geometry/observation-edit-geometry.component";
+import { ObservationEditFormComponent } from "./observation-edit-form.component";
 
 export type ObservationFormControl = UntypedFormControl & { definition: any };
 
@@ -79,17 +66,30 @@ export type ObservationFormControl = UntypedFormControl & { definition: any };
             transition(":leave", [animate("250ms", style({ opacity: 0 }))]),
         ]),
     ],
-    standalone: false
+    imports: [MatToolbar, MatToolbarRow, MatIconButton, MatIcon, MatButton, MatProgressBar, CdkScrollable, NgClass, FormsModule, MatCard, MatCardContent, ObservationEditDateComponent, ReactiveFormsModule, ObservationEditGeometryComponent, CdkDropList, CdkDrag, ObservationEditFormComponent, CdkDragHandle, MatFabButton]
 })
 export class ObservationEditComponent implements OnInit, OnChanges {
-  @Input() preview: boolean;
+  dialog = inject(MatDialog);
+  private formBuilder = inject(UntypedFormBuilder);
+  private bottomSheet = inject(MatBottomSheet);
+  private snackBar = inject(MatSnackBar);
+  private attachmentService = inject(AttachmentService);
+  private document = inject<Document>(DOCUMENT);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private userService = inject(UserService);
+  private filterService = inject(FilterService);
+  private eventService = inject(EventService);
+  private observationService = inject(ObservationService);
+
+  readonly preview = input<boolean>(undefined);
   @Input() observation: any;
   attachments = [];
 
-  @Output() close = new EventEmitter<any>();
+  readonly close = output<any>();
 
-  @ViewChild("editContent", { static: true }) editContent: ElementRef;
-  @ViewChild("dragHandle", { static: true }) dragHandle: ElementRef;
+  readonly editContent = viewChild<ElementRef>("editContent");
+  readonly dragHandle = viewChild<ElementRef>("dragHandle");
   @ViewChildren("form") formElements: QueryList<ElementRef>;
 
   private destroyRef = inject(DestroyRef);
@@ -136,22 +136,10 @@ export class ObservationEditComponent implements OnInit, OnChanges {
 
   noGeometryLabel = 'No Geometry';
 
-  constructor(
-    sanitizer: DomSanitizer,
-    matIconRegistry: MatIconRegistry,
-    public dialog: MatDialog,
-    private formBuilder: UntypedFormBuilder,
-    private bottomSheet: MatBottomSheet,
-    private snackBar: MatSnackBar,
-    private attachmentService: AttachmentService,
-    @Inject(DOCUMENT) private document: Document,
-    private mapService: MapService,
-    private sessionService: SessionService,
-    private userService: UserService,
-    private filterService: FilterService,
-    private eventService: EventService,
-    private observationService: ObservationService
-  ) {
+  constructor() {
+    const sanitizer = inject(DomSanitizer);
+    const matIconRegistry = inject(MatIconRegistry);
+
     matIconRegistry.addSvgIcon(
       "handle",
       sanitizer.bypassSecurityTrustResourceUrl("assets/images/handle-24px.svg")
@@ -452,7 +440,8 @@ export class ObservationEditComponent implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((result) => {
         if (result === "discard") {
-          this.close.emit();
+          // TODO: The 'emit' function requires a mandatory any argument
+          this.close.emit(undefined);
         }
       });
   }
@@ -468,7 +457,7 @@ export class ObservationEditComponent implements OnInit, OnChanges {
     if (this.mask) {
       const elementBounds = event.source.nativeElement.getBoundingClientRect();
       const parentBounds =
-        this.editContent.nativeElement.getBoundingClientRect();
+        this.editContent().nativeElement.getBoundingClientRect();
       if (
         elementBounds.top < parentBounds.top ||
         elementBounds.bottom > parentBounds.bottom

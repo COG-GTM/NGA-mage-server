@@ -10,23 +10,21 @@ import { MatButtonModule } from '@angular/material/button'
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatCardModule,
-    ScrollingModule
-  ],
-  declarations: [
-    StaticIconFormFieldComponent,
-    StaticIconImgComponent,
-    StaticIconSelectComponent,
-  ],
-  exports: [
-    StaticIconFormFieldComponent,
-    StaticIconImgComponent,
-    StaticIconSelectComponent,
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatCardModule,
+        ScrollingModule,
+        StaticIconFormFieldComponent,
+        StaticIconImgComponent,
+        StaticIconSelectComponent
+    ],
+    exports: [
+        StaticIconFormFieldComponent,
+        StaticIconImgComponent,
+        StaticIconSelectComponent,
+    ]
 })
 export class StaticIconModule {}
