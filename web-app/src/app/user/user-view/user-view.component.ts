@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { LatLng } from 'leaflet';
 import { PointAccuracy, MapClipComponent } from '../../map/clip/clip.component';
 import moment from 'moment';
@@ -21,15 +21,14 @@ import { GeometryPipe } from '../../geometry/geometry.pipe';
     imports: [MatToolbar, MatToolbarRow, MatIconButton, MatIcon, MatCard, MatCardContent, MapClipComponent, UserAvatarComponent, MatDivider, MatActionList, MatListItem, MatListItemIcon, MatListItemTitle, MatListItemMeta, DecimalPipe, GeometryPipe]
 })
 export class UserViewComponent implements OnChanges {
+  private mapService = inject(MapService);
+  private locationService = inject(LocationService);
+
   @Input() user: any
 
   @Output() close = new EventEmitter<void>()
 
   accuracy: PointAccuracy
-
-  constructor(
-    private mapService: MapService,
-    private locationService: LocationService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.user && changes.user.currentValue && changes.user.currentValue.location) {

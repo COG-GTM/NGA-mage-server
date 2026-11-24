@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MapSettings, WebSearchType } from 'src/app/entities/map/entities.map';
 import { Observable } from 'rxjs';
@@ -26,9 +26,8 @@ interface PlacenameSearch {
   providedIn: 'root'
 })
 export class PlacenameSearchService {
-  constructor(
-    private http: HttpClient
-  ) { }
+  private http = inject(HttpClient);
+
 
   search(settings: MapSettings, text: string): Observable<PlacenameSearchResult[]> {
     const service = this.getSearchService(settings.webSearchType, settings.webNominatimUrl)

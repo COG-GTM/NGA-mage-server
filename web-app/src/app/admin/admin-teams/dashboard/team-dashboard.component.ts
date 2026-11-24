@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { Team, TeamService } from '@ngageoint/mage.web-core-lib/team'
@@ -39,6 +39,12 @@ import { RouterModule } from '@angular/router';
     ]
 })
 export class TeamDashboardComponent implements OnInit, OnDestroy {
+  private modal = inject(MatDialog);
+  private teamService = inject(TeamService);
+  private sessionService = inject(SessionService);
+  private toastService = inject(AdminToastService);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   searchTerm = '';
   readonly teams = signal<Team[]>([]);
   readonly totalTeams = signal(0);
@@ -59,13 +65,7 @@ export class TeamDashboardComponent implements OnInit, OnDestroy {
   private readonly refresh$ = new Subject<void>();
   private readonly searchTerm$ = new Subject<string>();
 
-  constructor(
-    private modal: MatDialog,
-    private teamService: TeamService,
-    private sessionService: SessionService,
-    private toastService: AdminToastService,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {
+  constructor() {
     this.refresh$
       .pipe(
         switchMap(() => this.teamService

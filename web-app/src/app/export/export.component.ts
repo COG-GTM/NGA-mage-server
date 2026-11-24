@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ExportService } from './export.service';
 import { Observable, Subscription, timer } from 'rxjs';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -26,6 +26,8 @@ export enum ViewState { List, Create }
     imports: [ExportListComponent, ExportEmptyComponent, ExportCreateComponent]
 })
 export class ExportComponent implements OnInit, OnDestroy {
+  exportService = inject<ExportService>(ExportService);
+
 
   viewState = ViewState
   state: { view: ViewState, count?: number } = { view: ViewState.List, count: 0 }
@@ -33,10 +35,6 @@ export class ExportComponent implements OnInit, OnDestroy {
   refreshTimer$: Observable<number> = timer(0, 5000)
   refreshTimerSubscription: Subscription
   exportsSubscription: Subscription
-
-  constructor(
-    @Inject(ExportService) public exportService: ExportService
-  ) { }
 
   ngOnInit(): void {
     this.refreshTimerSubscription = this.refreshTimer$.subscribe(() => {

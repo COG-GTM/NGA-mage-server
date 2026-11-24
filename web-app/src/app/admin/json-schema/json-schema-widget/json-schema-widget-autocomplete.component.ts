@@ -1,5 +1,5 @@
 import { buildTitleMap, isArray, JsonSchemaFormService } from '@ngageoint/vendor-ajsf-core';
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS as MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { Observable } from 'rxjs';
@@ -27,6 +27,9 @@ import { AsyncPipe } from '@angular/common';
 })
 
 export class JsonSchemaWidgetAutocompleteComponent implements OnInit {
+  matFormFieldDefaultOptions = inject(MAT_FORM_FIELD_DEFAULT_OPTIONS, { optional: true });
+  private jsf = inject(JsonSchemaFormService);
+
   formControl: AbstractControl = new UntypedFormControl();
   controlName: string;
   controlValue: any;
@@ -41,13 +44,6 @@ export class JsonSchemaWidgetAutocompleteComponent implements OnInit {
   @Input() layoutNode: any;
   @Input() layoutIndex: number[];
   @Input() dataIndex: number[];
-
-  constructor(
-    @Inject(MAT_FORM_FIELD_DEFAULT_OPTIONS) @Optional() public matFormFieldDefaultOptions,
-    private jsf: JsonSchemaFormService
-  ) {
-
-  }
 
   private _filter(value: any): any[] {
     if (!value) {

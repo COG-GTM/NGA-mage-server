@@ -1,13 +1,4 @@
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
+import { Component, DestroyRef, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,6 +27,14 @@ import { AsyncPipe } from '@angular/common';
     imports: [MatToolbar, MatIconButton, MatIcon, CdkMenuTrigger, MatMenuTrigger, MatMenu, MatMenuItem, RouterLink, MatTooltip, CdkMenu, MatFormField, MatPrefix, MatInput, FormsModule, ReactiveFormsModule, CdkMenuItem, AsyncPipe]
 })
 export class NavigationComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private userService = inject(UserService);
+  private eventService = inject(EventService);
+  private filterService = inject(FilterService);
+  private destroyRef = inject(DestroyRef);
+
   @Output() onFeedToggle = new EventEmitter<void>();
   @Output() onPreferencesToggle = new EventEmitter<void>();
   @ViewChild('eventSearchInput') eventSearchInput: ElementRef<HTMLInputElement>;
@@ -52,16 +51,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
   filteredEvent: any = {};
   eventsLoaded = false;
   isAdmin: boolean = false;
-
-  constructor(
-    private router: Router,
-    private mapService: MapService,
-    private sessionService: SessionService,
-    private userService: UserService,
-    private eventService: EventService,
-    private filterService: FilterService,
-    private destroyRef: DestroyRef
-  ) {}
 
   ngOnInit(): void {
     this.filterService.event$

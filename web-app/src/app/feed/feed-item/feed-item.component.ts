@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { Feed, StyledFeature } from '@ngageoint/mage.web-core-lib/feed';
 import { SidebarService } from 'src/app/sidebar/sidebar.service';
 import { contentPathOfIcon } from '@ngageoint/mage.web-core-lib/static-icon';
@@ -21,6 +21,11 @@ import { GeometryPipe } from '../../geometry/geometry.pipe';
     imports: [MatToolbar, MatIconButton, MatIcon, MatCard, FeedIconModule, MapClipComponent, MatButton, MatCardHeader, MatCardTitle, MatList, MatListItem, MatListItemTitle, MatListItemLine, GeometryPipe]
 })
 export class FeedItemComponent implements OnChanges {
+  private sidebarService = inject(SidebarService);
+  private momentPipe = inject(MomentPipe);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+
   @Input() feed: Feed;
   @Input() item: StyledFeature;
 
@@ -30,13 +35,6 @@ export class FeedItemComponent implements OnChanges {
   secondary: string
   mapFeature: StyledFeature
   properties = []
-
-  constructor(
-    private sidebarService: SidebarService,
-    private momentPipe: MomentPipe,
-    private mapService: MapService,
-    private sessionService: SessionService
-    ) {}
 
   ngOnChanges(_changes: SimpleChanges): void {
     this.updateItem()

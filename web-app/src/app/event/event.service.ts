@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import {
   Observable,
   Subject,
@@ -62,6 +62,15 @@ interface LocationsCache {
   providedIn: "root",
 })
 export class EventService {
+  private pollingService = inject(PollingService);
+  private httpClient = inject(HttpClient);
+  private sessionService = inject(SessionService);
+  private feedService = inject(FeedService);
+  private layerService = inject(LayerService);
+  private filterService = inject(FilterService);
+  private locationService = inject(LocationService);
+  private observationService = inject(ObservationService);
+
   private destroy$ = new Subject<void>();
 
   private mapObservationsSubject = new BehaviorSubject<Observation[] | null>(null);
@@ -94,17 +103,6 @@ export class EventService {
   private feedPollTimeout: any = null;
   private feedSyncStates: FeedSyncState[] = [];
   private feedItemsSubscription: Subscription | null = null;
-
-  constructor(
-    private pollingService: PollingService,
-    private httpClient: HttpClient,
-    private sessionService: SessionService,
-    private feedService: FeedService,
-    private layerService: LayerService,
-    private filterService: FilterService,
-    private locationService: LocationService,
-    private observationService: ObservationService
-  ) { }
 
   init() {
     this.destroy$ = new Subject<void>();

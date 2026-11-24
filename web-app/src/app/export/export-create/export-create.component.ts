@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, Inject, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { ExportService } from '../export.service';
 import moment from 'moment';
 import { FilterService } from 'src/app/filter/filter.service';
@@ -65,6 +65,13 @@ const filterDefinitions = {
     imports: [MatToolbar, MatIcon, MatFormField, MatLabel, MatInput, FormsModule, MatAutocompleteTrigger, ReactiveFormsModule, MatAutocomplete, MatOption, MatError, MatChipListbox, MatChipOption, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatTooltip, MatExpansionPanelDescription, MatSelect, DatetimePickerComponent, MatCheckbox, MatIconButton, NgClass, EventMemberFilterComponent, MatSuffix, ObservationFieldFilterComponent, MatButton, MatDivider, MatProgressSpinner, MatList, ObservationPreviewItemComponent, MatPaginator, AsyncPipe, DecimalPipe]
 })
 export class ExportCreateComponent implements OnInit {
+  private eventService = inject(EventService);
+  private filterService = inject(FilterService);
+  private observationService = inject(ObservationService);
+  private locationService = inject(LocationService);
+  private sessionService = inject(SessionService);
+  exportService = inject<ExportService>(ExportService);
+
   @Output() close = new EventEmitter<Export | null>()
   @ViewChild(ObservationFieldFilterComponent) conditionFilter?: ObservationFieldFilterComponent
 
@@ -156,14 +163,7 @@ export class ExportCreateComponent implements OnInit {
   private getObservations$ = new Subject<ObservationsPageRequestOptions>()
   private getLocations$ = new Subject<{ startDate?: string, endDate?: string, users?: string[], teams?: string[] }>()
 
-  constructor(
-    private eventService: EventService,
-    private filterService: FilterService,
-    private observationService: ObservationService,
-    private locationService: LocationService,
-    private sessionService: SessionService,
-    @Inject(ExportService) public exportService: ExportService,
-  ) {
+  constructor() {
     this.defaultStartDate = moment().startOf('day').toDate()
     this.defaultEndDate = moment().endOf('day').toDate()
   }

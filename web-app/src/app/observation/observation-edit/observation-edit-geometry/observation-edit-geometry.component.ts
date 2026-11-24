@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core'
 import { UntypedFormGroup } from '@angular/forms'
 import { Feature, Geometry } from 'geojson'
 import { LocalStorageService } from '../../../http/local-storage.service'
@@ -14,6 +14,8 @@ import { GeometryPipe } from '../../../geometry/geometry.pipe';
     imports: [NgClass, ObservationEditGeometryMapComponent, ObservationEditGeometryFormComponent, GeometryPipe]
 })
 export class ObservationEditGeometryComponent implements OnChanges {
+  private localStorageService = inject(LocalStorageService);
+
   @Input() formGroup: UntypedFormGroup
   @Input() definition: any
 
@@ -27,10 +29,6 @@ export class ObservationEditGeometryComponent implements OnChanges {
   edit = false
   mapFeature: any
   editFeature: any
-
-  constructor(
-    private localStorageService: LocalStorageService
-  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.formGroup && changes.formGroup.currentValue) {

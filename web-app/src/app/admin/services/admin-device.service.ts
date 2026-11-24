@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -85,7 +85,8 @@ const toNumberOrNull = (value: number | string | null | undefined): number | nul
   providedIn: 'root'
 })
 export class AdminDeviceService {
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
+
 
   getDevices(options: SearchOptions): Observable<DevicesResponse> {
     let params = setParams(options);

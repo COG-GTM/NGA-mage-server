@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, DestroyRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog as MatDialog } from '@angular/material/dialog';
 import { MatTabGroup as MatTabGroup } from '@angular/material/tabs';
@@ -47,6 +47,16 @@ import { ExportComponent } from '../export/export.component';
     imports: [SidebarTabComponent, MatDivider, UserViewComponent, ObservationViewComponent, ObservationEditComponent, FeedItemComponent, ExportViewComponent, ObservationListComponent, UserListComponent, FeedListComponent, ExportComponent]
 })
 export class SidebarComponent implements OnInit, OnChanges {
+  dialog = inject(MatDialog);
+  private feedService = inject(FeedService);
+  private sidebarService = inject(SidebarService);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private filterService = inject(FilterService);
+  private eventService = inject(EventService);
+  private exportService = inject(ExportService);
+  private destroyRef = inject(DestroyRef);
+
   @Input() event: any
   @Input() observationLocation: any
   @Input() observationsChanged: any
@@ -96,17 +106,6 @@ export class SidebarComponent implements OnInit, OnChanges {
   info = {};
   statusTitle = 'Cannot Create Observation';
   statusMessage = 'You are not part of this event.';
-
-  constructor(
-    public dialog: MatDialog,
-    private feedService: FeedService,
-    private sidebarService: SidebarService,
-    private mapService: MapService,
-    private sessionService: SessionService,
-    private filterService: FilterService,
-    private eventService: EventService,
-    private exportService: ExportService,
-    private destroyRef: DestroyRef) { }
 
   ngOnInit(): void {
     this.currentTab = this.tabs[0]

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatActionList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
@@ -15,11 +15,9 @@ export enum ObservationOption {
     imports: [MatActionList, MatListItem, MatIcon, MatListItemIcon, MatListItemTitle]
 })
 export class ObservationOptionsComponent {
-  public options: typeof ObservationOption = ObservationOption;
+  private bottomSheetRef = inject<MatBottomSheetRef<ObservationOptionsComponent>>(MatBottomSheetRef);
 
-  constructor(
-    private bottomSheetRef: MatBottomSheetRef<ObservationOptionsComponent>) {
-  }
+  public options: typeof ObservationOption = ObservationOption;
 
   onOption(option: ObservationOption): void {
     this.bottomSheetRef.dismiss(option)

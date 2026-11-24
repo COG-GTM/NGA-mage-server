@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { take, lastValueFrom } from 'rxjs';
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog as MatDialog } from '@angular/material/dialog';
@@ -38,19 +38,17 @@ import { EmailValidatorDirective } from '../../../email/email';
   ]
 })
 export class ContactInfoComponent implements OnInit {
+  private settingsService = inject(SettingsService);
+  private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   readonly breadcrumbs: AdminBreadcrumb[] = [{ title: 'Contact Info', icon: 'contact_support' }];
 
   readonly phone = signal('');
   readonly email = signal('');
   readonly showDevContact = signal(false);
   readonly isDirty = signal(false);
-
-  constructor(
-    private settingsService: SettingsService,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {}
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);

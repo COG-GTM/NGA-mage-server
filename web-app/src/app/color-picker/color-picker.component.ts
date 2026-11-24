@@ -1,14 +1,4 @@
-import {
-  Component,
-  Output,
-  EventEmitter,
-  OnInit,
-  Input,
-  ViewChild,
-  ElementRef,
-  TemplateRef,
-  ViewContainerRef
-} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input, ViewChild, ElementRef, TemplateRef, ViewContainerRef, inject } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { ColorWrap, RGBA, toState, CheckboardModule, SaturationModule, HueModule, AlphaModule } from 'ngx-color';
@@ -29,6 +19,9 @@ export interface ColorEvent {
     imports: [MatFormField, MatLabel, MatInput, CheckboardModule, MatCard, SaturationModule, HueModule, AlphaModule, MatButton]
 })
 export class ColorPickerComponent extends ColorWrap implements OnInit {
+  private overlay = inject(Overlay);
+  private viewContainerRef = inject(ViewContainerRef);
+
   private static openInstance: ColorPickerComponent | null = null;
 
   @Input() label: string;
@@ -43,10 +36,6 @@ export class ColorPickerComponent extends ColorWrap implements OnInit {
 
   private originalHexColor: string;
   private overlayRef: OverlayRef | null = null;
-
-  constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef) {
-    super();
-  }
 
   ngOnInit(): void {
     this.updateColor();

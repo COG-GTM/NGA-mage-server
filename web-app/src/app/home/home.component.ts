@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MapService } from '../map/map.service';
 import { FilterService } from '../filter/filter.service';
@@ -22,6 +22,13 @@ import { MapComponent } from '../map/map.component';
     imports: [NavigationComponent, MatSidenavContainer, MatSidenav, SidebarComponent, PreferencesComponent, MapComponent]
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private filterService = inject(FilterService);
+  private locationService = inject(LocationService);
+  private activatedRoute = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
+
 
   map: any
   myself: User
@@ -31,14 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @ViewChild('feed') feed: MatSidenav
 
-  constructor(
-    private mapService: MapService,
-    private sessionService: SessionService,
-    private filterService: FilterService,
-    private locationService: LocationService,
-    private activatedRoute: ActivatedRoute,
-    private destroyRef: DestroyRef
-  ) {
+  constructor() {
     this.sessionService.user$.subscribe((myself: User) => {
       this.myself = myself
     })

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core'
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { Api, AuthenticationStrategy } from '../../../api/api.entity'
 import { UserService } from '../../../user/user.service'
@@ -14,6 +14,8 @@ import { AuthenticationButtonComponent } from '../button/authentication-button.c
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, AuthenticationButtonComponent]
 })
 export class LdapAuthenticationComponent {
+  private userService = inject(UserService);
+
   @Input() api: Api
   @Input() strategy: AuthenticationStrategy
 
@@ -30,10 +32,6 @@ export class LdapAuthenticationComponent {
     title: string,
     message: string
   }
-
-  constructor(
-    private userService: UserService
-  ) {}
 
   onSignin(): void {
     if (this.authenticationForm.invalid) {

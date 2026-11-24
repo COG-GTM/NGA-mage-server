@@ -1,4 +1,4 @@
-import { Component, input, output, viewChild, ElementRef, OnChanges, SimpleChanges, signal } from '@angular/core';
+import { Component, input, output, viewChild, ElementRef, OnChanges, SimpleChanges, signal, inject } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -39,6 +39,8 @@ export interface ImageryLayerConfig {
     ]
 })
 export class ImageryLayerSettingsComponent implements OnChanges {
+    private http = inject(HttpClient);
+
     config = input<ImageryLayerConfig>({
         url: '',
         format: 'XYZ',
@@ -62,8 +64,6 @@ export class ImageryLayerSettingsComponent implements OnChanges {
     wmsLayerSearchQuery: string = '';
 
     previewMapContainer = viewChild<ElementRef>('previewMapContainer');
-
-    constructor(private http: HttpClient) { }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['existingWmsLayers'] && this.existingWmsLayers()) {

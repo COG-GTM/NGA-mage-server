@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({ providedIn: 'root' })
 export class AdminToastService {
-  constructor(private snackBar: MatSnackBar, private router: Router) {}
+  private snackBar = inject(MatSnackBar);
+  private router = inject(Router);
+
 
   show(
     message: string,

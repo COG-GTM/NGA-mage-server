@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { Team } from './team.model'
@@ -9,8 +9,13 @@ import { User } from '@ngageoint/mage.web-core-lib/user'
   providedIn: 'root'
 })
 export class TeamService {
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
 
   createTeam(teamData: Partial<Team>): Observable<Team> {
     return this.http.post<Team>('/api/teams', teamData);

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from 'src/app/user/user.service';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
@@ -16,15 +16,13 @@ export interface AuthorizationEvent {
     imports: [MatFormField, MatLabel, MatInput, FormsModule, ReactiveFormsModule, MatError, MatButton]
 })
 export class AuthorizationComponent {
+  private userService = inject(UserService);
+
   @Input() token: string
   @Input() compact = false
   @Output() authorized = new EventEmitter<AuthorizationEvent>()
 
   deviceId = new FormControl('', [Validators.required])
-
-  constructor(
-    private userService: UserService
-  ) {}
 
   authorize(): void {
     this.deviceId.setErrors(null)

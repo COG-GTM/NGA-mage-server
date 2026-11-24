@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Subject } from "rxjs";
 import { filter, map, pairwise, takeUntil } from "rxjs/operators";
 import * as _ from "lodash";
@@ -61,6 +61,12 @@ interface MapListener {
   providedIn: 'root'
 })
 export class MapService {
+  private eventService = inject(EventService);
+  private locationService = inject(LocationService);
+  private mapPopupService = inject(MapPopupService);
+  private featureService = inject(FeatureService);
+  private sessionService = inject(SessionService);
+
 
   private destroy$ = new Subject<void>();
 
@@ -85,14 +91,6 @@ export class MapService {
   listeners: MapListener[] = [];
   observationsById: Record<string, any> = {};
   usersById: Record<string, any> = {};
-
-  constructor(
-    private eventService: EventService,
-    private locationService: LocationService,
-    private mapPopupService: MapPopupService,
-    private featureService: FeatureService,
-    private sessionService: SessionService
-  ) {}
 
   init () {
     this.destroy$ = new Subject<void>();

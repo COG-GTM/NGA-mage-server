@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { SidebarService } from '../../sidebar/sidebar.service';
 import { MapService } from '../../map/map.service';
 import { UserWithLocation } from '../../entities/user/entities.user-location';
@@ -15,13 +15,16 @@ import { MomentPipe } from '../../moment/moment.pipe';
     imports: [UserAvatarComponent, MatButton, MatIconButton, MatIcon, GeometryPipe, MomentPipe]
 })
 export class UserPopupComponent {
+  private sidebarService = inject(SidebarService);
+  private mapService = inject(MapService);
+
   @Input({ required: true }) userWithLocation: UserWithLocation;
 
   followingUser: MapService['followedFeature']
 
-  constructor(
-    private sidebarService: SidebarService,
-    private mapService: MapService) {
+  constructor() {
+    const mapService = this.mapService;
+
     this.followingUser = mapService.followedFeature
   }
 

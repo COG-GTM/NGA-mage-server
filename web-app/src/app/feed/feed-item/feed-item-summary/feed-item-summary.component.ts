@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import { Feed } from '@ngageoint/mage.web-core-lib/feed';
 import { Feature } from 'geojson';
@@ -17,6 +17,10 @@ import { MomentPipe } from '../../../moment/moment.pipe';
     imports: [MatCard, MatRipple, MatCardContent, MatIcon, StaticIconModule, MomentPipe]
 })
 export class FeedItemSummaryComponent implements OnChanges {
+  private sidebarService = inject(SidebarService);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+
   @Input() feed: Feed;
   @Input() item: Feature;
 
@@ -26,8 +30,6 @@ export class FeedItemSummaryComponent implements OnChanges {
   timestamp: number;
   primary: string;
   secondary: string;
-
-  constructor(private sidebarService: SidebarService, private mapService: MapService, private sessionService: SessionService) { }
 
   get accessToken(): string | null {
     return this.sessionService.getToken();

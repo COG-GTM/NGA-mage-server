@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,11 +23,15 @@ type ServiceWithFeeds = {
     ]
 })
 export class AdminServiceDeleteComponent {
+  data = inject<ServiceWithFeeds>(MAT_DIALOG_DATA);
+
 
   service: Service
   feeds: Feed[]
 
-  constructor( @Inject(MAT_DIALOG_DATA) public data: ServiceWithFeeds) {
+  constructor() {
+    const data = this.data;
+
     this.service = data.service
     this.feeds = data.feeds
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnInit, AfterViewInit, Output, TemplateRef, ViewChild, DestroyRef, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, AfterViewInit, Output, TemplateRef, ViewChild, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExportService } from '../export.service';
 import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
@@ -32,6 +32,12 @@ type ConditionTerm = { field: string, operator: string, value?: string }
     imports: [MatToolbar, MatToolbarRow, MatIconButton, MatIcon, MatTooltip, MatCard, MatCardContent, MatChipSet, MatChip, MatChipAvatar, MatProgressSpinner, MatCardTitleGroup, MatCardTitle, MatCardSubtitle, NgPlural, NgPluralCase, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatCheckbox, MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, MatDialogClose]
 })
 export class ExportViewComponent implements OnInit, AfterViewInit {
+  private dialog = inject(MatDialog);
+  exportService = inject<ExportService>(ExportService);
+  private eventService = inject(EventService);
+  private sidebarService = inject(SidebarService);
+  private localStorageService = inject(LocalStorageService);
+
   @Input() item: Export
   @Output() close = new EventEmitter<void>()
 
@@ -51,14 +57,9 @@ export class ExportViewComponent implements OnInit, AfterViewInit {
 
   disableAnimation = true;
 
-  constructor(
-    private dialog: MatDialog,
-    @Inject(ExportService) public exportService: ExportService,
-    private eventService: EventService,
-    private sidebarService: SidebarService,
-    private localStorageService: LocalStorageService,
-    sessionService: SessionService
-  ) {
+  constructor() {
+    const sessionService = inject(SessionService);
+
     this.token = sessionService.getToken()
     this.formProjections = []
   }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { AttachmentAction } from './observation-edit-attachment-action';
 import { AttachmentComponent } from '../../attachment/attachment.component';
@@ -21,6 +21,8 @@ interface AttachmentField {
     imports: [AttachmentComponent, AttachUploadComponent, MatIcon, MatButton]
 })
 export class ObservationEditAttachmentComponent implements OnInit {
+  private changeDetector = inject(ChangeDetectorRef);
+
   @Input() formGroup: UntypedFormGroup
   @Input() definition: AttachmentField
   @Input() url: string
@@ -29,8 +31,6 @@ export class ObservationEditAttachmentComponent implements OnInit {
   control: UntypedFormControl
   uploadId = 0
   uploadAttachments = false
-
-  constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.control = this.formGroup.get(this.definition.name) as UntypedFormControl

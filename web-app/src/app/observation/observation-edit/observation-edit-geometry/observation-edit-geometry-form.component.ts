@@ -1,4 +1,4 @@
-import { Component, Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core'
+import { Component, Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewContainerRef, inject } from '@angular/core'
 import { AbstractControl, FormControl, FormGroup, NgModel, NG_VALIDATORS, ValidationErrors, Validator, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar'
 import mgrs from 'mgrs'
@@ -72,6 +72,11 @@ type DMSFormValue = Partial<{ [DimensionKey.Latitude]: string, [DimensionKey.Lon
     imports: [MatChipListbox, MatChipOption, MatFormField, MatLabel, MatInput, FormsModule, MatError, ReactiveFormsModule, InputMaskModule, MatButton]
 })
 export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
+  private mapService = inject(MapService);
+  private geometryService = inject(GeometryService);
+  private localStorageService = inject(LocalStorageService);
+  private snackBar = inject(MatSnackBar);
+
 
   @Input() feature: any
   @Output() save = new EventEmitter<any>()
@@ -100,11 +105,7 @@ export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
     mask: `999° 99' 99" (E|W)`,
   })
 
-  constructor(
-    private mapService: MapService,
-    private geometryService: GeometryService,
-    private localStorageService: LocalStorageService,
-    private snackBar: MatSnackBar)
+  constructor()
   {
     this.coordinateSystem = this.localStorageService.getCoordinateSystemEdit()
   }

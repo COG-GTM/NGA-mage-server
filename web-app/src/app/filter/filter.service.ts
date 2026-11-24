@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { LocalStorageService } from "../http/local-storage.service";
 import moment from 'moment';
@@ -17,6 +17,8 @@ import { MemberFilterSelection } from "../event/event-member-filter.component";
   providedIn: "root",
 })
 export class FilterService {
+  private localStorageService = inject(LocalStorageService);
+
 
   private eventSubject = new BehaviorSubject<MageEvent | null>(null);
   private observationFilterSubject = new BehaviorSubject<EventObservationFilter | null>(null);
@@ -25,8 +27,6 @@ export class FilterService {
   readonly event$: Observable<MageEvent | null> = this.eventSubject.asObservable();
   readonly observationFilter$: Observable<EventObservationFilter | null> = this.observationFilterSubject.asObservable();
   readonly locationFilter$: Observable<EventLocationFilter | null> = this.locationFilterSubject.asObservable();
-
-  constructor(private localStorageService: LocalStorageService) { }
 
   getSavedEventId(): number | string | null {
     return this.localStorageService.getEventId();

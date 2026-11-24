@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -31,6 +31,9 @@ import { NgStyle } from '@angular/common';
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatIconButton, MatSuffix, MatIcon, MatProgressBar, NgStyle, MatButton]
 })
 export class SignupComponent {
+  private apiService = inject(ApiService);
+  private userService = inject(UserService);
+
   @Output() complete = new EventEmitter<SignupEvent>();
 
   showPassword = false;
@@ -53,11 +56,6 @@ export class SignupComponent {
   captcha: { uri?: string; token?: string } = {};
 
   private destroy$ = new Subject<void>();
-
-  constructor(
-    private apiService: ApiService,
-    private userService: UserService
-  ) {}
 
   ngOnInit(): void {
     zxcvbnOptions.setOptions({

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,6 +22,11 @@ import { I18nPluralPipe } from '@angular/common';
     imports: [MatToolbar, MatIcon, MatTooltip, MatIconButton, MatButton, UserListItemComponent, MatCard, MatCardFooter, MatPaginator, I18nPluralPipe]
 })
 export class UserListComponent implements OnInit {
+  private dialog = inject(MatDialog);
+  private eventService = inject(EventService);
+  private filterService = inject(FilterService);
+  private destroyRef = inject(DestroyRef);
+
   loaded = false
   searchError = false
   stale = false
@@ -41,13 +46,6 @@ export class UserListComponent implements OnInit {
   activeFilterIcons: string[] = []
 
   private locations: any[] = []
-
-  constructor(
-    private dialog: MatDialog,
-    private eventService: EventService,
-    private filterService: FilterService,
-    private destroyRef: DestroyRef) {
-  }
 
   openFilterDialog(): void {
     this.dialog.open(LocationFilterDialogComponent, {

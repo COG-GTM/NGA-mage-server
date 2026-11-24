@@ -1,5 +1,5 @@
 import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface Layer {
@@ -52,7 +52,8 @@ export interface SearchOptions {
     providedIn: 'root'
 })
 export class LayersService {
-    constructor(private http: HttpClient) { }
+    private http = inject(HttpClient);
+
 
     getLayers(options?: SearchOptions): Observable<Layer[]> {
         let params = new HttpParams();

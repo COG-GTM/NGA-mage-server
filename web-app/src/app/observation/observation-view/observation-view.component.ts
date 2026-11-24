@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ObservationFavoritesComponent } from '../observation-favorites/observation-favorites.component';
 import { SidebarService } from '../../sidebar/sidebar.service';
@@ -45,6 +45,13 @@ import { MomentPipe } from '../../moment/moment.pipe';
     imports: [MatToolbar, MatToolbarRow, MatIconButton, MatIcon, MatButton, MatCard, MatCardContent, MapClipComponent, MatDivider, MatFormField, MatLabel, MatInput, FormsModule, MatCardActions, MatTooltip, NgClass, ObservationViewFormComponent, DecimalPipe, GeometryPipe, MomentPipe]
 })
 export class ObservationViewComponent implements OnChanges {
+  private dialog = inject(MatDialog);
+  private bottomSheet = inject(MatBottomSheet);
+  private mapService = inject(MapService);
+  private eventService = inject(EventService);
+  private sessionService = inject(SessionService);
+  private sidebarService = inject(SidebarService);
+
   @Input() event: any
   @Input() observation: any
 
@@ -70,15 +77,6 @@ export class ObservationViewComponent implements OnChanges {
   }
   primaryFeedField: any = {}
   secondaryFeedField: any = {}
-
-  constructor(
-    private dialog: MatDialog,
-    private bottomSheet: MatBottomSheet,
-    private mapService: MapService,
-    private eventService: EventService,
-    private sessionService: SessionService,
-    private sidebarService: SidebarService
-  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     // TODO why did this not change after edit?

@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Observable } from "rxjs";
 import { LatLng } from "leaflet";
 import { MageEvent } from "../entities/event/entities.event";
@@ -11,10 +11,8 @@ export type ClosestFeature = GeoJSON.Feature & { layerId: LayerId; gp_table: str
   providedIn: 'root'
 })
 export class LayerService {
+  private httpClient = inject(HttpClient);
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
 
   getLayersForEvent(event: MageEvent, includeUnavailable = false): Observable<Layer[]> {
     const params: Record<string, boolean> = includeUnavailable ? { includeUnavailable: true } : {}

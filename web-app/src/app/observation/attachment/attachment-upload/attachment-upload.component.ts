@@ -1,5 +1,5 @@
 import { HttpEvent, HttpEventType, HttpResponse, HttpResponseBase } from '@angular/common/http';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { AttachmentAction } from '../../observation-edit/observation-edit-attachment/observation-edit-attachment-action';
 import { AttachmentService } from '../attachment.service';
@@ -32,6 +32,9 @@ enum PreviewType {
     imports: [MatProgressSpinner, MatIcon, MatMiniFabButton, MatProgressBar, FilenamePipe]
 })
 export class AttachUploadComponent implements OnChanges {
+  private changeDetector = inject(ChangeDetectorRef);
+  private attachmentService = inject(AttachmentService);
+
   @Input() attachment: FileUpload
   @Input() url: string
 
@@ -43,8 +46,6 @@ export class AttachUploadComponent implements OnChanges {
   previewType = PreviewType
   attachmentsToUpload = 0
   actions: typeof AttachmentAction = AttachmentAction
-
-  constructor(private changeDetector: ChangeDetectorRef, private attachmentService: AttachmentService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.attachment && this.attachment) {

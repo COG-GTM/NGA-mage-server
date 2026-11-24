@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { EventService } from '../../event/event.service';
 import { FilterService } from '../../filter/filter.service';
@@ -12,12 +12,14 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatDivider, MatNavList, MatListItem, MatIcon, MatListItemIcon, MatListItemTitle, MatListItemLine]
 })
 export class ObservationEditFormPickerComponent {
+  private bottomSheetRef = inject<MatBottomSheetRef<ObservationEditFormPickerComponent>>(MatBottomSheetRef);
+
   forms: any[]
 
-  constructor(
-    filterService: FilterService,
-    eventService: EventService,
-    private bottomSheetRef: MatBottomSheetRef<ObservationEditFormPickerComponent>) {
+  constructor() {
+    const filterService = inject(FilterService);
+    const eventService = inject(EventService);
+
 
     const event = filterService.getEvent();
     this.forms = eventService.getFormsForEvent(event, { archived: false });

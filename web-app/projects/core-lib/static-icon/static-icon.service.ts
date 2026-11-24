@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http'
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { PageOf, PagingParameters } from '@ngageoint/mage.web-core-lib/paging'
@@ -14,8 +14,13 @@ export interface IconFetch extends PagingParameters {
   providedIn: 'root'
 })
 export class StaticIconService {
+  private webClient = inject(HttpClient);
 
-  constructor(private webClient: HttpClient) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
 
   fetchIcons(fetch?: IconFetch): Observable<PageOf<StaticIcon>> {
     const now = Date.now()

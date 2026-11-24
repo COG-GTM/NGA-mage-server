@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal, viewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit, signal, viewChild, inject } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -31,6 +31,9 @@ import moment from 'moment'
   ]
 })
 export class ObservationFilterDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<ObservationFilterDialogComponent>>(MatDialogRef);
+  private filterService = inject(FilterService);
+
   fieldFilter = viewChild(ObservationFieldFilterComponent)
 
   mageEvent: any
@@ -52,11 +55,6 @@ export class ObservationFilterDialogComponent implements OnInit {
   startDate: Date
   defaultEndDate: Date
   endDate: Date
-
-  constructor(
-    public dialogRef: MatDialogRef<ObservationFilterDialogComponent>,
-    private filterService: FilterService
-  ) { }
 
   ngOnInit() {
     this.mageEvent = this.filterService.getEvent()

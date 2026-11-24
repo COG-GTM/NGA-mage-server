@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnChanges, SimpleChanges, ViewChild, forwardRef, OnInit } from '@angular/core'
+import { AfterViewInit, Component, OnChanges, SimpleChanges, ViewChild, forwardRef, OnInit, inject } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { NgSelectComponent, NgHeaderTemplateDirective, NgOptionTemplateDirective } from '@ng-select/ng-select'
 import { User } from '../user.model'
@@ -25,6 +25,8 @@ const trackByUserId = (user: User) => user.id
     imports: [NgSelectComponent, NgHeaderTemplateDirective, NgOptionTemplateDirective]
 })
 export class UserSelectComponent implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor {
+  private userService = inject(UserReadService);
+
 
   readonly baseFindParams: Readonly<UserSearchParams> = Object.freeze({
     pageSize: 100,
@@ -43,7 +45,10 @@ export class UserSelectComponent implements OnInit, OnChanges, AfterViewInit, Co
 
   #currentFetch: SubscriptionLike | null = null
 
-  constructor(private userService: UserReadService) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   get loading(): boolean {
     return !!this.#currentFetch && !this.#currentFetch.closed

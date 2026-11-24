@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef as MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatButton } from '@angular/material/button';
@@ -10,9 +10,8 @@ import { MatButton } from '@angular/material/button';
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton]
 })
 export class ObservationEditDiscardComponent {
+  dialogRef = inject<MatDialogRef<ObservationEditDiscardComponent>>(MatDialogRef);
 
-  constructor(public dialogRef: MatDialogRef<ObservationEditDiscardComponent>) {
-  }
 
   close(): void {
     this.dialogRef.close();

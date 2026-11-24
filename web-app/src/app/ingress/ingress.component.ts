@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { Api, AuthenticationStrategy } from '../api/api.entity';
 import { UserService } from '../user/user.service';
 import { AuthorizationEvent, AuthorizationComponent } from './authorization/authorization.component';
@@ -93,6 +93,9 @@ class Initialize extends Ingress {
     imports: [AuthenticationComponent, AuthorizationComponent, DisclaimerComponent, SignupComponent, AccountStatusComponent, InitializeComponent]
 })
 export class IngressComponent implements OnChanges {
+  private userService = inject(UserService);
+  private sessionService = inject(SessionService);
+
   @Input() api: Api;
   @Input() landing: boolean;
   @Output() complete = new EventEmitter<void>();
@@ -105,11 +108,6 @@ export class IngressComponent implements OnChanges {
   strategy: any;
   thirdPartyStrategies: any;
   localAuthenticationStrategy: any;
-
-  constructor(
-    private userService: UserService,
-    private sessionService: SessionService
-  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.api?.currentValue?.initial === true) {

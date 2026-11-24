@@ -1,17 +1,4 @@
-import {
-  Component,
-  DestroyRef,
-  Injector,
-  afterNextRender,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  TemplateRef,
-  ViewChild,
-  signal
-} from '@angular/core';
+import { Component, DestroyRef, Injector, afterNextRender, OnInit, Input, Output, EventEmitter, ElementRef, TemplateRef, ViewChild, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -52,6 +39,12 @@ interface IconMetadata {
     ]
 })
 export class UserDetailsEditComponent implements OnInit {
+  private userService = inject(UserService);
+  private sessionService = inject(SessionService);
+  private destroyRef = inject(DestroyRef);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+  private injector = inject(Injector);
+
   @Input() user!: User;
 
   @ViewChild('breadcrumbActions', { static: true })
@@ -77,14 +70,6 @@ export class UserDetailsEditComponent implements OnInit {
   iconMetadata: IconMetadata = { type: 'none' };
 
   @ViewChild('mapIconCanvas') mapIconCanvasRef?: ElementRef<HTMLCanvasElement>;
-
-  constructor(
-    private userService: UserService,
-    private sessionService: SessionService,
-    private destroyRef: DestroyRef,
-    private breadcrumbService: AdminBreadcrumbService,
-    private injector: Injector
-  ) {}
 
   ngOnInit(): void {
     this.breadcrumbService.setActions(this.breadcrumbActions);

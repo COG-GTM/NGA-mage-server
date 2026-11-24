@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MatDialogRef as MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from "@angular/material/dialog";
 import { LinkGenerator } from "./utilities/link-generator";
 import { Api } from "../api/api.entity";
@@ -13,6 +13,10 @@ import { MatButton } from "@angular/material/button";
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton]
 })
 export class ContactDialogComponent  {
+    private apiService = inject(ApiService);
+    data = inject(MAT_DIALOG_DATA);
+    dialogRef = inject<MatDialogRef<ContactDialogComponent>>(MatDialogRef);
+
     statusTitle: string;
     statusMessage: string;
     id: string;
@@ -20,11 +24,10 @@ export class ContactDialogComponent  {
     emailLink: string;
     phoneLink: string;
 
-    constructor(
-        private apiService: ApiService,
-        @Inject(MAT_DIALOG_DATA) public data: any,
-        public dialogRef: MatDialogRef<ContactDialogComponent>
-    ) {
+    constructor() {
+			const apiService = this.apiService;
+			const data = this.data;
+
 			this.statusTitle = data.info.statusTitle
 			this.statusMessage = data.info.statusMessage
 			this.id = data.info.id

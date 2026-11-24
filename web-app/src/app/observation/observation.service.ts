@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { SessionService } from "../http/session.service";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { BehaviorSubject, Observable, map, mergeMap } from "rxjs";
@@ -49,14 +49,12 @@ export type PagingOptions = {
   providedIn: "root",
 })
 export class ObservationService {
+  private client = inject(HttpClient);
+  private sessionService = inject(SessionService);
+
 
   private pagingSubject = new BehaviorSubject<PagingOptions | null>(null);
   readonly paging$: Observable<PagingOptions | null> = this.pagingSubject.asObservable();
-
-  constructor(
-    private client: HttpClient,
-    private sessionService: SessionService
-  ) { }
 
   setPagingOptions(options: PagingOptions) {
     this.pagingSubject.next(options);

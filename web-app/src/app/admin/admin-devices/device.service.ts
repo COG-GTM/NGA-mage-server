@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, forkJoin, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AdminDeviceService } from '../services/admin-device.service';
@@ -21,8 +21,8 @@ export type DeviceStateAndData = {
 
 @Injectable({ providedIn: 'root' })
 export class DeviceService {
+  private deviceService = inject(AdminDeviceService);
 
-  constructor(private deviceService: AdminDeviceService) {}
 
   constructDefault(): DeviceStateAndData {
     return {

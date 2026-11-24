@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { Team, TeamService } from '@ngageoint/mage.web-core-lib/team'
@@ -53,6 +53,14 @@ type UserFilter = {
 ]
 })
 export class UserDashboardComponent implements OnInit, OnDestroy {
+  private dialog = inject(MatDialog);
+  private userService = inject(UserService);
+  private teamService = inject(TeamService);
+  private sessionService = inject(SessionService);
+  private userPagingService = inject(UserPagingService);
+  private toastService = inject(AdminToastService);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   readonly dataSource = signal<User[]>([]);
 
   userSearch = '';
@@ -82,15 +90,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
   private readonly load$ = new Subject<Observable<{ users: User[]; total: number }>>();
   private readonly searchTerm$ = new Subject<string>();
 
-  constructor(
-    private dialog: MatDialog,
-    private userService: UserService,
-    private teamService: TeamService,
-    private sessionService: SessionService,
-    private userPagingService: UserPagingService,
-    private toastService: AdminToastService,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {
+  constructor() {
     this.stateAndData = this.userPagingService.constructDefault();
 
     this.load$

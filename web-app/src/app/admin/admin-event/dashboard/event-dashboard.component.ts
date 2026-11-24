@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, Subject, catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,6 +44,12 @@ import { RouterLink } from '@angular/router';
     ]
 })
 export class EventDashboardComponent implements OnInit, OnDestroy {
+  private modal = inject(MatDialog);
+  private eventService = inject(AdminEventsService);
+  private sessionService = inject(SessionService);
+  private toastService = inject(AdminToastService);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   events: PageOf<MageEvent> | null = null;
   readonly filteredEvents = signal<MageEvent[]>([]);
 
@@ -72,13 +78,7 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
   private readonly refresh$ = new Subject<void>();
   private readonly searchTerm$ = new Subject<string>();
 
-  constructor(
-    private modal: MatDialog,
-    private eventService: AdminEventsService,
-    private sessionService: SessionService,
-    private toastService: AdminToastService,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {
+  constructor() {
     this.refresh$
       .pipe(
         switchMap(() => this.eventService.getEvents(this.searchOptions).pipe(

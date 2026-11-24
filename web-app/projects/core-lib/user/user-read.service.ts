@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { InjectionToken, Injectable } from '@angular/core'
+import { InjectionToken, Injectable, inject } from '@angular/core'
 import { PageOf, PagingParameters } from '@ngageoint/mage.web-core-lib/paging'
 import { Observable } from 'rxjs'
 import { User } from './user.model'
@@ -18,8 +18,13 @@ type SearchQueryParams = {
   providedIn: 'root'
 })
 export class UserReadService {
+  private webClient = inject(HttpClient);
 
-  constructor(private webClient: HttpClient) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
 
   search(which: UserSearchParams): Observable<PageOf<UserSearchResult>> {
     const queryParams: SearchQueryParams = {

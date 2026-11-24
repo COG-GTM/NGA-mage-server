@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { LocalStorageService } from './local-storage.service'
 
@@ -6,6 +6,8 @@ import { LocalStorageService } from './local-storage.service'
   providedIn: 'root'
 })
 export class SessionService {
+  private localStorageService = inject(LocalStorageService);
+
 
   private readonly tokenKey = 'token'
 
@@ -15,7 +17,7 @@ export class SessionService {
   private userSubject = new BehaviorSubject<any | null>(null)
   readonly user$: Observable<any | null> = this.userSubject.asObservable()
 
-  constructor(private localStorageService: LocalStorageService) {
+  constructor() {
     this.tokenSubject.next(this.localStorageService.getLocalItem(this.tokenKey) ?? null)
   }
 

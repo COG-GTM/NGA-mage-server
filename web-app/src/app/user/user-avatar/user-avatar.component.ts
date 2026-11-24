@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { Component, Input, OnChanges, SimpleChanges, signal } from '@angular/core'
+import { Component, Input, OnChanges, SimpleChanges, signal, inject } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { MatIcon } from '@angular/material/icon';
 
@@ -10,6 +10,9 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatIcon]
 })
 export class UserAvatarComponent implements OnChanges {
+  private httpClient = inject(HttpClient);
+  private sanitizer = inject(DomSanitizer);
+
   @Input() user: any
   @Input() file: File | null = null
   @Input() avatarWidth = 40
@@ -17,10 +20,6 @@ export class UserAvatarComponent implements OnChanges {
 
   data = signal<string | ArrayBuffer | null>(null)
   url = signal<SafeUrl | null>(null)
-
-  constructor(
-    private httpClient: HttpClient,
-    private sanitizer: DomSanitizer) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['file'] && this.file) {

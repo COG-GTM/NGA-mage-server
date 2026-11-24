@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatSelectChange as MatSelectChange, MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,6 +19,8 @@ interface PollingOption {
     imports: [MatFormField, MatLabel, MatIcon, MatPrefix, MatSelect, MatOption]
 })
 export class PollingIntervalComponent implements OnInit, OnDestroy {
+  private pollingService = inject(PollingService);
+
   pollingOptions: PollingOption[] = [{
     title: '5 Seconds',
     interval: 5000
@@ -35,10 +37,6 @@ export class PollingIntervalComponent implements OnInit, OnDestroy {
   pollingOption: PollingOption
 
   private destroy$ = new Subject<void>();
-
-  constructor(
-    private pollingService: PollingService
-  ) { }
 
   ngOnInit(): void {
     this.pollingService.pollingInterval$.pipe(

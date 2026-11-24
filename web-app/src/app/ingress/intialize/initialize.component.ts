@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { PasswordStrength, passwordStrengthScores } from '../../entities/password/password';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core'
@@ -35,6 +35,9 @@ export interface InitializedEvent {
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatProgressBar, MatHint, MatButton]
 })
 export class InitializeComponent implements OnInit {
+  private userService = inject(UserService);
+  private initializeService = inject(InitializeService);
+
   @Output() initialized = new EventEmitter<InitializedEvent>()
 
   passwordStrength?: PasswordStrength
@@ -51,10 +54,7 @@ export class InitializeComponent implements OnInit {
     message: string
   }
 
-  constructor(
-    private userService: UserService,
-    private initializeService: InitializeService
-  ) {
+  constructor() {
     this.accountForm.controls.password.valueChanges.subscribe((password: string) => {
       this.onPasswordChanged(password)
     })

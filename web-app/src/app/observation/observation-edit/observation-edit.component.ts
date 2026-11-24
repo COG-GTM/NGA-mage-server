@@ -1,23 +1,7 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag, CdkDragHandle } from "@angular/cdk/drag-drop";
 
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  EventEmitter,
-  Inject,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  QueryList,
-  SimpleChanges,
-  ViewChild,
-  ViewChildren,
-  DOCUMENT,
-  inject
-} from "@angular/core";
+import { Component, DestroyRef, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren, DOCUMENT, inject } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -85,6 +69,19 @@ export type ObservationFormControl = UntypedFormControl & { definition: any };
     imports: [MatToolbar, MatToolbarRow, MatIconButton, MatIcon, MatButton, MatProgressBar, CdkScrollable, NgClass, FormsModule, MatCard, MatCardContent, ObservationEditDateComponent, ReactiveFormsModule, ObservationEditGeometryComponent, CdkDropList, CdkDrag, ObservationEditFormComponent, CdkDragHandle, MatFabButton]
 })
 export class ObservationEditComponent implements OnInit, OnChanges {
+  dialog = inject(MatDialog);
+  private formBuilder = inject(UntypedFormBuilder);
+  private bottomSheet = inject(MatBottomSheet);
+  private snackBar = inject(MatSnackBar);
+  private attachmentService = inject(AttachmentService);
+  private document = inject<Document>(DOCUMENT);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private userService = inject(UserService);
+  private filterService = inject(FilterService);
+  private eventService = inject(EventService);
+  private observationService = inject(ObservationService);
+
   @Input() preview: boolean;
   @Input() observation: any;
   attachments = [];
@@ -139,22 +136,10 @@ export class ObservationEditComponent implements OnInit, OnChanges {
 
   noGeometryLabel = 'No Geometry';
 
-  constructor(
-    sanitizer: DomSanitizer,
-    matIconRegistry: MatIconRegistry,
-    public dialog: MatDialog,
-    private formBuilder: UntypedFormBuilder,
-    private bottomSheet: MatBottomSheet,
-    private snackBar: MatSnackBar,
-    private attachmentService: AttachmentService,
-    @Inject(DOCUMENT) private document: Document,
-    private mapService: MapService,
-    private sessionService: SessionService,
-    private userService: UserService,
-    private filterService: FilterService,
-    private eventService: EventService,
-    private observationService: ObservationService
-  ) {
+  constructor() {
+    const sanitizer = inject(DomSanitizer);
+    const matIconRegistry = inject(MatIconRegistry);
+
     matIconRegistry.addSvgIcon(
       "handle",
       sanitizer.bypassSecurityTrustResourceUrl("assets/images/handle-24px.svg")

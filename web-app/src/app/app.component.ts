@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Subject, switchMap, of, takeUntil } from 'rxjs';
 import { Banners, SettingsService } from './settings/settings.service';
 import { UserService } from './user/user.service';
@@ -13,14 +13,12 @@ import { RouterOutlet } from '@angular/router';
     imports: [BannerComponent, RouterOutlet]
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private settingsService = inject(SettingsService);
+  private sessionService = inject(SessionService);
+
   banners?: Banners;
 
   private destroy$ = new Subject<void>();
-
-  constructor(
-    private settingsService: SettingsService,
-    private sessionService: SessionService
-  ) {}
 
   ngOnInit(): void {
     this.sessionService.user$.pipe(

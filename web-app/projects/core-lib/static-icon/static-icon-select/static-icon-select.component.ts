@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { PagingParameters, PagingDataSource } from '@ngageoint/mage.web-core-lib/paging'
 import { StaticIcon } from '../static-icon.model'
 import { StaticIconService } from '../static-icon.service'
@@ -19,13 +19,16 @@ export interface StaticIconSelectItem {
     imports: [CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, MatCard, MatCardHeader, MatCardTitle]
 })
 export class StaticIconSelectComponent implements OnInit {
+  private iconService = inject(StaticIconService);
+
 
   icons: StaticIcon[] | null = null
   dataSource: PagingDataSource<StaticIcon>
 
-  constructor(
-    private iconService: StaticIconService
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.dataSource = new PagingDataSource<StaticIcon>(250, (paging: PagingParameters) => {
       return this.iconService.fetchIcons(paging)
     })

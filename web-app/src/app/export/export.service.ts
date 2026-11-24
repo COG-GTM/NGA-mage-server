@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Export, ExportRequest } from './entities.export';
@@ -7,11 +7,11 @@ import { Export, ExportRequest } from './entities.export';
   providedIn: 'root'
 })
 export class ExportService {
+  private httpClient = inject(HttpClient);
+
 
   private _exports = new BehaviorSubject<Export[]>([])
   exports$ = this._exports.asObservable()
-
-  constructor(private httpClient: HttpClient) { }
 
   export(eventId: number, request: ExportRequest): Observable<Export> {
     return this.httpClient.post<Export>(`/api/events/${eventId}/exports`, request, {

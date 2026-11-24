@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, Input, OnInit, OnDestroy, Output, TemplateRef, ViewChild, signal } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, OnInit, OnDestroy, Output, TemplateRef, ViewChild, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -50,6 +50,17 @@ import { LoginsComponent } from '../../../admin-logins/admin-logins.component';
     ]
 })
 export class UserDetailsViewComponent implements OnInit, OnDestroy {
+  private userService = inject(UserService);
+  private sessionService = inject(SessionService);
+  private teamsService = inject(TeamService);
+  private eventsService = inject(AdminEventsService);
+  private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
+  private breadcrumbService = inject(AdminBreadcrumbService);
+
   @Input() user!: User;
 
   @ViewChild('breadcrumbActions', { static: true })
@@ -82,18 +93,7 @@ export class UserDetailsViewComponent implements OnInit, OnDestroy {
   private readonly teamSearch$ = new Subject<string>();
   private readonly eventSearch$ = new Subject<string>();
 
-  constructor(
-    private userService: UserService,
-    private sessionService: SessionService,
-    private teamsService: TeamService,
-    private eventsService: AdminEventsService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private router: Router,
-    private route: ActivatedRoute,
-    private destroyRef: DestroyRef,
-    private breadcrumbService: AdminBreadcrumbService
-  ) {
+  constructor() {
     this.loadTeams$
       .pipe(
         switchMap(() =>

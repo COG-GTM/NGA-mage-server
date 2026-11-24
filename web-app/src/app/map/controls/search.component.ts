@@ -1,11 +1,4 @@
-import {
-  Component,
-  Output,
-  EventEmitter,
-  ViewChild,
-  ElementRef,
-  AfterViewInit
-} from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, inject } from '@angular/core';
 import { DomEvent } from 'leaflet';
 import { MapSettingsService } from '../settings/map.settings.service';
 import { MapSettings } from 'src/app/entities/map/entities.map';
@@ -38,6 +31,10 @@ export interface SearchEvent {
     imports: [MatProgressSpinner, MatIconButton, MatIcon, MatMiniFabButton, MatTooltip, MatCard, MatList, MatListItem, MatRipple, MatListItemIcon, MatListItemTitle]
 })
 export class SearchComponent implements AfterViewInit {
+  private mapSettingsService = inject(MapSettingsService);
+  private searchService = inject(PlacenameSearchService);
+  private snackBar = inject(MatSnackBar);
+
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
   @ViewChild('searchList') matList!: ElementRef<HTMLElement>;
 
@@ -51,12 +48,6 @@ export class SearchComponent implements AfterViewInit {
 
   searchResults: any[] = [];
   searching = false;
-
-  constructor(
-    private mapSettingsService: MapSettingsService,
-    private searchService: PlacenameSearchService,
-    private snackBar: MatSnackBar
-  ) { }
 
   ngOnInit(): void {
     this.mapSettingsService

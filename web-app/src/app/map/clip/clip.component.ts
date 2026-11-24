@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, OnDestroy, OnChanges, SimpleChanges, OnInit, ViewChild } from '@angular/core'
+import { Component, Input, ElementRef, OnDestroy, OnChanges, SimpleChanges, OnInit, ViewChild, inject } from '@angular/core'
 import { Feature } from 'geojson'
 import { Map, GeoJSON, PathOptions, Layer, control, TileLayer, WMSOptions, Circle, LatLng } from 'leaflet'
 import { MapService } from '../map.service'
@@ -23,6 +23,9 @@ export interface PointAccuracy {
     styleUrls: ['./clip.component.scss']
 })
 export class MapClipComponent implements OnInit, OnChanges, OnDestroy {
+  private mapService = inject(MapService);
+  private localStorageService = inject(LocalStorageService);
+
   @Input() feature: Feature
   @Input() accuracy: PointAccuracy
 
@@ -35,11 +38,6 @@ export class MapClipComponent implements OnInit, OnChanges, OnDestroy {
   zoomControl = control.zoom()
   mapListener = {
     onBaseLayerSelected: this.onBaseLayerSelected.bind(this)
-  }
-
-  constructor(
-    private mapService: MapService,
-    private localStorageService: LocalStorageService) {
   }
 
   ngOnInit(): void {

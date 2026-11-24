@@ -13,6 +13,8 @@ import { AuthenticationButtonComponent } from '../button/authentication-button.c
     imports: [AuthenticationButtonComponent]
 })
 export class IdpAuthenticationComponent {
+  private userService = inject(UserService);
+
   @Input() strategy: AuthenticationStrategy
   @Output() created = new EventEmitter<SignupEvent>()
   @Output() authenticated = new EventEmitter<{ user: User, token: string }>()
@@ -24,10 +26,6 @@ export class IdpAuthenticationComponent {
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef)
   private signinSubscription?: Subscription
-
-  constructor(
-    private userService: UserService
-  ) {}
 
   signin() {
     this.error = undefined

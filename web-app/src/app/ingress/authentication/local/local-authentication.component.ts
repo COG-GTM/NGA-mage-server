@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SecurityContext, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SecurityContext, ViewChild, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../api/api.service';
 import { LinkGenerator } from '../../../contact/utilities/link-generator'
@@ -30,6 +30,11 @@ import { MatIcon } from '@angular/material/icon';
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatIconButton, MatSuffix, MatIcon, MatButton]
 })
 export class LocalAuthenticationComponent implements OnInit {
+  private router = inject(Router);
+  private apiService = inject(ApiService);
+  private userService = inject(UserService);
+  private sanitizer = inject(DomSanitizer);
+
   @Input() api: Api
   @Input() strategy: AuthenticationStrategy
   @Input() landing: boolean
@@ -50,13 +55,6 @@ export class LocalAuthenticationComponent implements OnInit {
     title: string,
     message: SafeHtml
   }
-
-  constructor(
-    private router: Router,
-    private apiService: ApiService,
-    private userService: UserService,
-    private sanitizer: DomSanitizer
-  ) { }
 
   ngOnInit(): void {
     this.apiService.getApi().subscribe((api: any) => {

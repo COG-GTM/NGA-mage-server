@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Api } from '../api/api.entity';
 import { ApiService } from 'mage-web-app/api/api.service';
 import { Router } from '@angular/router';
@@ -12,12 +12,13 @@ import { IngressComponent } from '../ingress/ingress.component';
     imports: [InfoComponent, IngressComponent]
 })
 export class LandingComponent {
+  private router = inject(Router);
+
   api: Api
 
-  constructor(
-    apiService: ApiService,
-    private router: Router
-  ) {
+  constructor() {
+    const apiService = inject(ApiService);
+
     apiService.getApi().subscribe((api: Api) => {
       this.api = api
     })

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatSelectChange as MatSelectChange, MatSelect } from '@angular/material/select';
 import { LocalStorageService } from 'src/app/http/local-storage.service';
 import { MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
@@ -17,6 +17,8 @@ interface TimeZoneOption {
     imports: [MatFormField, MatLabel, MatIcon, MatPrefix, MatSelect, MatOption]
 })
 export class TimeZoneComponent implements OnInit {
+  private localStorageService = inject(LocalStorageService);
+
 
   timezoneOptions: TimeZoneOption[] = [{
     title: 'Local',
@@ -26,10 +28,6 @@ export class TimeZoneComponent implements OnInit {
     timezone: 'gmt'
   }]
   timezoneOption: TimeZoneOption
-
-  constructor(
-    private localStorageService: LocalStorageService
-  ) {}
 
   ngOnInit(): void {
     const timezone = this.localStorageService.getTimeZoneView()

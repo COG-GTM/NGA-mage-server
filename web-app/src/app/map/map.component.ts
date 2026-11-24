@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild, inject } from '@angular/core'
 import { LocationEvent, LocationState } from '../../app/map/controls/location.component'
 import { SearchEvent } from '../../app/map/controls/search.component'
 import { ZoomDirection, ZoomEvent as ZoomControlEvent } from '../../app/map/controls/zoom.component'
@@ -46,6 +46,14 @@ Icon.Default.imagePath = '/'
     imports: [SearchComponent, LayersControlComponent, MatSidenavContainer, MatSidenav, LayersComponent, MatSidenavContent, AddObservationComponent, LocationComponent, ZoomComponent]
 })
 export class MapComponent implements OnDestroy, AfterViewInit {
+  dialog = inject(MatDialog);
+  private mapService = inject(MapService);
+  private sessionService = inject(SessionService);
+  private layerService = inject(LayerService);
+  private eventService = inject(EventService);
+  private filterService = inject(FilterService);
+  private localStorageService = inject(LocalStorageService);
+
 
   public static readonly PANE_Z_INDEX_BUCKET_SIZE = 10000
   public static readonly BASE_PANE_Z_INDEX_OFFSET = 1 * MapComponent.PANE_Z_INDEX_BUCKET_SIZE
@@ -107,16 +115,9 @@ export class MapComponent implements OnDestroy, AfterViewInit {
 
   private static readonly TEMPORAL_LAYER_REFRESH_INTERVAL_MS = 60000
 
-  constructor(
-    public dialog: MatDialog,
-    private mapService: MapService,
-    private sessionService: SessionService,
-    mapLayerService: MapLayerService,
-    private layerService: LayerService,
-    private eventService: EventService,
-    private filterService: FilterService,
-    private localStorageService: LocalStorageService
-  ) {
+  constructor() {
+    const mapLayerService = inject(MapLayerService);
+
     this.toggleSubscription = mapLayerService.toggle$.subscribe(event => this.layerTogged(event));
     this.zoomSubscription = mapLayerService.zoom$.subscribe(event => this.zoom(event));
     this.opacitySubscription = mapLayerService.opacity$.subscribe(event => this.opacityChanged(event));

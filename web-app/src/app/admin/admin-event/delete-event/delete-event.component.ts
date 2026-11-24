@@ -1,4 +1,4 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { MatDialogRef as MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { AdminEventsService } from '../../services/admin-events.service';
 import { MageEvent } from 'mage-web-app/entities/event/entities.event';
@@ -29,6 +29,12 @@ import { FormsModule } from '@angular/forms';
     ]
 })
 export class DeleteEventComponent {
+    dialogRef = inject<MatDialogRef<DeleteEventComponent>>(MatDialogRef);
+    data = inject<{
+    event: MageEvent;
+}>(MAT_DIALOG_DATA);
+    private eventsService = inject(AdminEventsService);
+
     // set once - never being reassigned, no signal declaration necessary
     event: MageEvent;
     
@@ -41,11 +47,9 @@ export class DeleteEventComponent {
      * @param data - Injected data containing the event to delete
      * @param eventsService - Service for event operations
      */
-    constructor(
-        public dialogRef: MatDialogRef<DeleteEventComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { event: MageEvent },
-        private eventsService: AdminEventsService
-    ) {
+    constructor() {
+        const data = this.data;
+
         this.event = data.event;
     }
 

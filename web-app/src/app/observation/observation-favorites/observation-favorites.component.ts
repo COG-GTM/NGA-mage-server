@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject } from '@angular/core'
+import { ChangeDetectorRef, Component, inject } from '@angular/core'
 import { MatDialogRef as MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import { UserService } from '../../user/user.service';
@@ -18,13 +18,15 @@ interface Data {
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatList, MatListItem, MatListItemAvatar, UserAvatarComponent, MatListItemTitle, MatListItemLine, MatDialogActions, MatButton]
 })
 export class ObservationFavoritesComponent {
+  dialogRef = inject<MatDialogRef<ObservationFavoritesComponent>>(MatDialogRef);
+  data = inject<Data>(MAT_DIALOG_DATA);
+
   users: any[]
 
-  constructor(
-    public dialogRef: MatDialogRef<ObservationFavoritesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Data,
-    userService: UserService,
-    cdr: ChangeDetectorRef) {
+  constructor() {
+    const data = this.data;
+    const userService = inject(UserService);
+
 
     forkJoin(data.userIds.map((userId: string) => userService.getUser(userId))).subscribe((result: any[]) => {
       this.users = result

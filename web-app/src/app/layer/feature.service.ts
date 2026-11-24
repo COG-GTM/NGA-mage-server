@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Observable, map } from "rxjs";
 import * as _ from 'underscore';
 
@@ -7,9 +7,8 @@ import * as _ from 'underscore';
   providedIn: 'root'
 })
 export class FeatureService {
-  constructor(
-    private httpClient: HttpClient
-  ) {}
+  private httpClient = inject(HttpClient);
+
 
   getFeatureCollection(event, layer): Observable<any> {
     let url: string

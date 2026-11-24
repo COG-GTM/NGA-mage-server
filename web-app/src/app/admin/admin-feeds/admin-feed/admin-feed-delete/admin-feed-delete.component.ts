@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'
 import { MatIconModule } from '@angular/material/icon'
@@ -18,7 +18,6 @@ import { Feed } from '@ngageoint/mage.web-core-lib/feed'
     ]
 })
 export class AdminFeedDeleteComponent {
-
-  constructor(@Inject(MAT_DIALOG_DATA) public feed: Feed) {}
+  feed = inject<Feed>(MAT_DIALOG_DATA);
 
 }

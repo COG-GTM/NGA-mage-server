@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { UntypedFormGroup, NgModel, FormsModule } from '@angular/forms';
 import moment from 'moment';
 import { LocalStorageService } from '../../../http/local-storage.service';
@@ -30,7 +24,9 @@ export class ObservationEditDateComponent implements OnChanges {
   timeZone: string;
   second = 0;
 
-  constructor(localStorageService: LocalStorageService) {
+  constructor() {
+    const localStorageService = inject(LocalStorageService);
+
     this.timeZone = localStorageService.getTimeZoneEdit();
   }
 

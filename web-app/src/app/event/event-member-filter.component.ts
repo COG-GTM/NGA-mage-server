@@ -48,6 +48,8 @@ interface MemberOptionGroup {
   ]
 })
 export class EventMemberFilterComponent {
+  private eventService = inject(EventService);
+
   eventId = input<EventId | null | undefined>()
   teams = input<Team[]>([])
   initialFilter = input<MemberFilterSelection | null>(null)
@@ -93,7 +95,7 @@ export class EventMemberFilterComponent {
 
   filteredGroups = computed<MemberOptionGroup[]>(() => this.buildGroups())
 
-  constructor(private eventService: EventService) {
+  constructor() {
     effect(() => {
       const eventId = this.eventId()
       const teams = this.teams()

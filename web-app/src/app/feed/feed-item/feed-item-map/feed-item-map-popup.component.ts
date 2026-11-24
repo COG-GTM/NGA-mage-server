@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Feature } from 'geojson';
 import { SidebarService } from 'src/app/sidebar/sidebar.service';
 import { Feed } from '@ngageoint/mage.web-core-lib/feed';
@@ -13,6 +13,8 @@ import { MomentPipe } from '../../../moment/moment.pipe';
     imports: [MatIconButton, MatIcon, MomentPipe]
 })
 export class FeedItemMapPopupComponent implements OnInit {
+  private sidebarService = inject(SidebarService);
+
   @Input() feed: Feed;
   @Input() item: Feature;
 
@@ -20,8 +22,6 @@ export class FeedItemMapPopupComponent implements OnInit {
   timestamp: number;
   primary: string;
   secondary: string;
-
-  constructor(private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
     if (!this.item || !this.item.properties) return;

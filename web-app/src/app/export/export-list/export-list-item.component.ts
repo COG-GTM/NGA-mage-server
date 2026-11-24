@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import moment from 'moment';
 import { SessionService } from '../../http/session.service';
 import { Export, ExportStatus } from '../entities.export';
@@ -23,7 +23,9 @@ export class ExportListItemComponent implements OnChanges {
   summaryStart: number
   summaryEnd: number
 
-  constructor(sessionService: SessionService) {
+  constructor() {
+    const sessionService = inject(SessionService);
+
     this.token = sessionService.getToken()
   }
 
