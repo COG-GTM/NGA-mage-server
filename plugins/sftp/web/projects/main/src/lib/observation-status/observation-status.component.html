@@ -13,47 +13,61 @@
       </div>
     </div>
 
-    <div class="loading-state" *ngIf="isSummaryLoading">
-      <mat-spinner diameter="28"></mat-spinner>
-    </div>
-
-    <ng-container *ngIf="!isSummaryLoading">
-      <div class="empty-state healthy" *ngIf="!showAllEvents && problemEvents.length === 0">
-        <mat-icon fontSet="material-symbols-outlined" class="empty-state-icon">check_circle</mat-icon>
-        <div class="empty-state-text">No sync problems across any event</div>
+    @if (isSummaryLoading) {
+      <div class="loading-state">
+        <mat-spinner diameter="28"></mat-spinner>
       </div>
+    }
 
-      <div *ngIf="showAllEvents || problemEvents.length > 0">
-        <mat-nav-list class="event-rows">
-          <mat-list-item *ngFor="let row of (showAllEvents ? pagedAllEvents : problemEvents)"
-            (click)="selectEventFromSummary(row.eventId)">
-            <mat-icon matListItemIcon fontSet="material-symbols-outlined"
-              [class.healthy-icon]="rowSeverity(row) === 'healthy'"
-              [class.pending-icon]="rowSeverity(row) === 'pending'"
-              [class.problem-icon]="rowSeverity(row) === 'failed'">
-              {{ rowIcon(row) }}
-            </mat-icon>
-            <span matListItemTitle>{{ row.eventName }}</span>
-            <span matListItemLine>{{ row.counts['SUCCESS'] }} observations synced</span>
-            <span matListItemMeta class="event-row__chips">
-              <span class="status-chip failed" *ngIf="row.counts['FAILED'] > 0">
-                {{ row.counts['FAILED'] }} Failed
-              </span>
-              <span class="status-chip pending" *ngIf="row.stuckPendingCount > 0">
-                {{ row.stuckPendingCount }} Pending
-              </span>
-              <span class="status-chip success" *ngIf="row.counts['FAILED'] === 0 && row.stuckPendingCount === 0">
-                Healthy
-              </span>
-            </span>
-          </mat-list-item>
-        </mat-nav-list>
-
-        <mat-paginator *ngIf="showAllEvents" class="full-bleed-paginator" [length]="eventSummaries.length"
-          [pageSizeOptions]="[10, 25, 50]" [pageSize]="pageSize" [pageIndex]="pageIndex"
-          (page)="onPageChange($event)"></mat-paginator>
-      </div>
-    </ng-container>
+    @if (!isSummaryLoading) {
+      @if (!showAllEvents && problemEvents.length === 0) {
+        <div class="empty-state healthy">
+          <mat-icon fontSet="material-symbols-outlined" class="empty-state-icon">check_circle</mat-icon>
+          <div class="empty-state-text">No sync problems across any event</div>
+        </div>
+      }
+      @if (showAllEvents || problemEvents.length > 0) {
+        <div>
+          <mat-nav-list class="event-rows">
+            @for (row of (showAllEvents ? pagedAllEvents : problemEvents); track row) {
+              <mat-list-item
+                (click)="selectEventFromSummary(row.eventId)">
+                <mat-icon matListItemIcon fontSet="material-symbols-outlined"
+                  [class.healthy-icon]="rowSeverity(row) === 'healthy'"
+                  [class.pending-icon]="rowSeverity(row) === 'pending'"
+                  [class.problem-icon]="rowSeverity(row) === 'failed'">
+                  {{ rowIcon(row) }}
+                </mat-icon>
+                <span matListItemTitle>{{ row.eventName }}</span>
+                <span matListItemLine>{{ row.counts['SUCCESS'] }} observations synced</span>
+                <span matListItemMeta class="event-row__chips">
+                  @if (row.counts['FAILED'] > 0) {
+                    <span class="status-chip failed">
+                      {{ row.counts['FAILED'] }} Failed
+                    </span>
+                  }
+                  @if (row.stuckPendingCount > 0) {
+                    <span class="status-chip pending">
+                      {{ row.stuckPendingCount }} Pending
+                    </span>
+                  }
+                  @if (row.counts['FAILED'] === 0 && row.stuckPendingCount === 0) {
+                    <span class="status-chip success">
+                      Healthy
+                    </span>
+                  }
+                </span>
+              </mat-list-item>
+            }
+          </mat-nav-list>
+          @if (showAllEvents) {
+            <mat-paginator class="full-bleed-paginator" [length]="eventSummaries.length"
+              [pageSizeOptions]="[10, 25, 50]" [pageSize]="pageSize" [pageIndex]="pageIndex"
+            (page)="onPageChange($event)"></mat-paginator>
+          }
+        </div>
+      }
+    }
   </mat-card>
 
   <mat-card class="event-detail">
@@ -63,36 +77,45 @@
       <mat-form-field appearance="fill" class="event-select" subscriptSizing="dynamic">
         <mat-label>Event</mat-label>
         <mat-select [(ngModel)]="selectedEventId" (ngModelChange)="onEventChange()">
-          <mat-option *ngFor="let event of events" [value]="event.id">{{ event.name }}</mat-option>
+          @for (event of events; track event) {
+            <mat-option [value]="event.id">{{ event.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
 
-      <div class="filter-buttons" *ngIf="selectedEventId">
-        <button mat-stroked-button
-          [class.filter-active]="activeFilters.size === 0"
-          (click)="activeFilters.clear(); applyFilter()">
-          ALL
+      @if (selectedEventId) {
+        <div class="filter-buttons">
+          <button mat-stroked-button
+            [class.filter-active]="activeFilters.size === 0"
+            (click)="activeFilters.clear(); applyFilter()">
+            ALL
+          </button>
+          @for (s of statuses; track s) {
+            <button mat-stroked-button
+              [class.filter-active]="isFilterActive(s)"
+              [class]="'filter-btn-' + s.toLowerCase()"
+              (click)="toggleFilter(s)">
+              {{ s }}
+            </button>
+          }
+        </div>
+      }
+
+      @if (selectedEventId) {
+        <button mat-icon-button (click)="refresh()" matTooltip="Refresh">
+          <mat-icon>refresh</mat-icon>
         </button>
-        <button mat-stroked-button *ngFor="let s of statuses"
-          [class.filter-active]="isFilterActive(s)"
-          [class]="'filter-btn-' + s.toLowerCase()"
-          (click)="toggleFilter(s)">
-          {{ s }}
-        </button>
+      }
+    </div>
+
+    @if (!selectedEventId) {
+      <div class="empty-state">
+        <mat-icon fontSet="material-symbols-outlined" class="empty-state-icon">inbox</mat-icon>
+        <div class="empty-state-text">Select an event to view upload records</div>
       </div>
+    }
 
-      <button mat-icon-button *ngIf="selectedEventId" (click)="refresh()" matTooltip="Refresh">
-        <mat-icon>refresh</mat-icon>
-      </button>
-    </div>
-
-    <div class="empty-state" *ngIf="!selectedEventId">
-      <mat-icon fontSet="material-symbols-outlined" class="empty-state-icon">inbox</mat-icon>
-      <div class="empty-state-text">Select an event to view upload records</div>
-    </div>
-
-    <ng-container *ngIf="selectedEventId">
-
+    @if (selectedEventId) {
       <div class="summary-bar">
         <span class="summary-chip success">
           {{ counts['SUCCESS'] }} Success
@@ -107,79 +130,87 @@
           {{ counts['SKIPPED'] }} Skipped
         </span>
       </div>
-
-      <div class="bulk-actions" *ngIf="!isLoading">
-        <button mat-stroked-button class="bulk-btn"
-          [disabled]="counts['FAILED'] === 0"
-          (click)="syncAllFailed()">
-          Retry All Failed ({{ counts['FAILED'] }})
-        </button>
-        <button mat-stroked-button class="bulk-btn"
-          [disabled]="counts['SKIPPED'] === 0"
-          (click)="syncAllSkipped()">
-          Send All Skipped ({{ counts['SKIPPED'] }})
-        </button>
-      </div>
-
-      <div class="loading-state" *ngIf="isLoading">
-        <mat-spinner diameter="36"></mat-spinner>
-      </div>
-
-      <div class="table-container" *ngIf="!isLoading">
-        <table mat-table [dataSource]="pagedRecords" class="obs-table">
-
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let row">
-              <span class="status-chip" [class]="row.status.toLowerCase()">
-                {{ row.status }}
-              </span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="observationId">
-            <th mat-header-cell *matHeaderCellDef>Observation ID</th>
-            <td mat-cell *matCellDef="let row">
-              <span class="obs-id">{{ row.observationId }}</span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="lastModified">
-            <th mat-header-cell *matHeaderCellDef>Last Modified</th>
-            <td mat-cell *matCellDef="let row">{{ row.lastObservationModified | date:'MMM d, HH:mm' }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="syncedAt">
-            <th mat-header-cell *matHeaderCellDef>Uploaded At</th>
-            <td mat-cell *matCellDef="let row">{{ row.updatedAt | date:'MMM d, HH:mm' }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let row">
-              <button *ngIf="row.status !== 'PENDING'" mat-stroked-button class="sync-btn" (click)="syncOne(row)" [disabled]="isSyncing(row)">
-                <mat-spinner *ngIf="isSyncing(row)" diameter="16" class="inline-spinner"></mat-spinner>
-                <span *ngIf="!isSyncing(row) && row.status === 'FAILED'">Retry</span>
-                <span *ngIf="!isSyncing(row) && row.status === 'SKIPPED'">Send</span>
-                <span *ngIf="!isSyncing(row) && row.status === 'SUCCESS'">Resend</span>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </div>
-
-      <mat-paginator *ngIf="!isLoading && filteredRecords.length > 0" class="full-bleed-paginator"
-        [length]="filteredRecords.length" [pageSizeOptions]="[10, 25, 50]" [pageSize]="recordsPageSize"
+      @if (!isLoading) {
+        <div class="bulk-actions">
+          <button mat-stroked-button class="bulk-btn"
+            [disabled]="counts['FAILED'] === 0"
+            (click)="syncAllFailed()">
+            Retry All Failed ({{ counts['FAILED'] }})
+          </button>
+          <button mat-stroked-button class="bulk-btn"
+            [disabled]="counts['SKIPPED'] === 0"
+            (click)="syncAllSkipped()">
+            Send All Skipped ({{ counts['SKIPPED'] }})
+          </button>
+        </div>
+      }
+      @if (isLoading) {
+        <div class="loading-state">
+          <mat-spinner diameter="36"></mat-spinner>
+        </div>
+      }
+      @if (!isLoading) {
+        <div class="table-container">
+          <table mat-table [dataSource]="pagedRecords" class="obs-table">
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="status-chip" [class]="row.status.toLowerCase()">
+                  {{ row.status }}
+                </span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="observationId">
+              <th mat-header-cell *matHeaderCellDef>Observation ID</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="obs-id">{{ row.observationId }}</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="lastModified">
+              <th mat-header-cell *matHeaderCellDef>Last Modified</th>
+              <td mat-cell *matCellDef="let row">{{ row.lastObservationModified | date:'MMM d, HH:mm' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="syncedAt">
+              <th mat-header-cell *matHeaderCellDef>Uploaded At</th>
+              <td mat-cell *matCellDef="let row">{{ row.updatedAt | date:'MMM d, HH:mm' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row">
+                @if (row.status !== 'PENDING') {
+                  <button mat-stroked-button class="sync-btn" (click)="syncOne(row)" [disabled]="isSyncing(row)">
+                    @if (isSyncing(row)) {
+                      <mat-spinner diameter="16" class="inline-spinner"></mat-spinner>
+                    }
+                    @if (!isSyncing(row) && row.status === 'FAILED') {
+                      <span>Retry</span>
+                    }
+                    @if (!isSyncing(row) && row.status === 'SKIPPED') {
+                      <span>Send</span>
+                    }
+                    @if (!isSyncing(row) && row.status === 'SUCCESS') {
+                      <span>Resend</span>
+                    }
+                  </button>
+                }
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      }
+      @if (!isLoading && filteredRecords.length > 0) {
+        <mat-paginator class="full-bleed-paginator"
+          [length]="filteredRecords.length" [pageSizeOptions]="[10, 25, 50]" [pageSize]="recordsPageSize"
         [pageIndex]="recordsPageIndex" (page)="onRecordsPageChange($event)"></mat-paginator>
-
-      <div class="empty-state" *ngIf="!isLoading && filteredRecords.length === 0">
-        <mat-icon fontSet="material-symbols-outlined" class="empty-state-icon">check_circle_outline</mat-icon>
-        <div class="empty-state-text">No records match the current filter</div>
-      </div>
-
-    </ng-container>
+      }
+      @if (!isLoading && filteredRecords.length === 0) {
+        <div class="empty-state">
+          <mat-icon fontSet="material-symbols-outlined" class="empty-state-icon">check_circle_outline</mat-icon>
+          <div class="empty-state-text">No records match the current filter</div>
+        </div>
+      }
+    }
   </mat-card>
 </div>
