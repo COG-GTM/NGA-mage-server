@@ -1,5 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'map-control-layers',
@@ -25,7 +28,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
             transition('default => rotated', animate('200ms ease-out'))
         ])
     ],
-    standalone: false
+    imports: [MatMiniFabButton, MatTooltip, MatIcon]
 })
 export class LayersControlComponent {
   @Output() onLayerPanelToggle = new EventEmitter<void>();

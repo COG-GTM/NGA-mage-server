@@ -12,7 +12,7 @@ import { ObservationEditTextareaComponent } from './observation-edit-textarea.co
     selector: `host-component`,
     template: `<observation-edit-textarea [formGroup]="formGroup" [definition]="definition"></observation-edit-textarea>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, ObservationEditTextareaComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({
@@ -35,9 +35,8 @@ describe('ObservationEditTextareaComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule],
-      declarations: [ObservationEditTextareaComponent, TestHostComponent]
-    })
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule, ObservationEditTextareaComponent, TestHostComponent]
+})
       .compileComponents()
   }))
 

@@ -17,15 +17,13 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [
-    LandingComponent,
-    InfoComponent
-  ],
-  imports: [
-    CommonModule,
-    IngressModule,
-    RouterModule.forChild(routes)
-  ],
-  exports: [ RouterModule ]
+    imports: [
+        CommonModule,
+        IngressModule,
+        RouterModule.forChild(routes),
+        LandingComponent,
+        InfoComponent
+    ],
+    exports: [RouterModule]
 })
 export class LandingModule { }

@@ -16,6 +16,7 @@ import { SecurityBannerComponent } from './security-banner.component';
 import { SettingsService } from '../settings.service';
 
 @Component({
+    imports: [SecurityBannerComponent],
     selector: 'color-picker',
     template: '',
     standalone: true

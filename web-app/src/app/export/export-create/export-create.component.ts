@@ -7,17 +7,32 @@ import { FilterChoice, INTERVAL_CHOICES } from 'src/app/filter/filter.types';
 import { MageEvent as FilterEvent } from 'src/app/entities/event/entities.event';
 import { Export, ExportFormat, ExportFormProjection, ExportRequest, FormProjection } from '../entities.export';
 import { Condition, ObservationFieldFilter } from '../../entities/observation/filter/entities.observation.filter'
-import { MemberFilterSelection } from '../../event/event-member-filter.component';
+import { MemberFilterSelection, EventMemberFilterComponent } from '../../event/event-member-filter.component';
 import { debounceTime, EMPTY, map, Observable, startWith, Subject, switchMap } from 'rxjs';
-import { PageEvent } from '@angular/material/paginator';
-import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { AbstractControl, FormControl, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventService } from 'src/app/event/event.service';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { ObservationService, ObservationsPage, ObservationsPageRequestOptions } from 'src/app/observation/observation.service';
 import { SessionService } from 'src/app/http/session.service';
 import { LocationService } from 'src/app/user/location/location.service';
 import { Form } from '../../entities/event/entities.event';
 import { ObservationFieldFilterComponent } from '../../observation/observation-filter/observation-field-filter.component';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatChipListbox, MatChipOption } from '@angular/material/chips';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatSelect } from '@angular/material/select';
+import { DatetimePickerComponent } from '../../datetime-picker/datetime-picker.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { NgClass, AsyncPipe, DecimalPipe } from '@angular/common';
+import { MatDivider, MatList } from '@angular/material/list';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { ObservationPreviewItemComponent } from './observation-preview-item.component';
 
 type ExportFormatOption = {
   text: string
@@ -33,21 +48,21 @@ const filterDefinitions = {
 }
 
 @Component({
-  selector: 'export-create',
-  templateUrl: 'export-create.component.html',
-  styleUrls: ['./export-create.component.scss'],
-  standalone: false,
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({ transform: 'translateX(100%)' }),
-        animate('250ms ease-out', style({ transform: 'translateX(0)' }))
-      ]),
-      transition(':leave', [
-        animate('200ms ease-in', style({ transform: 'translateX(100%)' }))
-      ])
-    ])
-  ]
+    selector: 'export-create',
+    templateUrl: 'export-create.component.html',
+    styleUrls: ['./export-create.component.scss'],
+    animations: [
+        trigger('slideIn', [
+            transition(':enter', [
+                style({ transform: 'translateX(100%)' }),
+                animate('250ms ease-out', style({ transform: 'translateX(0)' }))
+            ]),
+            transition(':leave', [
+                animate('200ms ease-in', style({ transform: 'translateX(100%)' }))
+            ])
+        ])
+    ],
+    imports: [MatToolbar, MatIcon, MatFormField, MatLabel, MatInput, FormsModule, MatAutocompleteTrigger, ReactiveFormsModule, MatAutocomplete, MatOption, MatError, MatChipListbox, MatChipOption, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatTooltip, MatExpansionPanelDescription, MatSelect, DatetimePickerComponent, MatCheckbox, MatIconButton, NgClass, EventMemberFilterComponent, MatSuffix, ObservationFieldFilterComponent, MatButton, MatDivider, MatProgressSpinner, MatList, ObservationPreviewItemComponent, MatPaginator, AsyncPipe, DecimalPipe]
 })
 export class ExportCreateComponent implements OnInit {
   @Output() close = new EventEmitter<Export | null>()

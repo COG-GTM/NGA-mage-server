@@ -2,12 +2,14 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Feed, FeedService } from '@ngageoint/mage.web-core-lib/feed';
 import { Feature } from 'geojson';
 import { Subscription } from 'rxjs'
+import { MatToolbar } from '@angular/material/toolbar';
+import { FeedItemSummaryComponent } from '../feed-item/feed-item-summary/feed-item-summary.component';
 
 @Component({
     selector: 'feed-list',
     templateUrl: './feed-list.component.html',
     styleUrls: ['./feed-list.component.scss'],
-    standalone: false
+    imports: [MatToolbar, FeedItemSummaryComponent]
 })
 export class FeedListComponent implements OnChanges {
   @Input() feed: Feed

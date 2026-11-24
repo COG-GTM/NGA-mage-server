@@ -1,3 +1,6 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { EventMemberFilterComponent } from '../../event/event-member-filter.component';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -66,14 +69,15 @@ describe('ExportCreateComponent', () => {
     exportService.export.calls.reset();
 
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         FormsModule, ReactiveFormsModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule,
         MatCheckboxModule, MatChipsModule, MatSelectModule, MatToolbarModule, MatIconModule, MatCardModule,
         MatRippleModule, MatExpansionModule, MatSlideToggleModule, MatListModule, MatPaginatorModule,
-        MatDatepickerModule, MatProgressSpinnerModule, MatDividerModule
-      ],
-      declarations: [ExportCreateComponent],
-      providers: [
+        MatDatepickerModule, MatProgressSpinnerModule, MatDividerModule,
+        ExportCreateComponent
+    ],
+    providers: [
+        provideMomentDateAdapter(),
         { provide: ExportService, useValue: exportService },
         { provide: EventService, useValue: eventService },
         { provide: FilterService, useValue: filterService },
@@ -81,9 +85,12 @@ describe('ExportCreateComponent', () => {
         { provide: LocationService, useValue: locationService },
         { provide: SessionService, useValue: sessionService },
         provideNoopAnimations()
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
+    // Member filter has its own spec; keep it out of this shallow render.
+    .overrideComponent(ExportCreateComponent, { remove: { imports: [EventMemberFilterComponent] }, add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] } })
+    .compileComponents();
   }));
 
   beforeEach(() => {

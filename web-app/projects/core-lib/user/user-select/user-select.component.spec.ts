@@ -12,7 +12,10 @@ import { PageOf, itemRangeOfPage, pageForItemIndex } from '@ngageoint/mage.web-c
 @Component({
     selector: 'test-host',
     template: `<form [formGroup]="form"><mage-user-select formControlName="user"></mage-user-select></form>`,
-    standalone: false
+    imports: [FormsModule,
+        NgSelectModule,
+        ReactiveFormsModule,
+        UserSelectComponent]
 })
 class TestHostComponent {
 
@@ -33,22 +36,20 @@ describe('user select component', () => {
       'search'
     ])
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         FormsModule,
         NgSelectModule,
         ReactiveFormsModule,
-      ],
-      declarations: [
         TestHostComponent,
         UserSelectComponent,
-      ],
-      providers: [
+    ],
+    providers: [
         {
-          provide: UserReadService,
-          useValue: userService
+            provide: UserReadService,
+            useValue: userService
         }
-      ]
-    })
+    ]
+})
     .compileComponents()
   }))
 

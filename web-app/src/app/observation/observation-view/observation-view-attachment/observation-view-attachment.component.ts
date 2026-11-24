@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+import { AttachmentComponent } from '../../attachment/attachment.component';
 
 @Component({
     selector: 'observation-view-attachment',
     templateUrl: './observation-view-attachment.component.html',
     styleUrls: ['./observation-view-attachment.component.scss'],
-    standalone: false
+    imports: [MatGridList, MatGridTile, AttachmentComponent]
 })
 export class ObservationViewAttachmentComponent {
   private _attachments: any[];

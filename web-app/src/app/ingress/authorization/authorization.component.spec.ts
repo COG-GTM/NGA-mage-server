@@ -10,8 +10,7 @@ describe('Authorization Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [AuthorizationComponent],
-    imports: [MatFormFieldModule],
+    imports: [MatFormFieldModule, AuthorizationComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 }).compileComponents();
   }));

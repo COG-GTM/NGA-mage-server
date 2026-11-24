@@ -13,7 +13,7 @@ import { MatCheckboxModule as MatCheckboxModule } from '@angular/material/checkb
     [form]="form"
     [geometryStyle]="geometryStyle"
   ></observation-view-form>`,
-    standalone: false
+    imports: [MatSelectModule, MatIconModule, MatFormFieldModule, MatCardModule, MatCheckboxModule, ObservationViewFormComponent]
 })
 class TestHostComponent {
   form = {
@@ -33,15 +33,15 @@ describe('ObservationViewFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         MatSelectModule,
         MatIconModule,
         MatFormFieldModule,
         MatCardModule,
-        MatCheckboxModule
-      ],
-      declarations: [ObservationViewFormComponent, TestHostComponent]
-    }).compileComponents();
+        MatCheckboxModule,
+        ObservationViewFormComponent, TestHostComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

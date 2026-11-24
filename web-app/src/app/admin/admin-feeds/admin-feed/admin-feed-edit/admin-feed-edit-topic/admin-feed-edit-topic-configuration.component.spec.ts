@@ -13,6 +13,7 @@ import { AdminFeedEditTopicConfigurationComponent } from './admin-feed-edit-topi
 import { JsonSchemaFormWithServiceComponent } from '../../../../json-schema/json-schema.component';
 
 @Component({
+    imports: [AdminFeedEditTopicConfigurationComponent],
     selector: 'mage-json-schema-form',
     template: ` <input [value]="data?.derp ?? ''" (input)="onInput($event)" /> `
 })
@@ -41,7 +42,7 @@ describe('TopicConfigurationComponent', () => {
       [initialFetchParameters]="initialFetchParameters"
     >
     </app-topic-configuration>`,
-    standalone: false
+    imports: [MatExpansionModule, AdminFeedEditTopicConfigurationComponent]
 })
   class TestHostComponent {
     expanded: boolean;
@@ -60,9 +61,8 @@ describe('TopicConfigurationComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [MatExpansionModule, NoopAnimationsModule, AdminFeedEditTopicConfigurationComponent],
-      declarations: [TestHostComponent]
-    }).compileComponents();
+    imports: [MatExpansionModule, NoopAnimationsModule, AdminFeedEditTopicConfigurationComponent, TestHostComponent]
+}).compileComponents();
 
     TestBed.overrideComponent(AdminFeedEditTopicConfigurationComponent, {
       remove: { imports: [JsonSchemaFormWithServiceComponent] },

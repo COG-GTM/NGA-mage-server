@@ -33,14 +33,14 @@ describe('UserListComponent', () => {
     });
 
     TestBed.configureTestingModule({
-      declarations: [UserListComponent],
-      providers: [
+    imports: [UserListComponent],
+    providers: [
         { provide: MatDialog, useValue: dialog },
         { provide: EventService, useValue: eventService },
         { provide: FilterService, useValue: filterService }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

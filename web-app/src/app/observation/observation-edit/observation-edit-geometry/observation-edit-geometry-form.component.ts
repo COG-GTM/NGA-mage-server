@@ -1,18 +1,21 @@
 import { Component, Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core'
-import { AbstractControl, FormControl, FormGroup, NgModel, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms'
+import { AbstractControl, FormControl, FormGroup, NgModel, NG_VALIDATORS, ValidationErrors, Validator, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar'
 import mgrs from 'mgrs'
 import { Dimension, DimensionKey, DMSCoordinate, DMSParseError } from 'src/app/geometry/geometry-dms'
 import * as DMS from 'src/app/geometry/geometry-dms'
-import { createMask } from '@ngneat/input-mask'
+import { createMask, InputMaskModule } from '@ngneat/input-mask'
 import { LocalStorageService } from '../../../http/local-storage.service'
 import { MapService, FeatureEdit } from '../../../map/map.service'
 import { GeometryService } from '../../../geometry/geometry.service'
+import { MatChipListbox, MatChipOption } from '@angular/material/chips';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Directive({
     selector: '[mgrs][formControlName],[mgrs][formControl],[mgrs][ngModel]',
-    providers: [{ provide: NG_VALIDATORS, useExisting: MGRSValidatorDirective, multi: true }],
-    standalone: false
+    providers: [{ provide: NG_VALIDATORS, useExisting: MGRSValidatorDirective, multi: true }]
 })
 export class MGRSValidatorDirective implements Validator {
 
@@ -33,8 +36,7 @@ export class MGRSValidatorDirective implements Validator {
 
 @Directive({
     selector: '[dmsValidation][formControlName],[dmsValidation][formControl],[dmsValidation][ngModel]',
-    providers: [{ provide: NG_VALIDATORS, useExisting: DMSValidatorDirective, multi: true }],
-    standalone: false
+    providers: [{ provide: NG_VALIDATORS, useExisting: DMSValidatorDirective, multi: true }]
 })
 export class DMSValidatorDirective implements Validator {
 
@@ -67,7 +69,7 @@ type DMSFormValue = Partial<{ [DimensionKey.Latitude]: string, [DimensionKey.Lon
         { provide: NG_VALIDATORS, useExisting: MGRSValidatorDirective, multi: true },
         { provide: NG_VALIDATORS, useExisting: DMSValidatorDirective, multi: true }
     ],
-    standalone: false
+    imports: [MatChipListbox, MatChipOption, MatFormField, MatLabel, MatInput, FormsModule, MatError, ReactiveFormsModule, InputMaskModule, MatButton]
 })
 export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
 

@@ -11,9 +11,8 @@ describe('ZoomComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ MatIconModule, MatButtonModule ],
-      declarations: [ ZoomComponent ]
-    })
+    imports: [MatIconModule, MatButtonModule, ZoomComponent]
+})
     .compileComponents();
   }));
 

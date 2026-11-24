@@ -1,10 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  ValidationErrors
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -22,12 +17,18 @@ import {
   evaluatePasswordStrength
 } from 'mage-web-app/password/password';
 import { emailValidator } from 'mage-web-app/email/email';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { NgStyle } from '@angular/common';
 
 @Component({
     selector: 'signup',
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.scss'],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatIconButton, MatSuffix, MatIcon, MatProgressBar, NgStyle, MatButton]
 })
 export class SignupComponent {
   @Output() complete = new EventEmitter<SignupEvent>();

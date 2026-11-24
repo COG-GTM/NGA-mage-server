@@ -3,14 +3,12 @@ import { CommonModule } from '@angular/common';
 import { GeometryPipe } from './geometry.pipe';
 
 @NgModule({
-  declarations: [
-    GeometryPipe
-  ],
-  exports: [
-    GeometryPipe
-  ],
-  imports: [
-    CommonModule
-  ]
+    exports: [
+        GeometryPipe
+    ],
+    imports: [
+        CommonModule,
+        GeometryPipe
+    ]
 })
 export class GeometryModule { }

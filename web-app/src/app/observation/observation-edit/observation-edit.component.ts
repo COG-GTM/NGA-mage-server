@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag, CdkDragHandle } from "@angular/cdk/drag-drop";
 
 import {
   Component,
@@ -19,13 +19,7 @@ import {
   inject
 } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import {
-  UntypedFormArray,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-} from "@angular/forms";
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 import { catchError, distinctUntilChanged, first, switchMap } from "rxjs/operators";
 import { of, Subject } from "rxjs";
@@ -37,7 +31,7 @@ import {
   MatSnackBarRef as MatSnackBarRef,
   SimpleSnackBar as SimpleSnackBar,
 } from "@angular/material/snack-bar";
-import { MatIconRegistry } from "@angular/material/icon";
+import { MatIconRegistry, MatIcon } from "@angular/material/icon";
 import { MatDialog as MatDialog } from "@angular/material/dialog";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import {
@@ -54,6 +48,15 @@ import { FilterService } from "src/app/filter/filter.service";
 import { ObservationService } from "../observation.service";
 import { SessionService } from "mage-web-app/http/session.service";
 import { EventPreference } from "core-lib-src/user";
+import { MatToolbar, MatToolbarRow } from "@angular/material/toolbar";
+import { MatIconButton, MatButton, MatFabButton } from "@angular/material/button";
+import { MatProgressBar } from "@angular/material/progress-bar";
+import { CdkScrollable } from "@angular/cdk/scrolling";
+import { NgClass } from "@angular/common";
+import { MatCard, MatCardContent } from "@angular/material/card";
+import { ObservationEditDateComponent } from "./observation-edit-date/observation-edit-date.component";
+import { ObservationEditGeometryComponent } from "./observation-edit-geometry/observation-edit-geometry.component";
+import { ObservationEditFormComponent } from "./observation-edit-form.component";
 
 export type ObservationFormControl = UntypedFormControl & { definition: any };
 
@@ -79,7 +82,7 @@ export type ObservationFormControl = UntypedFormControl & { definition: any };
             transition(":leave", [animate("250ms", style({ opacity: 0 }))]),
         ]),
     ],
-    standalone: false
+    imports: [MatToolbar, MatToolbarRow, MatIconButton, MatIcon, MatButton, MatProgressBar, CdkScrollable, NgClass, FormsModule, MatCard, MatCardContent, ObservationEditDateComponent, ReactiveFormsModule, ObservationEditGeometryComponent, CdkDropList, CdkDrag, ObservationEditFormComponent, CdkDragHandle, MatFabButton]
 })
 export class ObservationEditComponent implements OnInit, OnChanges {
   @Input() preview: boolean;

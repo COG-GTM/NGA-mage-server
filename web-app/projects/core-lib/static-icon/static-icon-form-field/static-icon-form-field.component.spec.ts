@@ -13,7 +13,10 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 @Component({
     selector: 'test-host',
     template: `<form [formGroup]="form"><mage-static-icon-form-field formControlName="icon"></mage-static-icon-form-field></form>`,
-    standalone: false
+    imports: [FormsModule,
+        ReactiveFormsModule,
+        MageCommonModule,
+        StaticIconFormFieldComponent]
 })
 class TestHostComponent {
 
@@ -37,13 +40,10 @@ describe('StaticIconFormFieldComponent', () => {
     iconService.fetchIconByReference.and.returnValue(of(null))
 
     TestBed.configureTestingModule({
-    declarations: [
-        StaticIconFormFieldComponent,
-        TestHostComponent
-    ],
     imports: [FormsModule,
         ReactiveFormsModule,
-        MageCommonModule],
+        MageCommonModule, StaticIconFormFieldComponent,
+        TestHostComponent],
     providers: [
         {
             provide: StaticIconService,

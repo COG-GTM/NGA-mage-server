@@ -1,11 +1,15 @@
 import { Component, ViewChild, ElementRef, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatAutocomplete, MatOptgroup, MatOption } from '@angular/material/autocomplete';
+import { MatChipInputEvent, MatChipGrid, MatChipRow, MatChipRemove, MatChipInput } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { RecentChoice } from 'core-lib-src/user';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { NgClass, AsyncPipe } from '@angular/common';
 
 interface Choice {
   title: string;
@@ -23,7 +27,7 @@ interface MultiSelectField {
     selector: 'observation-edit-multiselect',
     templateUrl: './observation-edit-multiselect.component.html',
     styleUrls: ['./observation-edit-multiselect.component.scss'],
-    standalone: false
+    imports: [MatFormField, FormsModule, ReactiveFormsModule, MatLabel, MatChipGrid, MatChipRow, MatIcon, MatChipRemove, MatInput, MatAutocompleteTrigger, MatChipInput, MatAutocomplete, MatOptgroup, MatOption, NgClass, MatError, AsyncPipe]
 })
 export class ObservationEditMultiselectComponent implements OnInit {
   @Input() formGroup!: UntypedFormGroup

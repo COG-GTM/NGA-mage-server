@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { MatButton } from '@angular/material/button';
 
 export enum DiscalimerCloseReason  {
   ACCEPT, REJECT
@@ -12,7 +13,7 @@ export interface DiscalimeCloseEvent {
     selector: 'disclaimer',
     templateUrl: './disclaimer.component.html',
     styleUrls: ['./disclaimer.component.scss'],
-    standalone: false
+    imports: [MatButton]
 })
 export class DisclaimerComponent {
   @Input() title!: string

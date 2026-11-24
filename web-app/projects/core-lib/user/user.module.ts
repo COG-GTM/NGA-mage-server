@@ -12,25 +12,23 @@ import { UserSelectComponent } from './user-select/user-select.component'
 import { NgSelectModule } from '@ng-select/ng-select'
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ScrollingModule,
-    MatAutocompleteModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatListModule,
-    MatSelectModule,
-    NgSelectModule,
-  ],
-  declarations: [
-    UserSelectComponent
-  ],
-  exports: [
-    UserSelectComponent
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ScrollingModule,
+        MatAutocompleteModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatListModule,
+        MatSelectModule,
+        NgSelectModule,
+        UserSelectComponent,
+    ],
+    exports: [
+        UserSelectComponent
+    ]
 })
 export class MageUserModule {
 

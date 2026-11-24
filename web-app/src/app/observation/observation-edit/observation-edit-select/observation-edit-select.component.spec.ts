@@ -23,7 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
     [recentChoices]="recentChoices"
   ></observation-edit-dropdown>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NgxMatSelectSearchModule, MatFormFieldModule, MatInputModule, MatSelectModule, ObservationEditSelectComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({
@@ -60,17 +60,17 @@ describe('ObservationEditSelectComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         NoopAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
         NgxMatSelectSearchModule,
         MatFormFieldModule,
         MatInputModule,
-        MatSelectModule
-      ],
-      declarations: [ObservationEditSelectComponent, TestHostComponent]
-    }).compileComponents();
+        MatSelectModule,
+        ObservationEditSelectComponent, TestHostComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

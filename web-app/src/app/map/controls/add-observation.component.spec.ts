@@ -11,9 +11,8 @@ describe('AddObservationComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ MatIconModule, MatButtonModule ],
-      declarations: [ AddObservationComponent ]
-    })
+    imports: [MatIconModule, MatButtonModule, AddObservationComponent]
+})
     .compileComponents();
   }));
 

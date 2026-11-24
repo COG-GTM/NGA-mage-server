@@ -2,7 +2,7 @@ import { Component, DestroyRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MapService } from '../map/map.service';
 import { FilterService } from '../filter/filter.service';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavContainer } from '@angular/material/sidenav';
 import { LocationService } from '../user/location/location.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'core-lib-src/user';
@@ -10,12 +10,16 @@ import * as _ from 'underscore';
 import { UserService } from '../user/user.service';
 import { MageEvent } from '@ngageoint/mage.web-core-lib/event';
 import { SessionService } from 'mage-web-app/http/session.service';
+import { NavigationComponent } from '../navigation/navigation.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { PreferencesComponent } from '../preferences/preferences.component';
+import { MapComponent } from '../map/map.component';
 
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
-    standalone: false
+    imports: [NavigationComponent, MatSidenavContainer, MatSidenav, SidebarComponent, PreferencesComponent, MapComponent]
 })
 export class HomeComponent implements OnInit, OnDestroy {
 

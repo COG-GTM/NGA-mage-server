@@ -7,9 +7,8 @@ describe('Info Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [InfoComponent],
-      imports: []
-    }).compileComponents();
+    imports: [InfoComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

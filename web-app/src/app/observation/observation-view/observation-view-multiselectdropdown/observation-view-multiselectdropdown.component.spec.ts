@@ -8,8 +8,8 @@ describe('ObservationViewMultiselectdropdownComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ObservationViewMultiselectdropdownComponent ]
-    })
+    imports: [ObservationViewMultiselectdropdownComponent]
+})
     .compileComponents();
   }));
 

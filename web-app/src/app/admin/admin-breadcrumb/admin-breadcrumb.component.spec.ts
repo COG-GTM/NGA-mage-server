@@ -13,7 +13,7 @@ describe('AdminBreadcrumbComponent', () => {
     template: `<admin-breadcrumb
       [breadcrumbs]="breadcrumbs"
     ></admin-breadcrumb>`,
-    standalone: false
+    imports: [MatIconTestingModule, MatIconModule, RouterTestingModule, AdminBreadcrumbComponent]
 })
   class TestHostComponent {
     breadcrumbs: AdminBreadcrumb[];
@@ -29,10 +29,9 @@ describe('AdminBreadcrumbComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [MatIconTestingModule, MatIconModule, RouterTestingModule, AdminBreadcrumbComponent],
-      declarations: [TestHostComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    }).compileComponents();
+    imports: [MatIconTestingModule, MatIconModule, RouterTestingModule, AdminBreadcrumbComponent, TestHostComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

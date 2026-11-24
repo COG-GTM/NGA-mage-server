@@ -9,7 +9,7 @@ import { LocalStorageService } from '../http/local-storage.service'
 import { EventService } from '../event/event.service'
 import { latLng, popup, tileLayer, Icon, Util, marker, TileLayer, geoJSON, GeoJSON as GeoJSONLayer, latLngBounds, LatLng, markerClusterGroup, MarkerClusterGroup, Map, Polyline, DomEvent, LocationEvent as LeafletLocationEvent } from "leaflet"
 import { OpacityEvent, ZoomEvent as LayerZoomEvent } from './layers/layer.service'
-import { ReorderEvent } from './layers/layers.component'
+import { ReorderEvent, LayersComponent } from './layers/layers.component'
 import { moveItemInArray } from '@angular/cdk/drag-drop'
 import { locationMarker, LocationMarker } from './marker/LocationMarker'
 import { observationMarker, ObservationMarker } from './marker/ObservationMarker'
@@ -29,6 +29,12 @@ import moment from 'moment';
 import { Subscription, interval } from 'rxjs'
 import { ContactDialogComponent } from '../contact/contact-dialog.component'
 import { SessionService } from 'mage-web-app/http/session.service'
+import { SearchComponent } from './controls/search.component';
+import { LayersControlComponent } from './controls/layers-control.component';
+import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
+import { AddObservationComponent } from './controls/add-observation.component';
+import { LocationComponent } from './controls/location.component';
+import { ZoomComponent } from './controls/zoom.component';
 
 Icon.Default.imagePath = '/'
 
@@ -37,7 +43,7 @@ Icon.Default.imagePath = '/'
     templateUrl: './map.component.html',
     styleUrls: ['./map.component.scss'],
     providers: [LayerService],
-    standalone: false
+    imports: [SearchComponent, LayersControlComponent, MatSidenavContainer, MatSidenav, LayersComponent, MatSidenavContent, AddObservationComponent, LocationComponent, ZoomComponent]
 })
 export class MapComponent implements OnDestroy, AfterViewInit {
 

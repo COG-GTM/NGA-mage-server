@@ -39,7 +39,6 @@ describe('SearchComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [SearchComponent],
     imports: [BrowserAnimationsModule,
         MatCardModule,
         MatButtonModule,
@@ -47,7 +46,7 @@ describe('SearchComponent', () => {
         MatInputModule,
         MatListModule,
         MatProgressSpinnerModule,
-        MatSnackBarModule],
+        MatSnackBarModule, SearchComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 }).compileComponents();
   }));

@@ -11,7 +11,7 @@ import { ObservationEditRadioComponent } from './observation-edit-radio.componen
     selector: `host-component`,
     template: `<observation-edit-radio [definition]="definition" [formGroup]="formGroup"></observation-edit-radio>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatRadioModule, ObservationEditRadioComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({
@@ -38,9 +38,8 @@ describe('ObservationEditRadioComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatRadioModule],
-      declarations: [ObservationEditRadioComponent, TestHostComponent]
-    })
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatRadioModule, ObservationEditRadioComponent, TestHostComponent]
+})
       .compileComponents()
   }))
 

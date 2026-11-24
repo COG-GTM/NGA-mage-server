@@ -61,7 +61,7 @@ describe('FeedMetaDataComponent', () => {
         [buttonText]="acceptButtonText"
       ></app-feed-configuration>
     `,
-    standalone: false
+    imports: [FormsModule, MatAutocompleteModule, MatCheckboxModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, ReactiveFormsModule, StaticIconModule, FeedIconModule, AdminFeedEditConfigurationComponent]
 })
   class TestFeedMetaDataHostComponent {
     topic: FeedTopic | null = null;
@@ -86,9 +86,6 @@ describe('FeedMetaDataComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [
-        TestFeedMetaDataHostComponent
-    ],
     imports: [FormsModule,
         MatAutocompleteModule,
         MatCheckboxModule,
@@ -100,7 +97,7 @@ describe('FeedMetaDataComponent', () => {
         ReactiveFormsModule,
         StaticIconModule,
         FeedIconModule,
-        AdminFeedEditConfigurationComponent],
+        AdminFeedEditConfigurationComponent, TestFeedMetaDataHostComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 }).compileComponents();
   }));

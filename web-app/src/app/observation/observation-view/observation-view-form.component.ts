@@ -1,5 +1,17 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { ObservationViewAttachmentComponent } from './observation-view-attachment/observation-view-attachment.component';
+import { ObservationViewGeometryComponent } from './observation-view-geometry/observation-view-geometry.component';
+import { ObservationViewDateComponent } from './observation-view-date/observation-view-date.component';
+import { ObservationViewCheckboxComponent } from './observation-view-checkbox/observation-view-checkbox.component';
+import { ObservationViewTextComponent } from './observation-view-text/observation-view-text.component';
+import { ObservationViewTextareaComponent } from './observation-view-textarea/observation-view-textarea.component';
+import { ObservationViewPasswordComponent } from './observation-view-password/observation-view-password.component';
+import { ObservationViewMultiselectdropdownComponent } from './observation-view-multiselectdropdown/observation-view-multiselectdropdown.component';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 
 @Component({
     selector: 'observation-view-form',
@@ -21,7 +33,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
             transition('* <=> *', animate('300ms ease-out'))
         ])
     ],
-    standalone: false
+    imports: [MatCard, MatCardContent, MatIcon, MatIconButton, ObservationViewAttachmentComponent, ObservationViewGeometryComponent, ObservationViewDateComponent, ObservationViewCheckboxComponent, ObservationViewTextComponent, ObservationViewTextareaComponent, ObservationViewPasswordComponent, ObservationViewMultiselectdropdownComponent, GeometryPipe]
 })
 export class ObservationViewFormComponent implements OnInit, OnChanges {
   @Input() form: any

@@ -1,14 +1,17 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Api, AuthenticationStrategy } from '../api/api.entity';
 import { UserService } from '../user/user.service';
-import { AuthorizationEvent } from './authorization/authorization.component';
-import { DiscalimeCloseEvent, DiscalimerCloseReason } from './disclaimer/disclaimer.component';
+import { AuthorizationEvent, AuthorizationComponent } from './authorization/authorization.component';
+import { DiscalimeCloseEvent, DiscalimerCloseReason, DisclaimerComponent } from './disclaimer/disclaimer.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { SignupEvent } from './authentication/@types/signup';
 import { User } from 'core-lib-src/user';
-import { InitializedEvent } from './intialize/initialize.component';
+import { InitializedEvent, InitializeComponent } from './intialize/initialize.component';
 import * as _ from 'underscore';
 import { SessionService } from 'mage-web-app/http/session.service';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { SignupComponent } from './authentication/local/signup.component';
+import { AccountStatusComponent } from './account-status/account-status.component';
 
 enum IngressState {
   Initialize,
@@ -87,7 +90,7 @@ class Initialize extends Ingress {
             ])
         ])
     ],
-    standalone: false
+    imports: [AuthenticationComponent, AuthorizationComponent, DisclaimerComponent, SignupComponent, AccountStatusComponent, InitializeComponent]
 })
 export class IngressComponent implements OnChanges {
   @Input() api: Api;

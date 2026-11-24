@@ -4,8 +4,7 @@ import { LocalStorageService } from '../http/local-storage.service';
 
 @Pipe({
     name: 'moment',
-    pure: false,
-    standalone: false
+    pure: false
 })
 export class MomentPipe implements PipeTransform {
 

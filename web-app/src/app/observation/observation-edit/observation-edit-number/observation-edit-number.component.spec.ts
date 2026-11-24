@@ -12,7 +12,7 @@ import { ObservationEditNumberComponent } from './observation-edit-number.compon
     selector: `host-component`,
     template: `<observation-edit-number [definition]="definition" [formGroup]="formGroup"></observation-edit-number>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, ObservationEditNumberComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({
@@ -35,9 +35,8 @@ describe('ObservationEditNumberComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule],
-      declarations: [ObservationEditNumberComponent, TestHostComponent]
-    })
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule, ObservationEditNumberComponent, TestHostComponent]
+})
     .compileComponents()
   }))
 

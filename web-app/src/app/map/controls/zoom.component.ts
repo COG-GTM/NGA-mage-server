@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 export enum ZoomDirection {
   IN,
@@ -13,7 +15,7 @@ export interface ZoomEvent {
     selector: 'map-control-zoom',
     templateUrl: './zoom.component.html',
     styleUrls: ['./zoom.component.scss'],
-    standalone: false
+    imports: [MatMiniFabButton, MatIcon]
 })
 export class ZoomComponent {
   @Output() onZoom = new EventEmitter<ZoomEvent>();

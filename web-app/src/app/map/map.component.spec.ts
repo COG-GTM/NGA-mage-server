@@ -1,3 +1,4 @@
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,25 +21,26 @@ describe('MapComponent', () => {
     mapService = jasmine.createSpyObj('MapService', ['addListener', 'removeListener', 'setDelegate', 'selectBaseLayer']);
 
     TestBed.configureTestingModule({
-      declarations: [MapComponent],
-      providers: [
+    imports: [MapComponent],
+    providers: [
+        provideNoopAnimations(),
         { provide: MatDialog, useValue: {} },
         { provide: MapService, useValue: mapService },
         { provide: SessionService, useValue: { getToken: () => 'token' } },
         { provide: EventService, useValue: {} },
         { provide: FilterService, useValue: { getEvent: () => null } },
         {
-          provide: LocalStorageService,
-          useValue: jasmine.createSpyObj('LocalStorageService', {
-            getMapPosition: { center: { lat: 0, lng: 0 }, zoom: 3 },
-            setMapPosition: undefined
-          })
+            provide: LocalStorageService,
+            useValue: jasmine.createSpyObj('LocalStorageService', {
+                getMapPosition: { center: { lat: 0, lng: 0 }, zoom: 3 },
+                setMapPosition: undefined
+            })
         },
         provideHttpClient(),
         provideHttpClientTesting()
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    });
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+});
   });
 
   it('registers as the map delegate and listener once the view is ready', fakeAsync(() => {

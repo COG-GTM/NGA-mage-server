@@ -11,8 +11,12 @@ import {
 } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { ColorWrap, RGBA, toState } from 'ngx-color';
+import { ColorWrap, RGBA, toState, CheckboardModule, SaturationModule, HueModule, AlphaModule } from 'ngx-color';
 import { TinyColor } from '@ctrl/tinycolor';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatCard } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
 
 export interface ColorEvent {
   color: string;
@@ -22,7 +26,7 @@ export interface ColorEvent {
     selector: 'color-picker',
     templateUrl: './color-picker.component.html',
     styleUrls: ['./color-picker.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatInput, CheckboardModule, MatCard, SaturationModule, HueModule, AlphaModule, MatButton]
 })
 export class ColorPickerComponent extends ColorWrap implements OnInit {
   private static openInstance: ColorPickerComponent | null = null;

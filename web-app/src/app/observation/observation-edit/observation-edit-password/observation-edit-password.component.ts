@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 interface PasswordField {
   title: string,
@@ -11,7 +13,7 @@ interface PasswordField {
     selector: 'observation-edit-password',
     templateUrl: './observation-edit-password.component.html',
     styleUrls: ['./observation-edit-password.component.scss'],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError]
 })
 export class ObservationEditPasswordComponent {
   @Input() formGroup: UntypedFormGroup

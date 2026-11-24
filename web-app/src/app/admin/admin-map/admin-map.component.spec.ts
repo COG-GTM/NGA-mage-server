@@ -18,7 +18,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 @Component({
     selector: 'host-component',
     template: `<mage-admin-map></mage-admin-map>`,
-    standalone: false
+    imports: [AdminMapComponent, MatInputModule, MatSnackBarModule, MatRadioModule, MatFormFieldModule, FormsModule]
 })
 class TestHostComponent {
   @ViewChild(AdminMapComponent) component!: AdminMapComponent;
@@ -48,7 +48,6 @@ describe('AdminMapComponent', () => {
     mockMapSettingsService.updateMapSettings.and.returnValue(of({} as any));
 
     await TestBed.configureTestingModule({
-    declarations: [TestHostComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [AdminMapComponent,
         MatInputModule,
@@ -56,7 +55,7 @@ describe('AdminMapComponent', () => {
         MatRadioModule,
         MatFormFieldModule,
         NoopAnimationsModule,
-        FormsModule],
+        FormsModule, TestHostComponent],
     providers: [
         { provide: MapSettingsService, useValue: mockMapSettingsService },
         provideHttpClient(withInterceptorsFromDi()),

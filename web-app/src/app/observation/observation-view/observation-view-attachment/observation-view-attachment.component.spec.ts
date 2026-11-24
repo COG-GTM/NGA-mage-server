@@ -4,9 +4,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ObservationViewAttachmentComponent } from './observation-view-attachment.component';
 
 @Component({
+    imports: [ObservationViewAttachmentComponent],
     selector: `host-component`,
-    template: `<observation-view-attachment [attachments]="attachments"></observation-view-attachment>`,
-    standalone: false
+    template: `<observation-view-attachment [attachments]="attachments"></observation-view-attachment>`
 })
 class TestHostComponent {
   attachments = []
@@ -20,8 +20,8 @@ describe('ObservationViewAttachmentComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ObservationViewAttachmentComponent, TestHostComponent]
-    })
+    imports: [ObservationViewAttachmentComponent, TestHostComponent]
+})
       .compileComponents()
   }))
 

@@ -10,21 +10,30 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ConnectedPosition } from '@angular/cdk/overlay';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { FilterService } from '../filter/filter.service';
 import { MapService } from '../map/map.service';
 import { UserService } from '../user/user.service';
 import { EventService } from '../event/event.service';
 import { MageEvent } from '../entities/event/entities.event';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SessionService } from 'mage-web-app/http/session.service';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { CdkMenuTrigger, CdkMenu, CdkMenuItem } from '@angular/cdk/menu';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatFormField, MatPrefix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
-    standalone: false
+    imports: [MatToolbar, MatIconButton, MatIcon, CdkMenuTrigger, MatMenuTrigger, MatMenu, MatMenuItem, RouterLink, MatTooltip, CdkMenu, MatFormField, MatPrefix, MatInput, FormsModule, ReactiveFormsModule, CdkMenuItem, AsyncPipe]
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   @Output() onFeedToggle = new EventEmitter<void>();

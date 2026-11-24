@@ -11,8 +11,7 @@ describe('Authentication Dialog', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [AuthenticationDialogComponent],
-    imports: [IngressModule],
+    imports: [IngressModule, AuthenticationDialogComponent],
     providers: [{
             provide: MatDialogRef,
             useValue: {}

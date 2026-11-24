@@ -14,6 +14,13 @@ import {
   PlacenameSearchService
 } from '../search/search.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIconButton, MatMiniFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatCard } from '@angular/material/card';
+import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list';
+import { MatRipple } from '@angular/material/core';
 
 export enum SearchState {
   ON,
@@ -28,7 +35,7 @@ export interface SearchEvent {
     selector: 'map-control-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
-    standalone: false
+    imports: [MatProgressSpinner, MatIconButton, MatIcon, MatMiniFabButton, MatTooltip, MatCard, MatList, MatListItem, MatRipple, MatListItemIcon, MatListItemTitle]
 })
 export class SearchComponent implements AfterViewInit {
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;

@@ -11,8 +11,7 @@ describe('Landing Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [LandingComponent, InfoComponent],
-    imports: [IngressModule],
+    imports: [IngressModule, LandingComponent, InfoComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 }).compileComponents();
   }));

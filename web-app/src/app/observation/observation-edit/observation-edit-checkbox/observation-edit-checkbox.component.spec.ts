@@ -21,7 +21,7 @@ import { ObservationEditCheckboxComponent } from './observation-edit-checkbox.co
     [definition]="definition"
     [formGroup]="formGroup"
   ></observation-edit-checkbox>`,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatCheckboxModule, ObservationEditCheckboxComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({
@@ -48,14 +48,14 @@ describe('ObservationEditCheckboxComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
-        MatCheckboxModule
-      ],
-      declarations: [ObservationEditCheckboxComponent, TestHostComponent]
-    }).compileComponents();
+        MatCheckboxModule,
+        ObservationEditCheckboxComponent, TestHostComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

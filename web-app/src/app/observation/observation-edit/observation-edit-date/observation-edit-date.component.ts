@@ -5,15 +5,19 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { UntypedFormGroup, NgModel } from '@angular/forms';
+import { UntypedFormGroup, NgModel, FormsModule } from '@angular/forms';
 import moment from 'moment';
 import { LocalStorageService } from '../../../http/local-storage.service';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatTimepickerInput, MatTimepickerToggle, MatTimepicker } from '@angular/material/timepicker';
 
 @Component({
     selector: 'observation-edit-date',
     templateUrl: './observation-edit-date.component.html',
     styleUrls: ['./observation-edit-date.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatInput, MatDatepickerInput, FormsModule, MatDatepickerToggle, MatSuffix, MatDatepicker, MatError, MatTimepickerInput, MatTimepickerToggle, MatTimepicker]
 })
 export class ObservationEditDateComponent implements OnChanges {
   @Input() formGroup: UntypedFormGroup;

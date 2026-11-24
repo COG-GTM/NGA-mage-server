@@ -3,6 +3,11 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, S
 import { UntypedFormControl } from '@angular/forms';
 import { AttachmentAction } from '../../observation-edit/observation-edit-attachment/observation-edit-attachment-action';
 import { AttachmentService } from '../attachment.service';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIcon } from '@angular/material/icon';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { FilenamePipe } from '../../../filename/filename.pipe';
 
 export interface FileUpload {
   id: number | string,
@@ -24,7 +29,7 @@ enum PreviewType {
     selector: 'attachment-upload',
     templateUrl: './attachment-upload.component.html',
     styleUrls: ['./attachment-upload.component.scss'],
-    standalone: false
+    imports: [MatProgressSpinner, MatIcon, MatMiniFabButton, MatProgressBar, FilenamePipe]
 })
 export class AttachUploadComponent implements OnChanges {
   @Input() attachment: FileUpload

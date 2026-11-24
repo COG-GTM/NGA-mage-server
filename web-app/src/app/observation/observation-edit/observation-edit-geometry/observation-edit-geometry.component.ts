@@ -2,12 +2,16 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleCh
 import { UntypedFormGroup } from '@angular/forms'
 import { Feature, Geometry } from 'geojson'
 import { LocalStorageService } from '../../../http/local-storage.service'
+import { NgClass } from '@angular/common';
+import { ObservationEditGeometryMapComponent } from './observation-edit-geometry-map.component';
+import { ObservationEditGeometryFormComponent } from './observation-edit-geometry-form.component';
+import { GeometryPipe } from '../../../geometry/geometry.pipe';
 
 @Component({
     selector: 'observation-edit-geometry',
     templateUrl: './observation-edit-geometry.component.html',
     styleUrls: ['./observation-edit-geometry.component.scss'],
-    standalone: false
+    imports: [NgClass, ObservationEditGeometryMapComponent, ObservationEditGeometryFormComponent, GeometryPipe]
 })
 export class ObservationEditGeometryComponent implements OnChanges {
   @Input() formGroup: UntypedFormGroup

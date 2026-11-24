@@ -1,6 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { AttachmentAction } from './observation-edit-attachment-action';
+import { AttachmentComponent } from '../../attachment/attachment.component';
+import { AttachUploadComponent } from '../../attachment/attachment-upload/attachment-upload.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
 
 interface AttachmentField {
   title: string,
@@ -14,7 +18,7 @@ interface AttachmentField {
     selector: 'observation-edit-attachment',
     templateUrl: './observation-edit-attachment.component.html',
     styleUrls: ['./observation-edit-attachment.component.scss'],
-    standalone: false
+    imports: [AttachmentComponent, AttachUploadComponent, MatIcon, MatButton]
 })
 export class ObservationEditAttachmentComponent implements OnInit {
   @Input() formGroup: UntypedFormGroup

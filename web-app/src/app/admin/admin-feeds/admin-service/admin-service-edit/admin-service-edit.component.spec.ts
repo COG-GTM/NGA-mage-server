@@ -14,7 +14,7 @@ describe('AdminServiceEditComponent', () => {
   @Component({
     selector: 'app-host-component',
     template: `<app-create-service [expanded]="expanded"></app-create-service>`,
-    standalone: false
+    imports: [AdminServiceEditComponent]
 })
   class TestHostComponent {
     expanded = false;
@@ -58,11 +58,10 @@ describe('AdminServiceEditComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      declarations: [TestHostComponent],
-      imports: [AdminServiceEditComponent],
-      providers: [{ provide: FeedService, useValue: feedService }],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    imports: [AdminServiceEditComponent, TestHostComponent],
+    providers: [{ provide: FeedService, useValue: feedService }],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
     host = fixture.componentInstance;

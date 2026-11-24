@@ -6,7 +6,7 @@ import { MapService } from '../map/map.service';
 import { UserService } from '../user/user.service';
 import { EventService } from '../event/event.service';
 import { SessionService } from 'mage-web-app/http/session.service';
-import { Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule as MatMenuModule } from '@angular/material/menu';
@@ -35,19 +35,18 @@ describe('Navigation Component', () => {
     userService = jasmine.createSpyObj('UserService', ['logout']);
 
     TestBed.configureTestingModule({
-      declarations: [NavigationComponent],
-      imports: [MatIconModule, MatMenuModule, MatToolbarModule],
-      providers: [
+    imports: [MatIconModule, MatMenuModule, MatToolbarModule, NavigationComponent],
+    providers: [
         { provide: FilterService, useValue: filterService },
         { provide: MapService, useValue: jasmine.createSpyObj('MapService', ['init', 'destroy', 'onLocationStop']) },
         { provide: UserService, useValue: userService },
         { provide: EventService, useValue: eventService },
         { provide: SessionService, useValue: { amAdmin: false } },
-        { provide: Router, useValue: jasmine.createSpyObj('Router', ['navigate']) },
+        provideRouter([]),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

@@ -2,17 +2,24 @@ import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { EventService } from '../../event/event.service';
 import { FilterService } from '../../filter/filter.service';
 import { LocationFilterDialogComponent } from '../location/location-filter.component';
 import { EventLocationFilter } from '../../filter/filter.types';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { UserListItemComponent } from './user-list-item.component';
+import { MatCard, MatCardFooter } from '@angular/material/card';
+import { I18nPluralPipe } from '@angular/common';
 
 @Component({
     selector: 'user-list',
     templateUrl: './user-list.component.html',
     styleUrls: ['./user-list.component.scss'],
-    standalone: false
+    imports: [MatToolbar, MatIcon, MatTooltip, MatIconButton, MatButton, UserListItemComponent, MatCard, MatCardFooter, MatPaginator, I18nPluralPipe]
 })
 export class UserListComponent implements OnInit {
   loaded = false

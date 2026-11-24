@@ -55,7 +55,7 @@ describe('AdminFeedEditItemPropertiesComponent', () => {
       >
       </app-feed-item-properties-configuration>
     `,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatCardModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatIconModule, JsonSchemaFormModule, JsonSchemaModule, AdminFeedEditItemPropertiesComponent]
 })
   class TestHostComponent {
     topicSchema: SimpleJsonSchema = null
@@ -72,7 +72,7 @@ describe('AdminFeedEditItemPropertiesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         FormsModule,
         ReactiveFormsModule,
         MatCardModule,
@@ -85,11 +85,9 @@ describe('AdminFeedEditItemPropertiesComponent', () => {
         JsonSchemaModule,
         NoopAnimationsModule,
         AdminFeedEditItemPropertiesComponent,
-      ],
-      declarations: [
-        TestHostComponent
-      ]
-    })
+        TestHostComponent,
+    ]
+})
     .compileComponents();
   }));
 

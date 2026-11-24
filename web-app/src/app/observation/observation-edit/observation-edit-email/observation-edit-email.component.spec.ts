@@ -12,7 +12,7 @@ import { ObservationEditEmailComponent } from './observation-edit-email.componen
     selector: `host-component`,
     template: `<observation-edit-email [definition]="definition" [formGroup]="formGroup"></observation-edit-email>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, ObservationEditEmailComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({
@@ -34,9 +34,8 @@ describe('ObservationEditEmailComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule],
-      declarations: [ObservationEditEmailComponent, TestHostComponent]
-    })
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule, ObservationEditEmailComponent, TestHostComponent]
+})
     .compileComponents()
   }))
 

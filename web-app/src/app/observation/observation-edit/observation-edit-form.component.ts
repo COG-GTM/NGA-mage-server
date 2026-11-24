@@ -1,7 +1,24 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { UntypedFormGroup } from '@angular/forms'
+import { UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { FormPreference } from 'core-lib-src/user'
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { ObservationEditAttachmentComponent } from './observation-edit-attachment/observation-edit-attachment.component';
+import { ObservationEditCheckboxComponent } from './observation-edit-checkbox/observation-edit-checkbox.component';
+import { ObservationEditDateComponent } from './observation-edit-date/observation-edit-date.component';
+import { ObservationEditSelectComponent } from './observation-edit-select/observation-edit-select.component';
+import { ObservationEditMultiselectComponent } from './observation-edit-multiselect/observation-edit-multiselect.component';
+import { ObservationEditEmailComponent } from './observation-edit-email/observation-edit-email.component';
+import { ObservationEditNumberComponent } from './observation-edit-number/observation-edit-number.component';
+import { ObservationEditRadioComponent } from './observation-edit-radio/observation-edit-radio.component';
+import { ObservationEditTextComponent } from './observation-edit-text/observation-edit-text.component';
+import { ObservationEditTextareaComponent } from './observation-edit-textarea/observation-edit-textarea.component';
+import { ObservationEditPasswordComponent } from './observation-edit-password/observation-edit-password.component';
+import { ObservationEditGeometryComponent } from './observation-edit-geometry/observation-edit-geometry.component';
+import { MatDivider } from '@angular/material/list';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 
 @Component({
     selector: 'observation-edit-form',
@@ -23,7 +40,7 @@ import { FormPreference } from 'core-lib-src/user'
             transition('* <=> *', animate('300ms ease-out'))
         ])
     ],
-    standalone: false
+    imports: [MatCard, MatCardContent, MatIcon, MatIconButton, ObservationEditAttachmentComponent, FormsModule, ReactiveFormsModule, ObservationEditCheckboxComponent, ObservationEditDateComponent, ObservationEditSelectComponent, ObservationEditMultiselectComponent, ObservationEditEmailComponent, ObservationEditNumberComponent, ObservationEditRadioComponent, ObservationEditTextComponent, ObservationEditTextareaComponent, ObservationEditPasswordComponent, ObservationEditGeometryComponent, MatDivider, MatButton, GeometryPipe]
 })
 export class ObservationEditFormComponent {
   @Input() formGroup: UntypedFormGroup

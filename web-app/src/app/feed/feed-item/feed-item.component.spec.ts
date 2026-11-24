@@ -49,7 +49,13 @@ class MockMapService {
 
 @Component({
     template: '<feed-item [feed]="feed" [item]="item"></feed-item>',
-    standalone: false
+    imports: [MatIconModule,
+        MatToolbarModule,
+        MatDividerModule,
+        MatCardModule,
+        GeometryModule,
+        FeedIconModule,
+        FeedItemComponent]
 })
 class TestHostComponent {
   feed: Feed = {
@@ -93,37 +99,35 @@ describe('FeedItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [{
-        provide: MapService,
-        useClass: MockMapService
-      }, {
-        provide: LocalStorageService,
-        useClass: MockLocalStorageService
-      }, {
-        provide: SessionService,
-        useClass: MockSessionService
-      },{
-        provide: MomentPipe,
-        useClass: MomentPipe
-      },
+    providers: [{
+            provide: MapService,
+            useClass: MockMapService
+        }, {
+            provide: LocalStorageService,
+            useClass: MockLocalStorageService
+        }, {
+            provide: SessionService,
+            useClass: MockSessionService
+        }, {
+            provide: MomentPipe,
+            useClass: MomentPipe
+        },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-      ],
-      imports: [
+    ],
+    imports: [
         MatIconModule,
         MatToolbarModule,
         MatDividerModule,
         MatCardModule,
         GeometryModule,
-        FeedIconModule
-      ],
-      declarations: [
+        FeedIconModule,
         FeedItemComponent,
         MapClipComponent,
         TestHostComponent,
         MomentPipe
-      ]
-    })
+    ]
+})
     .compileComponents()
   }));
 

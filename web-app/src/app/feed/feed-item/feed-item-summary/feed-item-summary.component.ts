@@ -5,12 +5,16 @@ import { Feature } from 'geojson';
 import { SidebarService } from '../../../sidebar/sidebar.service';
 import { MapService } from '../../../map/map.service';
 import { SessionService } from 'mage-web-app/http/session.service';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { StaticIconModule } from '@ngageoint/mage.web-core-lib/static-icon';
+import { MomentPipe } from '../../../moment/moment.pipe';
 
 @Component({
     selector: 'feed-item-summary',
     templateUrl: './feed-item-summary.component.html',
     styleUrls: ['./feed-item-summary.component.scss'],
-    standalone: false
+    imports: [MatCard, MatRipple, MatCardContent, MatIcon, StaticIconModule, MomentPipe]
 })
 export class FeedItemSummaryComponent implements OnChanges {
   @Input() feed: Feed;

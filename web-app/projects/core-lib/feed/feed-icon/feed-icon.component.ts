@@ -2,6 +2,9 @@ import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { contentPathOfIcon, StaticIconService } from '@ngageoint/mage.web-core-lib/static-icon';
+import { NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatBadge } from '@angular/material/badge';
 
 export interface MaterialIconReference {
   name: string
@@ -34,10 +37,10 @@ export interface FileIconReference {
 export type IconReference = MaterialIconReference | SourceUrlIconReference | RegisteredIconReference | FileIconReference
 
 @Component({
-  selector: 'feed-icon',
-  templateUrl: './feed-icon.component.html',
-  styleUrls: ['./feed-icon.component.scss'],
-  standalone: false
+    selector: 'feed-icon',
+    templateUrl: './feed-icon.component.html',
+    styleUrls: ['./feed-icon.component.scss'],
+    imports: [NgClass, MatIcon, MatBadge]
 })
 export class FeedIconComponent implements OnChanges, OnDestroy {
   @Input() icon: IconReference

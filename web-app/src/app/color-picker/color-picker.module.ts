@@ -11,20 +11,20 @@ import { SaturationModule, HueModule, AlphaModule, CheckboardModule } from 'ngx-
 import { ColorPickerComponent } from './color-picker.component';
 
 @NgModule({
-  declarations: [ColorPickerComponent],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    OverlayModule,
-    PortalModule,
-    SaturationModule,
-    HueModule,
-    AlphaModule,
-    CheckboardModule
-  ],
-  exports: [ColorPickerComponent]
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        OverlayModule,
+        PortalModule,
+        SaturationModule,
+        HueModule,
+        AlphaModule,
+        CheckboardModule,
+        ColorPickerComponent
+    ],
+    exports: [ColorPickerComponent]
 })
 export class ColorPickerModule {}

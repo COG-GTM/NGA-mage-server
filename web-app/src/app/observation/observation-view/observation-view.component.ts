@@ -12,6 +12,20 @@ import { EventService } from '../../event/event.service';
 import { Form } from '../../entities/event/entities.event';
 import { FormProperties, Observation } from '../../entities/observation/entities.observation';
 import { SessionService } from 'mage-web-app/http/session.service';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MapClipComponent } from '../../map/clip/clip.component';
+import { MatDivider } from '@angular/material/list';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, DecimalPipe } from '@angular/common';
+import { ObservationViewFormComponent } from './observation-view-form.component';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
+import { MomentPipe } from '../../moment/moment.pipe';
 
 @Component({
     selector: 'observation-view',
@@ -28,7 +42,7 @@ import { SessionService } from 'mage-web-app/http/session.service';
             ])
         ])
     ],
-    standalone: false
+    imports: [MatToolbar, MatToolbarRow, MatIconButton, MatIcon, MatButton, MatCard, MatCardContent, MapClipComponent, MatDivider, MatFormField, MatLabel, MatInput, FormsModule, MatCardActions, MatTooltip, NgClass, ObservationViewFormComponent, DecimalPipe, GeometryPipe, MomentPipe]
 })
 export class ObservationViewComponent implements OnChanges {
   @Input() event: any

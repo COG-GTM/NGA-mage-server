@@ -17,20 +17,18 @@ describe('StaticIconSelectComponent', () => {
       'fetchIcons'
     ])
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         MatCardModule,
-        ScrollingModule
-      ],
-      declarations: [
+        ScrollingModule,
         StaticIconSelectComponent
-      ],
-      providers: [
+    ],
+    providers: [
         {
-          provide: StaticIconService,
-          useValue: iconService
+            provide: StaticIconService,
+            useValue: iconService
         }
-      ]
-    })
+    ]
+})
     .compileComponents()
   }))
 

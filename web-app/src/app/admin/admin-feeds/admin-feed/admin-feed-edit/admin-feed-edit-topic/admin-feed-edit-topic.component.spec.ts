@@ -18,7 +18,7 @@ describe('ChooseServiceTopicComponent', () => {
       [selectedTopic]="selectedTopic"
     >
     </app-choose-service-topic>`,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatExpansionModule, MatSelectModule, NgxMatSelectSearchModule, AdminFeedEditTopicComponent]
 })
   class TestHostComponent {
     services: Service[];
@@ -39,17 +39,17 @@ describe('ChooseServiceTopicComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         FormsModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
         MatExpansionModule,
         MatSelectModule,
         NgxMatSelectSearchModule,
-        AdminFeedEditTopicComponent
-      ],
-      declarations: [TestHostComponent]
-    }).compileComponents();
+        AdminFeedEditTopicComponent,
+        TestHostComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

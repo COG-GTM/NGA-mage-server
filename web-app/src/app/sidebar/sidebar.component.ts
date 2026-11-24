@@ -6,7 +6,7 @@ import { MatTabGroup as MatTabGroup } from '@angular/material/tabs';
 import { filter, pairwise } from 'rxjs/operators';
 import moment from 'moment';
 import { FeedAction, FeedItemEvent, SidebarService } from './sidebar.service';
-import { FeedTab } from './sidebar-tab.component';
+import { FeedTab, SidebarTabComponent } from './sidebar-tab.component';
 import { MapService } from '../map/map.service';
 import { FilterService } from '../filter/filter.service';
 import { EventService } from '../event/event.service';
@@ -18,6 +18,16 @@ import { Export } from '../export/entities.export';
 import { Form } from '../entities/event/entities.event';
 import { FormProperties, Observation } from '../entities/observation/entities.observation';
 import { UserWithLocation } from '../entities/user/entities.user-location';
+import { MatDivider } from '@angular/material/list';
+import { UserViewComponent } from '../user/user-view/user-view.component';
+import { ObservationViewComponent } from '../observation/observation-view/observation-view.component';
+import { ObservationEditComponent } from '../observation/observation-edit/observation-edit.component';
+import { FeedItemComponent } from '../feed/feed-item/feed-item.component';
+import { ExportViewComponent } from '../export/export-view/export-view.component';
+import { ObservationListComponent } from '../observation/observation-list/observation-list.component';
+import { UserListComponent } from '../user/user-list/user-list.component';
+import { FeedListComponent } from '../feed/feed-list/feed-list.component';
+import { ExportComponent } from '../export/export.component';
 
 @Component({
     selector: 'sidebar',
@@ -34,7 +44,7 @@ import { UserWithLocation } from '../entities/user/entities.user-location';
             ])
         ])
     ],
-    standalone: false
+    imports: [SidebarTabComponent, MatDivider, UserViewComponent, ObservationViewComponent, ObservationEditComponent, FeedItemComponent, ExportViewComponent, ObservationListComponent, UserListComponent, FeedListComponent, ExportComponent]
 })
 export class SidebarComponent implements OnInit, OnChanges {
   @Input() event: any

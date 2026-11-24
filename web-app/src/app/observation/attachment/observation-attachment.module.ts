@@ -12,19 +12,19 @@ import { AttachmentCarouselComponent } from './attachment-carousel.component';
 import { AttachUploadComponent } from './attachment-upload/attachment-upload.component';
 
 @NgModule({
-  declarations: [AttachUploadComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatChipsModule,
-    MatIconModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    AttachmentComponent,
-    AttachmentCarouselComponent,
-    FilenamePipe,
-  ],
-  exports: [AttachmentComponent, AttachmentCarouselComponent, AttachUploadComponent, FilenamePipe]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatChipsModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        AttachmentComponent,
+        AttachmentCarouselComponent,
+        FilenamePipe,
+        AttachUploadComponent,
+    ],
+    exports: [AttachmentComponent, AttachmentCarouselComponent, AttachUploadComponent, FilenamePipe]
 })
 export class ObservationAttachmentModule {}

@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Output } from "@angular/core"
+import { MatIcon } from "@angular/material/icon";
+import { MatButton } from "@angular/material/button";
 
 @Component({
     selector: 'export-empty',
     templateUrl: 'export-empty.component.html',
     styleUrls: ['./export-empty.component.scss'],
-    standalone: false
+    imports: [MatIcon, MatButton]
 })
 export class ExportEmptyComponent {
 

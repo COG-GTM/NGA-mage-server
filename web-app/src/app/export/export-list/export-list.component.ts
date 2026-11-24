@@ -3,12 +3,18 @@ import { ExportService } from '../export.service';
 import { Subscription } from 'rxjs';
 import { SidebarService } from 'src/app/sidebar/sidebar.service';
 import { Export, ExportStatus } from '../entities.export';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatRipple } from '@angular/material/core';
+import { ExportListItemComponent } from './export-list-item.component';
+import { MatDivider } from '@angular/material/list';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'export-list',
-  templateUrl: 'export-list.component.html',
-  styleUrls: ['./export-list.component.scss'],
-  standalone: false
+    selector: 'export-list',
+    templateUrl: 'export-list.component.html',
+    styleUrls: ['./export-list.component.scss'],
+    imports: [MatToolbar, MatRipple, ExportListItemComponent, MatDivider, MatMiniFabButton, MatIcon]
 })
 export class ExportListComponent implements OnInit, OnDestroy {
   @Output() create = new EventEmitter<void>()

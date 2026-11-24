@@ -8,8 +8,8 @@ describe('ObservationViewTextareaComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ObservationViewTextareaComponent ]
-    })
+    imports: [ObservationViewTextareaComponent]
+})
     .compileComponents();
   }));
 

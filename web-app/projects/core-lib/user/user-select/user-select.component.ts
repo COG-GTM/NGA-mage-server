@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnChanges, SimpleChanges, ViewChild, forwardRef, OnInit } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
-import { NgSelectComponent } from '@ng-select/ng-select'
+import { NgSelectComponent, NgHeaderTemplateDirective, NgOptionTemplateDirective } from '@ng-select/ng-select'
 import { User } from '../user.model'
 import { UserReadService, UserSearchParams, UserSearchResult } from '../user-read.service'
 import { pageForItemIndex } from '@ngageoint/mage.web-core-lib/paging'
@@ -22,7 +22,7 @@ const trackByUserId = (user: User) => user.id
             useExisting: forwardRef(() => UserSelectComponent)
         }
     ],
-    standalone: false
+    imports: [NgSelectComponent, NgHeaderTemplateDirective, NgOptionTemplateDirective]
 })
 export class UserSelectComponent implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor {
 

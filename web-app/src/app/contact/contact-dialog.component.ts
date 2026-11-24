@@ -1,14 +1,16 @@
 import { Component, Inject } from "@angular/core";
-import { MatDialogRef as MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialogRef as MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions } from "@angular/material/dialog";
 import { LinkGenerator } from "./utilities/link-generator";
 import { Api } from "../api/api.entity";
 import { ApiService } from "../api/api.service";
+import { CdkScrollable } from "@angular/cdk/scrolling";
+import { MatButton } from "@angular/material/button";
 
 @Component({
     selector: 'contact-dialog',
     templateUrl: 'contact-dialog.component.html',
     styleUrls: ['./contact-dialog.component.scss'],
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton]
 })
 export class ContactDialogComponent  {
     statusTitle: string;

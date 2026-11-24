@@ -20,8 +20,7 @@ export interface PointAccuracy {
 @Component({
     selector: 'map-clip',
     templateUrl: './clip.component.html',
-    styleUrls: ['./clip.component.scss'],
-    standalone: false
+    styleUrls: ['./clip.component.scss']
 })
 export class MapClipComponent implements OnInit, OnChanges, OnDestroy {
   @Input() feature: Feature

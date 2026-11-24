@@ -8,6 +8,10 @@ import {
   Input
 } from '@angular/core';
 import { DomEvent } from 'leaflet';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 export enum LocationState {
   Off,
@@ -23,7 +27,7 @@ export interface LocationEvent {
     selector: 'map-control-location',
     templateUrl: './location.component.html',
     styleUrls: ['./location.component.scss'],
-    standalone: false
+    imports: [MatMiniFabButton, MatTooltip, NgClass, MatIcon]
 })
 export class LocationComponent implements AfterViewInit {
   @ViewChild('locateButton') locateButton!: ElementRef<HTMLElement>;

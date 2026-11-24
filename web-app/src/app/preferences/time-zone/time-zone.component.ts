@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSelectChange as MatSelectChange } from '@angular/material/select';
+import { MatSelectChange as MatSelectChange, MatSelect } from '@angular/material/select';
 import { LocalStorageService } from 'src/app/http/local-storage.service';
+import { MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatOption } from '@angular/material/autocomplete';
 
 interface TimeZoneOption {
   title: string
@@ -11,7 +14,7 @@ interface TimeZoneOption {
     selector: 'time-zone',
     templateUrl: './time-zone.component.html',
     styleUrls: ['./time-zone.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatIcon, MatPrefix, MatSelect, MatOption]
 })
 export class TimeZoneComponent implements OnInit {
 

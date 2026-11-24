@@ -14,7 +14,7 @@ import { TinyColor } from '@ctrl/tinycolor';
 @Component({
     selector: `host-component`,
     template: `<color-picker hexColor="hexColor"></color-picker>`,
-    standalone: false
+    imports: [OverlayModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, CheckboardModule, SaturationModule, HueModule, AlphaModule, ColorPickerComponent]
 })
 class TestHostComponent {
   hexColor = '#000000FF';
@@ -29,9 +29,8 @@ describe('ColorPickerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ NoopAnimationsModule, OverlayModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, CheckboardModule, SaturationModule, HueModule, AlphaModule ],
-      declarations: [ TestHostComponent, ColorPickerComponent ]
-    })
+    imports: [NoopAnimationsModule, OverlayModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, CheckboardModule, SaturationModule, HueModule, AlphaModule, TestHostComponent, ColorPickerComponent]
+})
     .compileComponents();
   }));
 

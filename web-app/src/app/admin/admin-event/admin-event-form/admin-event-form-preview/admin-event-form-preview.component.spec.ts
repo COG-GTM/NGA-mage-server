@@ -8,7 +8,7 @@ import { AdminEventFormPreviewComponent } from './admin-event-form-preview.compo
 
 @Component({
     template: '<admin-event-form-preview [formDefinition]="formDefinition"></admin-event-form-preview>',
-    standalone: false
+    imports: [AdminEventFormPreviewComponent]
 })
 class TestHostComponent {
   formDefinition: any
@@ -33,12 +33,11 @@ describe('AdminEventFormPreviewComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, MatDialogModule, AdminEventFormPreviewComponent],
-      declarations: [TestHostComponent],
-      providers: [{
-        provide: MatDialog, useClass: MatDialogMock
-      }]
-    })
+    imports: [BrowserAnimationsModule, MatDialogModule, AdminEventFormPreviewComponent, TestHostComponent],
+    providers: [{
+            provide: MatDialog, useClass: MatDialogMock
+        }]
+})
     .compileComponents()
   }));
 

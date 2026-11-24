@@ -39,25 +39,23 @@ import { MatDialogModule } from '@angular/material/dialog';
 class AngularModule { }
 
 @NgModule({
-  declarations: [
-    AccountStatusComponent,
-    AuthenticationComponent,
-    AuthenticationDialogComponent,
-    AuthorizationComponent,
-    DisclaimerComponent,
-    IdpAuthenticationComponent,
-    IngressComponent,
-    InitializeComponent,
-    LdapAuthenticationComponent,
-    LocalAuthenticationComponent,
-    SignupComponent
-  ],
-  imports: [
-    AngularModule,
-    AuthenticationButtonComponent
-  ],
-  exports: [
-    IngressComponent
-  ]
+    imports: [
+        AngularModule,
+        AuthenticationButtonComponent,
+        AccountStatusComponent,
+        AuthenticationComponent,
+        AuthenticationDialogComponent,
+        AuthorizationComponent,
+        DisclaimerComponent,
+        IdpAuthenticationComponent,
+        IngressComponent,
+        InitializeComponent,
+        LdapAuthenticationComponent,
+        LocalAuthenticationComponent,
+        SignupComponent
+    ],
+    exports: [
+        IngressComponent
+    ]
 })
 export class IngressModule { }

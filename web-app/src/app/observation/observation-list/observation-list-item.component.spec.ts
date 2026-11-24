@@ -86,7 +86,7 @@ class MockLocalStorageService {
     [observation]="observation"
     [event]="event"
   ></observation-list-item>`,
-    standalone: false
+    imports: [ObservationListItemComponent, MatSnackBarModule]
 })
 class TestHostComponent {
   event: any = {
@@ -106,33 +106,31 @@ describe('ObservationListItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        TestHostComponent
-      ],
-      imports: [
+    imports: [
         ObservationListItemComponent,
         NoopAnimationsModule,
-        MatSnackBarModule
-      ],
-      providers: [
+        MatSnackBarModule,
+        TestHostComponent
+    ],
+    providers: [
         {
-          provide: MapService,
-          useClass: MockMapService
+            provide: MapService,
+            useClass: MockMapService
         },
         {
-          provide: SessionService,
-          useClass: MockSessionService
+            provide: SessionService,
+            useClass: MockSessionService
         },
         {
-          provide: EventService,
-          useClass: MockEventService
+            provide: EventService,
+            useClass: MockEventService
         },
         {
-          provide: LocalStorageService,
-          useClass: MockLocalStorageService
+            provide: LocalStorageService,
+            useClass: MockLocalStorageService
         }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

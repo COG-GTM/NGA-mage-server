@@ -2,12 +2,17 @@ import { Component, Input } from '@angular/core';
 import { SidebarService } from '../../sidebar/sidebar.service';
 import { MapService } from '../../map/map.service';
 import { UserWithLocation } from '../../entities/user/entities.user-location';
+import { UserAvatarComponent } from '../user-avatar/user-avatar.component';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
+import { MomentPipe } from '../../moment/moment.pipe';
 
 @Component({
     selector: 'user-popup',
     templateUrl: './user-popup.component.html',
     styleUrls: ['./user-popup.component.scss'],
-    standalone: false
+    imports: [UserAvatarComponent, MatButton, MatIconButton, MatIcon, GeometryPipe, MomentPipe]
 })
 export class UserPopupComponent {
   @Input({ required: true }) userWithLocation: UserWithLocation;

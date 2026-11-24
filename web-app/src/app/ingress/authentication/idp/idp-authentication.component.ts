@@ -5,11 +5,12 @@ import { AuthenticationStrategy } from '../../../api/api.entity';
 import { UserService } from '../../../user/user.service';
 import { SignupEvent } from '../@types/signup';
 import { User } from '@ngageoint/mage.web-core-lib/user';
+import { AuthenticationButtonComponent } from '../button/authentication-button.component';
 @Component({
     selector: 'idp-authentication',
     templateUrl: './idp-authentication.component.html',
     styleUrls: ['./idp-authentication.component.scss'],
-    standalone: false
+    imports: [AuthenticationButtonComponent]
 })
 export class IdpAuthenticationComponent {
   @Input() strategy: AuthenticationStrategy

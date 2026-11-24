@@ -37,6 +37,7 @@ import { AdminToastService } from '../../services/admin-toast.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
+    imports: [UserDashboardComponent],
     selector: 'user-avatar',
     template: '',
     standalone: true

@@ -15,13 +15,12 @@ describe('ExportListItemComponent', () => {
     sessionService.getToken.and.returnValue('token');
 
     TestBed.configureTestingModule({
-      imports: [MomentModule],
-      declarations: [ExportListItemComponent],
-      providers: [
+    imports: [MomentModule, ExportListItemComponent],
+    providers: [
         { provide: SessionService, useValue: sessionService }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
   }));
 
   beforeEach(() => {

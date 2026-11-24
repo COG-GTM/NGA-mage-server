@@ -3,6 +3,9 @@ import { SessionService } from '../http/session.service';
 import SwaggerUI from 'swagger-ui';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 const DisableAuthorizePlugin = function () {
   return {
@@ -18,7 +21,7 @@ const DisableAuthorizePlugin = function () {
     selector: 'swagger',
     templateUrl: './swagger.component.html',
     styleUrls: ['./swagger.component.scss'],
-    standalone: false
+    imports: [MatToolbar, MatIconButton, MatIcon]
 })
 export class SwaggerComponent implements AfterViewInit {
 

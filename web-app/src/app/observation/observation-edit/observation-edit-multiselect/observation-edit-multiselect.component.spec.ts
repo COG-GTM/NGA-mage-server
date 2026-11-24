@@ -15,7 +15,7 @@ import { By } from '@angular/platform-browser'
     selector: `host-component`,
     template: `<observation-edit-multiselect [definition]="definition" [formGroup]="formGroup" [recentChoices]="recentChoices"></observation-edit-multiselect>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, MatInputModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatFormFieldModule, ObservationEditMultiselectComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({
@@ -49,10 +49,9 @@ describe('ObservationEditMultiselectComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, BrowserAnimationsModule, ReactiveFormsModule, MatInputModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatFormFieldModule],
-      declarations: [ObservationEditMultiselectComponent, TestHostComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
+    imports: [FormsModule, BrowserAnimationsModule, ReactiveFormsModule, MatInputModule, MatAutocompleteModule, MatChipsModule, MatIconModule, MatFormFieldModule, ObservationEditMultiselectComponent, TestHostComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
       .compileComponents()
   }));
 

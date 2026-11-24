@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
     selector: `host-component`,
     template: `<observation-edit-attachment [definition]="definition" [formGroup]="formGroup" [attachments]="attachments"></observation-edit-attachment>`,
-    standalone: false
+    imports: [MatIconModule, ObservationEditAttachmentComponent]
 })
 class TestHostComponent {
   attachments = []
@@ -28,9 +28,8 @@ describe('ObservationEditAttachmentComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ObservationEditAttachmentComponent, TestHostComponent],
-      imports: [MatIconModule]
-    })
+    imports: [MatIconModule, ObservationEditAttachmentComponent, TestHostComponent]
+})
     .compileComponents();
   }));
 

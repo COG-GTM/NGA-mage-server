@@ -18,12 +18,11 @@ describe('Idp Authentication Component', () => {
     mockUserService = jasmine.createSpyObj<UserService>('UserService', ['idpSignin']);
 
     TestBed.configureTestingModule({
-    declarations: [IdpAuthenticationComponent],
-    imports: [MatFormFieldModule, AuthenticationButtonComponent],
+    imports: [MatFormFieldModule, AuthenticationButtonComponent, IdpAuthenticationComponent],
     providers: [
-      { provide: UserService, useValue: mockUserService },
-      provideHttpClient(withInterceptorsFromDi()),
-      provideHttpClientTesting()
+        { provide: UserService, useValue: mockUserService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
     ]
 }).compileComponents();
   }));

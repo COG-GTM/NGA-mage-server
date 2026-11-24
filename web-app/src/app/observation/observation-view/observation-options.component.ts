@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatActionList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list';
+import { MatIcon } from '@angular/material/icon';
 
 export enum ObservationOption {
   DOWNLOAD,
@@ -10,7 +12,7 @@ export enum ObservationOption {
     selector: 'observation-options',
     templateUrl: './observation-options.component.html',
     styleUrls: ['./observation-options.component.scss'],
-    standalone: false
+    imports: [MatActionList, MatListItem, MatIcon, MatListItemIcon, MatListItemTitle]
 })
 export class ObservationOptionsComponent {
   public options: typeof ObservationOption = ObservationOption;

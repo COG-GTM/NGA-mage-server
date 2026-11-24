@@ -17,7 +17,7 @@ import { MapClipComponent } from 'src/app/map/clip/clip.component';
     [geometryStyle]="geometryStyle"
     [options]="options"
   ></observation-edit-form>`,
-    standalone: false
+    imports: [MatIconModule, MatCardModule, MatListModule, ObservationEditFormComponent, MapClipComponent]
 })
 class TestHostComponent {
   formGroup = new UntypedFormGroup({});
@@ -41,9 +41,8 @@ describe('ObservationEditFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MatIconModule, MatCardModule, MatListModule ],
-      declarations: [ObservationEditFormComponent, TestHostComponent, MapClipComponent]
-    }).compileComponents();
+    imports: [NoopAnimationsModule, MatIconModule, MatCardModule, MatListModule, ObservationEditFormComponent, TestHostComponent, MapClipComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

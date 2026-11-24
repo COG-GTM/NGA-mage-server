@@ -5,12 +5,20 @@ import { contentPathOfIcon } from '@ngageoint/mage.web-core-lib/static-icon';
 import { SessionService } from 'mage-web-app/http/session.service';
 import { MapService } from '../../map/map.service';
 import { MomentPipe } from '../../moment/moment.pipe';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { FeedIconModule } from '@ngageoint/mage.web-core-lib/feed/feed-icon';
+import { MapClipComponent } from '../../map/clip/clip.component';
+import { MatList, MatListItem, MatListItemTitle, MatListItemLine } from '@angular/material/list';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 
 @Component({
     selector: 'feed-item',
     templateUrl: './feed-item.component.html',
     styleUrls: ['./feed-item.component.scss'],
-    standalone: false
+    imports: [MatToolbar, MatIconButton, MatIcon, MatCard, FeedIconModule, MapClipComponent, MatButton, MatCardHeader, MatCardTitle, MatList, MatListItem, MatListItemTitle, MatListItemLine, GeometryPipe]
 })
 export class FeedItemComponent implements OnChanges {
   @Input() feed: Feed;

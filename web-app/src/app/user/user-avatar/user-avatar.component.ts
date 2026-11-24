@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnChanges, SimpleChanges, signal } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'user-avatar',
     templateUrl: './user-avatar.component.html',
     styleUrls: ['./user-avatar.component.scss'],
-    standalone: false
+    imports: [MatIcon]
 })
 export class UserAvatarComponent implements OnChanges {
   @Input() user: any

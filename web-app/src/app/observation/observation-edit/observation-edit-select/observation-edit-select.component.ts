@@ -1,8 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { RecentChoice } from 'core-lib-src/user';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption, MatOptgroup } from '@angular/material/autocomplete';
+import { MatSelectSearchComponent } from 'ngx-mat-select-search';
+import { AsyncPipe } from '@angular/common';
 
 export interface Choice {
   title: string;
@@ -20,7 +25,7 @@ interface SelectField {
     selector: 'observation-edit-dropdown',
     templateUrl: './observation-edit-select.component.html',
     styleUrls: ['./observation-edit-select.component.scss'],
-    standalone: false
+    imports: [MatFormField, FormsModule, ReactiveFormsModule, MatLabel, MatSelect, MatOption, MatSelectSearchComponent, MatOptgroup, MatError, AsyncPipe]
 })
 export class ObservationEditSelectComponent implements OnInit {
   @Input() formGroup: UntypedFormGroup

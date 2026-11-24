@@ -9,8 +9,8 @@ describe('ObservationViewPasswordComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ObservationViewPasswordComponent, PasswordPipe ]
-    })
+    imports: [ObservationViewPasswordComponent, PasswordPipe]
+})
     .compileComponents();
   }));
 

@@ -25,9 +25,9 @@ function newObservation(eventId: number) {
 }
 
 @Component({
-  selector: 'host-component',
-  template: `<observation-edit [observation]="observation"></observation-edit>`,
-  standalone: false
+    selector: 'host-component',
+    template: `<observation-edit [observation]="observation"></observation-edit>`,
+    imports: [MatDialogModule, ObservationEditComponent]
 })
 class TestHostComponent {
   observation: any = newObservation(1);
@@ -50,9 +50,8 @@ describe('ObservationEditComponent', () => {
     userService.getEventPreferences.and.returnValue(of(null));
 
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MatDialogModule],
-      declarations: [ObservationEditComponent, TestHostComponent],
-      providers: [
+    imports: [NoopAnimationsModule, MatDialogModule, ObservationEditComponent, TestHostComponent],
+    providers: [
         { provide: AttachmentService, useValue: { upload$: new Subject() } },
         { provide: MapService, useValue: jasmine.createSpyObj('MapService', ['addFeaturesToLayer', 'updateFeatureForLayer', 'removeFeatureFromLayer']) },
         { provide: SessionService, useValue: { user: { id: 'user1', role: { permissions: [] } }, getToken: () => 'token' } },
@@ -60,8 +59,8 @@ describe('ObservationEditComponent', () => {
         { provide: FilterService, useValue: jasmine.createSpyObj('FilterService', ['getEvent']) },
         { provide: EventService, useValue: eventService },
         { provide: ObservationService, useValue: jasmine.createSpyObj('ObservationService', ['getObservationStyleForForm']) }
-      ]
-    })
+    ]
+})
       // Override the real template, which pulls in the entire tree of form field
       // components, so this suite can exercise the component class in isolation.
       .overrideComponent(ObservationEditComponent, {
