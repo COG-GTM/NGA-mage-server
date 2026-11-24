@@ -7,7 +7,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MapLayerService, SimpleStyle } from './layer.service';
 import { RenderedMapLayer } from '../entities.map-layer';
 import { ColorEvent } from 'src/app/color-picker/color-picker.component';
-import { ColorPickerModule } from 'src/app/color-picker/color-picker.module';
+
+import { ColorPickerComponent } from '../../color-picker/color-picker.component';
 
 const DEFAULT_STYLE: SimpleStyle = {
   stroke: '#000000FF',
@@ -21,13 +22,13 @@ const DEFAULT_STYLE: SimpleStyle = {
     styleUrls: ['./layer-content.component.scss'],
     standalone: true,
     imports: [
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSlideToggleModule,
-        MatSliderModule,
-        ColorPickerModule
-    ]
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    ColorPickerComponent
+]
 })
 export class LayerContentComponent {
   private layerService: MapLayerService = inject(MapLayerService);

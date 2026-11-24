@@ -24,7 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { UserAvatarModule } from 'src/app/user/user-avatar/user-avatar.module';
+
+import { UserAvatarComponent } from '../../../user/user-avatar/user-avatar.component';
 
 type UserFilter = {
   limit?: number;
@@ -38,18 +39,18 @@ type UserFilter = {
     templateUrl: './user-dashboard.component.html',
     styleUrls: ['./user-dashboard.component.scss'],
     imports: [
-      MatCardModule,
-      MatChipsModule,
-      MatFormFieldModule,
-      MatIconModule,
-      MatInputModule,
-      MatButtonModule,
-      MatListModule,
-      MatPaginatorModule,
-      FormsModule,
-      RouterLink,
-      UserAvatarModule
-    ]
+    MatCardModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatListModule,
+    MatPaginatorModule,
+    FormsModule,
+    RouterLink,
+    UserAvatarComponent
+]
 })
 export class UserDashboardComponent implements OnInit, OnDestroy {
   readonly dataSource = signal<User[]>([]);

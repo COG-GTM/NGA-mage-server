@@ -4,7 +4,7 @@ import { LandingComponent } from './landing.component';
 import { InfoComponent } from './info.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ApiResolver } from '../api/api.resolver';
-import { IngressModule } from '../ingress/ingress.module';
+
 import { NoSessionGuard } from '../ingress/no-session-guard.service';
 
 const routes: Routes = [{
@@ -18,12 +18,11 @@ const routes: Routes = [{
 
 @NgModule({
     imports: [
-        CommonModule,
-        IngressModule,
-        RouterModule.forChild(routes),
-        LandingComponent,
-        InfoComponent
-    ],
+    CommonModule,
+    RouterModule.forChild(routes),
+    LandingComponent,
+    InfoComponent
+],
     exports: [RouterModule]
 })
 export class LandingModule { }

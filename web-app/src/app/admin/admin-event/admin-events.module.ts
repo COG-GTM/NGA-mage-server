@@ -21,7 +21,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { AdminBreadcrumbModule } from '../admin-breadcrumb/admin-breadcrumb.module';
-import { AdminEventFormModule } from './admin-event-form/admin-event-form.module';
+
 
 import { EventDetailsComponent } from './event-details/event-details.component';
 import { EventDashboardComponent } from './dashboard/event-dashboard.component';
@@ -30,32 +30,31 @@ import { EventService } from '../../event/event.service';
 
 @NgModule({
     imports: [
-        CommonModule,
-        EventDashboardComponent,
-        EventDetailsComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule,
-        AdminBreadcrumbModule,
-        AdminEventFormModule,
-        MatButtonModule,
-        MatCardModule,
-        MatChipsModule,
-        MatPaginatorModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatDividerModule,
-        MatIconModule,
-        MatInputModule,
-        MatCheckboxModule,
-        MatProgressSpinnerModule,
-        MatSelectModule,
-        MatOptionModule,
-        MatTooltipModule,
-        DragDropModule,
-        MatListModule,
-        MatMenuModule
-    ],
+    CommonModule,
+    EventDashboardComponent,
+    EventDetailsComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    AdminBreadcrumbModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatDividerModule,
+    MatIconModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatTooltipModule,
+    DragDropModule,
+    MatListModule,
+    MatMenuModule
+],
     exports: [
         EventDashboardComponent,
         EventDetailsComponent

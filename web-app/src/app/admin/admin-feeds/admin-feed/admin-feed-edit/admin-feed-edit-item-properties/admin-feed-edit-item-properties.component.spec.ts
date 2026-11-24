@@ -1,3 +1,4 @@
+import { JsonSchemaFormWithServiceComponent } from '../../../../json-schema/json-schema.component';
 import { JsonSchemaFormModule } from '@ngageoint/vendor-ajsf-core';
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync, fakeAsync, tick } from '@angular/core/testing';
@@ -11,7 +12,6 @@ import { MatIconModule } from '@angular/material/icon'
 import { By } from '@angular/platform-browser'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import * as _ from 'lodash'
-import { JsonSchemaModule } from '../../../../json-schema/json-schema.module';
 import { AdminFeedEditItemPropertiesComponent, SchemaFormValue, SimpleJsonSchema, SimplePropertyJsonSchema } from './admin-feed-edit-item-properties.component';
 
 
@@ -55,7 +55,7 @@ describe('AdminFeedEditItemPropertiesComponent', () => {
       >
       </app-feed-item-properties-configuration>
     `,
-    imports: [FormsModule, ReactiveFormsModule, MatCardModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatIconModule, JsonSchemaFormModule, JsonSchemaModule, AdminFeedEditItemPropertiesComponent]
+    imports: [FormsModule, ReactiveFormsModule, MatCardModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatIconModule, JsonSchemaFormModule, JsonSchemaFormWithServiceComponent, AdminFeedEditItemPropertiesComponent]
 })
   class TestHostComponent {
     topicSchema: SimpleJsonSchema = null
@@ -72,21 +72,7 @@ describe('AdminFeedEditItemPropertiesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatDividerModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        JsonSchemaFormModule,
-        JsonSchemaModule,
-        NoopAnimationsModule,
-        AdminFeedEditItemPropertiesComponent,
-        TestHostComponent,
-    ]
+    imports: [FormsModule, ReactiveFormsModule, MatCardModule, MatDividerModule, MatExpansionModule, MatFormFieldModule, MatInputModule, MatIconModule, JsonSchemaFormModule, JsonSchemaFormWithServiceComponent, NoopAnimationsModule, AdminFeedEditItemPropertiesComponent, TestHostComponent]
 })
     .compileComponents();
   }));

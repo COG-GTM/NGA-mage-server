@@ -15,27 +15,28 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { UserAvatarModule } from '../user-avatar/user-avatar.module';
+
 import { PasswordResetSuccessDialog } from '../password/password-reset-success-dialog';
 import { PasswordStrength, passwordStrengthScores } from '../../entities/password/password';
 import { SessionService } from 'mage-web-app/http/session.service';
 import { emailValidator } from 'mage-web-app/email/email';
+import { UserAvatarComponent } from '../user-avatar/user-avatar.component';
 
 @Component({
     selector: 'profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
     imports: [
-      ReactiveFormsModule,
-      MatButtonModule,
-      MatCardModule,
-      MatFormFieldModule,
-      MatIconModule,
-      MatInputModule,
-      MatProgressBarModule,
-      MatToolbarModule,
-      UserAvatarModule
-    ]
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressBarModule,
+    MatToolbarModule,
+    UserAvatarComponent
+]
 })
 export class ProfileComponent implements OnInit {
   private readonly dialog: MatDialog = inject(MatDialog)

@@ -12,7 +12,7 @@ import { MatRipple, MatRippleModule } from '@angular/material/core';
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { animate, style, transition, trigger } from '@angular/animations'
-import { GeometryModule } from '../../geometry/geometry.module'
+
 import { MomentModule } from '../../moment/moment.module'
 import { AttachmentCarouselComponent } from '../attachment/attachment-carousel.component'
 import { SidebarService } from '../../sidebar/sidebar.service'
@@ -20,6 +20,7 @@ import { MapService } from '../../map/map.service';
 import { EventService } from '../../event/event.service';
 import { SessionService } from 'mage-web-app/http/session.service';
 import { AttachmentProcessingStatus } from '../../entities/observation/entities.observation';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 
 interface ImportantEditorState {
   open: boolean
@@ -42,19 +43,19 @@ interface ImportantEditorState {
         ])
     ],
     imports: [
-        NgClass,
-        FormsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatRippleModule,
-        MatTooltipModule,
-        GeometryModule,
-        MomentModule,
-        AttachmentCarouselComponent
-    ]
+    NgClass,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRippleModule,
+    MatTooltipModule,
+    GeometryPipe,
+    MomentModule,
+    AttachmentCarouselComponent
+]
 })
 export class ObservationListItemComponent implements OnChanges {
   private readonly mapService: MapService = inject(MapService)

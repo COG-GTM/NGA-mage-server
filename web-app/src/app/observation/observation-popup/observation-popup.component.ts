@@ -1,17 +1,18 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { GeometryModule } from '../../geometry/geometry.module';
+
 import { MomentModule } from '../../moment/moment.module';
 import { SidebarService } from '../../sidebar/sidebar.service';
 import { MapService } from '../../map/map.service';
 import { EventService } from '../../event/event.service';
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 
 @Component({
     selector: 'observation-map-popup',
     templateUrl: './observation-popup.component.html',
     styleUrls: ['./observation-popup.component.scss'],
-    imports: [MatButtonModule, MatIconModule, GeometryModule, MomentModule]
+    imports: [MatButtonModule, MatIconModule, GeometryPipe, MomentModule]
 })
 export class ObservationPopupComponent {
   private readonly sidebarService: SidebarService = inject(SidebarService)

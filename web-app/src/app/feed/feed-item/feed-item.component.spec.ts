@@ -1,3 +1,4 @@
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
@@ -6,7 +7,6 @@ import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { FeedIconModule } from '@ngageoint/mage.web-core-lib/feed/feed-icon'
-import { GeometryModule } from 'src/app/geometry/geometry.module';
 import { MapClipComponent } from 'src/app/map/clip/clip.component';
 import { FeedItemComponent } from './feed-item.component';
 import { Component, ViewChild } from '@angular/core';
@@ -49,13 +49,7 @@ class MockMapService {
 
 @Component({
     template: '<feed-item [feed]="feed" [item]="item"></feed-item>',
-    imports: [MatIconModule,
-        MatToolbarModule,
-        MatDividerModule,
-        MatCardModule,
-        GeometryModule,
-        FeedIconModule,
-        FeedItemComponent]
+    imports: [MatIconModule, MatToolbarModule, MatDividerModule, MatCardModule, GeometryPipe, FeedIconModule, FeedItemComponent]
 })
 class TestHostComponent {
   feed: Feed = {
@@ -115,18 +109,7 @@ describe('FeedItemComponent', () => {
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
     ],
-    imports: [
-        MatIconModule,
-        MatToolbarModule,
-        MatDividerModule,
-        MatCardModule,
-        GeometryModule,
-        FeedIconModule,
-        FeedItemComponent,
-        MapClipComponent,
-        TestHostComponent,
-        MomentPipe
-    ]
+    imports: [MatIconModule, MatToolbarModule, MatDividerModule, MatCardModule, GeometryPipe, FeedIconModule, FeedItemComponent, MapClipComponent, TestHostComponent, MomentPipe]
 })
     .compileComponents()
   }));

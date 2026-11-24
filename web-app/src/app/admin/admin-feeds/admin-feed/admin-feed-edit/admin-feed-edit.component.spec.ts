@@ -1,3 +1,4 @@
+import { JsonSchemaFormWithServiceComponent } from '../../../json-schema/json-schema.component';
 import { JsonSchemaFormModule } from '@ngageoint/vendor-ajsf-core';
 import { provideHttpClientTesting } from '@angular/common/http/testing'
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
@@ -20,7 +21,6 @@ import { AdminBreadcrumbModule } from '../../../../../app/admin/admin-breadcrumb
 import { MageCommonModule } from '@ngageoint/mage.web-core-lib/common'
 import { ServiceType, FeedService } from '@ngageoint/mage.web-core-lib/feed'
 import { JsonSchemaWidgetAutocompleteComponent } from '../../../json-schema/json-schema-widget/json-schema-widget-autocomplete.component';
-import { JsonSchemaModule } from '../../../json-schema/json-schema.module';
 import { MomentModule } from '../../../../../app/moment/moment.module';
 import { StaticIconModule } from '@ngageoint/mage.web-core-lib/static-icon'
 import { FeedIconModule } from '@ngageoint/mage.web-core-lib/feed/feed-icon'
@@ -99,34 +99,7 @@ describe('FeedEditComponent', () => {
     mockFeedService.fetchServices.and.returnValue(of([]))
 
     TestBed.configureTestingModule({
-    imports: [MatAutocompleteModule,
-        JsonSchemaWidgetAutocompleteComponent,
-        MatDividerModule,
-        MatExpansionModule,
-        MatListModule,
-        MatFormFieldModule,
-        MatCheckboxModule,
-        MatInputModule,
-        MatSelectModule,
-        MatCardModule,
-        MatIconModule,
-        NgxMatSelectSearchModule,
-        FormsModule,
-        ReactiveFormsModule,
-        JsonSchemaFormModule,
-        JsonSchemaModule,
-        NoopAnimationsModule,
-        MomentModule,
-        MageCommonModule,
-        StaticIconModule,
-        FeedIconModule,
-        AdminBreadcrumbModule,
-        AdminFeedEditComponent,
-        AdminServiceEditComponent,
-        AdminFeedEditTopicComponent,
-        AdminFeedEditTopicConfigurationComponent,
-        AdminFeedEditConfigurationComponent,
-        AdminFeedEditItemPropertiesComponent],
+    imports: [MatAutocompleteModule, JsonSchemaWidgetAutocompleteComponent, MatDividerModule, MatExpansionModule, MatListModule, MatFormFieldModule, MatCheckboxModule, MatInputModule, MatSelectModule, MatCardModule, MatIconModule, NgxMatSelectSearchModule, FormsModule, ReactiveFormsModule, JsonSchemaFormModule, JsonSchemaFormWithServiceComponent, NoopAnimationsModule, MomentModule, MageCommonModule, StaticIconModule, FeedIconModule, AdminBreadcrumbModule, AdminFeedEditComponent, AdminServiceEditComponent, AdminFeedEditTopicComponent, AdminFeedEditTopicConfigurationComponent, AdminFeedEditConfigurationComponent, AdminFeedEditItemPropertiesComponent],
     providers: [
         { provide: FeedService, useValue: mockFeedService },
         {

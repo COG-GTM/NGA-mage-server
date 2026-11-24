@@ -33,8 +33,8 @@ import { AdminEventsModule } from './admin-event/admin-events.module';
 import { AdminLayersModule } from './admin-layers/admin-layers.module';
 import { AdminDevicesModule } from './admin-devices/admin-devices.module';
 import { AdminFeedsModule } from './admin-feeds/admin-feeds.module';
-import { AdminEventFormModule } from './admin-event/admin-event-form/admin-event-form.module';
-import { ColorPickerModule } from '../color-picker/color-picker.module';
+
+
 
 import { SearchModalComponent } from './search-modal/search-modal.component';
 import { AdminGuard } from './services/admin-guard.service';
@@ -75,13 +75,11 @@ import { AdminNavbarComponent } from './admin-shell/admin-navbar/admin-navbar.co
     AdminLayersModule,
     AdminDevicesModule,
     AdminFeedsModule,
-    AdminEventFormModule,
-    ColorPickerModule,
     AdminNavbarComponent,
     AdminNavigationComponent,
     AdminComponent,
     SearchModalComponent
-  ],
+],
   exports: [AdminComponent],
   providers: [AdminGuard]
 })

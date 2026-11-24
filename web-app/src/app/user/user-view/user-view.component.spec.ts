@@ -1,3 +1,4 @@
+import { GeometryPipe } from '../../geometry/geometry.pipe';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MapClipComponent } from '../../map/clip/clip.component';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
@@ -6,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { UserViewComponent } from './user-view.component';
 import { MapService } from '../../map/map.service';
 import { LocationService } from '../location/location.service';
-import { GeometryModule } from '../../geometry/geometry.module';
 import { UserLocation } from '../../entities/user/entities.user-location';
 
 describe('UserViewComponent', () => {
@@ -40,7 +40,7 @@ describe('UserViewComponent', () => {
     const locationService = { colorBuckets };
 
     TestBed.configureTestingModule({
-    imports: [CommonModule, GeometryModule, UserViewComponent],
+    imports: [CommonModule, GeometryPipe, UserViewComponent],
     providers: [
         { provide: MapService, useValue: mapService },
         { provide: LocationService, useValue: locationService }
