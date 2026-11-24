@@ -1,16 +1,29 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog'
+import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
 import { AttributeConfig, AttributeConcatenationConfig, AttributeDefaultConfig, AttributeValueConfig, FeatureServiceConfig } from '../ArcGISConfig';
 import { ArcGISPluginConfig, defaultArcGISPluginConfig } from '../ArcGISPluginConfig'
 import { ArcService, Form, MageEvent } from '../arc.service'
 import { Subject, first } from 'rxjs';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatHint, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatInput } from '@angular/material/input';
+import { ArcLayerComponent } from '../arc-layer/arc-layer.component';
+import { ArcEventComponent } from '../arc-event/arc-event.component';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatSelect } from '@angular/material/select';
+import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 
 @Component({
-  standalone: false,
-  selector: 'arc-admin',
-  templateUrl: './arc-admin.component.html',
-  styleUrls: ['./arc-admin.component.scss']
+    selector: 'arc-admin',
+    templateUrl: './arc-admin.component.html',
+    styleUrls: ['./arc-admin.component.scss'],
+    imports: [MatIcon, MatButton, MatTabGroup, MatTab, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatHint, MatSlideToggle, FormsModule, MatFormField, MatLabel, MatInput, MatCardActions, ArcLayerComponent, ArcEventComponent, ReactiveFormsModule, MatIconButton, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatDialogClose, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete]
 })
 export class ArcAdminComponent implements OnInit {
 

@@ -1,12 +1,23 @@
 import { Component, Inject, OnDestroy, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSelectionList } from '@angular/material/list';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import { MatSelectionList, MatListOption, MatListItemTitle, MatListItemLine } from '@angular/material/list';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FeatureServiceConfig } from '../ArcGISConfig';
 import { ArcService, DiscoveredFeatureService, DiscoveryRequest, DiscoveryResult, FeatureLayer } from '../arc.service';
 import { RecentFeatureServiceUrlsService } from './recent-feature-service-urls.service';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { MatSelect } from '@angular/material/select';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatTooltip } from '@angular/material/tooltip';
 
 enum State { Validate, Layers }
 
@@ -28,10 +39,10 @@ export interface DialogData {
 }
 
 @Component({
-	standalone: false,
-	selector: 'arc-layer-dialog',
-	templateUrl: 'arc-layer-dialog.component.html',
-	styleUrls: ['./arc-layer-dialog.component.scss']
+    selector: 'arc-layer-dialog',
+    templateUrl: 'arc-layer-dialog.component.html',
+    styleUrls: ['./arc-layer-dialog.component.scss'],
+    imports: [MatIconButton, MatIcon, MatDialogTitle, CdkScrollable, MatDialogContent, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatButtonToggleGroup, FormsModule, MatButtonToggle, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatAutocompleteTrigger, MatAutocomplete, MatOption, MatError, MatHint, MatSelect, MatProgressSpinner, MatSelectionList, MatListOption, MatTooltip, MatListItemTitle, MatListItemLine, MatButton]
 })
 export class ArcLayerDialogComponent implements OnDestroy {
 	State = State

@@ -6,12 +6,18 @@ import { MatDialog } from '@angular/material/dialog'
 import { ArcLayerSelectable } from './ArcLayerSelectable'
 import { ArcLayerDialogComponent, DialogData } from './arc-layer-dialog.component'
 import { ArcLayerDeleteDialogComponent } from './arc-layer-delete-dialog.component'
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatHint } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatList, MatListItem, MatListItemIcon, MatListItemTitle, MatListItemLine, MatListItemMeta, MatDivider } from '@angular/material/list';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton, MatButton } from '@angular/material/button';
 
 @Component({
-  standalone: false,
-  selector: 'arc-layer',
-  templateUrl: './arc-layer.component.html',
-  styleUrls: ['./arc-layer.component.scss']
+    selector: 'arc-layer',
+    templateUrl: './arc-layer.component.html',
+    styleUrls: ['./arc-layer.component.scss'],
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatHint, MatCardContent, MatIcon, MatList, MatListItem, MatTooltip, MatListItemIcon, MatListItemTitle, MatListItemLine, MatListItemMeta, MatIconButton, MatDivider, MatCardActions, MatButton]
 })
 export class ArcLayerComponent implements OnChanges {
 
