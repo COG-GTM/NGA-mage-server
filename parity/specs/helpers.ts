@@ -13,8 +13,8 @@ export function credsFor(info: TestInfo): Creds {
   const file = path.join(authDir, `${info.project.name}.json`);
   if (fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, 'utf8'));
   const creds = { username: 'admin', password: `P!${crypto.randomBytes(12).toString('base64url')}9a` };
-  fs.mkdirSync(authDir, { recursive: true });
-  fs.writeFileSync(file, JSON.stringify(creds));
+  fs.mkdirSync(authDir, { recursive: true, mode: 0o700 });
+  fs.writeFileSync(file, JSON.stringify(creds), { mode: 0o600 });
   return creds;
 }
 
