@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -28,6 +28,10 @@ const ALL_STATUSES = ['SUCCESS', 'FAILED', 'PENDING', 'SKIPPED']
     imports: [MatCard, MatCardTitle, MatButton, MatIconButton, MatTooltip, MatIcon, MatProgressSpinner, MatNavList, MatListItem, MatListItemIcon, MatListItemTitle, MatListItemLine, MatListItemMeta, MatPaginator, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class ObservationStatusComponent implements OnInit, OnDestroy {
+  private statusService = inject(ObservationStatusService);
+  private configService = inject(ConfigurationService);
+  private snackBar = inject(MatSnackBar);
+
   private destroy$ = new Subject<void>()
 
   events: MageEventSummary[] = []
@@ -80,11 +84,10 @@ export class ObservationStatusComponent implements OnInit, OnDestroy {
     return [...this.eventSummaries].sort((a, b) => a.eventName.localeCompare(b.eventName))
   }
 
-  constructor(
-    private statusService: ObservationStatusService,
-    private configService: ConfigurationService,
-    private snackBar: MatSnackBar
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.configService.getEvents().pipe(takeUntil(this.destroy$)).subscribe(events => {

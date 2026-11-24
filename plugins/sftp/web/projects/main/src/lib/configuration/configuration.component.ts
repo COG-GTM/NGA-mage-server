@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ArchiveFormat, CompletionAction, SFTPPluginConfig, TriggerRule, ConnectionTestResult, EventFilterMode, MageEventSummary } from '../entities/entities.format';
@@ -26,6 +26,10 @@ import { I18nPluralPipe } from '@angular/common';
     imports: [MatIcon, MatCard, MatSlideToggle, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatHint, MatRadioGroup, MatRadioButton, MatInput, MatSuffix, MatCheckbox, MatButton, MatProgressSpinner, I18nPluralPipe]
 })
 export class ConfigurationComponent implements OnInit, OnDestroy {
+  service = inject(ConfigurationService);
+  private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
+
 
   private destroy$ = new Subject<void>();
 
@@ -109,11 +113,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     return JSON.stringify(this.configuration) !== this.originalConfiguration
   }
 
-  constructor(
-    public service: ConfigurationService,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
   }
 
   ngOnInit(): void {

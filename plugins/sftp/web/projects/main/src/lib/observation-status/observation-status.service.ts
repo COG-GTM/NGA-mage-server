@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 import { EventObservationSummary, ObservationStatusResponse } from '../entities/entities.format';
 import { baseUrl } from '../configuration/configuration.service';
@@ -14,7 +14,12 @@ export interface ObservationStatusApi {
   providedIn: 'root'
 })
 export class ObservationStatusService implements ObservationStatusApi {
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   getObservationStatusSummary(): Observable<EventObservationSummary[]> {
     return this.http.get<EventObservationSummary[]>(`${baseUrl}/observations/summary`).pipe(
