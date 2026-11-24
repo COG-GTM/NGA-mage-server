@@ -2,18 +2,30 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PageEvent } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { ObservationStatusService } from './observation-status.service';
 import { ConfigurationService } from '../configuration/configuration.service';
 import { EventObservationSummary, MageEventSummary, SftpObservationRecord } from '../entities/entities.format';
+import { MatCard, MatCardTitle } from '@angular/material/card';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatNavList, MatListItem, MatListItemIcon, MatListItemTitle, MatListItemLine, MatListItemMeta } from '@angular/material/list';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 
 const ALL_STATUSES = ['SUCCESS', 'FAILED', 'PENDING', 'SKIPPED']
 
 @Component({
-  standalone: false,
-  selector: 'sftp-observation-status',
-  templateUrl: './observation-status.component.html',
-  styleUrls: ['./observation-status.component.scss']
+    selector: 'sftp-observation-status',
+    templateUrl: './observation-status.component.html',
+    styleUrls: ['./observation-status.component.scss'],
+    imports: [MatCard, MatCardTitle, MatButton, MatIconButton, MatTooltip, MatIcon, MatProgressSpinner, MatNavList, MatListItem, MatListItemIcon, MatListItemTitle, MatListItemLine, MatListItemMeta, MatPaginator, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class ObservationStatusComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>()

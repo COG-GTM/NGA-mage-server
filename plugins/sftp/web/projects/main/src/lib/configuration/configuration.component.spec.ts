@@ -9,9 +9,8 @@ describe('ConfigurationComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [ConfigurationComponent]
-    }).compileComponents();
+    imports: [HttpClientTestingModule, ConfigurationComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

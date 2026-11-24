@@ -5,12 +5,25 @@ import { ArchiveFormat, CompletionAction, SFTPPluginConfig, TriggerRule, Connect
 import { ConfigurationService, errorMessage } from './configuration.service';
 import { Subject } from 'rxjs';
 import { ResetConfirmDialogComponent } from './reset-confirm-dialog.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatCard } from '@angular/material/card';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel, MatHint, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { I18nPluralPipe } from '@angular/common';
 
 @Component({
-  standalone: false,
-  selector: 'sftp-configuration',
-  templateUrl: './configuration.component.html',
-  styleUrls: ['./configuration.component.scss']
+    selector: 'sftp-configuration',
+    templateUrl: './configuration.component.html',
+    styleUrls: ['./configuration.component.scss'],
+    imports: [MatIcon, MatCard, MatSlideToggle, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatHint, MatRadioGroup, MatRadioButton, MatInput, MatSuffix, MatCheckbox, MatButton, MatProgressSpinner, I18nPluralPipe]
 })
 export class ConfigurationComponent implements OnInit, OnDestroy {
 
