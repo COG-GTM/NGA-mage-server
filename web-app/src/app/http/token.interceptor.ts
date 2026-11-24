@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpContextToken, HttpStatusCode, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpInterceptorFn, HttpRequest, HttpHandler, HttpEvent, HttpContextToken, HttpStatusCode, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, ReplaySubject, switchMap, throwError, take } from 'rxjs';
 import { AuthenticationDialogComponent } from '../ingress/authentication/authentication-dialog.component';
 import { MatDialog as MatDialog } from '@angular/material/dialog';
@@ -72,3 +72,6 @@ export class TokenInterceptorService implements HttpInterceptor {
     });
   }
 }
+
+export const tokenInterceptor: HttpInterceptorFn = (req, next) =>
+  inject(TokenInterceptorService).intercept(req, { handle: next });
