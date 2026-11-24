@@ -4,6 +4,8 @@
   </mat-toolbar>
 
   <div class="items">
-    <feed-item-summary *ngFor="let item of items" [item]="item" [feed]="feed"></feed-item-summary>
+    @for (item of items; track item) {
+      <feed-item-summary [item]="item" [feed]="feed"></feed-item-summary>
+    }
   </div>
 </div>

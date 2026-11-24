@@ -1,7 +1,9 @@
 <div class="feeds-nav">
-  <div *ngFor="let tab of tabs" (click)="onTabSwitched(tab)">
-    <sidebar-tab [tab]="tab" [active]="tab.id === currentTab?.id"></sidebar-tab>
-  </div>
+  @for (tab of tabs; track tab) {
+    <div (click)="onTabSwitched(tab)">
+      <sidebar-tab [tab]="tab" [active]="tab.id === currentTab?.id"></sidebar-tab>
+    </div>
+  }
 
   <mat-divider></mat-divider>
 
@@ -11,18 +13,38 @@
 </div>
 
 <div class="feeds-content">
-  <user-view *ngIf="viewUser" @slide class="component__view" [class.reselected]="userReselected" (animationend)="userReselected = false" [user]="viewUser" (close)="onUserViewClose()"></user-view>
+  @if (viewUser) {
+    <user-view @slide class="component__view" [class.reselected]="userReselected" (animationend)="userReselected = false" [user]="viewUser" (close)="onUserViewClose()"></user-view>
+  }
 
-  <observation-view *ngIf="viewObservation" @slide class="component__view" [class.reselected]="observationReselected" (animationend)="observationReselected = false" [event]="event" [observation]="viewObservation" (close)="onObservationViewClose()" (delete)="onObservationDelete($event)"></observation-view>
-  <observation-edit *ngIf="editObservation" @slide class="component__view" [observation]="editObservation" (close)="onObservationEditClose($event)"></observation-edit>
-  <observation-edit *ngIf="newObservation" @slide class="component__view" [observation]="newObservation" (close)="onObservationEditClose($event)"></observation-edit>
+  @if (viewObservation) {
+    <observation-view @slide class="component__view" [class.reselected]="observationReselected" (animationend)="observationReselected = false" [event]="event" [observation]="viewObservation" (close)="onObservationViewClose()" (delete)="onObservationDelete($event)"></observation-view>
+  }
+  @if (editObservation) {
+    <observation-edit @slide class="component__view" [observation]="editObservation" (close)="onObservationEditClose($event)"></observation-edit>
+  }
+  @if (newObservation) {
+    <observation-edit @slide class="component__view" [observation]="newObservation" (close)="onObservationEditClose($event)"></observation-edit>
+  }
 
-  <feed-item *ngIf="feedItem" @slide class="component__view" [item]="feedItem.item" [feed]="feedItem.feed"></feed-item>
+  @if (feedItem) {
+    <feed-item @slide class="component__view" [item]="feedItem.item" [feed]="feedItem.feed"></feed-item>
+  }
 
-  <export-view *ngIf="viewExport" @slide class="component__view" [item]="viewExport" (close)="onExportViewClose()"></export-view>
+  @if (viewExport) {
+    <export-view @slide class="component__view" [item]="viewExport" (close)="onExportViewClose()"></export-view>
+  }
 
-  <observation-list class="feed-container" *ngIf="currentTab.id === 'observations'"></observation-list>
-  <user-list class="feed-container" *ngIf="currentTab.id === 'people'"></user-list>
-  <feed-list class="feed-container" [feed]="currentTab.feed" *ngIf="currentTab.feed"></feed-list>
-  <export class="feed-container" *ngIf="currentTab.id === 'export'"></export>
+  @if (currentTab.id === 'observations') {
+    <observation-list class="feed-container"></observation-list>
+  }
+  @if (currentTab.id === 'people') {
+    <user-list class="feed-container"></user-list>
+  }
+  @if (currentTab.feed) {
+    <feed-list class="feed-container" [feed]="currentTab.feed"></feed-list>
+  }
+  @if (currentTab.id === 'export') {
+    <export class="feed-container"></export>
+  }
 </div>

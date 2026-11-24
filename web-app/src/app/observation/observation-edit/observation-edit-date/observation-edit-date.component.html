@@ -6,14 +6,18 @@
         (ngModelChange)="onDate()" #dateModel="ngModel" autocomplete="off" />
       <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
       <mat-datepicker #datePicker></mat-datepicker>
-      <mat-error *ngIf="
-          dateModel.errors?.required && !dateModel.errors?.matDatepickerParse
-        ">
-        Date is required
-      </mat-error>
-      <mat-error *ngIf="dateModel.errors?.matDatepickerParse">
-        Invalid date
-      </mat-error>
+      @if (
+        dateModel.errors?.required && !dateModel.errors?.matDatepickerParse
+        ) {
+        <mat-error>
+          Date is required
+        </mat-error>
+      }
+      @if (dateModel.errors?.matDatepickerParse) {
+        <mat-error>
+          Invalid date
+        </mat-error>
+      }
     </mat-form-field>
   </div>
 

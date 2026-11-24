@@ -2,8 +2,10 @@
   <mat-label>Time Format</mat-label>
   <mat-icon matIconPrefix>schedule</mat-icon>
   <mat-select [(value)]="formatOption" (selectionChange)="updateTimeFormat($event)" [compareWith]="compareFormat">
-    <mat-option *ngFor="let option of formatOptions" [value]="option">
-      {{option.title}}
-    </mat-option>
+    @for (option of formatOptions; track option) {
+      <mat-option [value]="option">
+        {{option.title}}
+      </mat-option>
+    }
   </mat-select>
 </mat-form-field>

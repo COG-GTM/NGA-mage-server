@@ -2,16 +2,17 @@
   <mat-checkbox
     [checked]="definition.value"
     (change)="checked($event)"
-  >
+    >
     {{ definition.title }}{{ definition.required ? ' *' : '' }}
   </mat-checkbox>
 
-  <mat-error
-    *ngIf="
-      formGroup.get(definition.name)?.hasError('required') &&
-      formGroup.get(definition.name)?.touched
-    "
-  >
-    {{ definition.title }} is required
-  </mat-error>
+  @if (
+    formGroup.get(definition.name)?.hasError('required') &&
+    formGroup.get(definition.name)?.touched
+    ) {
+    <mat-error
+      >
+      {{ definition.title }} is required
+    </mat-error>
+  }
 </div>

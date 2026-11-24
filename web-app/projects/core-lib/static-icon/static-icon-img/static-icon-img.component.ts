@@ -3,7 +3,7 @@ import { RegisteredStaticIconReference, contentPathOfIcon } from '../static-icon
 
 @Component({
     selector: 'mage-static-icon-img',
-    template: `<img *ngIf="iconSrc" [attr.src]="iconSrc" />`,
+    template: `@if (iconSrc) {<img [attr.src]="iconSrc" />}`,
     standalone: false
 })
 export class StaticIconImgComponent implements OnChanges {

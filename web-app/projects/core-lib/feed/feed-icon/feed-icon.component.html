@@ -1,9 +1,11 @@
 
-<div *ngIf="iconMaskImage" class="icon-mask" [ngClass]="active ? 'icon-mask--active' : 'icon-mask--inactive'"
-  [style.width]="size + 'px'" [style.height]="size + 'px'"
+@if (iconMaskImage) {
+  <div class="icon-mask" [ngClass]="active ? 'icon-mask--active' : 'icon-mask--inactive'"
+    [style.width]="size + 'px'" [style.height]="size + 'px'"
   [style.mask-image]="iconMaskImage" [style.-webkit-mask-image]="iconMaskImage"></div>
-<mat-icon
-    *ngIf="!iconMaskImage && !isImageIcon"
+}
+@if (!iconMaskImage && !isImageIcon) {
+  <mat-icon
     matBadge="{{badge}}"
     matBadgePosition="above after"
     matBadgeSize="small"
@@ -13,5 +15,6 @@
     [style.fontSize]="size + 'px'"
     [style.width]="size + 'px'"
     [style.height]="size + 'px'">
-      {{icon?.name ?? 'rss_feed'}}
+    {{icon?.name ?? 'rss_feed'}}
   </mat-icon>
+}

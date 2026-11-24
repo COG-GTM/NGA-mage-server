@@ -23,8 +23,12 @@
 
 <div class="actions">
   <div class="action-buttons">
-    <button *ngIf="followingUser.id !== user.id" matButton (click)="onFollow()">FOLLOW</button>
-    <button *ngIf="followingUser.id === user.id" matButton="filled" (click)="onFollow()">FOLLOWING</button>
+    @if (followingUser.id !== user.id) {
+      <button matButton (click)="onFollow()">FOLLOW</button>
+    }
+    @if (followingUser.id === user.id) {
+      <button matButton="filled" (click)="onFollow()">FOLLOWING</button>
+    }
   </div>
 
   <div class="actions-icons">

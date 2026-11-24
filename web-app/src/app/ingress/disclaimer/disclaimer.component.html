@@ -1,7 +1,9 @@
 <div class="container" [class.compact]="compact">
-  <div *ngIf="!compact" class="header">
-    <div class="header__title">{{title}}</div>
-  </div>
+  @if (!compact) {
+    <div class="header">
+      <div class="header__title">{{title}}</div>
+    </div>
+  }
 
   <div class="disclaimer">
     <div class="disclaimer__text">{{text}}</div>

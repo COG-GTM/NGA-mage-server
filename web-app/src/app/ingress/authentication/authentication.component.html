@@ -1,40 +1,55 @@
 <div class="signin-container">
-  <div *ngIf="landing" class="welcome">
-    <div class="welcome__title">Welcome to Mage</div>
-    <div class="welcome__message">Sign in to your account</div>
-  </div>
+  @if (landing) {
+    <div class="welcome">
+      <div class="welcome__title">Welcome to Mage</div>
+      <div class="welcome__message">Sign in to your account</div>
+    </div>
+  }
 
   <div class="authentications">
     <div class="strategies">
-      <div *ngFor="let strategy of thirdPartyStrategies" >
-        <ng-container [ngSwitch]="strategy?.type">
-          <idp-authentication *ngSwitchCase="'oauth'" [strategy]="strategy"
-            (authenticated)="onSignin($event)" (created)="onCreated($event)"></idp-authentication>
-          <idp-authentication *ngSwitchCase="'saml'" [strategy]="strategy"
-            (authenticated)="onSignin($event)" (created)="onCreated($event)"></idp-authentication>
-          <idp-authentication *ngSwitchCase="'openidconnect'" [strategy]="strategy"
-            (authenticated)="onSignin($event)" (created)="onCreated($event)"></idp-authentication>
-          <ldap-authentication *ngSwitchCase="'ldap'" [api]="api" [strategy]="strategy"
-            (authenticated)="onSignin($event)"></ldap-authentication>
-        </ng-container>
-      </div>
+      @for (strategy of thirdPartyStrategies; track strategy) {
+        <div >
+          @switch (strategy?.type) {
+            @case ('oauth') {
+              <idp-authentication [strategy]="strategy"
+              (authenticated)="onSignin($event)" (created)="onCreated($event)"></idp-authentication>
+            }
+            @case ('saml') {
+              <idp-authentication [strategy]="strategy"
+              (authenticated)="onSignin($event)" (created)="onCreated($event)"></idp-authentication>
+            }
+            @case ('openidconnect') {
+              <idp-authentication [strategy]="strategy"
+              (authenticated)="onSignin($event)" (created)="onCreated($event)"></idp-authentication>
+            }
+            @case ('ldap') {
+              <ldap-authentication [api]="api" [strategy]="strategy"
+              (authenticated)="onSignin($event)"></ldap-authentication>
+            }
+          }
+        </div>
+      }
     </div>
 
-    <div *ngIf="localAuthenticationStrategy && thirdPartyStrategies.length">
-      <div class="or">
-        <div class="or__divider"></div>
-        <div class="or__text">or</div>
-        <div class="or__divider"></div>
+    @if (localAuthenticationStrategy && thirdPartyStrategies.length) {
+      <div>
+        <div class="or">
+          <div class="or__divider"></div>
+          <div class="or__text">or</div>
+          <div class="or__divider"></div>
+        </div>
       </div>
-    </div>
+    }
 
-    <local-authentication
-      *ngIf="localAuthenticationStrategy"
-      strategy="localAuthenticationStrategy"
-      [landing]="landing"
-      (signup)="onSignup()"
-      (authenticated)="onSignin($event)">
-    </local-authentication>
+    @if (localAuthenticationStrategy) {
+      <local-authentication
+        strategy="localAuthenticationStrategy"
+        [landing]="landing"
+        (signup)="onSignup()"
+        (authenticated)="onSignin($event)">
+      </local-authentication>
+    }
 
   </div>
 </div>
