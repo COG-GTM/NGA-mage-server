@@ -35,9 +35,9 @@ Baseline (`develop`, :4000) vs upgraded (this branch, :4200). Same specs, both p
 
 | Page | Pixel diff | Size (baseline / upgraded) |
 |---|---|---|
-| [01-sign-in.png](side-by-side/01-sign-in.png) | 0.00% | 1440x900 / 1440x900 |
-| [02-sign-up.png](side-by-side/02-sign-up.png) | 1.02% | 1440x900 / 1440x900 |
-| [03-access-code.png](side-by-side/03-access-code.png) | 1.27% | 1440x900 / 1440x900 |
+| [01-sign-in.png](side-by-side/01-sign-in.png) | 1.02% | 1440x900 / 1440x900 |
+| [02-sign-up.png](side-by-side/02-sign-up.png) | 1.91% | 1440x900 / 1440x900 |
+| [03-access-code.png](side-by-side/03-access-code.png) | 2.16% | 1440x900 / 1440x900 |
 | [10-home.png](side-by-side/10-home.png) | 0.00% | 1440x900 / 1440x900 |
 | [11-profile.png](side-by-side/11-profile.png) | 0.00% | 1440x900 / 1440x900 |
 | [12-about.png](side-by-side/12-about.png) | 0.00% | 1440x900 / 1440x900 |
@@ -53,5 +53,5 @@ Baseline (`develop`, :4000) vs upgraded (this branch, :4200). Same specs, both p
 | [22-plugin-arcgis.png](side-by-side/22-plugin-arcgis.png) | 0.00% | 1440x900 / 1440x900 |
 | [22-plugin-sftp.png](side-by-side/22-plugin-sftp.png) | 0.00% | 1440x900 / 1440x900 |
 | [30-user-create-validation.png](side-by-side/30-user-create-validation.png) | 0.00% | 1440x900 / 1440x900 |
-| [31-team-details.png](side-by-side/31-team-details.png) | 0.02% | 1440x900 / 1440x900 |
+| [31-team-details.png](side-by-side/31-team-details.png) | 0.01% | 1440x900 / 1440x900 |
 | [32-event-details.png](side-by-side/32-event-details.png) | 0.02% | 1440x900 / 1440x900 |
