@@ -133,7 +133,9 @@ async function rollupFesmToAmd(buildInfo: BuildInfo): Promise<BuilderOutput> {
 
     const rolled = await roller.write({
       format: 'amd',
-      file: amdPath
+      file: amdPath,
+      // Partially compiled Angular code reads the bare `ngDevMode` global, which app builders define at build time.
+      intro: 'var ngDevMode = typeof globalThis === "undefined" ? undefined : globalThis.ngDevMode;'
     })
 
     for (const rollOut of rolled.output) {
