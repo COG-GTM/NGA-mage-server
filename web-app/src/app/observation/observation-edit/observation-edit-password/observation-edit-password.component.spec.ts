@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ObservationEditPasswordComponent } from './observation-edit-password.component';
@@ -19,7 +19,7 @@ class TestHostComponent {
     required: true
   }
 
-  @ViewChild(ObservationEditPasswordComponent) component: ObservationEditPasswordComponent
+  readonly component = viewChild(ObservationEditPasswordComponent);
 }
 
 /* TODO tests MUST contain at least 1 test

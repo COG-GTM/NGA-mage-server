@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, input, OnChanges, signal, SimpleChanges, ViewChild } from '@angular/core'
+import { Component, DestroyRef, inject, input, OnChanges, signal, SimpleChanges, viewChild } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { NgClass } from '@angular/common'
 import { FormsModule } from '@angular/forms'
@@ -69,7 +69,7 @@ export class ObservationListItemComponent implements OnChanges {
   form = input<any>()
   observation = input<any>()
 
-  @ViewChild(MatRipple) ripple: MatRipple
+  readonly ripple = viewChild(MatRipple);
 
   edit = false
   canEdit = false
@@ -145,7 +145,7 @@ export class ObservationListItemComponent implements OnChanges {
   }
 
   onRipple(): void {
-    this.ripple.launch({
+    this.ripple().launch({
       centered: true
     })
   }

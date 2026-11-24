@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, AfterViewInit, Output, TemplateRef, ViewChild, DestroyRef, inject } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, TemplateRef, DestroyRef, inject, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExportService } from '../export.service';
 import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
@@ -39,9 +39,9 @@ export class ExportViewComponent implements OnInit, AfterViewInit {
   private localStorageService = inject(LocalStorageService);
 
   @Input() item: Export
-  @Output() close = new EventEmitter<void>()
+  readonly close = output<void>();
 
-  @ViewChild('deleteDialog') deleteDialog: TemplateRef<void>
+  readonly deleteDialog = viewChild<TemplateRef<void>>('deleteDialog');
 
   private destroyRef = inject(DestroyRef)
 
@@ -156,7 +156,7 @@ export class ExportViewComponent implements OnInit, AfterViewInit {
   }
 
   deleteExport(e: Export): void {
-    this.dialog.open(this.deleteDialog).afterClosed().subscribe(result => {
+    this.dialog.open(this.deleteDialog()).afterClosed().subscribe(result => {
       if (result === 'delete') {
         this.exportService.deleteExport(e.id).subscribe(() => {
           this.sidebarService.viewExport(null)

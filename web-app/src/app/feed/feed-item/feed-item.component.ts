@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, inject, input } from '@angular/core';
 import { Feed, StyledFeature } from '@ngageoint/mage.web-core-lib/feed';
 import { SidebarService } from 'src/app/sidebar/sidebar.service';
 import { contentPathOfIcon } from '@ngageoint/mage.web-core-lib/static-icon';
@@ -26,8 +26,8 @@ export class FeedItemComponent implements OnChanges {
   private mapService = inject(MapService);
   private sessionService = inject(SessionService);
 
-  @Input() feed: Feed;
-  @Input() item: StyledFeature;
+  readonly feed = input<Feed>(undefined);
+  readonly item = input<StyledFeature>(undefined);
 
   hasContent = false
   date: string
@@ -41,40 +41,42 @@ export class FeedItemComponent implements OnChanges {
   }
 
   private updateItem(): void {
-    if (!this.feed || !this.item) {
+    const feed = this.feed();
+    const item = this.item();
+    if (!feed || !item) {
       return
     }
 
-    const mapStyle = this.feed.mapStyle?.icon ? {
-      iconUrl: `${contentPathOfIcon(this.feed.mapStyle.icon)}?access_token=${this.sessionService.getToken()}`
+    const mapStyle = feed.mapStyle?.icon ? {
+      iconUrl: `${contentPathOfIcon(feed.mapStyle.icon)}?access_token=${this.sessionService.getToken()}`
     } : null
-    this.mapFeature = { style: mapStyle, ...this.item }
+    this.mapFeature = { style: mapStyle, ...item }
 
-    if (!this.item.properties) {
+    if (!item.properties) {
       return
     }
 
-    if (this.feed.itemTemporalProperty && this.item.properties[this.feed.itemTemporalProperty] != null) {
-      this.date = this.momentPipe.transform(this.item.properties[this.feed.itemTemporalProperty]);
+    if (feed.itemTemporalProperty && item.properties[feed.itemTemporalProperty] != null) {
+      this.date = this.momentPipe.transform(item.properties[feed.itemTemporalProperty]);
       this.hasContent = true;
     }
 
-    if (this.feed.itemPrimaryProperty && this.item.properties[this.feed.itemPrimaryProperty] != null) {
-      this.primary = this.item.properties[this.feed.itemPrimaryProperty];
+    if (feed.itemPrimaryProperty && item.properties[feed.itemPrimaryProperty] != null) {
+      this.primary = item.properties[feed.itemPrimaryProperty];
       this.hasContent = true;
     }
 
-    if (this.feed.itemSecondaryProperty && this.item.properties[this.feed.itemSecondaryProperty] != null) {
-      this.secondary = this.item.properties[this.feed.itemSecondaryProperty];
+    if (feed.itemSecondaryProperty && item.properties[feed.itemSecondaryProperty] != null) {
+      this.secondary = item.properties[feed.itemSecondaryProperty];
       this.hasContent = true;
     }
 
-    if (this.item.properties) {
-      const schemaProperties = this.feed?.itemPropertiesSchema?.properties
+    if (item.properties) {
+      const schemaProperties = feed?.itemPropertiesSchema?.properties
 
-      this.properties = Object.keys(this.item.properties).map(key => {
-        let value = this.item.properties[key]
-        if (key === this.feed.itemTemporalProperty) {
+      this.properties = Object.keys(item.properties).map(key => {
+        let value = this.item().properties[key]
+        if (key === this.feed().itemTemporalProperty) {
           value = this.momentPipe.transform(value)
         }
 
@@ -87,10 +89,10 @@ export class FeedItemComponent implements OnChanges {
   }
 
   close(): void {
-    this.sidebarService.deselectFeedItem(this.feed, this.item);
+    this.sidebarService.deselectFeedItem(this.feed(), this.item());
   }
 
   onLocationClick(): void {
-    this.mapService.zoomToFeatureInLayer(this.item, `feed-${this.feed.id}`);
+    this.mapService.zoomToFeatureInLayer(this.item(), `feed-${this.feed().id}`);
   }
 }

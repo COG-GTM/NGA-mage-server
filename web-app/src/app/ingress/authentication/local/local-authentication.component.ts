@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SecurityContext, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SecurityContext, inject, input, output, viewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../api/api.service';
 import { LinkGenerator } from '../../../contact/utilities/link-generator'
@@ -36,13 +36,13 @@ export class LocalAuthenticationComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
 
   @Input() api: Api
-  @Input() strategy: AuthenticationStrategy
-  @Input() landing: boolean
+  readonly strategy = input<AuthenticationStrategy>(undefined);
+  readonly landing = input<boolean>(undefined);
 
-  @Output() signup = new EventEmitter<void>()
-  @Output() authenticated = new EventEmitter<any>()
+  readonly signup = output<void>();
+  readonly authenticated = output<any>();
 
-  @ViewChild('errorElement') private errorElement: ElementRef;
+  private readonly errorElement = viewChild<ElementRef>('errorElement');
 
   showPassword = false;
 
@@ -75,7 +75,7 @@ export class LocalAuthenticationComponent implements OnInit {
       error: (response: any) => {
         let message = response.error || 'Please check your username and password and try again.'
         if (this.api.contactInfo.email || this.api.contactInfo.phone) {
-          const email = LinkGenerator.emailLink(this.api.contactInfo, response.error, username, this.strategy)
+          const email = LinkGenerator.emailLink(this.api.contactInfo, response.error, username, this.strategy())
           const phone = LinkGenerator.phoneLink(this.api.contactInfo)
           message = `${message} Should you need futher assistance you may contact your Mage administrator via ${[`<a href=${email}>email</a>`, `<a href=${phone}>phone</a>`].join(' or ')}.`
         }
@@ -100,7 +100,7 @@ export class LocalAuthenticationComponent implements OnInit {
 
   scrollToError(): void {
     try {
-      this.errorElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.errorElement().nativeElement.scrollIntoView({ behavior: 'smooth' });
     } catch (err) { }     
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, input } from '@angular/core';
 import { UntypedFormGroup, ValidatorFn, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -19,11 +19,11 @@ interface NumberField {
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError]
 })
 export class ObservationEditNumberComponent implements OnInit {
-  @Input() formGroup: UntypedFormGroup
+  readonly formGroup = input<UntypedFormGroup>(undefined);
   @Input() definition: NumberField
 
   ngOnInit(): void {
-    const control = this.formGroup.get(this.definition.name)
+    const control = this.formGroup().get(this.definition.name)
     const validators: ValidatorFn[] = []
     if (this.definition.required) validators.push(Validators.required)
     if (this.definition.min != null) validators.push(Validators.min(this.definition.min))

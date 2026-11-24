@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnChanges, OnInit, SimpleChanges, inject, input, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms'
 import { MatExpansionModule } from '@angular/material/expansion'
@@ -51,13 +51,13 @@ export type SchemaFormValue = KeyedPropertySchemaFormValue[]
 export class AdminFeedEditItemPropertiesComponent implements OnInit, OnChanges {
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  @Input() expanded: boolean = false;
-  @Input() topicSchema: any = null;
+  readonly expanded = input<boolean>(false);
+  readonly topicSchema = input<any>(null);
   @Input() feedSchema: any = null;
-  @Output() feedSchemaChanged = new EventEmitter<SimpleJsonSchema>();
-  @Output() feedSchemaAccepted = new EventEmitter<SimpleJsonSchema | null>();
-  @Output() cancelled = new EventEmitter<void>();
-  @Output() opened = new EventEmitter<void>();
+  readonly feedSchemaChanged = output<SimpleJsonSchema>();
+  readonly feedSchemaAccepted = output<SimpleJsonSchema | null>();
+  readonly cancelled = output<void>();
+  readonly opened = output<void>();
 
   readonly schemaForm: UntypedFormArray = new UntypedFormArray([])
   readonly changeDebounceInterval = 500
@@ -122,11 +122,11 @@ export class AdminFeedEditItemPropertiesComponent implements OnInit, OnChanges {
 
   private buildFreshForm() {
     this.schemaForm.clear()
-    syncPropertiesFormToSchemaProperties(this.schemaForm, this.feedSchema || this.topicSchema)
+    syncPropertiesFormToSchemaProperties(this.schemaForm, this.feedSchema || this.topicSchema())
   }
 
   private applyFormValueToSchema() {
-    this.feedSchema = applyFormValueToSchema(this.schemaForm.value, this.feedSchema || this.topicSchema)
+    this.feedSchema = applyFormValueToSchema(this.schemaForm.value, this.feedSchema || this.topicSchema())
   }
 }
 

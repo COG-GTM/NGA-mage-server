@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -95,8 +95,7 @@ class TestHostComponent {
 
   observation: any;
 
-  @ViewChild(ObservationListItemComponent)
-  observationListItem: ObservationListItemComponent;
+  readonly observationListItem = viewChild(ObservationListItemComponent);
 }
 
 describe('ObservationListItemComponent', () => {
@@ -137,7 +136,7 @@ describe('ObservationListItemComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.observationListItem;
+    component = hostComponent.observationListItem();
   });
 
   it('should create', () => {

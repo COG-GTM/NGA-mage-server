@@ -320,7 +320,6 @@ describe('AdminDashboardComponent', () => {
 
   it('should activate user and emit event', fakeAsync(() => {
     const user = { ...TEST_USERS[0], active: false };
-    component.onUserActivated = new EventEmitter();
     spyOn(component.onUserActivated, 'emit');
 
     (mockUserService.updateUser as jasmine.Spy).and.callFake(
@@ -337,7 +336,6 @@ describe('AdminDashboardComponent', () => {
 
   it('should register device and emit event', fakeAsync(() => {
     const device = { ...TEST_DEVICES[0], registered: false };
-    component.onDeviceEnabled = new EventEmitter();
     spyOn(component.onDeviceEnabled, 'emit');
 
     const event = new MouseEvent('click');

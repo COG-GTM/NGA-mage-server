@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, input } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -28,8 +28,8 @@ interface SelectField {
     imports: [MatFormField, FormsModule, ReactiveFormsModule, MatLabel, MatSelect, MatOption, MatSelectSearchComponent, MatOptgroup, MatError, AsyncPipe]
 })
 export class ObservationEditSelectComponent implements OnInit {
-  @Input() formGroup: UntypedFormGroup
-  @Input() definition: SelectField
+  readonly formGroup = input<UntypedFormGroup>(undefined);
+  readonly definition = input<SelectField>(undefined);
 
   private _recentChoices: RecentChoice[] = []
   @Input()
@@ -46,9 +46,9 @@ export class ObservationEditSelectComponent implements OnInit {
   recentChoices$: Observable<any[]>;
 
   ngOnInit(): void {
-    this.recentChoicesFromDefinition = this.definition.maxRecent
+    this.recentChoicesFromDefinition = this.definition().maxRecent
       ? this.recentChoices
-        .map(recent => this.definition.choices.find(choice => choice.title === recent))
+        .map(recent => this.definition().choices.find(choice => choice.title === recent))
         .filter((choice): choice is Choice => choice !== undefined)
       : []
 
@@ -58,7 +58,7 @@ export class ObservationEditSelectComponent implements OnInit {
         return !value || typeof value === 'string' ? value : value.title
       }),
       map(title => {
-        return title ? this.filter(title) : this.definition.choices.slice()
+        return title ? this.filter(title) : this.definition().choices.slice()
       })
     );
 
@@ -77,7 +77,7 @@ export class ObservationEditSelectComponent implements OnInit {
   private filter(title: string): Choice[] {
     const filterValue = title.toLowerCase();
 
-    return this.definition.choices.filter(option => option.title.toLowerCase().indexOf(filterValue) === 0);
+    return this.definition().choices.filter(option => option.title.toLowerCase().indexOf(filterValue) === 0);
   }
 
 }

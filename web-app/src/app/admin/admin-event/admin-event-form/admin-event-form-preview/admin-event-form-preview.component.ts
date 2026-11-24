@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, inject } from '@angular/core';
+import { Component, OnChanges, inject, input, output } from '@angular/core';
 import { MatDialog as MatDialog } from '@angular/material/dialog';
 import { AdminEventFormPreviewDialogComponent } from './form-preview-dialog/admin-event-form-preview-dialog.component';
 
@@ -15,18 +15,18 @@ import { AdminEventFormPreviewDialogComponent } from './form-preview-dialog/admi
 export class AdminEventFormPreviewComponent implements OnChanges {
   dialog = inject(MatDialog);
 
-  @Input() formDefinition: any[];
-  @Output() onClose = new EventEmitter<void>();
+  readonly formDefinition = input<any[]>(undefined);
+  readonly onClose = output<void>();
 
   ngOnChanges(): void {
-    if (this.formDefinition) {
+    if (this.formDefinition()) {
       this.openDialog()
     }
   }
 
   openDialog(): void {
     const dialog = this.dialog.open(AdminEventFormPreviewDialogComponent, {
-      data: this.formDefinition,
+      data: this.formDefinition(),
       width: '600px',
       maxWidth: '90vw'
     })

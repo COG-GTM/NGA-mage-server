@@ -24,7 +24,7 @@
       </div>
 
       <div class="card-avatar">
-        <feed-icon [icon]="feed.icon" [active]="true"></feed-icon>
+        <feed-icon [icon]="feed().icon" [active]="true"></feed-icon>
       </div>
     </div>
 
@@ -35,7 +35,7 @@
     <div class="card-actions">
       <button matButton (click)="onLocationClick()">
         <mat-icon>gps_fixed</mat-icon>
-        <span>{{ item?.geometry | geometry:5 }}</span>
+        <span>{{ item()?.geometry | geometry:5 }}</span>
       </button>
     </div>
   </mat-card>

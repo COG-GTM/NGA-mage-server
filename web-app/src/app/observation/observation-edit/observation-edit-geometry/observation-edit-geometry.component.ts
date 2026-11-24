@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core'
+import { Component, ElementRef, OnChanges, SimpleChanges, inject, input, output, viewChild } from '@angular/core'
 import { UntypedFormGroup } from '@angular/forms'
 import { Feature, Geometry } from 'geojson'
 import { LocalStorageService } from '../../../http/local-storage.service'
@@ -16,15 +16,15 @@ import { GeometryPipe } from '../../../geometry/geometry.pipe';
 export class ObservationEditGeometryComponent implements OnChanges {
   private localStorageService = inject(LocalStorageService);
 
-  @Input() formGroup: UntypedFormGroup
-  @Input() definition: any
+  readonly formGroup = input<UntypedFormGroup>(undefined);
+  readonly definition = input<any>(undefined);
 
-  @Input() featureId: string
-  @Input() featureStyle: any
+  readonly featureId = input<string>(undefined);
+  readonly featureStyle = input<any>(undefined);
 
-  @Output() onFeatureEdit = new EventEmitter<any>()
+  readonly onFeatureEdit = output<any>();
 
-  @ViewChild('geometry', { static: true }) geometryElement: ElementRef
+  readonly geometryElement = viewChild<ElementRef>('geometry');
 
   edit = false
   mapFeature: any
@@ -33,18 +33,19 @@ export class ObservationEditGeometryComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.formGroup && changes.formGroup.currentValue) {
       this.mapFeature = {
-        id: this.featureId,
+        id: this.featureId(),
         type: 'Feature',
-        geometry: changes.formGroup.currentValue.get(this.definition.name).value
+        geometry: changes.formGroup.currentValue.get(this.definition().name).value
       }
     }
 
     if (changes.featureStyle && changes.featureStyle.currentValue) {
+      const featureStyle = this.featureStyle();
       this.mapFeature = {
-        id: this.featureId,
+        id: this.featureId(),
         type: 'Feature',
-        geometry: this.formGroup.get(this.definition.name).value,
-        style: this.featureStyle ? JSON.parse(JSON.stringify(this.featureStyle)) : null
+        geometry: this.formGroup().get(this.definition().name).value,
+        style: featureStyle ? JSON.parse(JSON.stringify(featureStyle)) : null
       }
     }
   }
@@ -52,29 +53,31 @@ export class ObservationEditGeometryComponent implements OnChanges {
   startGeometryEdit(): void {
     this.edit = true;
 
-    const value = this.formGroup.get(this.definition.name).value
+    const value = this.formGroup().get(this.definition().name).value
     if (value) {
+      const featureStyle = this.featureStyle();
       this.editFeature = {
-        id: this.featureId,
+        id: this.featureId(),
         type: 'Feature',
         geometry: value,
-        style: this.featureStyle ? JSON.parse(JSON.stringify(this.featureStyle)) : null
+        style: featureStyle ? JSON.parse(JSON.stringify(featureStyle)) : null
       }
     } else {
       const mapPosition = this.localStorageService.getMapPosition();
+      const featureStyle = this.featureStyle();
       this.editFeature = {
         type: 'Feature',
         geometry: {
           type: 'Point',
           coordinates: [mapPosition.center.lng, mapPosition.center.lat]
         },
-        style: this.featureStyle ? JSON.parse(JSON.stringify(this.featureStyle)) : null
+        style: featureStyle ? JSON.parse(JSON.stringify(featureStyle)) : null
       }
     }
 
     this.onFeatureEdit.emit({
       action: 'edit',
-      source: this.geometryElement
+      source: this.geometryElement()
     })
   }
 
@@ -83,11 +86,11 @@ export class ObservationEditGeometryComponent implements OnChanges {
     this.mapFeature = event.feature
 
     // TODO normalize geometry
-    this.formGroup.get(this.definition.name).setValue(this.normalizeGeometry(event.feature))
+    this.formGroup().get(this.definition().name).setValue(this.normalizeGeometry(event.feature))
 
     this.onFeatureEdit.emit({
       action: 'none',
-      source: this.geometryElement
+      source: this.geometryElement()
     })
   }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { Api, AuthenticationStrategy } from '../api/api.entity';
 import { UserService } from '../user/user.service';
 import { AuthorizationEvent, AuthorizationComponent } from './authorization/authorization.component';
@@ -96,11 +96,11 @@ export class IngressComponent implements OnChanges {
   private userService = inject(UserService);
   private sessionService = inject(SessionService);
 
-  @Input() api: Api;
-  @Input() landing: boolean;
-  @Output() complete = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
-  @Output() title = new EventEmitter<string>();
+  readonly api = input<Api>(undefined);
+  readonly landing = input<boolean>(undefined);
+  readonly complete = output<void>();
+  readonly cancel = output<void>();
+  readonly title = output<string>();
 
   public readonly IngressState: typeof IngressState = IngressState;
 
@@ -122,7 +122,7 @@ export class IngressComponent implements OnChanges {
       [IngressState.Signin]: 'Sign in to Mage',
       [IngressState.Signup]: 'Create Account',
       [IngressState.Authorization]: 'Access Code',
-      [IngressState.Disclaimer]: this.api?.disclaimer?.title || 'Terms & Conditions',
+      [IngressState.Disclaimer]: this.api()?.disclaimer?.title || 'Terms & Conditions',
       [IngressState.ActiveAccount]: 'Account Created',
       [IngressState.InactiveAccount]: 'Account Pending',
       [IngressState.DisabledAccount]: 'Account Disabled',
@@ -175,7 +175,7 @@ export class IngressComponent implements OnChanges {
   }
 
   private authorized(token: string) {
-    if (this.api.disclaimer?.show === true) {
+    if (this.api().disclaimer?.show === true) {
       this.ingress = new Authorized(token);
       this.emitTitle();
     } else {
@@ -191,7 +191,7 @@ export class IngressComponent implements OnChanges {
       this.complete.emit();
     } else {
       this.sessionService.clearSession();
-      if (this.landing) {
+      if (this.landing()) {
         this.ingress = new Signin();
         this.emitTitle();
       } else {

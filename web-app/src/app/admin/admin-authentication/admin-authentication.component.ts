@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, OnDestroy, TemplateRef, ViewChild, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, OnDestroy, TemplateRef, inject, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -53,8 +53,7 @@ export class AdminAuthenticationComponent
 
   readonly breadcrumbs: AdminBreadcrumb[] = [{ title: 'Authentication', icon: 'lock' }];
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>;
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   readonly teams = signal<Team[]>([]);
   readonly events = signal<any[]>([]);
@@ -69,7 +68,7 @@ export class AdminAuthenticationComponent
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
-    this.breadcrumbService.setActions(this.breadcrumbActions);
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     forkJoin({
       configs: this.authenticationConfigurationService.getAllConfigurations({

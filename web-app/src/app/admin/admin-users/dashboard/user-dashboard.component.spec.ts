@@ -4,7 +4,7 @@ import {
   fakeAsync,
   tick
 } from '@angular/core/testing';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
 import { TeamService } from '@ngageoint/mage.web-core-lib/team'
 import { UserDashboardComponent } from './user-dashboard.component';
 import { BulkUserComponent } from '../bulk-user/bulk-user.component';
@@ -43,7 +43,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     standalone: true
 })
 class MockUserAvatarComponent {
-  @Input() user: any;
+  readonly user = input<any>(undefined);
 }
 
 describe('UserDashboardComponent', () => {

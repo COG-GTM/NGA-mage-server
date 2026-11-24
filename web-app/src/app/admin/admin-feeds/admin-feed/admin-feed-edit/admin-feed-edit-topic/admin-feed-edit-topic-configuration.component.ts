@@ -1,11 +1,11 @@
 import {
   Component,
   DestroyRef,
-  EventEmitter,
   Input,
-  Output,
   ViewEncapsulation,
   inject,
+  input,
+  output
 } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { MatExpansionModule } from '@angular/material/expansion'
@@ -25,13 +25,13 @@ export class AdminFeedEditTopicConfigurationComponent {
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   @Input() fetchParametersSchema: any
-  @Input() initialFetchParameters: any
-  @Input() expanded: boolean
-  @Input() showPrevious: boolean
-  @Output() fetchParametersChanged = new EventEmitter<any>()
-  @Output() fetchParametersAccepted = new EventEmitter<any>()
-  @Output() cancelled = new EventEmitter()
-  @Output() opened = new EventEmitter()
+  readonly initialFetchParameters = input<any>(undefined);
+  readonly expanded = input<boolean>(undefined);
+  readonly showPrevious = input<boolean>(undefined);
+  readonly fetchParametersChanged = output<any>();
+  readonly fetchParametersAccepted = output<any>();
+  readonly cancelled = output();
+  readonly opened = output();
 
   readonly changeDebounceInterval = 500
 

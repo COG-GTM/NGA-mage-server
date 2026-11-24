@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, input, OnInit, Output } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -27,7 +27,7 @@ export class AttachmentComponent implements OnInit {
   // place (that's reserved for the detail/edit views where there's room for it to grow into).
   expandable = input(true)
 
-  @Output() delete = new EventEmitter<void>()
+  readonly delete = output<void>();
 
   canEdit: boolean
   token: string = this.sessionService.getToken()

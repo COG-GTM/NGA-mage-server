@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
@@ -19,8 +19,7 @@ describe('AdminServiceEditComponent', () => {
   class TestHostComponent {
     expanded = false;
 
-    @ViewChild(AdminServiceEditComponent, { static: true })
-    createServiceComponent!: AdminServiceEditComponent;
+    readonly createServiceComponent = viewChild.required(AdminServiceEditComponent);
   }
 
   let fixture: ComponentFixture<TestHostComponent>;
@@ -65,7 +64,7 @@ describe('AdminServiceEditComponent', () => {
 
     fixture = TestBed.createComponent(TestHostComponent);
     host = fixture.componentInstance;
-    component = host.createServiceComponent;
+    component = host.createServiceComponent();
   });
 
   it('should create', () => {

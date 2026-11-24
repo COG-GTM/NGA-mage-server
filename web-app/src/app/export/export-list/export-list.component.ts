@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, output } from '@angular/core';
 import { ExportService } from '../export.service';
 import { Subscription } from 'rxjs';
 import { SidebarService } from 'src/app/sidebar/sidebar.service';
@@ -20,7 +20,7 @@ export class ExportListComponent implements OnInit, OnDestroy {
   exportService = inject<ExportService>(ExportService);
   private sidebarService = inject(SidebarService);
 
-  @Output() create = new EventEmitter<void>()
+  readonly create = output<void>();
 
   exportStatus = ExportStatus
   exports: Export[] = []

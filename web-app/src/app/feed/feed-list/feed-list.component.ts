@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, inject, input } from '@angular/core';
 import { Feed, FeedService } from '@ngageoint/mage.web-core-lib/feed';
 import { Feature } from 'geojson';
 import { Subscription } from 'rxjs'
@@ -14,7 +14,7 @@ import { FeedItemSummaryComponent } from '../feed-item/feed-item-summary/feed-it
 export class FeedListComponent implements OnChanges {
   private feedService = inject(FeedService);
 
-  @Input() feed: Feed
+  readonly feed = input<Feed>(undefined);
 
   items: Array<Feature> = []
   feedSubscription: Subscription | null = null

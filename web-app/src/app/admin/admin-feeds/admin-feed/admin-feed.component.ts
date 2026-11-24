@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, OnDestroy, TemplateRef, ViewChild, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, OnDestroy, TemplateRef, computed, inject, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable, map } from 'rxjs';
@@ -68,8 +68,7 @@ export class AdminFeedComponent implements OnInit, OnDestroy {
     route: ['/admin/feeds']
   }];
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>;
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   readonly feedId: string = this.route.snapshot.paramMap.get('feedId');
 
@@ -102,7 +101,7 @@ export class AdminFeedComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
-    this.breadcrumbService.setActions(this.breadcrumbActions);
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     this.initFeed();
   }

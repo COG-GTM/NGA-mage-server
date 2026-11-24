@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, ViewChild, computed, effect, inject, input, output, signal, untracked } from '@angular/core'
+import { Component, DestroyRef, ElementRef, computed, effect, inject, input, output, signal, untracked, viewChild } from '@angular/core'
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
@@ -56,7 +56,7 @@ export class EventMemberFilterComponent {
 
   memberFilterChanged = output<MemberFilterSelection>()
 
-  @ViewChild('memberInput') memberInput: ElementRef<HTMLInputElement>
+  readonly memberInput = viewChild<ElementRef<HTMLInputElement>>('memberInput');
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]
 
@@ -137,8 +137,9 @@ export class EventMemberFilterComponent {
       this.emit()
     }
     this.inputControl.setValue('')
-    this.memberInput.nativeElement.value = ''
-    this.memberInput.nativeElement.focus()
+    const memberInput = this.memberInput()!
+    memberInput.nativeElement.value = ''
+    memberInput.nativeElement.focus()
   }
 
   remove(option: MemberOption): void {

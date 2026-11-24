@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatSelectModule as MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,8 +22,7 @@ class TestHostComponent {
   };
   geometryStyle = {};
 
-  @ViewChild(ObservationViewFormComponent)
-  component: ObservationViewFormComponent;
+  readonly component = viewChild(ObservationViewFormComponent);
 }
 
 describe('ObservationViewFormComponent', () => {
@@ -48,7 +47,7 @@ describe('ObservationViewFormComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.component;
+    component = hostComponent.component();
   });
 
   it('should create', () => {

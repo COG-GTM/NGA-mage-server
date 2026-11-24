@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -16,6 +16,6 @@ interface TextareaField {
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError]
 })
 export class ObservationEditTextareaComponent {
-  @Input() formGroup: UntypedFormGroup
-  @Input() definition: TextareaField
+  readonly formGroup = input<UntypedFormGroup>(undefined);
+  readonly definition = input<TextareaField>(undefined);
 }

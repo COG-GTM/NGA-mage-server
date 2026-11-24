@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { PasswordPipe } from './password.pipe';
 
 @Component({
@@ -9,5 +9,5 @@ import { PasswordPipe } from './password.pipe';
     imports: [PasswordPipe]
 })
 export class ObservationViewPasswordComponent {
-  @Input() field: any
+  readonly field = input<any>(undefined);
 }

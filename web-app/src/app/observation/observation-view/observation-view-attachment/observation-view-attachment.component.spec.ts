@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ObservationViewAttachmentComponent } from './observation-view-attachment.component';
@@ -10,7 +10,7 @@ import { ObservationViewAttachmentComponent } from './observation-view-attachmen
 })
 class TestHostComponent {
   attachments = []
-  @ViewChild(ObservationViewAttachmentComponent) component: ObservationViewAttachmentComponent
+  readonly component = viewChild(ObservationViewAttachmentComponent);
 }
 
 describe('ObservationViewAttachmentComponent', () => {
@@ -29,7 +29,7 @@ describe('ObservationViewAttachmentComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
     fixture.detectChanges();
-    component = hostComponent.component
+    component = hostComponent.component()
   })
 
 

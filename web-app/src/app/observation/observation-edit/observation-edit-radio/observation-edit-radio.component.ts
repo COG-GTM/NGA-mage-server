@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { MatError } from '@angular/material/form-field';
@@ -20,6 +20,6 @@ interface RadioField {
     imports: [FormsModule, ReactiveFormsModule, MatRadioGroup, MatRadioButton, MatError]
 })
 export class ObservationEditRadioComponent {
-  @Input() formGroup: UntypedFormGroup
-  @Input() definition: RadioField
+  readonly formGroup = input<UntypedFormGroup>(undefined);
+  readonly definition = input<RadioField>(undefined);
 }

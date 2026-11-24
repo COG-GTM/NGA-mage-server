@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, inject } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, inject, output, viewChild } from '@angular/core';
 import { DomEvent } from 'leaflet';
 import { MapSettingsService } from '../settings/map.settings.service';
 import { MapSettings } from 'src/app/entities/map/entities.map';
@@ -35,11 +35,11 @@ export class SearchComponent implements AfterViewInit {
   private searchService = inject(PlacenameSearchService);
   private snackBar = inject(MatSnackBar);
 
-  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('searchList') matList!: ElementRef<HTMLElement>;
+  readonly searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
+  readonly matList = viewChild.required<ElementRef<HTMLElement>>('searchList');
 
-  @Output() onSearch = new EventEmitter<SearchEvent>();
-  @Output() onSearchClear = new EventEmitter<void>();
+  readonly onSearch = output<SearchEvent>();
+  readonly onSearchClear = output<void>();
 
   mapSettings: MapSettings;
 
@@ -58,9 +58,10 @@ export class SearchComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.matList?.nativeElement) {
-      DomEvent.disableClickPropagation(this.matList.nativeElement);
-      DomEvent.disableScrollPropagation(this.matList.nativeElement);
+    const matList = this.matList();
+    if (matList?.nativeElement) {
+      DomEvent.disableClickPropagation(matList.nativeElement);
+      DomEvent.disableScrollPropagation(matList.nativeElement);
     }
   }
 
@@ -70,7 +71,7 @@ export class SearchComponent implements AfterViewInit {
 
     if (this.searchState === SearchState.ON) {
       setTimeout(() => {
-        this.searchInput?.nativeElement?.focus();
+        this.searchInput()?.nativeElement?.focus();
       });
     }
   }

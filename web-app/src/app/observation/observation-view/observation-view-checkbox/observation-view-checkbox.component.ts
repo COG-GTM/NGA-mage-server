@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
@@ -8,5 +8,5 @@ import { MatCheckbox } from '@angular/material/checkbox';
     imports: [MatCheckbox]
 })
 export class ObservationViewCheckboxComponent {
-  @Input() field: any
+  readonly field = input<any>(undefined);
 }

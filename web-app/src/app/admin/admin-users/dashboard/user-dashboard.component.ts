@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, signal, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, signal, inject, viewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { Team, TeamService } from '@ngageoint/mage.web-core-lib/team'
@@ -81,8 +81,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
   breadcrumbs: AdminBreadcrumb[] = [{ title: 'Users', icon: 'person' }];
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>;
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   userStatusFilter: 'all' | 'active' | 'inactive' | 'disabled' = 'all';
 
@@ -110,7 +109,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
-    this.breadcrumbService.setActions(this.breadcrumbActions);
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     this.refreshUsers();
     this.loadRoles();

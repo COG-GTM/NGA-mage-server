@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { AdminBreadcrumb } from './admin-breadcrumb.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -19,8 +19,8 @@ import { NgClass, SlicePipe } from '@angular/common';
     ]
 })
 export class AdminBreadcrumbComponent {
-  @Input() icon!: string;
-  @Input() iconClass!: string;
-  @Input() route!: string[];
+  readonly icon = input<string>();
+  readonly iconClass = input<string>();
+  readonly route = input<string[]>();
   @Input() breadcrumbs!: AdminBreadcrumb[];
 }

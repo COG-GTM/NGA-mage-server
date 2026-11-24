@@ -1,26 +1,26 @@
 <form [formGroup]="authenticationForm" (ngSubmit)="onSignin()">
   <div>
     <mat-form-field appearance="fill">
-      <mat-label>{{strategy.title}} Username</mat-label>
-      <input matInput placeholder="{{strategy.title}} Username" formControlName="username" required>
+      <mat-label>{{strategy().title}} Username</mat-label>
+      <input matInput placeholder="{{strategy().title}} Username" formControlName="username" required>
       <mat-error>Username is required</mat-error>
     </mat-form-field>
   </div>
 
   <div>
     <mat-form-field appearance="fill">
-      <mat-label>{{strategy.title}} Password</mat-label>
-      <input matInput placeholder="{{strategy.title}} Password" type="password" formControlName="password" required>
+      <mat-label>{{strategy().title}} Password</mat-label>
+      <input matInput placeholder="{{strategy().title}} Password" type="password" formControlName="password" required>
       <mat-error>Password is required</mat-error>
     </mat-form-field>
   </div>
 
   <authentication-button
-    [text]="strategy.title"
-    [buttonText]="strategy.buttonText"
-    [textColor]="strategy.textColor"
-    [color]="strategy.buttonColor"
-    [icon]="strategy.icon">
+    [text]="strategy().title"
+    [buttonText]="strategy().buttonText"
+    [textColor]="strategy().textColor"
+    [color]="strategy().buttonColor"
+    [icon]="strategy().icon">
   </authentication-button>
 
   @if (error) {

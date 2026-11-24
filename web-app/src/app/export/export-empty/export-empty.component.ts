@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from "@angular/core"
+import { Component, output } from "@angular/core"
 import { MatIcon } from "@angular/material/icon";
 import { MatButton } from "@angular/material/button";
 
@@ -10,7 +10,7 @@ import { MatButton } from "@angular/material/button";
 })
 export class ExportEmptyComponent {
 
-  @Output() open = new EventEmitter<void>()
+  readonly open = output<void>();
 
   openExport(): void {
     this.open.emit()

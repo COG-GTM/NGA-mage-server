@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, Input, OnInit, OnDestroy, Output, TemplateRef, ViewChild, signal, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, OnDestroy, TemplateRef, signal, inject, output, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -63,11 +63,10 @@ export class UserDetailsViewComponent implements OnInit, OnDestroy {
 
   @Input() user!: User;
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>;
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
-  @Output() editRequested = new EventEmitter<void>();
-  @Output() userChanged = new EventEmitter<User>();
+  readonly editRequested = output<void>();
+  readonly userChanged = output<User>();
 
   private currentUserId: string | null = null;
 
@@ -166,7 +165,7 @@ export class UserDetailsViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.breadcrumbService.setActions(this.breadcrumbActions);
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     this.sessionService.user$
       .pipe(take(1), takeUntilDestroyed(this.destroyRef))

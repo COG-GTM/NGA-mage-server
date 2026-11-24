@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
@@ -18,7 +18,7 @@ class TestHostComponent {
   definition = {
     name: 'attachment'
   }
-  @ViewChild(ObservationEditAttachmentComponent) component: ObservationEditAttachmentComponent
+  readonly component = viewChild(ObservationEditAttachmentComponent);
 }
 
 describe('ObservationEditAttachmentComponent', () => {
@@ -37,7 +37,7 @@ describe('ObservationEditAttachmentComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
     fixture.detectChanges();
-    component = hostComponent.component
+    component = hostComponent.component()
   })
 
   it('should create', () => {

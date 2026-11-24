@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, inject, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MapService } from '../map/map.service';
 import { FilterService } from '../filter/filter.service';
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   hideFeed: boolean = false
   newObservation: any
 
-  @ViewChild('feed') feed: MatSidenav
+  readonly feed = viewChild<MatSidenav>('feed');
 
   constructor() {
     this.sessionService.user$.subscribe((myself: User) => {
@@ -67,8 +67,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onAddObservation($event) {
-    if (!this.feed.opened) {
-      this.feed.toggle()
+    const feed = this.feed();
+    if (!feed.opened) {
+      feed.toggle()
     }
 
     this.newObservation = $event

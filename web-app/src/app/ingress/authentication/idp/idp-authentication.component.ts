@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, DestroyRef, Input, inject, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subscription } from 'rxjs';
 import { AuthenticationStrategy } from '../../../api/api.entity';
@@ -16,8 +16,11 @@ export class IdpAuthenticationComponent {
   private userService = inject(UserService);
 
   @Input() strategy: AuthenticationStrategy
-  @Output() created = new EventEmitter<SignupEvent>()
-  @Output() authenticated = new EventEmitter<{ user: User, token: string }>()
+  readonly created = output<SignupEvent>();
+  readonly authenticated = output<{
+    user: User;
+    token: string;
+}>();
 
   error: {
     title: string,

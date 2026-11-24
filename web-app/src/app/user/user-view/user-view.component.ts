@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject, output } from '@angular/core';
 import { LatLng } from 'leaflet';
 import { PointAccuracy, MapClipComponent } from '../../map/clip/clip.component';
 import moment from 'moment';
@@ -26,7 +26,7 @@ export class UserViewComponent implements OnChanges {
 
   @Input() user: any
 
-  @Output() close = new EventEmitter<void>()
+  readonly close = output<void>();
 
   accuracy: PointAccuracy
 

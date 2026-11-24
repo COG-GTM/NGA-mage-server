@@ -1,4 +1,4 @@
-import { Component, Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewContainerRef, inject } from '@angular/core'
+import { Component, Directive, Input, OnChanges, OnInit, SimpleChanges, ViewContainerRef, inject, input, output, viewChild } from '@angular/core'
 import { AbstractControl, FormControl, FormGroup, NgModel, NG_VALIDATORS, ValidationErrors, Validator, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar'
 import mgrs from 'mgrs'
@@ -40,13 +40,13 @@ export class MGRSValidatorDirective implements Validator {
 })
 export class DMSValidatorDirective implements Validator {
 
-  @Input()
-  dmsValidation: 'latitude' | 'longitude'
+  readonly dmsValidation = input<'latitude' | 'longitude'>(undefined);
 
   validate(control: AbstractControl): ValidationErrors | null {
-    if (this.dmsValidation === 'latitude' && DMS.validateLatitude(control.value)) {
+    const dmsValidation = this.dmsValidation();
+    if (dmsValidation === 'latitude' && DMS.validateLatitude(control.value)) {
       return null
-    } else if (this.dmsValidation === 'longitude' && DMS.validateLongitude(control.value)) {
+    } else if (dmsValidation === 'longitude' && DMS.validateLongitude(control.value)) {
       return null
     }
     const error: ValidationErrors | null = {
@@ -79,11 +79,11 @@ export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
 
 
   @Input() feature: any
-  @Output() save = new EventEmitter<any>()
-  @Output() cancel = new EventEmitter<any>()
+  readonly save = output<any>();
+  readonly cancel = output<any>();
 
-  @ViewChild('mgrsModel') mgrsModel: NgModel;
-  @ViewChild('snackbarContainer', { read: ViewContainerRef }) snackBarContainer: ViewContainerRef;
+  readonly mgrsModel = viewChild<NgModel>('mgrsModel');
+  readonly snackBarContainer = viewChild('snackbarContainer', { read: ViewContainerRef });
 
   selectedShapeType = 'Point'
   coordinateSystem = 'wgs84'
@@ -169,7 +169,8 @@ export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
 
   onCancel(): void {
     this.featureEdit?.cancel()
-    this.cancel.emit()
+    // TODO: The 'emit' function requires a mandatory any argument
+    this.cancel.emit(undefined)
   }
 
   coordinateSystemChange(coordinateSystem: CoordinateSystemKey): void {
@@ -254,7 +255,7 @@ export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
   }
 
   onMgrsChange(): void {
-    if (this.mgrsModel.control.invalid) {
+    if (this.mgrsModel().control.invalid) {
       return
     }
     const [ lon, lat ] = mgrs.toPoint(this.mgrs)
@@ -340,7 +341,7 @@ export class ObservationEditGeometryFormComponent implements OnChanges, OnInit {
     this.coordinateEditSource = null
     if (from !== 'mgrs') {
       this.mgrs = this.toMgrs(this.feature)
-      this.mgrsModel.control.setValue(this.mgrs, {emitEvent:false, emitViewToModelChange:false, emitModelToViewChange:true})
+      this.mgrsModel().control.setValue(this.mgrs, {emitEvent:false, emitViewToModelChange:false, emitModelToViewChange:true})
     }
     if (from !== 'dms') {
       this.dmsForm.setValue({

@@ -2,7 +2,7 @@
   <mat-label>Point of Contact</mat-label>
   <input matInput
     type="text"
-    [placeholder]="placeholder"
+    [placeholder]="placeholder()"
     [(ngModel)]="inputValue"
     (ngModelChange)="onUserInput($event)"
     [matAutocomplete]="userAuto"

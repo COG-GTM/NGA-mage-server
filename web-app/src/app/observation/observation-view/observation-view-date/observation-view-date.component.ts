@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MomentPipe } from '../../../moment/moment.pipe';
 
 @Component({
@@ -8,5 +8,5 @@ import { MomentPipe } from '../../../moment/moment.pipe';
     imports: [MomentPipe]
 })
 export class ObservationViewDateComponent {
-  @Input() field: any
+  readonly field = input<any>(undefined);
 }

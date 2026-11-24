@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   UntypedFormControl,
@@ -35,8 +35,7 @@ class TestHostComponent {
     value: true
   };
 
-  @ViewChild(ObservationEditCheckboxComponent)
-  component: ObservationEditCheckboxComponent;
+  readonly component = viewChild(ObservationEditCheckboxComponent);
 }
 
 let loader: HarnessLoader;
@@ -63,7 +62,7 @@ describe('ObservationEditCheckboxComponent', () => {
     loader = TestbedHarnessEnvironment.loader(fixture);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.component;
+    component = hostComponent.component();
   });
 
   it('should create', () => {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { MatMiniFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
@@ -18,7 +18,7 @@ export interface ZoomEvent {
     imports: [MatMiniFabButton, MatIcon]
 })
 export class ZoomComponent {
-  @Output() onZoom = new EventEmitter<ZoomEvent>();
+  readonly onZoom = output<ZoomEvent>();
 
   onZoomIn($event: MouseEvent): void {
     $event.stopPropagation();

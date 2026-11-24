@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -34,7 +34,7 @@ export class SignupComponent {
   private apiService = inject(ApiService);
   private userService = inject(UserService);
 
-  @Output() complete = new EventEmitter<SignupEvent>();
+  readonly complete = output<SignupEvent>();
 
   showPassword = false;
   showConfirmPassword = false;

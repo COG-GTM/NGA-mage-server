@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LayerContentComponent } from './layer-content.component';
 import { MapLayerService } from './layer.service';
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { RenderedMapLayer } from '../entities.map-layer';
 
 const imageryLayer = { id: 1, name: 'Layer One', type: 'Imagery', layer: {} } as unknown as RenderedMapLayer;
@@ -18,7 +18,7 @@ const geoPackageLayer = { id: 'layer1', name: 'Layer One', type: 'GeoPackage', r
 class TestHostComponent {
   layer = imageryLayer;
 
-  @ViewChild(LayerContentComponent) layerContent!: LayerContentComponent;
+  readonly layerContent = viewChild.required(LayerContentComponent);
 }
 
 describe('LayerContentComponent', () => {
@@ -37,7 +37,7 @@ describe('LayerContentComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.layerContent;
+    component = hostComponent.layerContent();
   });
 
   it('should create', () => {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, input } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxChange as MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
 import { MatError } from '@angular/material/form-field';
@@ -17,13 +17,13 @@ interface CheckboxField {
     imports: [FormsModule, ReactiveFormsModule, MatCheckbox, MatError]
 })
 export class ObservationEditCheckboxComponent implements OnInit {
-  @Input() formGroup: UntypedFormGroup
+  readonly formGroup = input<UntypedFormGroup>(undefined);
   @Input() definition: CheckboxField
 
   control: UntypedFormControl
 
   ngOnInit(): void {
-    this.control = this.formGroup.get(this.definition.name) as UntypedFormControl
+    this.control = this.formGroup().get(this.definition.name) as UntypedFormControl
   }
 
   checked(event: MatCheckboxChange): void {

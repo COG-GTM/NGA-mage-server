@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MatMiniFabButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -31,7 +31,7 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatMiniFabButton, MatTooltip, MatIcon]
 })
 export class LayersControlComponent {
-  @Output() onLayerPanelToggle = new EventEmitter<void>();
+  readonly onLayerPanelToggle = output<void>();
 
   state = 'default';
   stateClosed = 'default';

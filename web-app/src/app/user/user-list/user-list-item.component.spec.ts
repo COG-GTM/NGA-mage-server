@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import { UserListItemComponent } from './user-list-item.component';
 import { MapService } from '../../map/map.service';
 import { SessionService } from '../../http/session.service';
@@ -30,7 +31,7 @@ describe('UserListItemComponent', () => {
     mapService = jasmine.createSpyObj<MapService>('MapService', ['zoomToFeatureInLayer', 'followFeatureInLayer'], { followedFeature: { id: 'user2', layer: 'people' } });
     const sessionService = jasmine.createSpyObj<SessionService>('SessionService', { getToken: 'token' });
 
-    component = new UserListItemComponent(sidebarService, mapService, sessionService);
+    component = TestBed.runInInjectionContext(() => new UserListItemComponent(sidebarService, mapService, sessionService));
     component.userWithLocation = userWithLocation;
     component.ngOnChanges();
   });

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { Component, OnInit, inject, output } from '@angular/core';
 import { PasswordStrength, passwordStrengthScores } from '../../entities/password/password';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { zxcvbn, zxcvbnOptions } from '@zxcvbn-ts/core'
@@ -38,7 +38,7 @@ export class InitializeComponent implements OnInit {
   private userService = inject(UserService);
   private initializeService = inject(InitializeService);
 
-  @Output() initialized = new EventEmitter<InitializedEvent>()
+  readonly initialized = output<InitializedEvent>();
 
   passwordStrength?: PasswordStrength
 

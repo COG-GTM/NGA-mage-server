@@ -1,5 +1,5 @@
 import { buildTitleMap, isArray, JsonSchemaFormService } from '@ngageoint/vendor-ajsf-core';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, input } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS as MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { Observable } from 'rxjs';
@@ -42,8 +42,8 @@ export class JsonSchemaWidgetAutocompleteComponent implements OnInit {
   boundDisplayValue: (value: string) => string;
   filteredTitleMap: Observable<any>;
   @Input() layoutNode: any;
-  @Input() layoutIndex: number[];
-  @Input() dataIndex: number[];
+  readonly layoutIndex = input<number[]>(undefined);
+  readonly dataIndex = input<number[]>(undefined);
 
   private _filter(value: any): any[] {
     if (!value) {

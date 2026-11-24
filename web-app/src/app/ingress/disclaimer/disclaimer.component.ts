@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 import { MatButton } from '@angular/material/button';
 
 export enum DiscalimerCloseReason  {
@@ -16,11 +16,11 @@ export interface DiscalimeCloseEvent {
     imports: [MatButton]
 })
 export class DisclaimerComponent {
-  @Input() title!: string
-  @Input() text!: string
-  @Input() compact = false
+  readonly title = input.required<string>();
+  readonly text = input.required<string>();
+  readonly compact = input(false);
 
-  @Output() close = new EventEmitter<DiscalimeCloseEvent>()
+  readonly close = output<DiscalimeCloseEvent>();
 
   onAccept(): void {
     this.close.emit({

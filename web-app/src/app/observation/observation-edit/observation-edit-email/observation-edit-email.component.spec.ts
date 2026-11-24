@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { UntypedFormControl, UntypedFormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError as MatError, MatFormFieldModule as MatFormFieldModule } from '@angular/material/form-field';
@@ -24,7 +24,7 @@ class TestHostComponent {
     title: 'Email Field'
   }
 
-  @ViewChild(ObservationEditEmailComponent) component: ObservationEditEmailComponent
+  readonly component = viewChild(ObservationEditEmailComponent);
 }
 
 describe('ObservationEditEmailComponent', () => {
@@ -43,7 +43,7 @@ describe('ObservationEditEmailComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
     fixture.detectChanges();
-    component = hostComponent.component
+    component = hostComponent.component()
   })
 
   it('should create', () => {
@@ -51,9 +51,9 @@ describe('ObservationEditEmailComponent', () => {
   })
 
   it('should not indicate required', async () => {
-    component.definition.required = false
+    component.definition().required = false
 
-    const control = component.formGroup.get('text')
+    const control = component.formGroup().get('text')
     control.clearValidators()
     control.updateValueAndValidity()
 
@@ -66,9 +66,9 @@ describe('ObservationEditEmailComponent', () => {
   })
 
   it('should indicate required', async () => {
-    component.definition.required = true
+    component.definition().required = true
 
-    const control = component.formGroup.get('text')
+    const control = component.formGroup().get('text')
     control.setValidators(Validators.required)
     control.updateValueAndValidity()
 
@@ -79,9 +79,9 @@ describe('ObservationEditEmailComponent', () => {
   })
 
   it('should show error on invalid and touched', async () => {
-    component.definition.required = true
+    component.definition().required = true
 
-    const control = component.formGroup.get('text')
+    const control = component.formGroup().get('text')
     control.setValidators(Validators.required)
     control.updateValueAndValidity()
     control.markAsTouched()
@@ -95,9 +95,9 @@ describe('ObservationEditEmailComponent', () => {
   })
 
   it('should not show error on invalid if not touched', async () => {
-    component.definition.required = true
+    component.definition().required = true
 
-    const control = component.formGroup.get('text')
+    const control = component.formGroup().get('text')
     control.setValidators(Validators.required)
     control.updateValueAndValidity()
 

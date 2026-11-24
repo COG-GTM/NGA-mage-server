@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
-import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, viewChild } from '@angular/core'
 
 import { ObservationEditMultiselectComponent } from './observation-edit-multiselect.component'
 import { MatAutocompleteModule as MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -38,7 +38,7 @@ class TestHostComponent {
 
   recentChoices: string[] = []
 
-  @ViewChild(ObservationEditMultiselectComponent) component: ObservationEditMultiselectComponent
+  readonly component = viewChild(ObservationEditMultiselectComponent);
 }
 
 describe('ObservationEditMultiselectComponent', () => {
@@ -60,7 +60,7 @@ describe('ObservationEditMultiselectComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
     fixture.detectChanges();
-    component = hostComponent.component
+    component = hostComponent.component()
   })
 
   it('should create', () => {
@@ -68,9 +68,9 @@ describe('ObservationEditMultiselectComponent', () => {
   })
 
   it('should not indicate required', async () => {
-    component.definition.required = false
+    component.definition().required = false
 
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     control.clearValidators()
     control.updateValueAndValidity()
 
@@ -83,9 +83,9 @@ describe('ObservationEditMultiselectComponent', () => {
   })
 
   it('should indicate required', async () => {
-    component.definition.required = true
+    component.definition().required = true
 
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     control.setValidators(Validators.required)
     control.updateValueAndValidity()
 
@@ -104,7 +104,7 @@ describe('ObservationEditMultiselectComponent', () => {
 
     component.selected(event)
 
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     expect(control.value).toEqual(['red'])
   })
 
@@ -123,7 +123,7 @@ describe('ObservationEditMultiselectComponent', () => {
       freshHost.recentChoices = ['green', 'blue', 'red']
       freshFixture.detectChanges()
 
-      freshHost.component.recentChoices$.subscribe(recent => {
+      freshHost.component().recentChoices$.subscribe(recent => {
         expect(recent.map(c => c.title)).toEqual(['green', 'blue', 'red'])
         done()
       })
@@ -135,7 +135,7 @@ describe('ObservationEditMultiselectComponent', () => {
       freshHost.recentChoices = ['red', 'not-a-real-choice']
       freshFixture.detectChanges()
 
-      freshHost.component.recentChoices$.subscribe(recent => {
+      freshHost.component().recentChoices$.subscribe(recent => {
         expect(recent.map(c => c.title)).toEqual(['red'])
         done()
       })
@@ -148,7 +148,7 @@ describe('ObservationEditMultiselectComponent', () => {
       freshHost.recentChoices = ['green', 'blue', 'red']
       freshFixture.detectChanges()
 
-      freshHost.component.recentChoices$.subscribe(recent => {
+      freshHost.component().recentChoices$.subscribe(recent => {
         expect(recent).toEqual([])
         done()
       })
@@ -163,7 +163,7 @@ describe('ObservationEditMultiselectComponent', () => {
     }
     component.add(event)
 
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     expect(control.value).toEqual(['red'])
   })
 
@@ -176,7 +176,7 @@ describe('ObservationEditMultiselectComponent', () => {
     component.add(event)
 
     // expect(component.field.value).toBeUndefined()
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     expect(control.value).toBeNull()
   })
 
@@ -189,7 +189,7 @@ describe('ObservationEditMultiselectComponent', () => {
     component.add(event)
     component.add(event)
 
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     expect(control.value).toEqual(['red'])
   })
 
@@ -202,7 +202,7 @@ describe('ObservationEditMultiselectComponent', () => {
     component.add(event)
     component.remove('red')
 
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     expect(control.value).toBeNull()
   })
 
@@ -215,14 +215,14 @@ describe('ObservationEditMultiselectComponent', () => {
     component.add(event)
     component.remove('blue')
 
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     expect(control.value).toEqual(['red'])
   })
 
   it('should show error on invalid and touched', async () => {
-    component.definition.required = true
+    component.definition().required = true
 
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     control.setValidators(Validators.required)
     control.updateValueAndValidity()
     control.markAsTouched()
@@ -236,9 +236,9 @@ describe('ObservationEditMultiselectComponent', () => {
   })
 
   it('should not show error on invalid if not touched', async () => {
-    component.definition.required = true
+    component.definition().required = true
 
-    const control = component.formGroup.get('select')
+    const control = component.formGroup().get('select')
     control.setValidators(Validators.required)
     control.updateValueAndValidity()
 

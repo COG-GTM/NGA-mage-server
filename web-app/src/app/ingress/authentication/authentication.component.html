@@ -1,5 +1,5 @@
 <div class="signin-container">
-  @if (landing) {
+  @if (landing()) {
     <div class="welcome">
       <div class="welcome__title">Welcome to Mage</div>
       <div class="welcome__message">Sign in to your account</div>
@@ -45,7 +45,7 @@
     @if (localAuthenticationStrategy) {
       <local-authentication
         strategy="localAuthenticationStrategy"
-        [landing]="landing"
+        [landing]="landing()"
         (signup)="onSignup()"
         (authenticated)="onSignin($event)">
       </local-authentication>

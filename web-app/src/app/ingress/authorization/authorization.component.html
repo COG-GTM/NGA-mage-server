@@ -1,6 +1,6 @@
-<div class="authorization" [class.compact]="compact">
+<div class="authorization" [class.compact]="compact()">
   <div class="header">
-    @if (!compact) {
+    @if (!compact()) {
       <div class="header__title">Access Code</div>
     }
     <div class="header__message">Please enter your Mage access code. If you do not have an access code please ask you Mage

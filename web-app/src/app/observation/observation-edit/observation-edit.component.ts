@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag, CdkDragHandle } from "@angular/cdk/drag-drop";
 
-import { Component, DestroyRef, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren, DOCUMENT, inject } from "@angular/core";
+import { Component, DestroyRef, ElementRef, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren, DOCUMENT, inject, input, output, viewChild } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -82,14 +82,14 @@ export class ObservationEditComponent implements OnInit, OnChanges {
   private eventService = inject(EventService);
   private observationService = inject(ObservationService);
 
-  @Input() preview: boolean;
+  readonly preview = input<boolean>(undefined);
   @Input() observation: any;
   attachments = [];
 
-  @Output() close = new EventEmitter<any>();
+  readonly close = output<any>();
 
-  @ViewChild("editContent", { static: true }) editContent: ElementRef;
-  @ViewChild("dragHandle", { static: true }) dragHandle: ElementRef;
+  readonly editContent = viewChild<ElementRef>("editContent");
+  readonly dragHandle = viewChild<ElementRef>("dragHandle");
   @ViewChildren("form") formElements: QueryList<ElementRef>;
 
   private destroyRef = inject(DestroyRef);
@@ -440,7 +440,8 @@ export class ObservationEditComponent implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((result) => {
         if (result === "discard") {
-          this.close.emit();
+          // TODO: The 'emit' function requires a mandatory any argument
+          this.close.emit(undefined);
         }
       });
   }
@@ -456,7 +457,7 @@ export class ObservationEditComponent implements OnInit, OnChanges {
     if (this.mask) {
       const elementBounds = event.source.nativeElement.getBoundingClientRect();
       const parentBounds =
-        this.editContent.nativeElement.getBoundingClientRect();
+        this.editContent().nativeElement.getBoundingClientRect();
       if (
         elementBounds.top < parentBounds.top ||
         elementBounds.bottom > parentBounds.bottom

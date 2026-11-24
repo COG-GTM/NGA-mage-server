@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core'
+import { Component, inject, input, output } from '@angular/core'
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { Api, AuthenticationStrategy } from '../../../api/api.entity'
 import { UserService } from '../../../user/user.service'
@@ -16,10 +16,10 @@ import { AuthenticationButtonComponent } from '../button/authentication-button.c
 export class LdapAuthenticationComponent {
   private userService = inject(UserService);
 
-  @Input() api: Api
-  @Input() strategy: AuthenticationStrategy
+  readonly api = input<Api>(undefined);
+  readonly strategy = input<AuthenticationStrategy>(undefined);
 
-  @Output() authenticated = new EventEmitter<any>();
+  readonly authenticated = output<any>();
   
   authenticationForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -49,8 +49,9 @@ export class LdapAuthenticationComponent {
           message: response.error || 'Please check your username and password and try again.'
         }
 
-        const email = LinkGenerator.emailLink(this.api?.contactInfo, response.error, username, this.strategy)
-        const phone = LinkGenerator.phoneLink(this.api?.contactInfo)
+        const api = this.api();
+        const email = LinkGenerator.emailLink(api?.contactInfo, response.error, username, this.strategy())
+        const phone = LinkGenerator.phoneLink(api?.contactInfo)
         this.contact = `Should you need futher assistance you may contact your Mage administrator via ${[`<a href=${email}>email</a>`, `<a href=${phone}>phone</a>`].join(' or ')}.`
       }
     }) 

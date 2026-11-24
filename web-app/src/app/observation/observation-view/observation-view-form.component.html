@@ -3,8 +3,8 @@
     <div class="form-header">
       <div class="form-header-summary">
         <div class="form-header-title">
-          <mat-icon class="form-header-title__icon" [style.color]="form.color">description</mat-icon>
-          <div class="form-header-title__text">{{form?.name}}</div>
+          <mat-icon class="form-header-title__icon" [style.color]="form().color">description</mat-icon>
+          <div class="form-header-title__text">{{form()?.name}}</div>
         </div>
         @if (primaryField?.value) {
           <div class="form-header-summary__primary">
@@ -47,12 +47,12 @@
 
     @if (expand) {
       <div @expand class="form-content">
-        @for (field of nonArchivedFields(form.fields); track field) {
+        @for (field of nonArchivedFields(form().fields); track field) {
           <div>
             <div class="field">
               @switch (field.type) {
                 @case ('attachment') {
-                  <observation-view-attachment [form]="form" [field]="field" [attachments]="attachments"></observation-view-attachment>
+                  <observation-view-attachment [form]="form()" [field]="field" [attachments]="attachments()"></observation-view-attachment>
                 }
                 @case ('geometry') {
                   <observation-view-geometry [field]="field"></observation-view-geometry>

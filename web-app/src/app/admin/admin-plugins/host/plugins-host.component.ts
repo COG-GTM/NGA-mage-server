@@ -2,10 +2,10 @@ import {
   Component,
   OnInit,
   Type,
-  ViewChild,
   ViewContainerRef,
   inject,
-  signal
+  signal,
+  viewChild
 } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
@@ -27,8 +27,7 @@ export class PluginHostComponent implements OnInit {
   private readonly pluginService: PluginService = inject(PluginService);
   private readonly breadcrumbService: AdminBreadcrumbService = inject(AdminBreadcrumbService);
 
-  @ViewChild('host', { read: ViewContainerRef, static: true })
-  host!: ViewContainerRef;
+  readonly host = viewChild.required('host', { read: ViewContainerRef });
 
   readonly pluginId: string = this.route.snapshot.paramMap.get('pluginId');
 
@@ -120,7 +119,7 @@ export class PluginHostComponent implements OnInit {
         );
       }
 
-      this.host.createComponent(entry, { injector: moduleRef.injector });
+      this.host().createComponent(entry, { injector: moduleRef.injector });
     } catch (e: any) {
       this.error.set(e?.message ?? 'Failed to load plugin.');
     } finally {

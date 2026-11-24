@@ -1,19 +1,19 @@
-<div class="container" [class.compact]="!landing" @disableOnEnter>
+<div class="container" [class.compact]="!landing()" @disableOnEnter>
   @if (ingress.state === IngressState.Signin) {
     <div class="state" @slide>
-      <authentication [landing]="landing" [api]="api" (authenticated)="onAuthenticated($event)" (signup)="onSignup()" (created)="onCreated($event)"></authentication>
+      <authentication [landing]="landing()" [api]="api()" (authenticated)="onAuthenticated($event)" (signup)="onSignup()" (created)="onCreated($event)"></authentication>
     </div>
   }
 
   @if (ingress.state === IngressState.Authorization) {
     <div class="state" @slide>
-      <authorization [token]="getAuthenticationToken()" [compact]="!landing" (authorized)="onAuthorized($event)"></authorization>
+      <authorization [token]="getAuthenticationToken()" [compact]="!landing()" (authorized)="onAuthorized($event)"></authorization>
     </div>
   }
 
   @if (ingress.state === IngressState.Disclaimer) {
     <div @slide class="state">
-      <disclaimer [title]="api?.disclaimer?.title" [text]="api?.disclaimer?.text" [compact]="!landing" (close)="onDisclaimer($event)"></disclaimer>
+      <disclaimer [title]="api()?.disclaimer?.title" [text]="api()?.disclaimer?.text" [compact]="!landing()" (close)="onDisclaimer($event)"></disclaimer>
     </div>
   }
 

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, ViewChild, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatSnackBar as MatSnackBar } from '@angular/material/snack-bar';
@@ -37,7 +37,7 @@ export class AdminMapComponent implements OnInit {
   private readonly breadcrumbService = inject(AdminBreadcrumbService);
   private readonly destroyRef = inject(DestroyRef);
 
-  @ViewChild('mapForm') mapForm!: NgForm;
+  readonly mapForm = viewChild.required<NgForm>('mapForm');
 
   readonly breadcrumbs: AdminBreadcrumb[] = [{ title: 'Map', icon: 'public' }];
 
@@ -81,8 +81,9 @@ export class AdminMapComponent implements OnInit {
   }
 
   save(): void {
-    if (this.mapForm.invalid) {
-      this.mapForm.form.markAllAsTouched();
+    const mapForm = this.mapForm();
+    if (mapForm.invalid) {
+      mapForm.form.markAllAsTouched();
       return;
     }
 

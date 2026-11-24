@@ -1,11 +1,11 @@
 <div class="feed">
   <mat-toolbar>
-    <span class="feed__title">{{feed?.title}}</span>
+    <span class="feed__title">{{feed()?.title}}</span>
   </mat-toolbar>
 
   <div class="items">
     @for (item of items; track item) {
-      <feed-item-summary [item]="item" [feed]="feed"></feed-item-summary>
+      <feed-item-summary [item]="item" [feed]="feed()"></feed-item-summary>
     }
   </div>
 </div>

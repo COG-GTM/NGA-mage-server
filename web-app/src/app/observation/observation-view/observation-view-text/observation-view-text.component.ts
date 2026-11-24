@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
     selector: 'observation-view-text',
@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./observation-view-text.component.scss']
 })
 export class ObservationViewTextComponent {
-  @Input() field: any
+  readonly field = input<any>(undefined);
 }

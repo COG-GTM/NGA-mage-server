@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild, inject } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, OnDestroy, inject, output, viewChild } from '@angular/core'
 import { LocationEvent, LocationState } from '../../app/map/controls/location.component'
 import { SearchEvent } from '../../app/map/controls/search.component'
 import { ZoomDirection, ZoomEvent as ZoomControlEvent } from '../../app/map/controls/zoom.component'
@@ -62,11 +62,11 @@ export class MapComponent implements OnDestroy, AfterViewInit {
   public static readonly FEATURE_PANE_Z_INDEX_OFFSET = 6 * MapComponent.PANE_Z_INDEX_BUCKET_SIZE
   public static readonly MAGE_PANE_Z_INDEX_OFFSET = 7 * MapComponent.PANE_Z_INDEX_BUCKET_SIZE
 
-  @Output() addObservation = new EventEmitter<any>()
+  readonly addObservation = output<any>();
 
-  @ViewChild('map') mapElement!: ElementRef<any>
-  @ViewChild('mapControlsLeft') mapControlsLeft!: ElementRef<HTMLElement>
-  @ViewChild('mapControlsRight') mapControlsRight!: ElementRef<HTMLElement>
+  readonly mapElement = viewChild.required<ElementRef<any>>('map');
+  readonly mapControlsLeft = viewChild.required<ElementRef<HTMLElement>>('mapControlsLeft');
+  readonly mapControlsRight = viewChild.required<ElementRef<HTMLElement>>('mapControlsRight');
   mapReizeObserver?: ResizeObserver
   private listenerTimeout?: ReturnType<typeof setTimeout>
 
@@ -131,10 +131,10 @@ export class MapComponent implements OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.mapReizeObserver?.observe(this.mapElement.nativeElement)
+    this.mapReizeObserver?.observe(this.mapElement().nativeElement)
 
-    DomEvent.disableClickPropagation(this.mapControlsLeft.nativeElement)
-    DomEvent.disableClickPropagation(this.mapControlsRight.nativeElement)
+    DomEvent.disableClickPropagation(this.mapControlsLeft().nativeElement)
+    DomEvent.disableClickPropagation(this.mapControlsRight().nativeElement)
 
     let mapPosition = this.localStorageService.getMapPosition()
     if (!mapPosition) {
@@ -223,7 +223,7 @@ export class MapComponent implements OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     clearTimeout(this.listenerTimeout)
     this.mapService.removeListener(this)
-    this.mapReizeObserver?.unobserve(this.mapElement.nativeElement)
+    this.mapReizeObserver?.unobserve(this.mapElement().nativeElement)
 
     this.toggleSubscription.unsubscribe()
     this.zoomSubscription.unsubscribe()

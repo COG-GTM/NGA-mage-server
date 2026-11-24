@@ -18,7 +18,7 @@
   }
 
   @if (viewObservation) {
-    <observation-view @slide class="component__view" [class.reselected]="observationReselected" (animationend)="observationReselected = false" [event]="event" [observation]="viewObservation" (close)="onObservationViewClose()" (delete)="onObservationDelete($event)"></observation-view>
+    <observation-view @slide class="component__view" [class.reselected]="observationReselected" (animationend)="observationReselected = false" [event]="event()" [observation]="viewObservation" (close)="onObservationViewClose()" (delete)="onObservationDelete($event)"></observation-view>
   }
   @if (editObservation) {
     <observation-edit @slide class="component__view" [observation]="editObservation" (close)="onObservationEditClose($event)"></observation-edit>

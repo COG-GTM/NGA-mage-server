@@ -229,7 +229,7 @@ describe('EventDetailsComponent', () => {
 
     it('should set and clear breadcrumb actions', () => {
       component.ngOnInit()
-      expect(breadcrumbService.setActions).toHaveBeenCalledWith(component.breadcrumbActions)
+      expect(breadcrumbService.setActions).toHaveBeenCalledWith(component.breadcrumbActions() ?? null)
 
       component.ngOnDestroy()
       expect(breadcrumbService.setActions).toHaveBeenCalledWith(null)

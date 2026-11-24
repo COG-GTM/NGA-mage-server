@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core'
 import { Api, AuthenticationStrategy } from '../../api/api.entity'
 import { User } from 'core-lib-src/user'
 import * as _ from 'underscore'
@@ -20,11 +20,14 @@ export interface AuthenticationEvent {
 })
 export class AuthenticationComponent implements OnChanges {
   @Input() api: Api
-  @Input() landing: boolean = false
+  readonly landing = input<boolean>(false);
 
-  @Output() signup = new EventEmitter<void>()
-  @Output() created = new EventEmitter<SignupEvent>()
-  @Output() authenticated = new EventEmitter<{ user: User, token: string}>()
+  readonly signup = output<void>();
+  readonly created = output<SignupEvent>();
+  readonly authenticated = output<{
+    user: User;
+    token: string;
+}>();
 
   strategy: any
   thirdPartyStrategies: any

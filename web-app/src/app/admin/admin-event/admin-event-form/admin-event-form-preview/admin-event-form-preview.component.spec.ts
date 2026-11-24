@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialog as MatDialog, MatDialogModule as MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,8 +13,7 @@ import { AdminEventFormPreviewComponent } from './admin-event-form-preview.compo
 class TestHostComponent {
   formDefinition: any
 
-  @ViewChild(AdminEventFormPreviewComponent, { static: true })
-  public adminEventFormPreviewComponent: AdminEventFormPreviewComponent
+  public readonly adminEventFormPreviewComponent = viewChild(AdminEventFormPreviewComponent);
 }
 
 class MatDialogMock {
@@ -44,7 +43,7 @@ describe('AdminEventFormPreviewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
-    component = hostComponent.adminEventFormPreviewComponent
+    component = hostComponent.adminEventFormPreviewComponent()
     dialog = TestBed.inject(MatDialog)
     fixture.detectChanges()
   });

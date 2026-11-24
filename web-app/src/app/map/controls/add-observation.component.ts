@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, output, viewChild } from '@angular/core';
 import { DomEvent } from 'leaflet';
 import { MatFabButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -11,13 +11,14 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatFabButton, MatTooltip, MatIcon]
 })
 export class AddObservationComponent implements AfterViewInit {
-  @ViewChild('addObservationButton') button!: ElementRef<HTMLElement>;
+  readonly button = viewChild.required<ElementRef<HTMLElement>>('addObservationButton');
 
-  @Output() onAddObservation = new EventEmitter<void>();
+  readonly onAddObservation = output<void>();
 
   ngAfterViewInit(): void {
-    if (this.button?.nativeElement) {
-      DomEvent.disableClickPropagation(this.button.nativeElement);
+    const button = this.button();
+    if (button?.nativeElement) {
+      DomEvent.disableClickPropagation(button.nativeElement);
     }
   }
 

@@ -1,4 +1,4 @@
-<div class="checkbox-content" [formGroup]="formGroup">
+<div class="checkbox-content" [formGroup]="formGroup()">
   <mat-checkbox
     [checked]="definition.value"
     (change)="checked($event)"
@@ -7,8 +7,8 @@
   </mat-checkbox>
 
   @if (
-    formGroup.get(definition.name)?.hasError('required') &&
-    formGroup.get(definition.name)?.touched
+    formGroup().get(definition.name)?.hasError('required') &&
+    formGroup().get(definition.name)?.touched
     ) {
     <mat-error
       >

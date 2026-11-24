@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatError as MatError, MatFormField as MatFormField, MatFormFieldModule as MatFormFieldModule } from '@angular/material/form-field';
@@ -20,7 +20,7 @@ class TestHostComponent {
     name: 'field1'
   }
 
-  @ViewChild(ObservationEditTextComponent) component: ObservationEditTextComponent
+  readonly component = viewChild(ObservationEditTextComponent);
 }
 
 /* TODO test MUST contain at least 1 test

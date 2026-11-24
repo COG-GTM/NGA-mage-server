@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, output } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 
 @Component({
@@ -9,7 +9,7 @@ import { MatButton } from '@angular/material/button';
 })
 export class AccountStatusComponent implements OnChanges {
   @Input() status: 'active' | 'inactive' | 'disabled'
-  @Output() complete = new EventEmitter<void>()
+  readonly complete = output<void>();
 
   icon: string
   title: string

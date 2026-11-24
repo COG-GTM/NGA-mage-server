@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,8 +32,7 @@ function newObservation(eventId: number) {
 class TestHostComponent {
   observation: any = newObservation(1);
 
-  @ViewChild(ObservationEditComponent)
-  component: ObservationEditComponent;
+  readonly component = viewChild(ObservationEditComponent);
 }
 
 describe('ObservationEditComponent', () => {
@@ -77,7 +76,7 @@ describe('ObservationEditComponent', () => {
   it('should create', () => {
     fixture.detectChanges();
 
-    expect(hostComponent.component).toBeTruthy();
+    expect(hostComponent.component()).toBeTruthy();
   });
 
   describe('loading event preferences', () => {
@@ -93,7 +92,7 @@ describe('ObservationEditComponent', () => {
       fixture.detectChanges();
 
       expect(userService.getEventPreferences).toHaveBeenCalledOnceWith(1);
-      expect(hostComponent.component.eventPreferences).toEqual(eventPreference);
+      expect(hostComponent.component().eventPreferences).toEqual(eventPreference);
     });
 
     it('does not refetch preferences when the event has not changed', () => {
@@ -135,7 +134,7 @@ describe('ObservationEditComponent', () => {
       // clobber the second event's preferences.
       firstEventResponse.next({ forms: { 1: { fields: {} } } });
 
-      expect(hostComponent.component.eventPreferences).toEqual(secondEventPreference);
+      expect(hostComponent.component().eventPreferences).toEqual(secondEventPreference);
     });
 
     it('sets preferences to null if the request errors', () => {
@@ -143,7 +142,7 @@ describe('ObservationEditComponent', () => {
 
       fixture.detectChanges();
 
-      expect(hostComponent.component.eventPreferences).toBeNull();
+      expect(hostComponent.component().eventPreferences).toBeNull();
     });
   });
 });

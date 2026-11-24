@@ -114,7 +114,7 @@ export class LayerDetailsComponent implements OnInit, OnDestroy {
     return this._breadcrumbs;
   }
 
-  breadcrumbActions = viewChild.required<TemplateRef<unknown>>('breadcrumbActions');
+  breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   readonly layer = signal<Layer | undefined>(undefined);
   readonly urlLayers = signal<UrlLayer[]>([]);
@@ -148,7 +148,7 @@ export class LayerDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
-    this.breadcrumbService.setActions(this.breadcrumbActions());
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null);
 
     if (!this.layerId) {
       console.error('No layerId found in route params');

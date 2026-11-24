@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ObservationFavoritesComponent } from '../observation-favorites/observation-favorites.component';
 import { SidebarService } from '../../sidebar/sidebar.service';
@@ -52,11 +52,11 @@ export class ObservationViewComponent implements OnChanges {
   private sessionService = inject(SessionService);
   private sidebarService = inject(SidebarService);
 
-  @Input() event: any
+  readonly event = input<any>(undefined);
   @Input() observation: any
 
-  @Output() close = new EventEmitter<void>()
-  @Output() delete = new EventEmitter<any>()
+  readonly close = output<void>();
+  readonly delete = output<any>();
 
   edit = false
   canEdit = false
@@ -112,7 +112,7 @@ export class ObservationViewComponent implements OnChanges {
     this.dialog.open(ObservationFavoritesComponent, {
       width: '500px',
       data: {
-        event: this.event,
+        event: this.event(),
         form: this.observationForm,
         userIds: this.observation.favoriteUserIds || []
       },
@@ -183,16 +183,17 @@ export class ObservationViewComponent implements OnChanges {
   }
 
   updateObservation(): void {
-    if (!this.observation || !this.event) return;
+    const event = this.event();
+    if (!this.observation || !event) return;
 
     this.isUserFavorite = this.observation.favoriteUserIds.includes(this.sessionService.user.id)
     this.canEdit = this.sessionService.hasPermission('UPDATE_OBSERVATION_EVENT') || this.sessionService.hasPermission('UPDATE_OBSERVATION_ALL')
 
-    const myAccess = this.event.acl[this.sessionService.user.id] || {}
+    const myAccess = event.acl[this.sessionService.user.id] || {}
     const aclPermissions = myAccess.permissions || []
     this.canEditImportant = this.sessionService.user.role.permissions.includes('UPDATE_EVENT') || aclPermissions.includes('update')
 
-    const formMap = this.eventService.getFormsForEvent(this.event, {}).reduce<Record<number, Form>>((map, form) => {
+    const formMap = this.eventService.getFormsForEvent(event, {}).reduce<Record<number, Form>>((map, form) => {
       map[form.id] = form
       return map
     }, {})

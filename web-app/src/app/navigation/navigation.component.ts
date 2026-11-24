@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { Component, DestroyRef, ElementRef, OnDestroy, OnInit, inject, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,9 +35,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
   private filterService = inject(FilterService);
   private destroyRef = inject(DestroyRef);
 
-  @Output() onFeedToggle = new EventEmitter<void>();
-  @Output() onPreferencesToggle = new EventEmitter<void>();
-  @ViewChild('eventSearchInput') eventSearchInput: ElementRef<HTMLInputElement>;
+  readonly onFeedToggle = output<void>();
+  readonly onPreferencesToggle = output<void>();
+  readonly eventSearchInput = viewChild<ElementRef<HTMLInputElement>>('eventSearchInput');
 
   events: any[] = [];
   eventSearchControl = new FormControl('');
@@ -103,7 +103,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   onEventMenuOpened(): void {
     this.eventSearchControl.setValue('');
-    setTimeout(() => this.eventSearchInput?.nativeElement.focus(), 0);
+    setTimeout(() => this.eventSearchInput()?.nativeElement.focus(), 0);
   }
 
   onSelectEvent(event: any): void {

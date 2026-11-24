@@ -1,5 +1,5 @@
 import { HttpEvent, HttpEventType, HttpResponse, HttpResponseBase } from '@angular/common/http';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { AttachmentAction } from '../../observation-edit/observation-edit-attachment/observation-edit-attachment-action';
 import { AttachmentService } from '../attachment.service';
@@ -36,11 +36,18 @@ export class AttachUploadComponent implements OnChanges {
   private attachmentService = inject(AttachmentService);
 
   @Input() attachment: FileUpload
-  @Input() url: string
+  readonly url = input<string>(undefined);
 
-  @Output() remove = new EventEmitter<{ id: number | string }>()
-  @Output() upload = new EventEmitter<{ id: number | string, response: HttpResponseBase }>()
-  @Output() error = new EventEmitter<{ id: number | string }>()
+  readonly remove = output<{
+    id: number | string;
+}>();
+  readonly upload = output<{
+    id: number | string;
+    response: HttpResponseBase;
+}>();
+  readonly error = output<{
+    id: number | string;
+}>();
 
   preview: PreviewType = PreviewType.LOADING
   previewType = PreviewType
@@ -127,9 +134,10 @@ export class AttachUploadComponent implements OnChanges {
   }
 
   startUpload(): void {
-    if (!this.attachment || !this.url) return
+    const url = this.url();
+    if (!this.attachment || !url) return
 
-    this.attachmentService.upload(this.attachment, this.url).subscribe((response: HttpEvent<HttpResponse<Object>>) => {
+    this.attachmentService.upload(this.attachment, url).subscribe((response: HttpEvent<HttpResponse<Object>>) => {
       if (response.type === HttpEventType.Response) {
         this.attachment.uploading = false
         if (response.status === 200) {

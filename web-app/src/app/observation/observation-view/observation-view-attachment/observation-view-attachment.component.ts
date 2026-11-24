@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { AttachmentComponent } from '../../attachment/attachment.component';
 
@@ -11,13 +11,13 @@ import { AttachmentComponent } from '../../attachment/attachment.component';
 export class ObservationViewAttachmentComponent {
   private _attachments: any[];
 
-  @Input() form: any
-  @Input() field: any
+  readonly form = input<any>(undefined);
+  readonly field = input<any>(undefined);
   @Input()
   set attachments(attachments: any[]) {
     this._attachments = attachments.filter(attachment => {
-      return attachment.observationFormId === this.form.remoteId &&
-        attachment.fieldName === this.field.name
+      return attachment.observationFormId === this.form().remoteId &&
+        attachment.fieldName === this.field().name
     })
   }
   get attachments(): any[] {

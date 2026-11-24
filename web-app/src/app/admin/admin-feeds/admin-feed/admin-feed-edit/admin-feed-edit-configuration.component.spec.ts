@@ -457,7 +457,7 @@ describe('FeedMetaDataComponent', () => {
     fixture.detectChanges();
     tick(debounceTimeMs + 50);
 
-    expect(target.topic).toEqual(topic);
+    expect(target.topic()).toEqual(topic);
     expect(target.feedMetaDataForm.value).toEqual(formValueForMetaData(topic));
 
     host.feedMetaData = feedMetaData;
@@ -509,7 +509,7 @@ describe('FeedMetaDataComponent', () => {
     fixture.detectChanges();
     tick(debounceTimeMs + 50);
 
-    expect(target.topic).toEqual(topic);
+    expect(target.topic()).toEqual(topic);
     expect(target.feedMetaData).toEqual(feedMetaData);
     expect(target.feedMetaDataForm.value).toEqual(
       formValueForMetaData({

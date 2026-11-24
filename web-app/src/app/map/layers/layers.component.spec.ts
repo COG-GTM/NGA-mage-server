@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LayersComponent } from './layers.component';
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { RenderedMapLayer } from '../entities.map-layer';
 
 @Component({
@@ -24,7 +24,7 @@ class TestHostComponent {
   featureOverlays = [];
   gridOverlays = [];
 
-  @ViewChild(LayersComponent) layers!: LayersComponent;
+  readonly layers = viewChild.required(LayersComponent);
 }
 
 
@@ -44,7 +44,7 @@ describe('LayersComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.layers;
+    component = hostComponent.layers();
   });
 
   it('should create', () => {

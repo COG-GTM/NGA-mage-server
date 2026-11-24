@@ -1,4 +1,4 @@
-<mat-expansion-panel [expanded]="expanded" (opened)="opened.emit()" hideToggle>
+<mat-expansion-panel [expanded]="expanded()" (opened)="opened.emit()" hideToggle>
   <mat-expansion-panel-header>
     <mat-panel-title>
       Describe the Feed
@@ -84,6 +84,6 @@
   </form>
   <mat-action-row>
     <button matButton (click)="onPreviousStep()">Previous</button>
-    <button matButton (click)="onAccepted()">{{buttonText}}</button>
+    <button matButton (click)="onAccepted()">{{buttonText()}}</button>
   </mat-action-row>
 </mat-expansion-panel>

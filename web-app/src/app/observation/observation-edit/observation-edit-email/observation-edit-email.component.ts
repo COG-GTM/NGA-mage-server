@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -17,6 +17,6 @@ interface EmailField {
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError]
 })
 export class ObservationEditEmailComponent {
-  @Input() formGroup: UntypedFormGroup
-  @Input() definition: EmailField
+  readonly formGroup = input<UntypedFormGroup>(undefined);
+  readonly definition = input<EmailField>(undefined);
 }

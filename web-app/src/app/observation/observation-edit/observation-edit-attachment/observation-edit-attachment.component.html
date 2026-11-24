@@ -1,7 +1,7 @@
 <div class="attachment-field">
   <div class="attachment-field__header">
     <div class="attachment-field__label">
-      {{ definition.title }}{{ definition.min > 0 ? ' *' : '' }}
+      {{ definition().title }}{{ definition().min > 0 ? ' *' : '' }}
     </div>
   </div>
 
@@ -19,7 +19,7 @@
               (delete)="deleteAttachment(attachment)"></observation-attachment>
             }
             @if (attachment.file) {
-              <attachment-upload [url]="url" [attachment]="attachment"
+              <attachment-upload [url]="url()" [attachment]="attachment"
               (remove)="removeAttachment($event)"></attachment-upload>
             }
           </div>

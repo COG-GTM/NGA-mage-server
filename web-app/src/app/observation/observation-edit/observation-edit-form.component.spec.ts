@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { UntypedFormGroup } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,8 +30,7 @@ class TestHostComponent {
     expand: false
   };
 
-  @ViewChild(ObservationEditFormComponent)
-  component: ObservationEditFormComponent;
+  readonly component = viewChild(ObservationEditFormComponent);
 }
 
 describe('ObservationEditFormComponent', () => {
@@ -49,7 +48,7 @@ describe('ObservationEditFormComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     fixture.detectChanges();
-    component = hostComponent.component;
+    component = hostComponent.component();
   });
 
   it('should create', () => {

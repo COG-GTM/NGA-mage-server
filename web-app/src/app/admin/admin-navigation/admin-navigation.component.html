@@ -13,7 +13,7 @@
       <div>
         <a class="nav-item nav-item--child" routerLink="./users" routerLinkActive="active">
           <mat-icon fontSet="material-symbols-outlined">person</mat-icon>
-          <span class="nav-label" [matBadge]="inactiveUsers.length" matBadgeSize="small" [matBadgeHidden]="!inactiveUsers.length">Users</span>
+          <span class="nav-label" [matBadge]="inactiveUsers().length" matBadgeSize="small" [matBadgeHidden]="!inactiveUsers().length">Users</span>
         </a>
         <a class="nav-item nav-item--child" routerLink="./teams" routerLinkActive="active">
           <mat-icon fontSet="material-symbols-outlined">groups</mat-icon>
@@ -21,7 +21,7 @@
         </a>
         <a class="nav-item nav-item--child" routerLink="./devices" routerLinkActive="active">
           <mat-icon fontSet="material-symbols-outlined">devices</mat-icon>
-          <span class="nav-label" [matBadge]="unregisteredDevices.length" matBadgeSize="small" [matBadgeHidden]="!unregisteredDevices.length">Devices</span>
+          <span class="nav-label" [matBadge]="unregisteredDevices().length" matBadgeSize="small" [matBadgeHidden]="!unregisteredDevices().length">Devices</span>
         </a>
       </div>
     </div>

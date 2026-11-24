@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations'
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, input, output } from '@angular/core'
 import { UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { FormPreference } from 'core-lib-src/user'
 import { MatCard, MatCardContent } from '@angular/material/card';
@@ -43,17 +43,20 @@ import { GeometryPipe } from '../../geometry/geometry.pipe';
     imports: [MatCard, MatCardContent, MatIcon, MatIconButton, ObservationEditAttachmentComponent, FormsModule, ReactiveFormsModule, ObservationEditCheckboxComponent, ObservationEditDateComponent, ObservationEditSelectComponent, ObservationEditMultiselectComponent, ObservationEditEmailComponent, ObservationEditNumberComponent, ObservationEditRadioComponent, ObservationEditTextComponent, ObservationEditTextareaComponent, ObservationEditPasswordComponent, ObservationEditGeometryComponent, MatDivider, MatButton, GeometryPipe]
 })
 export class ObservationEditFormComponent {
-  @Input() formGroup: UntypedFormGroup
-  @Input() formPreferences: FormPreference
-  @Input() definition: any
-  @Input() geometryStyle: any
-  @Input() attachmentUrl: string
-  @Input() observation: any
-  @Input() deletable = true
-  @Input() options: { expand: boolean, deletable: boolean }
+  readonly formGroup = input<UntypedFormGroup>(undefined);
+  readonly formPreferences = input<FormPreference>(undefined);
+  readonly definition = input<any>(undefined);
+  readonly geometryStyle = input<any>(undefined);
+  readonly attachmentUrl = input<string>(undefined);
+  readonly observation = input<any>(undefined);
+  readonly deletable = input(true);
+  readonly options = input<{
+    expand: boolean;
+    deletable: boolean;
+}>(undefined);
 
-  @Output() remove = new EventEmitter<UntypedFormGroup>()
-  @Output() featureEdit = new EventEmitter<any>()
+  readonly remove = output<UntypedFormGroup>();
+  readonly featureEdit = output<any>();
 
   fieldNames: string[]
   fieldDefinitions: {}
@@ -65,15 +68,15 @@ export class ObservationEditFormComponent {
   expand: boolean
 
   ngOnInit(): void {
-    this.expand = this.options.expand;
+    this.expand = this.options().expand;
 
-    this.fieldDefinitions = this.definition.fields.reduce((map, field) => {
+    this.fieldDefinitions = this.definition().fields.reduce((map, field) => {
       map[field.name] = field
       return map
     }, {})
 
-    const controlNames = Object.keys(this.formGroup.controls)
-    this.fieldNames = this.definition.fields
+    const controlNames = Object.keys(this.formGroup().controls)
+    this.fieldNames = this.definition().fields
       .filter(field => !field.archived)
       .filter(field => controlNames.includes(field.name))
       .sort((a, b) => a.id - b.id)
@@ -91,22 +94,23 @@ export class ObservationEditFormComponent {
   }
 
   removeForm(): void {
-    this.remove.emit(this.formGroup)
+    this.remove.emit(this.formGroup())
   }
 
   private updateView(): void {
-    if (this.definition.primaryFeedField) {
-      this.primaryField = this.definition.fields.find(field => field.name === this.definition.primaryFeedField)
-      this.primaryFieldValue = this.getValue(this.definition.primaryFeedField)
+    const definition = this.definition();
+    if (definition.primaryFeedField) {
+      this.primaryField = definition.fields.find(field => field.name === this.definition().primaryFeedField)
+      this.primaryFieldValue = this.getValue(definition.primaryFeedField)
     }
 
-    if (this.definition.secondaryFeedField) {
-      this.secondaryField = this.definition.fields.find(field => field.name === this.definition.secondaryFeedField)
-      this.secondaryFieldValue = this.getValue(this.definition.secondaryFeedField)
+    if (definition.secondaryFeedField) {
+      this.secondaryField = definition.fields.find(field => field.name === this.definition().secondaryFeedField)
+      this.secondaryFieldValue = this.getValue(definition.secondaryFeedField)
     }
   }
 
   private getValue(fieldName: string): any {
-    return this.formGroup.get(fieldName).value
+    return this.formGroup().get(fieldName).value
   }
 }

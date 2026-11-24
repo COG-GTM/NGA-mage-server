@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject, input, viewChild } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import { Feed } from '@ngageoint/mage.web-core-lib/feed';
 import { Feature } from 'geojson';
@@ -22,9 +22,9 @@ export class FeedItemSummaryComponent implements OnChanges {
   private sessionService = inject(SessionService);
 
   @Input() feed: Feed;
-  @Input() item: Feature;
+  readonly item = input<Feature>(undefined);
 
-  @ViewChild(MatRipple) ripple: MatRipple;
+  readonly ripple = viewChild(MatRipple);
 
   hasContent = false;
   timestamp: number;
@@ -36,31 +36,33 @@ export class FeedItemSummaryComponent implements OnChanges {
   }
 
   ngOnChanges(_changes: SimpleChanges): void {
-    if (!this.feed || !this.item.properties) return;
+    const item = this.item();
+    if (!this.feed || !item.properties) return;
 
-    if (this.feed.itemTemporalProperty && this.item.properties[this.feed.itemTemporalProperty] != null) {
-      this.timestamp = this.item.properties[this.feed.itemTemporalProperty];
+    if (this.feed.itemTemporalProperty && item.properties[this.feed.itemTemporalProperty] != null) {
+      this.timestamp = item.properties[this.feed.itemTemporalProperty];
       this.hasContent = true;
     }
 
-    if (this.feed.itemPrimaryProperty && this.item.properties[this.feed.itemPrimaryProperty] != null) {
-      this.primary = this.item.properties[this.feed.itemPrimaryProperty];
+    if (this.feed.itemPrimaryProperty && item.properties[this.feed.itemPrimaryProperty] != null) {
+      this.primary = item.properties[this.feed.itemPrimaryProperty];
       this.hasContent = true;
     }
 
-    if (this.feed.itemSecondaryProperty && this.item.properties[this.feed.itemSecondaryProperty] != null) {
-      this.secondary = this.item.properties[this.feed.itemSecondaryProperty];
+    if (this.feed.itemSecondaryProperty && item.properties[this.feed.itemSecondaryProperty] != null) {
+      this.secondary = item.properties[this.feed.itemSecondaryProperty];
       this.hasContent = true;
     }
   }
 
   onItemSelect(): void {
-    this.sidebarService.selectFeedItem(this.feed, this.item);
-    this.mapService.zoomToFeatureInLayer(this.item, `feed-${this.feed.id}`);
+    const item = this.item();
+    this.sidebarService.selectFeedItem(this.feed, item);
+    this.mapService.zoomToFeatureInLayer(item, `feed-${this.feed.id}`);
   }
 
   onRipple(): void {
-    this.ripple.launch({
+    this.ripple().launch({
       centered: true
     })
   }

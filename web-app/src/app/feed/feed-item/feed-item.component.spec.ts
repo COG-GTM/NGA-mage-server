@@ -9,7 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { FeedIconModule } from '@ngageoint/mage.web-core-lib/feed/feed-icon'
 import { MapClipComponent } from 'src/app/map/clip/clip.component';
 import { FeedItemComponent } from './feed-item.component';
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { MomentPipe } from 'src/app/moment/moment.pipe';
 import { Feed } from 'core-lib-src/feed';
 import { MapService } from 'src/app/map/map.service';
@@ -82,8 +82,7 @@ class TestHostComponent {
     style: {}
   }
 
-  @ViewChild(FeedItemComponent, { static: true })
-  public feedItemComponent: FeedItemComponent
+  public readonly feedItemComponent = viewChild(FeedItemComponent);
 }
 
 describe('FeedItemComponent', () => {
@@ -117,7 +116,7 @@ describe('FeedItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance
-    component = hostComponent.feedItemComponent
+    component = hostComponent.feedItemComponent()
     fixture.detectChanges()
   });
 

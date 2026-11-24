@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnDestroy, OnInit, TemplateRef, ViewChild, computed, effect, inject, linkedSignal, signal } from '@angular/core'
+import { Component, DestroyRef, OnDestroy, OnInit, TemplateRef, computed, effect, inject, linkedSignal, signal, viewChild } from '@angular/core'
 import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router, RouterLink } from '@angular/router'
@@ -69,8 +69,7 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
 
   private takeUntilDestroyed = <T>() => takeUntilDestroyed<T>(this.destroyRef)
 
-  @ViewChild('breadcrumbActions', { static: true })
-  breadcrumbActions!: TemplateRef<unknown>
+  readonly breadcrumbActions = viewChild<TemplateRef<unknown>>('breadcrumbActions');
 
   readonly teamId: string = this.route.snapshot.paramMap.get('teamId')
 
@@ -138,7 +137,7 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.breadcrumbService.setActions(this.breadcrumbActions)
+    this.breadcrumbService.setActions(this.breadcrumbActions() ?? null)
   }
 
   ngOnDestroy(): void {

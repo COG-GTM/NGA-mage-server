@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, DestroyRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, inject } from '@angular/core';
+import { Component, DestroyRef, OnChanges, OnInit, SimpleChanges, TemplateRef, inject, input, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog as MatDialog } from '@angular/material/dialog';
 import { MatTabGroup as MatTabGroup } from '@angular/material/tabs';
@@ -57,14 +57,14 @@ export class SidebarComponent implements OnInit, OnChanges {
   private exportService = inject(ExportService);
   private destroyRef = inject(DestroyRef);
 
-  @Input() event: any
-  @Input() observationLocation: any
-  @Input() observationsChanged: any
+  readonly event = input<any>(undefined);
+  readonly observationLocation = input<any>(undefined);
+  readonly observationsChanged = input<any>(undefined);
 
-  @Output() toggle = new EventEmitter<any>()
+  readonly toggle = output<any>();
 
-  @ViewChild('tabGroup') tabGroup: MatTabGroup
-  @ViewChild('permissionDialog') permissionDialog: TemplateRef<any>
+  readonly tabGroup = viewChild<MatTabGroup>('tabGroup');
+  readonly permissionDialog = viewChild<TemplateRef<any>>('permissionDialog');
 
   defaultTabs: FeedTab[] = [{
     id: 'observations',

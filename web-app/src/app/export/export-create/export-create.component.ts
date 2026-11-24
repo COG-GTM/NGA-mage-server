@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, EventEmitter, Output, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, output } from '@angular/core';
 import { ExportService } from '../export.service';
 import moment from 'moment';
 import { FilterService } from 'src/app/filter/filter.service';
@@ -72,7 +72,7 @@ export class ExportCreateComponent implements OnInit {
   private sessionService = inject(SessionService);
   exportService = inject<ExportService>(ExportService);
 
-  @Output() close = new EventEmitter<Export | null>()
+  readonly close = output<Export | null | undefined>();
   @ViewChild(ObservationFieldFilterComponent) conditionFilter?: ObservationFieldFilterComponent
 
   events: FilterEvent[] = []
@@ -374,7 +374,8 @@ export class ExportCreateComponent implements OnInit {
   }
 
   cancel(): void {
-    this.close.emit()
+    // TODO: The 'emit' function requires a mandatory Export | null argument
+    this.close.emit(undefined)
   }
 
   onConditionChanged(condition: Condition | undefined): void {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, output, viewChild } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import { MapService } from '../../map/map.service';
 import { SessionService } from '../../http/session.service';
@@ -20,9 +20,9 @@ import { MomentPipe } from '../../moment/moment.pipe';
 export class UserListItemComponent implements OnChanges {
   @Input() userWithLocation: UserWithLocation
 
-  @Output() click = new EventEmitter<any>()
+  readonly click = output<any>();
 
-  @ViewChild(MatRipple) ripple: MatRipple
+  readonly ripple = viewChild(MatRipple);
 
   token: string | null
   followingUser: any
@@ -59,7 +59,7 @@ export class UserListItemComponent implements OnChanges {
   }
 
   onRipple(): void {
-    this.ripple.launch({
+    this.ripple().launch({
       centered: true
     })
   }
